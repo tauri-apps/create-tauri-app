@@ -58,26 +58,18 @@ main(function* start() {
       }
 
       if (!parallelize) {
-        console.log('1')
         const cta = yield exec(run, { cwd: recipeFolder })
-        console.log('2')
         yield streamLogs(cta)
-        console.log('3')
         // now it is finished, assert on some things
         yield assertCTAState({ appFolder, appName })
-        console.log('4')
 
         const tauriBuild = yield exec(manager, {
           arguments: opts,
           cwd: appFolder
         })
-        console.log('5')
-
         yield streamLogs(tauriBuild)
-        console.log('6')
         // build is complete, assert on some things
         yield assertTauriBuildState({ appFolder, appName })
-        console.log('7')
       } else {
         console.log('running CTA recipe in parallel')
         output[recipe] = yield spawn(function* () {
