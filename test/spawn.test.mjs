@@ -18,8 +18,6 @@ if (nodeVersion === '14') {
 }
 
 const ctaBinary = path.resolve('./bin/create-tauri-app.js')
-//const clijs = path.resolve('../cli.js/')
-//const api = path.resolve('../api/')
 
 const manager = process.env.TAURI_RUN_MANAGER || 'yarn'
 const recipes = process.env.TAURI_RECIPE
@@ -46,7 +44,7 @@ main(function* start() {
       console.log(`${recipeFolder} created.`)
 
       // runs CTA with all args set to avoid any prompts
-      const run = `node '${ctaBinary}' --manager ${manager} --recipe ${recipe} --ci --dev`
+      const run = `node '${ctaBinary}' --manager ${manager} --recipe ${recipe} --ci`
       console.log(`[running] ${run}`)
 
       let opts = []
@@ -60,18 +58,26 @@ main(function* start() {
       }
 
       if (!parallelize) {
+        console.log('1')
         const cta = yield exec(run, { cwd: recipeFolder })
+        console.log('2')
         yield streamLogs(cta)
+        console.log('3')
         // now it is finished, assert on some things
         yield assertCTAState({ appFolder, appName })
+        console.log('4')
 
         const tauriBuild = yield exec(manager, {
           arguments: opts,
           cwd: appFolder
         })
+        console.log('5')
+
         yield streamLogs(tauriBuild)
+        console.log('6')
         // build is complete, assert on some things
         yield assertTauriBuildState({ appFolder, appName })
+        console.log('7')
       } else {
         console.log('running CTA recipe in parallel')
         output[recipe] = yield spawn(function* () {
@@ -181,14 +187,5 @@ function* assertTauriBuildState({ appFolder, appName }) {
     cargoFileOutput.startsWith(`[package]\nname = "app"`),
     true,
     `The Cargo.toml did not have the name "app".`
-  )
-
-  const tauriTarget = yield fs.readdir(
-    path.join(appFolder, 'src-tauri', 'target')
-  )
-  assert.strictEqual(
-    tauriTarget.includes('release'),
-    true,
-    `The Tauri build does not have a target/release directory.`
   )
 }
