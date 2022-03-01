@@ -16,11 +16,11 @@ import { ngcli } from './recipes/ng-cli'
 import { svelte } from './recipes/svelte'
 import { solid } from './recipes/solid'
 import { cljs } from './recipes/cljs'
-import { shell } from './shell'
 import { updatePackageJson } from './helpers/update-package-json'
 import { Recipe } from './types/recipe'
 import { updateTauriConf } from './helpers/update-tauri-conf'
 import { getPkgManagerFromUA, Npm, Pnpm, Yarn } from './package-manager'
+import execa from 'execa'
 
 const allRecipes: Recipe[] = [
   vanillajs,
@@ -166,7 +166,7 @@ You may find the requirements here: ${cyan(setupLink)}
   const pmName = argv.manager ?? pmInfo?.name ?? 'npm'
   let pmVerStr: string
   try {
-    pmVerStr = (await shell(pmName, ['--version'])).stdout
+    pmVerStr = (await execa(pmName, ['--version'])).stdout
   } catch {
     throw new Error(
       `Must have ${pmName} installed to manage dependencies. Is it in your PATH? We tried running it inside ${process.cwd()}`
@@ -380,7 +380,7 @@ function logStep(msg: string): void {
   console.log(out)
 }
 
-function handlePromptsErr(error: { isTtyError: boolean }) {
+function handlePromptsErr(error: { isTtyError: boolean }): void {
   if (error.isTtyError) {
     console.warn(
       'It appears your terminal does not support interactive prompts. Using default values.'

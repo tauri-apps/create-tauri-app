@@ -66,14 +66,14 @@ export class Npm implements PackageManager {
     this.ci = options?.ci ?? false
   }
 
-  async install(options?: { cwd?: string }) {
+  async install(options?: { cwd?: string }): Promise<void> {
     await shell('npm', ['install'], { cwd: options?.cwd })
   }
 
   async add(
     packages: string[],
     options?: { dev?: boolean; cwd?: string | undefined } | undefined
-  ) {
+  ): Promise<void> {
     await shell(
       'npm',
       ['install', options?.dev ? '--save-dev' : '', ...packages],
@@ -86,7 +86,7 @@ export class Npm implements PackageManager {
     script: string,
     args: string[],
     options?: { cwd?: string | undefined } | undefined
-  ) {
+  ): Promise<void> {
     await shell(
       'npm',
       ['run', script, '--', ...args],
@@ -99,7 +99,7 @@ export class Npm implements PackageManager {
     createApp: string,
     args: string[],
     options?: { cwd?: string | undefined } | undefined
-  ) {
+  ): Promise<void> {
     if (this.version >= 7) {
       await shell(
         'npm',
@@ -132,14 +132,14 @@ export class Yarn implements PackageManager {
     this.ci = options?.ci ?? false
   }
 
-  async install(options?: { cwd?: string }) {
+  async install(options?: { cwd?: string }): Promise<void> {
     await shell('yarn', ['install'], { cwd: options?.cwd })
   }
 
   async add(
     packages: string[],
     options?: { dev?: boolean; cwd?: string | undefined } | undefined
-  ) {
+  ): Promise<void> {
     await shell(
       'yarn',
       ['add', options?.dev ? '-D' : '', ...packages],
@@ -152,7 +152,7 @@ export class Yarn implements PackageManager {
     script: string,
     args: string[],
     options?: { cwd?: string | undefined } | undefined
-  ) {
+  ): Promise<void> {
     await shell('yarn', [script, ...args], { cwd: options?.cwd }, this.log)
   }
 
@@ -160,7 +160,7 @@ export class Yarn implements PackageManager {
     createApp: string,
     args: string[],
     options?: { cwd?: string | undefined } | undefined
-  ) {
+  ): Promise<void> {
     await shell(
       'yarn',
       ['create', createApp, this.ci ? '--non-interactive' : '', ...args],
@@ -184,14 +184,14 @@ export class Pnpm implements PackageManager {
     this.ci = options?.ci ?? false
   }
 
-  async install(options?: { cwd?: string }) {
+  async install(options?: { cwd?: string }): Promise<void> {
     await shell('pnpm', ['install'], { cwd: options?.cwd })
   }
 
   async add(
     packages: string[],
     options?: { dev?: boolean; cwd?: string | undefined } | undefined
-  ) {
+  ): Promise<void> {
     await shell(
       'pnpm',
       ['add', options?.dev ? '-D' : '', ...packages],
@@ -204,7 +204,7 @@ export class Pnpm implements PackageManager {
     script: string,
     args: string[],
     options?: { cwd?: string | undefined } | undefined
-  ) {
+  ): Promise<void> {
     if (this.version >= 7) {
       await shell('pnpm', [script, ...args], { cwd: options?.cwd }, this.log)
     } else {
@@ -221,7 +221,7 @@ export class Pnpm implements PackageManager {
     createApp: string,
     args: string[],
     options?: { cwd?: string | undefined } | undefined
-  ) {
+  ): Promise<void> {
     await shell(
       'pnpm',
       ['create', createApp, '--', ...args],

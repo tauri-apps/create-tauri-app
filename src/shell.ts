@@ -33,8 +33,8 @@ export const shell = async (
         }
       )
     }
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error with command: %s', command)
-    throw new Error(error)
+    throw new Error(error as string)
   }
 }
