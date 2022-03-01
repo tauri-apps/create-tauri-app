@@ -20,6 +20,7 @@ export const ngcli: Recipe = {
       [
         ci ? '--yes' : '',
         '-p',
+        '@angular/cli',
         'ng',
         'new',
         `${cfg.appName}`,
