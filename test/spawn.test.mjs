@@ -78,7 +78,7 @@ async function main() {
         stdio: 'inherit'
       })
       // now it is finished, assert on some things
-      await assertCTAState({ appFolder, appName })
+      await assertCTAState({ recipe, appFolder, appName })
 
       await execa(manager, opts, {
         stdio: 'inherit',
@@ -111,7 +111,7 @@ function sleep(duration) {
   })
 }
 
-async function assertCTAState({ appFolder, appName }) {
+async function assertCTAState({ recipe, appFolder, appName }) {
   const packageFileInitial = JSON.parse(
     await fs.readFile(path.join(appFolder, 'package.json'), 'utf-8')
   )
@@ -120,14 +120,16 @@ async function assertCTAState({ appFolder, appName }) {
     appName,
     `The package.json did not have the name "${appName}".`
   )
-  assert.strictEqual(
-    packageFileInitial.scripts.tauri,
-    'tauri',
-    `The package.json did not have the tauri script.`
-  )
+  if (recipe != 'vuecli') {
+    assert.strictEqual(
+      packageFileInitial.scripts.tauri,
+      'tauri',
+      `The package.json did not have the tauri script.`
+    )
+  }
 }
 
-async function assertTauriBuildState({ appFolder, appName }) {
+async function assertTauriBuildState({ recipe, appFolder, appName }) {
   const packageFileOutput = JSON.parse(
     await fs.readFile(path.join(appFolder, 'package.json'), 'utf-8')
   )
@@ -136,11 +138,14 @@ async function assertTauriBuildState({ appFolder, appName }) {
     appName,
     `The package.json did not have the name "${appName}".`
   )
-  assert.strictEqual(
-    packageFileOutput.scripts.tauri,
-    'tauri',
-    `The package.json did not have the tauri script.`
-  )
+
+  if (recipe != 'vuecli') {
+    assert.strictEqual(
+      packageFileOutput.scripts.tauri,
+      'tauri',
+      `The package.json did not have the tauri script.`
+    )
+  }
 
   const cargoFileOutput = await fs.readFile(
     path.join(appFolder, 'src-tauri', 'Cargo.toml'),
