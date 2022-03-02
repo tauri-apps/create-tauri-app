@@ -54,7 +54,7 @@ jobs:
           TAURI_RUN_MANAGER: 'npm'
 
   create-recipe-with-yarn:
-    name: 'node@${{ matrix.node }} + npm@${{ matrix.manager }}'
+    name: 'node@${{ matrix.node }} + yarn'
     runs-on: ${{ github.event.inputs.platform || 'ubuntu' }}-latest
 
     strategy:
