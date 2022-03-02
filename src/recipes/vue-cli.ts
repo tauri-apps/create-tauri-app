@@ -21,7 +21,7 @@ export const vuecli: Recipe = {
         '@vue/cli@latest',
         'create',
         cfg.appName,
-        '--pm',
+        '-m',
         pm.name,
         ci ? '--default' : ''
       ],
