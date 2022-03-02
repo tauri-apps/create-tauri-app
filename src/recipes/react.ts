@@ -41,8 +41,8 @@ export const cra: Recipe = {
     await pm.create(
       'react-app',
       [
+        cfg.appName,
         ...(template === 'cra.ts' ? ['--template', 'typescript'] : []),
-        `${cfg.appName}`,
         pm.name !== 'yarn' ? '--use-npm' : ''
       ],
       {

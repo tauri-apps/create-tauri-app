@@ -46,7 +46,7 @@ const vite: Recipe = {
   preInit: async ({ cwd, cfg, pm, answers }) => {
     const template = (answers?.template as string) ?? 'vue'
 
-    await pm.create('vite', [`${cfg.appName}`, '--template', `${template}`], {
+    await pm.create('vite', [cfg.appName, '--template', `${template}`], {
       cwd
     })
   },

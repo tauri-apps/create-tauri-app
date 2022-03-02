@@ -23,7 +23,7 @@ export const ngcli: Recipe = {
         '@angular/cli',
         'ng',
         'new',
-        `${cfg.appName}`,
+        cfg.appName,
         `--package-manager=${pm.name}`
       ],
       {

@@ -163,7 +163,7 @@ export class Yarn implements PackageManager {
   ): Promise<void> {
     await shell(
       'yarn',
-      ['create', createApp, this.ci ? '--non-interactive' : '', ...args],
+      ['create', this.ci ? '--non-interactive' : '', createApp, ...args],
       {
         cwd: options?.cwd
       },

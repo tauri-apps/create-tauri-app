@@ -20,7 +20,7 @@ export const vuecli: Recipe = {
         ci ? '--yes' : '',
         '@vue/cli@latest',
         'create',
-        `${cfg.appName}`,
+        cfg.appName,
         '--pm',
         pm.name,
         ci ? '--default' : ''
@@ -35,7 +35,7 @@ export const vuecli: Recipe = {
         'add',
         'tauri',
         '--appName',
-        `${cfg.appName}`,
+        cfg.appName,
         '--windowTitle',
         `${cfg.windowTitle}`
       ],

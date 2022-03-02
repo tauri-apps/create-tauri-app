@@ -32,7 +32,7 @@ export const svelte: Recipe = {
   preInit: async ({ cwd, cfg, answers, ci }) => {
     await shell(
       'npx',
-      [ci ? '--yes' : '', 'degit', 'sveltejs/template', `${cfg.appName}`],
+      [ci ? '--yes' : '', 'degit', 'sveltejs/template', cfg.appName],
       {
         cwd
       }
