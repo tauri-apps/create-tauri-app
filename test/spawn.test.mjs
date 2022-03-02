@@ -153,4 +153,7 @@ async function assertTauriBuildState({ appFolder, appName }) {
   )
 }
 
-main().catch((e) => console.error(e))
+main().catch((e) => {
+  console.error(e)
+  process.exit(1)
+})
