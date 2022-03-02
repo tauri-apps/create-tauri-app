@@ -7,7 +7,7 @@ env:
   RUST_BACKTRACE: 1
   CARGO_INCREMENTAL: 0 # This is set to 0 by the https://github.com/Swatinem/rust-cache
   CARGO_PROFILE_DEV_DEBUG: 0 # This would add unnecessary bloat to the target folder, decreasing cache efficiency.
-  TAURI_RECIPE: 'vanillajs,cra,vite,ngcli,solid'
+  TAURI_RECIPE: 'vanillajs,vite,cra,svelte,solid,vuecli,ngcli,dominator,cljs'
 
 on:
   workflow_dispatch:
@@ -52,3 +52,33 @@ jobs:
       - run: yarn test
         env:
           TAURI_RUN_MANAGER: 'npm'
+
+  create-recipe-with-yarn:
+    name: 'node@${{ matrix.node }} + npm@${{ matrix.manager }}'
+    runs-on: ${{ github.event.inputs.platform || 'ubuntu' }}-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node: ['14', '16']
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: install stable
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - uses: volta-cli/action@v1
+        with:
+          node-version: ${{ matrix.node }}
+          yarn-version: 1.22.5
+      - name: install webkit2gtk
+        if: (github.event.inputs.platform || 'ubuntu') == 'ubuntu'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+      - run: yarn
+      - run: yarn build
+      - run: yarn test
+        env:
+          TAURI_RUN_MANAGER: 'yarn'

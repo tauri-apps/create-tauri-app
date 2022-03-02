@@ -22,9 +22,9 @@ const manager = process.env.TAURI_RUN_MANAGER || 'yarn'
 const recipes = process.env.TAURI_RECIPE
   ? process.env.TAURI_RECIPE.split(',')
   : [
-      'cra',
       'vanillajs',
       'vite',
+      'cra',
       'svelte',
       'solid',
       'vuecli',
