@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 import { join } from 'path'
+import { updatePackageJson } from '../helpers/update-package-json'
 import { shell } from '../shell'
 import { Recipe } from '../types/recipe'
 
@@ -43,6 +44,16 @@ export const vuecli: Recipe = {
         cwd: join(cwd, cfg.appName)
       }
     )
+    updatePackageJson((pkg) => {
+      return {
+        ...pkg,
+        scripts: {
+          ...pkg.scripts,
+          'tauri:build': 'vue-cli-service tauri:build',
+          'tauri:dev': 'vue-cli-service tauri:dev'
+        }
+      }
+    }, join(cwd, cfg.appName))
   },
   postInit: async ({ cfg, pm }) => {
     console.log(`
