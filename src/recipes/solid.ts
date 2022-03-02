@@ -31,7 +31,7 @@ const solid: Recipe = {
   ],
   configUpdate: ({ cfg, pm }) => ({
     ...cfg,
-    distDir: `../public`,
+    distDir: `../dist`,
     devPath: 'http://localhost:3000',
     beforeDevCommand: `${pm.name === 'npm' ? 'npm run' : pm.name} dev`,
     beforeBuildCommand: `${pm.name === 'npm' ? 'npm run' : pm.name} build`
