@@ -27,9 +27,6 @@ jobs:
       matrix:
         node: ['14', '16']
         manager: ['7']
-        exclude:
-          - node: '16'
-            manager: '6'
 
     steps:
       - uses: actions/checkout@v2
@@ -61,9 +58,6 @@ jobs:
       fail-fast: false
       matrix:
         node: ['14', '16']
-        exclude:
-          - node: '16'
-            manager: '6'
 
     steps:
       - uses: actions/checkout@v2
