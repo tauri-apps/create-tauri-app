@@ -67,7 +67,9 @@ jobs:
           toolchain: stable
       - uses: volta-cli/action@v1
         with:
+        with:
           node-version: ${{ matrix.node }}
+          npm-version: ${{ matrix.manager }}
           yarn-version: 1.22.5
       - name: install webkit2gtk
         if: (github.event.inputs.platform || 'ubuntu') == 'ubuntu'
