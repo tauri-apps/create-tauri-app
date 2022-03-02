@@ -85,7 +85,7 @@ async function main() {
         cwd: appFolder
       })
       // build is complete, assert on some things
-      await assertTauriBuildState({ appFolder, appName })
+      await assertTauriBuildState({ recipe, appFolder, appName })
 
       console.log(`------------------ ${recipe} complete -------------------`)
       console.log('::endgroup::')
@@ -120,7 +120,7 @@ async function assertCTAState({ recipe, appFolder, appName }) {
     appName,
     `The package.json did not have the name "${appName}".`
   )
-  if (recipe != 'vuecli') {
+  if (recipe !== 'vuecli') {
     assert.strictEqual(
       packageFileInitial.scripts.tauri,
       'tauri',
@@ -139,7 +139,7 @@ async function assertTauriBuildState({ recipe, appFolder, appName }) {
     `The package.json did not have the name "${appName}".`
   )
 
-  if (recipe != 'vuecli') {
+  if (recipe !== 'vuecli') {
     assert.strictEqual(
       packageFileOutput.scripts.tauri,
       'tauri',

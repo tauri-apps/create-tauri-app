@@ -28,6 +28,7 @@ export const vuecli: Recipe = {
       ],
       { cwd }
     )
+
     await shell(
       'npx',
       [
@@ -44,6 +45,7 @@ export const vuecli: Recipe = {
         cwd: join(cwd, cfg.appName)
       }
     )
+
     updatePackageJson((pkg) => {
       return {
         ...pkg,
