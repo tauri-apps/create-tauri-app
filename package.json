@@ -5,21 +5,15 @@
   "bin": {
     "create-tauri-app": "./bin/create-tauri-app.js"
   },
-  "repository": "git+https://github.com/tauri-apps/tauri.git",
+  "repository": "git+https://github.com/tauri-apps/create-tauri-app.git",
   "license": "MIT OR Apache-2.0",
   "bugs": {
-    "url": "https://github.com/tauri-apps/tauri/issues"
+    "url": "https://github.com/tauri-apps/create-tauri-app/issues"
   },
-  "homepage": "https://github.com/tauri-apps/tauri#readme",
-  "contributors": [
-    "Tauri Programme within The Commons Conservancy"
-  ],
+  "homepage": "https://github.com/tauri-apps/create-tauri-app#readme",
+  "contributors": ["Tauri Programme within The Commons Conservancy"],
   "main": "bin/create-tauri-app.js",
-  "files": [
-    "bin",
-    "dist",
-    "src/templates"
-  ],
+  "files": ["bin", "dist", "src/templates"],
   "scripts": {
     "create-tauri-app": "create-tauri-app",
     "build": "rollup --config",
