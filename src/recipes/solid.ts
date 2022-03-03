@@ -6,42 +6,38 @@ import { shell } from '../shell'
 import { Recipe } from '../types/recipe'
 
 const solid: Recipe = {
+  shortName: 'solid',
   descriptiveName: {
     name: 'Solid (https://github.com/solidjs/templates)',
     value: 'solid'
   },
-  shortName: 'solid',
-  extraNpmDevDependencies: [],
-  extraNpmDependencies: [],
-  extraQuestions: ({ ci }) => {
-    return [
-      {
-        type: 'list',
-        name: 'template',
-        message: 'Which Solid template would you like to use?',
-        choices: [
-          'js',
-          'ts-bootstrap',
-          'ts-minimal',
-          'ts-router',
-          'ts-windicss',
-          'ts'
-        ],
-        default: 'ts',
-        loop: false,
-        when: !ci
-      }
-    ]
-  },
+  extraQuestions: ({ ci }) => [
+    {
+      type: 'list',
+      name: 'template',
+      message: 'Which Solid template would you like to use?',
+      choices: [
+        'js',
+        'ts-bootstrap',
+        'ts-minimal',
+        'ts-router',
+        'ts-windicss',
+        'ts'
+      ],
+      default: 'ts',
+      loop: false,
+      when: !ci
+    }
+  ],
   configUpdate: ({ cfg, packageManager }) => ({
     ...cfg,
-    distDir: `../public`,
+    distDir: `../dist`,
     devPath: 'http://localhost:3000',
     beforeDevCommand: `${
-      packageManager === 'npm' ? 'npm run' : packageManager
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
     } dev`,
     beforeBuildCommand: `${
-      packageManager === 'npm' ? 'npm run' : packageManager
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
     } build`
   }),
   preInit: async ({ cwd, cfg, answers, ci }) => {
@@ -61,8 +57,10 @@ const solid: Recipe = {
     Your installation completed.
 
     $ cd ${cfg.appName}
-    $ ${packageManager} install
-    $ ${packageManager === 'npm' ? 'npm run' : packageManager} tauri dev
+    $ ${packageManager.name} install
+    $ ${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } tauri dev
     `)
 
     return await Promise.resolve()

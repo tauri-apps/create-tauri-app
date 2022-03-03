@@ -8,20 +8,19 @@ import scaffe from 'scaffe'
 import { Recipe } from '../types/recipe'
 
 export const vanillajs: Recipe = {
+  shortName: 'vanillajs',
   descriptiveName: {
     name: 'Vanilla.js (html, css, and js without the bundlers)',
     value: 'Vanilla.js'
   },
-  shortName: 'vanillajs',
   configUpdate: ({ cfg }) => ({
     ...cfg,
     distDir: `../dist`,
     devPath: `../dist`,
     beforeDevCommand: '',
-    beforeBuildCommand: ''
+    beforeBuildCommand: '',
+    withGlobalTauri: true
   }),
-  extraNpmDevDependencies: [],
-  extraNpmDependencies: [],
   preInit: async ({ cwd, cfg }) => {
     const { appName } = cfg
     const templateDir = join(__dirname, '../src/templates/vanilla')
@@ -44,8 +43,10 @@ export const vanillajs: Recipe = {
     Your installation completed.
 
     $ cd ${cfg.appName}
-    $ ${packageManager} install
-    $ ${packageManager === 'npm' ? 'npm run' : packageManager} tauri dev
+    $ ${packageManager.name} install
+    $ ${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } tauri dev
     `)
     return await Promise.resolve()
   }

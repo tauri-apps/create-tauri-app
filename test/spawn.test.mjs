@@ -2,12 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-import { main, spawn, sleep } from 'effection'
-import { exec } from '@effection/process'
 import fs from 'fs/promises'
 import path from 'path'
 import crypto from 'crypto'
 import tempDirectory from 'temp-dir'
+import execa from 'execa'
 
 let assert
 const nodeVersion = process.versions.node.split('.')[0]
@@ -18,16 +17,24 @@ if (nodeVersion === '14') {
 }
 
 const ctaBinary = path.resolve('./bin/create-tauri-app.js')
-//const clijs = path.resolve('../cli.js/')
-//const api = path.resolve('../api/')
 
 const manager = process.env.TAURI_RUN_MANAGER || 'yarn'
 const recipes = process.env.TAURI_RECIPE
   ? process.env.TAURI_RECIPE.split(',')
-  : ['vanillajs', 'cra', 'vite', 'ngcli', 'solid', 'cljs']
+  : [
+      'vanillajs',
+      'vite',
+      'cra',
+      'svelte',
+      'solid',
+      'vuecli',
+      'ngcli',
+      'dominator',
+      'cljs'
+    ]
 const parallelize = process.env.TAURI_RECIPE_PARALLELIZE || false
 
-main(function* start() {
+async function main() {
   const tauriTemp = path.join(
     tempDirectory,
     `tauri_${crypto.randomBytes(16).toString('hex')}`
@@ -42,12 +49,19 @@ main(function* start() {
       console.log(`------------------ ${recipe} started -------------------`)
       const recipeFolder = path.join(tauriTemp, recipe)
       const appFolder = path.join(recipeFolder, appName)
-      yield fs.mkdir(recipeFolder, { recursive: true })
+      await fs.mkdir(recipeFolder, { recursive: true })
       console.log(`${recipeFolder} created.`)
 
       // runs CTA with all args set to avoid any prompts
-      const run = `node '${ctaBinary}' --manager ${manager} --recipe ${recipe} --ci --dev`
-      console.log(`[running] ${run}`)
+      const runArgs = [
+        ctaBinary,
+        '--manager',
+        manager,
+        '--recipe',
+        recipe,
+        '--ci'
+      ]
+      console.log(`[running] node ${runArgs.join(' ')}`)
 
       let opts = []
       if (manager === 'npm') {
@@ -59,55 +73,25 @@ main(function* start() {
         opts = recipe == 'vuecli' ? ['tauri:build'] : ['tauri', 'build']
       }
 
-      if (!parallelize) {
-        const cta = yield exec(run, { cwd: recipeFolder })
-        yield streamLogs(cta)
-        // now it is finished, assert on some things
-        yield assertCTAState({ appFolder, appName })
+      await execa('node', runArgs, {
+        cwd: recipeFolder,
+        stdio: 'inherit'
+      })
+      // now it is finished, assert on some things
+      await assertCTAState({ recipe, appFolder, appName })
 
-        const tauriBuild = yield exec(manager, {
-          arguments: opts,
-          cwd: appFolder
-        })
-        yield streamLogs(tauriBuild)
-        // build is complete, assert on some things
-        yield assertTauriBuildState({ appFolder, appName })
-      } else {
-        console.log('running CTA recipe in parallel')
-        output[recipe] = yield spawn(function* () {
-          const childCTA = yield exec(run, { cwd: recipeFolder })
-          const cta = yield captureLogs(childCTA)
-          const childTauriBuild = yield exec(manager, {
-            arguments: opts,
-            cwd: appFolder
-          })
-          const tauriBuild = yield captureLogs(childTauriBuild)
-          return { cta, tauriBuild }
-        })
-      }
+      await execa(manager, opts, {
+        stdio: 'inherit',
+        cwd: appFolder
+      })
+      // build is complete, assert on some things
+      await assertTauriBuildState({ recipe, appFolder, appName })
 
       console.log(`------------------ ${recipe} complete -------------------`)
       console.log('::endgroup::')
       // sometimes it takes a moment to flush all of the logs
       // to the console, let things catch up here
-      yield sleep(1000)
-    }
-
-    if (parallelize) {
-      for (let i = 0; i < recipes.length; i++) {
-        const recipe = recipes[i]
-        console.log(`::group::recipe ${recipe} logs`)
-        console.log(
-          `------------------ ${recipe} output start -------------------`
-        )
-        const out = yield output[recipe]
-        console.log(out.cta)
-        console.log(out.tauriBuild)
-        console.log(
-          `------------------ ${recipe} output end -------------------`
-        )
-        console.log('::endgroup::')
-      }
+      await sleep(1000)
     }
   } catch (e) {
     console.error(e)
@@ -115,65 +99,55 @@ main(function* start() {
   } finally {
     console.log('\nstopping process...')
     // wait a tick for file locks to be release
-    yield sleep(5000)
-    yield fs.rm(tauriTemp, { recursive: true, force: true })
+    await sleep(5000)
+    await fs.rm(tauriTemp, { recursive: true, force: true })
     console.log(`${tauriTemp} deleted.`)
   }
-})
+}
 
-function* streamLogs(child) {
-  yield child.stdout.forEach((data) => {
-    process.stdout.write(data)
-  })
-  yield child.stderr.forEach((data) => {
-    process.stderr.write(data)
+function sleep(duration) {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(), duration)
   })
 }
 
-function* captureLogs(child) {
-  let log = ''
-  yield child.stdout.forEach((data) => {
-    log += data
-  })
-  yield child.stderr.forEach((data) => {
-    log += data
-  })
-
-  return log
-}
-
-function* assertCTAState({ appFolder, appName }) {
+async function assertCTAState({ recipe, appFolder, appName }) {
   const packageFileInitial = JSON.parse(
-    yield fs.readFile(path.join(appFolder, 'package.json'), 'utf-8')
+    await fs.readFile(path.join(appFolder, 'package.json'), 'utf-8')
   )
   assert.strictEqual(
     packageFileInitial.name,
     appName,
     `The package.json did not have the name "${appName}".`
   )
-  assert.strictEqual(
-    packageFileInitial.scripts.tauri,
-    'tauri',
-    `The package.json did not have the tauri script.`
-  )
+  if (recipe !== 'vuecli') {
+    assert.strictEqual(
+      packageFileInitial.scripts.tauri,
+      'tauri',
+      `The package.json did not have the tauri script.`
+    )
+  }
 }
 
-function* assertTauriBuildState({ appFolder, appName }) {
+async function assertTauriBuildState({ recipe, appFolder, appName }) {
   const packageFileOutput = JSON.parse(
-    yield fs.readFile(path.join(appFolder, 'package.json'), 'utf-8')
+    await fs.readFile(path.join(appFolder, 'package.json'), 'utf-8')
   )
   assert.strictEqual(
     packageFileOutput.name,
     appName,
     `The package.json did not have the name "${appName}".`
   )
-  assert.strictEqual(
-    packageFileOutput.scripts.tauri,
-    'tauri',
-    `The package.json did not have the tauri script.`
-  )
 
-  const cargoFileOutput = yield fs.readFile(
+  if (recipe !== 'vuecli') {
+    assert.strictEqual(
+      packageFileOutput.scripts.tauri,
+      'tauri',
+      `The package.json did not have the tauri script.`
+    )
+  }
+
+  const cargoFileOutput = await fs.readFile(
     path.join(appFolder, 'src-tauri', 'Cargo.toml'),
     'utf-8'
   )
@@ -182,13 +156,9 @@ function* assertTauriBuildState({ appFolder, appName }) {
     true,
     `The Cargo.toml did not have the name "app".`
   )
-
-  const tauriTarget = yield fs.readdir(
-    path.join(appFolder, 'src-tauri', 'target')
-  )
-  assert.strictEqual(
-    tauriTarget.includes('release'),
-    true,
-    `The Tauri build does not have a target/release directory.`
-  )
 }
+
+main().catch((e) => {
+  console.error(e)
+  process.exit(1)
+})

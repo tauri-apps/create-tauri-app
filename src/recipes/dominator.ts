@@ -8,24 +8,22 @@ import scaffe from 'scaffe'
 import { Recipe } from '../types/recipe'
 
 export const dominator: Recipe = {
+  shortName: 'dominator',
   descriptiveName: {
     name: 'Dominator (https://crates.io/crates/dominator/)',
     value: 'Dominator'
   },
-  shortName: 'dominator',
   configUpdate: ({ cfg, packageManager }) => ({
     ...cfg,
     distDir: `../dist`,
     devPath: 'http://localhost:10001/',
     beforeDevCommand: `${
-      packageManager === 'npm' ? 'npm run' : packageManager
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
     } start`,
     beforeBuildCommand: `${
-      packageManager === 'npm' ? 'npm run' : packageManager
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
     } build`
   }),
-  extraNpmDevDependencies: [],
-  extraNpmDependencies: [],
   preInit: async ({ cwd, cfg }) => {
     const { appName, windowTitle } = cfg
     const templateDir = join(__dirname, '../src/templates/dominator')
@@ -49,8 +47,10 @@ export const dominator: Recipe = {
     Your installation completed.
 
     $ cd ${cfg.appName}
-    $ ${packageManager} install
-    $ ${packageManager === 'npm' ? 'npm run' : packageManager} tauri dev
+    $ ${packageManager.name} install
+    $ ${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } tauri dev
     `)
     return await Promise.resolve()
   }

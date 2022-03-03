@@ -6,52 +6,43 @@ import { join } from 'path'
 import { shell } from '../shell'
 import { Recipe } from '../types/recipe'
 
-const svelte: Recipe = {
+export const svelte: Recipe = {
+  shortName: 'svelte',
   descriptiveName: {
     name: 'Svelte (https://github.com/sveltejs/template)',
     value: 'svelte'
   },
-  shortName: 'svelte',
-  extraNpmDevDependencies: [],
-  extraNpmDependencies: [],
-  extraQuestions: ({ ci }) => {
-    return [
-      {
-        type: 'confirm',
-        name: 'typescript',
-        message: 'Enable Typescript?',
-        default: true,
-        loop: false,
-        when: !ci
-      }
-    ]
-  },
+  extraQuestions: ({ ci }) => [
+    {
+      type: 'confirm',
+      name: 'typescript',
+      message: 'Enable Typescript?',
+      default: true,
+      loop: false,
+      when: !ci
+    }
+  ],
   configUpdate: ({ cfg, packageManager }) => ({
     ...cfg,
     distDir: `../public`,
     devPath: 'http://localhost:8080',
     beforeDevCommand: `${
-      packageManager === 'npm' ? 'npm run' : packageManager
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
     } dev`,
     beforeBuildCommand: `${
-      packageManager === 'npm' ? 'npm run' : packageManager
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
     } build`
   }),
   preInit: async ({ cwd, cfg, answers, ci }) => {
-    let typescript = false
-    if (answers) {
-      typescript = !!answers.typescript
-    }
-
     await shell(
       'npx',
-      [ci ? '--yes' : '', 'degit', 'sveltejs/template', `${cfg.appName}`],
+      [ci ? '--yes' : '', 'degit', 'sveltejs/template', cfg.appName],
       {
         cwd
       }
     )
 
-    if (typescript) {
+    if (answers?.typescript) {
       await shell('node', ['scripts/setupTypeScript.js'], {
         cwd: join(cwd, cfg.appName)
       })
@@ -62,12 +53,12 @@ const svelte: Recipe = {
     Your installation completed.
 
     $ cd ${cfg.appName}
-    $ ${packageManager} install
-    $ ${packageManager === 'npm' ? 'npm run' : packageManager} tauri dev
+    $ ${packageManager.name} install
+    $ ${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } tauri dev
     `)
 
     return await Promise.resolve()
   }
 }
-
-export { svelte }

@@ -11,9 +11,9 @@ export const shell = async (
   log: boolean = false
 ): Promise<ExecaChildProcess> => {
   try {
-    if (options && options.shell === true) {
+    if (options?.shell) {
       const stringCommand = [command, ...(args ?? [])].join(' ')
-      if (log) console.log(`[running]: ${stringCommand}`)
+      if (log) console.log(`[running(shell)]: ${stringCommand}`)
       return await execa(stringCommand, {
         stdio: 'inherit',
         cwd: process.cwd(),
@@ -33,8 +33,8 @@ export const shell = async (
         }
       )
     }
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Error with command: %s', command)
-    throw new Error(error)
+    throw new Error(error as string)
   }
 }
