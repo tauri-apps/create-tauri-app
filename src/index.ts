@@ -144,13 +144,20 @@ const keypress = async (skip: boolean): Promise<void> => {
   })
 }
 
+const getStepsUrl = () => {
+  const p = platform()
+
+  if (p === 'win32') {
+    return 'windows'
+  }
+  if (p === 'darwin') {
+    return 'macros'
+  }
+  return 'linux'
+}
+
 const runInit = async (argv: Argv): Promise<void> => {
-  const setupLink =
-    platform() === 'win32'
-      ? 'https://tauri.studio/en/docs/get-started/setup-windows/'
-      : platform() === 'darwin'
-      ? 'https://tauri.studio/en/docs/get-started/setup-macos/'
-      : 'https://tauri.studio/en/docs/get-started/setup-linux/'
+  const setupLink = `https://tauri.studio/docs/getting-started/setting-up-${getStepsUrl()}/`
 
   // prettier-ignore
   console.log(
