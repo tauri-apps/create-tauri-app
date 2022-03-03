@@ -13,12 +13,16 @@ export const dominator: Recipe = {
     name: 'Dominator (https://crates.io/crates/dominator/)',
     value: 'Dominator'
   },
-  configUpdate: ({ cfg, pm }) => ({
+  configUpdate: ({ cfg, packageManager }) => ({
     ...cfg,
     distDir: `../dist`,
     devPath: 'http://localhost:10001/',
-    beforeDevCommand: `${pm.name === 'npm' ? 'npm run' : pm.name} start`,
-    beforeBuildCommand: `${pm.name === 'npm' ? 'npm run' : pm.name} build`
+    beforeDevCommand: `${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } start`,
+    beforeBuildCommand: `${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } build`
   }),
   preInit: async ({ cwd, cfg }) => {
     const { appName, windowTitle } = cfg
@@ -38,13 +42,15 @@ export const dominator: Recipe = {
       console.log(err)
     }
   },
-  postInit: async ({ cfg, pm }) => {
+  postInit: async ({ cfg, packageManager }) => {
     console.log(`
     Your installation completed.
 
     $ cd ${cfg.appName}
-    $ ${pm.name} install
-    $ ${pm.name === 'npm' ? 'npm run' : pm.name} tauri dev
+    $ ${packageManager.name} install
+    $ ${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } tauri dev
     `)
     return await Promise.resolve()
   }

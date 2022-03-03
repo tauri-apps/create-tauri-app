@@ -12,12 +12,16 @@ const vite: Recipe = {
     name: 'create-vite (vanilla, vue, react, svelte, preact, lit) (https://vitejs.dev/guide/#scaffolding-your-first-vite-project)',
     value: 'create-vite'
   },
-  configUpdate: ({ cfg, pm }) => ({
+  configUpdate: ({ cfg, packageManager }) => ({
     ...cfg,
     distDir: `../dist`,
     devPath: 'http://localhost:3000',
-    beforeDevCommand: `${pm.name === 'npm' ? 'npm run' : pm.name} dev`,
-    beforeBuildCommand: `${pm.name === 'npm' ? 'npm run' : pm.name} build`
+    beforeDevCommand: `${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } dev`,
+    beforeBuildCommand: `${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } build`
   }),
   extraQuestions: ({ ci }) => [
     {
@@ -43,19 +47,25 @@ const vite: Recipe = {
       when: !ci
     }
   ],
-  preInit: async ({ cwd, cfg, pm, answers }) => {
+  preInit: async ({ cwd, cfg, packageManager, answers }) => {
     const template = (answers?.template as string) ?? 'vue'
 
-    await pm.create('vite', [cfg.appName, '--template', `${template}`], {
-      cwd
-    })
+    await packageManager.create(
+      'vite',
+      [cfg.appName, '--template', `${template}`],
+      {
+        cwd
+      }
+    )
   },
-  postInit: async ({ pm, cfg }) => {
+  postInit: async ({ packageManager, cfg }) => {
     console.log(`
     Your installation completed.
 
     $ cd ${cfg.appName}
-    $ ${pm.name === 'npm' ? 'npm run' : pm.name} tauri dev
+    $ ${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } tauri dev
     `)
     return await Promise.resolve()
   }

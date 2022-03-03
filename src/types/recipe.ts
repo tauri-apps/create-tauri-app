@@ -5,7 +5,7 @@ import { TauriBuildConfig } from './config'
 export interface RecipeArgs {
   cwd: string
   cfg: TauriBuildConfig
-  pm: PackageManager
+  packageManager: PackageManager
   ci: boolean
   answers?: Answers
 }

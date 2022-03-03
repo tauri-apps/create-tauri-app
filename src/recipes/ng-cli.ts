@@ -7,14 +7,18 @@ export const ngcli: Recipe = {
     name: 'Angular CLI (https://angular.io/cli)',
     value: 'ng-cli'
   },
-  configUpdate: ({ cfg, pm }) => ({
+  configUpdate: ({ cfg, packageManager }) => ({
     ...cfg,
     distDir: `../dist/${cfg.appName}`,
     devPath: 'http://localhost:4200',
-    beforeDevCommand: `${pm.name === 'npm' ? 'npm run' : pm.name} start`,
-    beforeBuildCommand: `${pm.name === 'npm' ? 'npm run' : pm.name} build`
+    beforeDevCommand: `${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } start`,
+    beforeBuildCommand: `${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } build`
   }),
-  preInit: async ({ cwd, cfg, pm, ci }) => {
+  preInit: async ({ cwd, cfg, packageManager, ci }) => {
     await shell(
       'npx',
       [
@@ -24,19 +28,21 @@ export const ngcli: Recipe = {
         'ng',
         'new',
         cfg.appName,
-        `--package-manager=${pm.name}`
+        `--package-manager=${packageManager.name}`
       ],
       {
         cwd
       }
     )
   },
-  postInit: async ({ pm, cfg }) => {
+  postInit: async ({ packageManager, cfg }) => {
     console.log(`
     Your installation completed.
 
     $ cd ${cfg.appName}
-    $ ${pm.name === 'npm' ? 'npm run' : pm.name} tauri dev
+    $ ${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } tauri dev
     `)
 
     return await Promise.resolve()

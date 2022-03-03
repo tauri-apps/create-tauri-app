@@ -13,24 +13,28 @@ export const cljs: Recipe = {
     name: 'ClojureScript (https://github.com/filipesilva/create-cljs-app)',
     value: 'cljs'
   },
-  configUpdate: ({ cfg, pm }) => ({
+  configUpdate: ({ cfg, packageManager }) => ({
     ...cfg,
     distDir: `../public`,
     devPath: 'http://localhost:3000',
-    beforeDevCommand: `${pm.name === 'npm' ? 'npm run' : pm.name} start`,
-    beforeBuildCommand: `${pm.name === 'npm' ? 'npm run' : pm.name} build`
+    beforeDevCommand: `${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } start`,
+    beforeBuildCommand: `${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } build`
   }),
-  preInit: async ({ cwd, cfg, pm }) => {
+  preInit: async ({ cwd, cfg, packageManager }) => {
     const npmLock = join(cwd, cfg.appName, 'package-lock.json')
     const yarnLock = join(cwd, cfg.appName, 'yarn.lock')
     const nodeModules = join(cwd, cfg.appName, 'node_modules')
 
-    await pm.create('cljs-app', [cfg.appName], { cwd })
+    await packageManager.create('cljs-app', [cfg.appName], { cwd })
 
     // `create-cljs-app` has both a `package-lock.json` and a `yarn.lock`
     // so it is better to remove conflicting lock files and install fresh node_modules
     emptyDir(nodeModules)
-    switch (pm.name) {
+    switch (packageManager.name) {
       case 'yarn':
         if (existsSync(npmLock)) unlinkSync(npmLock)
         break
@@ -44,14 +48,16 @@ export const cljs: Recipe = {
       default:
         break
     }
-    await pm.install({ cwd: join(cwd, cfg.appName) })
+    await packageManager.install({ cwd: join(cwd, cfg.appName) })
   },
-  postInit: async ({ cfg, pm }) => {
+  postInit: async ({ cfg, packageManager }) => {
     console.log(`
     Your installation completed.
 
     $ cd ${cfg.appName}
-    $ ${pm.name === 'npm' ? 'npm run' : pm.name} tauri dev
+    $ ${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } tauri dev
     `)
     return await Promise.resolve()
   }

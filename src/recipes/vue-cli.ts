@@ -14,7 +14,7 @@ export const vuecli: Recipe = {
     value: 'vue-cli'
   },
   configUpdate: ({ cfg }) => cfg,
-  preInit: async ({ cwd, cfg, ci, pm }) => {
+  preInit: async ({ cwd, cfg, ci, packageManager }) => {
     await shell(
       'npx',
       [
@@ -23,7 +23,7 @@ export const vuecli: Recipe = {
         'create',
         cfg.appName,
         '-m',
-        pm.name,
+        packageManager.name,
         ci ? '--default' : ''
       ],
       { cwd }
@@ -57,12 +57,14 @@ export const vuecli: Recipe = {
       }
     }, join(cwd, cfg.appName))
   },
-  postInit: async ({ cfg, pm }) => {
+  postInit: async ({ cfg, packageManager }) => {
     console.log(`
     Your installation completed.
 
     $ cd ${cfg.appName}
-    $ ${pm.name === 'npm' ? 'npm run' : pm.name} tauri:serve
+    $ ${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } tauri:serve
     `)
     return await Promise.resolve()
   }

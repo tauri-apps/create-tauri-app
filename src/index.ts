@@ -173,7 +173,7 @@ You may find the requirements here: ${cyan(setupLink)}
     )
   }
   const pmVer = parseInt(pmVerStr.split('.')[0])
-  const pm =
+  const packageManager =
     pmName === 'npm'
       ? new Npm(pmVer, { ci: argv.ci, log: argv.log })
       : pmName === 'yarn'
@@ -181,7 +181,7 @@ You may find the requirements here: ${cyan(setupLink)}
       : pmName === 'pnpm'
       ? new Pnpm(pmVer, { ci: argv.ci, log: argv.log })
       : null
-  if (!pm) throw new Error(`Unsupported package manager: ${pmName}`)
+  if (!packageManager) throw new Error(`Unsupported package manager: ${pmName}`)
 
   const directory = argv.directory ?? process.cwd()
 
@@ -269,7 +269,7 @@ You may find the requirements here: ${cyan(setupLink)}
       .prompt(
         recipe.extraQuestions({
           cfg: buildConfig,
-          pm,
+          packageManager,
           ci: argv.ci,
           cwd: directory
         })
@@ -281,7 +281,7 @@ You may find the requirements here: ${cyan(setupLink)}
   if (recipe.configUpdate) {
     updatedConfig = recipe.configUpdate({
       cfg: buildConfig,
-      pm,
+      packageManager,
       ci: argv.ci,
       cwd: directory,
       answers: recipeAnswers ?? {}
@@ -302,7 +302,7 @@ You may find the requirements here: ${cyan(setupLink)}
     await recipe.preInit({
       cwd: directory,
       cfg,
-      pm,
+      packageManager,
       ci: argv.ci,
       answers: recipeAnswers ?? {}
     })
@@ -311,14 +311,14 @@ You may find the requirements here: ${cyan(setupLink)}
   // Vue CLI plugin automatically runs these
   if (recipe.shortName !== 'vuecli') {
     logStep('Installing any additional needed dependencies')
-    await pm.add(
+    await packageManager.add(
       [
         installApi ? '@tauri-apps/api@latest' : '',
         ...(recipe.extraNpmDependencies ?? [])
       ],
       { cwd: appDirectory }
     )
-    await pm.add(
+    await packageManager.add(
       ['@tauri-apps/cli@latest', ...(recipe.extraNpmDevDependencies ?? [])],
       { dev: true, cwd: appDirectory }
     )
@@ -348,7 +348,7 @@ You may find the requirements here: ${cyan(setupLink)}
       '--dev-path',
       cfg.devPath
     ]
-    await pm.run('tauri', initArgs, { cwd: appDirectory })
+    await packageManager.run('tauri', initArgs, { cwd: appDirectory })
 
     logStep(`Updating ${reset(yellow('"tauri.conf.json"'))}`)
     updateTauriConf((tauriConf) => {
@@ -368,7 +368,7 @@ You may find the requirements here: ${cyan(setupLink)}
     await recipe.postInit({
       cwd: appDirectory,
       cfg,
-      pm,
+      packageManager,
       ci: argv.ci,
       answers: recipeAnswers ?? {}
     })

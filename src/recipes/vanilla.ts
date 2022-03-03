@@ -38,13 +38,15 @@ export const vanillajs: Recipe = {
       console.log(err)
     }
   },
-  postInit: async ({ cfg, pm }) => {
+  postInit: async ({ cfg, packageManager }) => {
     console.log(`
     Your installation completed.
 
     $ cd ${cfg.appName}
-    $ ${pm.name} install
-    $ ${pm.name === 'npm' ? 'npm run' : pm.name} tauri dev
+    $ ${packageManager.name} install
+    $ ${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } tauri dev
     `)
     return await Promise.resolve()
   }

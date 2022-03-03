@@ -14,12 +14,16 @@ export const cra: Recipe = {
     name: 'create-react-app (https://create-react-app.dev/)',
     value: 'create-react-app'
   },
-  configUpdate: ({ cfg, pm }) => ({
+  configUpdate: ({ cfg, packageManager }) => ({
     ...cfg,
     distDir: `../build`,
     devPath: 'http://localhost:3000',
-    beforeDevCommand: `${pm.name === 'npm' ? 'npm run' : pm.name} start`,
-    beforeBuildCommand: `${pm.name === 'npm' ? 'npm run' : pm.name} build`
+    beforeDevCommand: `${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } start`,
+    beforeBuildCommand: `${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } build`
   }),
   extraNpmDevDependencies: ['cross-env'],
   extraQuestions: ({ ci }) => [
@@ -36,14 +40,14 @@ export const cra: Recipe = {
       when: !ci
     }
   ],
-  preInit: async ({ cwd, cfg, pm, answers }) => {
+  preInit: async ({ cwd, cfg, packageManager, answers }) => {
     const template = (answers?.template as string) ?? 'cra.js'
-    await pm.create(
+    await packageManager.create(
       'react-app',
       [
         cfg.appName,
         ...(template === 'cra.ts' ? ['--template', 'typescript'] : []),
-        pm.name !== 'yarn' ? '--use-npm' : ''
+        packageManager.name !== 'yarn' ? '--use-npm' : ''
       ],
       {
         cwd
@@ -51,14 +55,14 @@ export const cra: Recipe = {
     )
 
     // create-react-app doesn't support pnpm, so we remove `node_modules` and any lock files then install them again using pnpm
-    if (pm.name === 'pnpm') {
+    if (packageManager.name === 'pnpm') {
       const npmLock = join(cwd, cfg.appName, 'package-lock.json')
       const yarnLock = join(cwd, cfg.appName, 'yarn.lock')
       const nodeModules = join(cwd, cfg.appName, 'node_modules')
       if (existsSync(npmLock)) unlinkSync(npmLock)
       if (existsSync(yarnLock)) unlinkSync(yarnLock)
       emptyDir(nodeModules)
-      await pm.install({ cwd: join(cwd, cfg.appName) })
+      await packageManager.install({ cwd: join(cwd, cfg.appName) })
     }
 
     updatePackageJson((pkg) => {
@@ -71,12 +75,14 @@ export const cra: Recipe = {
       }
     }, join(cwd, cfg.appName))
   },
-  postInit: async ({ pm, cfg }) => {
+  postInit: async ({ packageManager, cfg }) => {
     console.log(`
     Your installation completed.
 
     $ cd ${cfg.appName}
-    $ ${pm.name === 'npm' ? 'npm run' : pm.name} tauri dev
+    $ ${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } tauri dev
     `)
     return await Promise.resolve()
   }

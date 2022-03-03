@@ -22,12 +22,16 @@ export const svelte: Recipe = {
       when: !ci
     }
   ],
-  configUpdate: ({ cfg, pm }) => ({
+  configUpdate: ({ cfg, packageManager }) => ({
     ...cfg,
     distDir: `../public`,
     devPath: 'http://localhost:8080',
-    beforeDevCommand: `${pm.name === 'npm' ? 'npm run' : pm.name} dev`,
-    beforeBuildCommand: `${pm.name === 'npm' ? 'npm run' : pm.name} build`
+    beforeDevCommand: `${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } dev`,
+    beforeBuildCommand: `${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } build`
   }),
   preInit: async ({ cwd, cfg, answers, ci }) => {
     await shell(
@@ -44,13 +48,15 @@ export const svelte: Recipe = {
       })
     }
   },
-  postInit: async ({ cfg, pm }) => {
+  postInit: async ({ cfg, packageManager }) => {
     console.log(`
     Your installation completed.
 
     $ cd ${cfg.appName}
-    $ ${pm.name} install
-    $ ${pm.name === 'npm' ? 'npm run' : pm.name} tauri dev
+    $ ${packageManager.name} install
+    $ ${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } tauri dev
     `)
 
     return await Promise.resolve()

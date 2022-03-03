@@ -29,12 +29,16 @@ const solid: Recipe = {
       when: !ci
     }
   ],
-  configUpdate: ({ cfg, pm }) => ({
+  configUpdate: ({ cfg, packageManager }) => ({
     ...cfg,
     distDir: `../dist`,
     devPath: 'http://localhost:3000',
-    beforeDevCommand: `${pm.name === 'npm' ? 'npm run' : pm.name} dev`,
-    beforeBuildCommand: `${pm.name === 'npm' ? 'npm run' : pm.name} build`
+    beforeDevCommand: `${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } dev`,
+    beforeBuildCommand: `${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } build`
   }),
   preInit: async ({ cwd, cfg, answers, ci }) => {
     await shell(
@@ -48,13 +52,15 @@ const solid: Recipe = {
       { cwd }
     )
   },
-  postInit: async ({ cfg, pm }) => {
+  postInit: async ({ cfg, packageManager }) => {
     console.log(`
     Your installation completed.
 
     $ cd ${cfg.appName}
-    $ ${pm.name} install
-    $ ${pm.name === 'npm' ? 'npm run' : pm.name} tauri dev
+    $ ${packageManager.name} install
+    $ ${
+      packageManager.name === 'npm' ? 'npm run' : packageManager.name
+    } tauri dev
     `)
 
     return await Promise.resolve()
