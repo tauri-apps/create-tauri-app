@@ -37,7 +37,6 @@
         }
       ],
       "publish": [
-        "sleep 15s",
         {
           "command": "echo \"# Yarn Package Publish\"",
           "dryRunCommand": true,
@@ -49,7 +48,7 @@
           "pipe": true
         },
         {
-          "command": "yarn publish --access public --loglevel silly",
+          "command": "yarn publish --access public",
           "dryRunCommand": "npm publish --dry-run --access public",
           "pipe": true
         },
@@ -69,7 +68,7 @@
   "packages": {
     "create-tauri-app": {
       "path": ".",
-      "manaer": "javascript"
+      "manager": "javascript"
     }
   }
 }
