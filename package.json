@@ -11,9 +11,15 @@
     "url": "https://github.com/tauri-apps/create-tauri-app/issues"
   },
   "homepage": "https://github.com/tauri-apps/create-tauri-app#readme",
-  "contributors": ["Tauri Programme within The Commons Conservancy"],
+  "contributors": [
+    "Tauri Programme within The Commons Conservancy"
+  ],
   "main": "bin/create-tauri-app.js",
-  "files": ["bin", "dist", "src/templates"],
+  "files": [
+    "bin",
+    "dist",
+    "src/templates"
+  ],
   "scripts": {
     "create-tauri-app": "create-tauri-app",
     "build": "rollup --config",
@@ -41,6 +47,7 @@
     "@types/semver": "7.3.9",
     "@typescript-eslint/eslint-plugin": "5.12.0",
     "@typescript-eslint/parser": "5.12.0",
+    "covector": "^0.7.3",
     "eslint": "8.9.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-standard-with-typescript": "21.0.1",
