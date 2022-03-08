@@ -21,7 +21,7 @@
           "pipe": true
         },
         {
-          "command": "yarn audit",
+          "command": "yarn audit --groups dependencies",
           "dryRunCommand": true,
           "runFromRoot": true,
           "pipe": true
