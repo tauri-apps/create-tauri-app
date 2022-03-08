@@ -22,4 +22,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn audit --prod
+      - run: yarn audit --groups dependencies
