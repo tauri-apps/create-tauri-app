@@ -12,8 +12,14 @@ on:
       - '**/yarn.lock'
 
 jobs:
-  audit-js:
+  full-audit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: yarn audit
+
+  prod-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: yarn audit --prod
