@@ -1,5 +1,10 @@
 # Changelog
 
+## \[1.0.0-rc.3]
+
+- - `create-tauri-app` handles different package managers usage better now.
+  - [a073dbc](https://www.github.com/tauri-apps/create-tauri-app/commit/a073dbc51d14530be75152f314480e2cc2496181) refactor: version aware package manager usage, fix [#4](https://www.github.com/tauri-apps/create-tauri-app/pull/4), fix [#2](https://www.github.com/tauri-apps/create-tauri-app/pull/2), fix [#6](https://www.github.com/tauri-apps/create-tauri-app/pull/6) ([#5](https://www.github.com/tauri-apps/create-tauri-app/pull/5)) on 2022-03-03
+
 ## \[1.0.0-rc.2]
 
 - Fix crash when using `create-react-app` recipe.
