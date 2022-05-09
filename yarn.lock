@@ -191,10 +191,10 @@
     is-module "^1.0.0"
     resolve "^1.19.0"
 
-"@rollup/plugin-typescript@8.3.0":
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/@rollup/plugin-typescript/-/plugin-typescript-8.3.0.tgz#bc1077fa5897b980fc27e376c4e377882c63e68b"
-  integrity sha512-I5FpSvLbtAdwJ+naznv+B4sjXZUcIvLLceYpITAn7wAP8W0wqc5noLdGIp9HGVntNhRWXctwPYrSSFQxtl0FPA==
+"@rollup/plugin-typescript@8.3.2":
+  version "8.3.2"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-typescript/-/plugin-typescript-8.3.2.tgz#e1b719e2ed3e752bbc092001656c48378f2d15f0"
+  integrity sha512-MtgyR5LNHZr3GyN0tM7gNO9D0CS+Y+vflS4v/PHmrX17JCkHUYKvQ5jN5o3cz1YKllM3duXUqu3yOHwMPUxhDg==
   dependencies:
     "@rollup/pluginutils" "^3.1.0"
     resolve "^1.17.0"
