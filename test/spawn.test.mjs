@@ -82,9 +82,9 @@ async function main() {
 
       // change bundle identifier
       const tauriConfPath = path.join(recipeFolder, appName, "src-tauri", "tauri.conf.json");
-      const tauriConf = fs.readFileSync(tauriConfPath, "utf8")
+      const tauriConf = await fs.readFile(tauriConfPath, "utf8")
       const tauriConfOut = tauriConf.replace("com.tauri.dev", "com.tauri.cta")
-      fs.writeFileSync(tauriConfPath, tauriConfOut, "utf8");
+      await fs.writeFile(tauriConfPath, tauriConfOut, "utf8");
 
 
       await execa(manager, opts, {
