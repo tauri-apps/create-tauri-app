@@ -54,7 +54,7 @@
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-lodash-template": "0.21.0",
     "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-promise": "5.2.0",
+    "eslint-plugin-promise": "6.0.0",
     "eslint-plugin-security": "1.5.0",
     "prettier": "2.6.2",
     "rollup": "2.72.1",
