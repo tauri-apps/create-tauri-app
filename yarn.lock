@@ -996,10 +996,10 @@ eslint-plugin-import@2.26.0:
     resolve "^1.22.0"
     tsconfig-paths "^3.14.1"
 
-eslint-plugin-lodash-template@0.19.0:
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-lodash-template/-/eslint-plugin-lodash-template-0.19.0.tgz#4b2aafec4fc2a23bbbc08325fbcb946371479666"
-  integrity sha512-OWcxGOkJ87lflnFDeKAhYErN1F6SQ7qLisko4n/mK3iQPT747ft2EYlI+SSt2aYGSp8fhvidsrnR7hlK9TRi0w==
+eslint-plugin-lodash-template@0.21.0:
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-lodash-template/-/eslint-plugin-lodash-template-0.21.0.tgz#31a8d6236c65105708a4d68787da630d446742a4"
+  integrity sha512-O0Rz7ZqXwZBxMB5ujy3kj7Y4dkaEzSDmmST21Ea2B1rZQrsaaBDH9pxmPG1WoVs88oobu9DoEptplGm8lpYXFg==
   dependencies:
     esquery "^1.0.1"
     parse5 "^6.0.0"
