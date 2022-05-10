@@ -34,7 +34,7 @@
   "dependencies": {
     "chalk": "5.0.1",
     "commander": "9.2.0",
-    "execa": "5.1.1",
+    "execa": "6.1.0",
     "inquirer": "8.2.4",
     "scaffe": "1.2.0"
   },
