@@ -17,10 +17,16 @@ const solid: Recipe = {
       name: 'template',
       message: 'Which Solid template would you like to use?',
       choices: [
+        'js-vitest',
         'js',
         'ts-bootstrap',
         'ts-minimal',
         'ts-router',
+        'ts-sass',
+        'ts-tailwindcss',
+        'ts-unocss',
+        'ts-uvu',
+        'ts-vitest',
         'ts-windicss',
         'ts'
       ],
