@@ -32,7 +32,6 @@ const recipes = process.env.TAURI_RECIPE
       'dominator',
       'cljs'
     ]
-const parallelize = process.env.TAURI_RECIPE_PARALLELIZE || false
 
 async function main() {
   const tauriTemp = path.join(
@@ -42,7 +41,6 @@ async function main() {
 
   try {
     const appName = 'tauri-app'
-    let output = {}
     for (let i = 0; i < recipes.length; i++) {
       const recipe = recipes[i]
       console.log(`::group::recipe ${recipe}`)
