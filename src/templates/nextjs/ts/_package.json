@@ -1,0 +1,21 @@
+{
+  "name": "<%= name %>",
+  "scripts": {
+    "next:build": "next build src-next",
+    "next:export": "next export -o ./dist src-next",
+    "next:dev": "next src-next",
+    "build": "npm run next:build && npm run next:export",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "typescript": "latest"
+  }
+}

@@ -16,6 +16,7 @@ import { ngcli } from "./recipes/ng-cli";
 import { svelte } from "./recipes/svelte";
 import { solid } from "./recipes/solid";
 import { cljs } from "./recipes/cljs";
+import { nextjs } from "./recipes/nextjs";
 import { updatePackageJson } from "./helpers/update-package-json";
 import { Recipe } from "./types/recipe";
 import { updateTauriConf } from "./helpers/update-tauri-conf";
@@ -31,6 +32,7 @@ const allRecipes: Recipe[] = [
   vuecli,
   ngcli,
   dominator,
+  nextjs,
   cljs,
 ];
 const recipeShortNames = allRecipes.map((r) => r.shortName);
