@@ -140,10 +140,6 @@ const keypress = async (skip: boolean): Promise<void> => {
 };
 
 const runInit = async (argv: Argv): Promise<void> => {
-  const p = platform();
-  const setupPlatform =
-    p === "win32" ? "windows" : p === "darwin" ? "macos" : "linux";
-  const setupLink = `https://tauri.studio/docs/getting-started/setting-up-${setupPlatform}/`;
 
   // prettier-ignore
   console.log(
@@ -153,7 +149,7 @@ You will have a choice of one of the UI frameworks supported by the greater web 
 This tool should get you quickly started. See our docs at ${cyan('https://tauri.studio/')}
 
 If you haven't already, please take a moment to setup your system.
-You may find the requirements here: ${cyan(setupLink)}
+You may find the requirements here: ${cyan('https://tauri.studio/v1/guides/getting-started/prerequisites')}
     `
   )
 
