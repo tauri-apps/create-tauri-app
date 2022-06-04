@@ -1,7 +1,6 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@types/node': ^17.0.39
   covector: 0.7.3
   execa: ^6.1.0
   fs-extra: ^10.1.0
@@ -17,7 +16,6 @@ dependencies:
   prompts: 2.4.2
 
 devDependencies:
-  '@types/node': 17.0.39
   covector: 0.7.3
   execa: 6.1.0
   fs-extra: 10.1.0
@@ -183,10 +181,6 @@ packages:
     resolution: {integrity: sha512-W864tg/Osz1+9f4lrGTZpCSO5/z4608eUp19tbozkq2HJK6i3z1kT0H9tlADXuYIb1YYOBByU4Jsqkk75q48qA==}
     dependencies:
       '@types/unist': 2.0.6
-    dev: true
-
-  /@types/node/17.0.39:
-    resolution: {integrity: sha512-JDU3YLlnPK3WDao6/DlXLOgSNpG13ct+CwIO17V8q0/9fWJyeMJJ/VyZ1lv8kDprihvZMydzVwf0tQOqGiY2Nw==}
     dev: true
 
   /@types/unist/2.0.6:
