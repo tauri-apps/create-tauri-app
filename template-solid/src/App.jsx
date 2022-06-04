@@ -1,20 +1,21 @@
-import { useState } from 'react'
+import { createSignal } from 'solid-js'
+import { invoke } from '@tauri-apps/api/tauri'
 import logo from './logo.svg'
-import { invoke } from '@tauri-apps/api'
-import './App.css'
+import styles from './App.module.css'
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState('')
-  const [name, setName] = useState('')
+  const [greetMsg, setGreetMsg] = createSignal('')
+  const [name, setName] = createSignal('')
 
   async function greet() {
-    setGreetMsg(await invoke('greet', { name }))
+    setGreetMsg(await invoke('greet', { name: name() }))
   }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Tauri + React + Typescript!</p>
+    <div class={styles.App}>
+      <header class={styles.header}>
+        <img src={logo} class={styles.logo} alt="logo" />
+        <p>Hello Tauri + Solid + Typescript!</p>
 
         <div>
           <input
@@ -28,7 +29,7 @@ function App() {
         <p>{greetMsg}</p>
 
         <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
+          Edit <code>src/App.jsx</code> and save to test HMR updates.
         </p>
         <p>
           Edit <code>src-tauri/src/main.rs</code> and save to test app hot
@@ -37,6 +38,7 @@ function App() {
 
         <p>
           <a
+            class={styles.link}
             className="App-link"
             href="https://tauri.studio"
             target="_blank"
@@ -46,12 +48,12 @@ function App() {
           </a>
           {' | '}
           <a
-            className="App-link"
-            href="https://reactjs.org"
+            class={styles.link}
+            href="https://github.com/solidjs/solid"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn React
+            Learn Solid
           </a>
         </p>
       </header>

@@ -31,7 +31,7 @@ async function greet() {
   </p>
 
   <p>
-     <a href="https://tauri.studio/" target="_blank">Tauri Documentation</a>
+    <a href="https://tauri.studio/" target="_blank">Tauri Documentation</a>
     |
     <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
   </p>
