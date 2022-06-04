@@ -206,7 +206,7 @@ You may find the requirements here: ${cyan('https://tauri.studio/v1/guides/getti
       console.log('  yarn tauri dev')
       break
     case 'pnpm':
-      console.log('  pnpm i')
+      console.log('  pnpm install')
       console.log('  pnpm tauri dev')
       break
     default:

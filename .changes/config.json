@@ -7,11 +7,11 @@
       "getPublishedVersion": "npm view ${ pkgFile.pkg.name } version",
       "prepublish": [
         {
-          "command": "yarn",
+          "command": "pnpm install",
           "dryRunCommand": true
         },
         {
-          "command": "echo \"# Yarn Audit\n\"",
+          "command": "echo \"# Pnpm Audit\n\"",
           "dryRunCommand": true,
           "pipe": true
         },
@@ -21,7 +21,7 @@
           "pipe": true
         },
         {
-          "command": "yarn audit --groups dependencies",
+          "command": "pnpm audit --prod",
           "dryRunCommand": true,
           "runFromRoot": true,
           "pipe": true
@@ -38,7 +38,7 @@
       ],
       "publish": [
         {
-          "command": "echo \"# Yarn Package Publish\"",
+          "command": "echo \"# Pnpm Package Publish\"",
           "dryRunCommand": true,
           "pipe": true
         },
@@ -48,7 +48,7 @@
           "pipe": true
         },
         {
-          "command": "yarn publish --access public",
+          "command": "pnpm publish --access public",
           "dryRunCommand": "npm publish --dry-run --access public",
           "pipe": true
         },

@@ -16,10 +16,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn audit
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 7.0.0
+      - run: pnpm audit
 
   prod-audit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn audit --groups dependencies
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 7.0.0
+      - run: pnpm audit --prod
