@@ -1,7 +1,4 @@
 {
   "tag": "rc",
-  "changes": [
-    ".changes/going-rc.md",
-    ".changes/version-aware-pm.md"
-  ]
+  "changes": [".changes/going-rc.md", ".changes/version-aware-pm.md"]
 }

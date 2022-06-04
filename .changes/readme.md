@@ -10,7 +10,7 @@ Use the following format:
 
 ```md
 ---
-"create-tauri-app": patch
+'create-tauri-app': patch
 ---
 
 Change summary goes here

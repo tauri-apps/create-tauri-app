@@ -1,0 +1,21 @@
+{
+  "name": "tauri-vue-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "vue": "^3.2.36"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.3.3",
+    "vite": "^2.9.9",
+    "@tauri-apps/cli": "^1.0.0-rc.13",
+    "@tauri-apps/api": "^1.0.0-rc.6"
+  }
+}

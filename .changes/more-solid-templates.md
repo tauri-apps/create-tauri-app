@@ -1,5 +1,5 @@
 ---
-"create-tauri-app": minor
+'create-tauri-app': minor
 ---
 
-* More Solid templates have been added!
+- More Solid templates have been added!
