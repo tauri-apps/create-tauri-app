@@ -1,5 +1,16 @@
 # Changelog
 
+## \[1.0.0-rc.4]
+
+- `create-tauri-app` will no longer install or prompt for `@tauri-apps/api` package in the `VanillaJs` recipe.
+  - [0c37e73](https://www.github.com/tauri-apps/create-tauri-app/commit/0c37e7382fabce0cff716069582309197ac60461) fix: don't install `@tauri-apps/api` for vanillajs on 2022-04-30
+- Update vulnerable packages: `ejs` and `minimist`.
+  - [3128215](https://www.github.com/tauri-apps/create-tauri-app/commit/31282158760b2bf8692b92b0d493fefe0a359fa5) fix: update vulnerable packages on 2022-06-04
+- - More Solid templates have been added!
+  - [a77df69](https://www.github.com/tauri-apps/create-tauri-app/commit/a77df69f6c6745121d8cd29f62cf30ace32e88c3) feat(solid): 📦 add more solid templates ([#42](https://www.github.com/tauri-apps/create-tauri-app/pull/42)) on 2022-05-20
+- Use `@latest` tag when creating the recipe so `npm` wouldn't load from cache.
+  - [d462775](https://www.github.com/tauri-apps/create-tauri-app/commit/d462775742db185d6d595c57b44dde8b5e6719e0) fix: use `@latest` tag ([#58](https://www.github.com/tauri-apps/create-tauri-app/pull/58)) on 2022-06-04
+
 ## \[1.0.0-rc.3]
 
 - - `create-tauri-app` handles different package managers usage better now.
