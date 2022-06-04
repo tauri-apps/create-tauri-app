@@ -103,7 +103,7 @@ export class Npm implements PackageManager {
     if (this.version >= 7) {
       await shell(
         'npm',
-        ['init', createApp, this.ci ? '--yes' : '', '--', ...args],
+        ['init', `${createApp}@latest`, this.ci ? '--yes' : '', '--', ...args],
         {
           cwd: options?.cwd
         },
@@ -112,7 +112,7 @@ export class Npm implements PackageManager {
     } else {
       await shell(
         'npm',
-        ['init', this.ci ? '--yes' : '', createApp, ...args],
+        ['init', this.ci ? '--yes' : '', `${createApp}@latest`, ...args],
         { cwd: options?.cwd },
         this.log
       )
@@ -163,7 +163,12 @@ export class Yarn implements PackageManager {
   ): Promise<void> {
     await shell(
       'yarn',
-      ['create', this.ci ? '--non-interactive' : '', createApp, ...args],
+      [
+        'create',
+        this.ci ? '--non-interactive' : '',
+        `${createApp}@latest`,
+        ...args
+      ],
       {
         cwd: options?.cwd
       },
@@ -224,7 +229,7 @@ export class Pnpm implements PackageManager {
   ): Promise<void> {
     await shell(
       'pnpm',
-      ['create', createApp, '--', ...args],
+      ['create', `${createApp}@latest`, '--', ...args],
       {
         cwd: options?.cwd
       },
