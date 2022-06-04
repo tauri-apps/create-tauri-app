@@ -37,8 +37,9 @@ const RENAME_FILES = {
 }
 
 async function init() {
-  // prettier-ignore
-  console.log(
+  if (!argv.ci) {
+    // prettier-ignore
+    console.log(
       `
 We hope to help you create something special with ${bold(yellow('Tauri'))}!
 You will have a choice of one of the UI frameworks supported by the greater web tech community.
@@ -46,9 +47,10 @@ This tool should get you quickly started. See our docs at ${cyan('https://tauri.
 
 If you haven't already, please take a moment to setup your system.
 You may find the requirements here: ${cyan('https://tauri.studio/v1/guides/getting-started/prerequisites')}
-      `
+`
     )
-  await keypress(argv.ci)
+    await keypress()
+  }
 
   let targetDir = argv._[0]
   let template = argv.template || argv.t
@@ -92,8 +94,8 @@ You may find the requirements here: ${cyan('https://tauri.studio/v1/guides/getti
         },
         {
           type: () => (isValidPackageName(targetDir) ? null : 'text'),
-          name: 'appName',
-          message: reset('App name:'),
+          name: 'packageName',
+          message: reset('Package name:'),
           initial: () => toValidPackageName(targetDir),
           validate: (dir) =>
             isValidPackageName(dir) || 'Invalid package.json name'
@@ -123,7 +125,7 @@ You may find the requirements here: ${cyan('https://tauri.studio/v1/guides/getti
   }
 
   // user choice associated with prompts
-  const { overwrite, appName } = promptsResult
+  const { overwrite, packageName } = promptsResult
 
   const root = path.join(cwd, targetDir)
 
@@ -166,7 +168,7 @@ You may find the requirements here: ${cyan('https://tauri.studio/v1/guides/getti
   const pkg = JSON.parse(
     fs.readFileSync(path.join(templateDir, 'package.json'), 'utf-8')
   )
-  pkg.name = appName || targetDir
+  pkg.name = packageName || targetDir
   write('package.json', JSON.stringify(pkg, null, 2))
 
   const pkgInfo = pkgFromUserAgent(process.env.npm_config_user_agent)
@@ -190,7 +192,7 @@ You may find the requirements here: ${cyan('https://tauri.studio/v1/guides/getti
       '{{pkgManagerRunCommand}}',
       pkgManagerRunCommand
     )
-  tauriConf.package.productName = appName || targetDir
+  tauriConf.package.productName = packageName || targetDir
   write(
     path.join('src-tauri', 'tauri.conf.json'),
     JSON.stringify(tauriConf, null, 2)
@@ -217,12 +219,7 @@ You may find the requirements here: ${cyan('https://tauri.studio/v1/guides/getti
   console.log()
 }
 
-/**
- *
- * @param {boolean} skip
- */
-async function keypress(skip) {
-  if (skip) return
+async function keypress() {
   process.stdin.setRawMode(true)
   return await new Promise((resolve, reject) => {
     console.log('Press any key to continue...')
