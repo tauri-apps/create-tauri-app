@@ -1,4 +1,11 @@
 {
   "tag": "rc",
-  "changes": [".changes/going-rc.md", ".changes/version-aware-pm.md"]
+  "changes": [
+    ".changes/dont-install-api-package-vanillajs.md",
+    ".changes/fix-vulnerable-packages.md",
+    ".changes/going-rc.md",
+    ".changes/more-solid-templates.md",
+    ".changes/use-latest.md",
+    ".changes/version-aware-pm.md"
+  ]
 }
