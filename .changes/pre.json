@@ -6,6 +6,7 @@
     ".changes/going-rc.md",
     ".changes/more-solid-templates.md",
     ".changes/use-latest.md",
-    ".changes/version-aware-pm.md"
+    ".changes/version-aware-pm.md",
+    ".changes/yarn-latest.md"
   ]
 }
