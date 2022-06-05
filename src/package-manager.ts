@@ -166,7 +166,7 @@ export class Yarn implements PackageManager {
       [
         'create',
         this.ci ? '--non-interactive' : '',
-        `${createApp}@latest`,
+        createApp,
         ...args
       ],
       {
