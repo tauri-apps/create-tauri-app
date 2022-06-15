@@ -13,10 +13,10 @@
   "devDependencies": {
     "vite": "^2.9.9",
     "vite-plugin-solid": "^2.2.6",
-    "@tauri-apps/cli": "^1.0.0-rc.13"
+    "@tauri-apps/cli": "^1.0.0-rc.15"
   },
   "dependencies": {
     "solid-js": "^1.4.2",
-    "@tauri-apps/api": "^1.0.0-rc.6"
+    "@tauri-apps/api": "^1.0.0-rc.7"
   }
 }
