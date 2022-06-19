@@ -1,5 +1,10 @@
 # Changelog
 
+## \[1.0.1]
+
+- Update tauri.studio links to tauri.app
+  - [fe5d9ca](https://www.github.com/tauri-apps/create-tauri-app/commit/fe5d9caecf0988beda5f1f9bf371bb467fc4b717) Update website link ([#75](https://www.github.com/tauri-apps/create-tauri-app/pull/75)) on 2022-06-19
+
 ## \[1.0.0]
 
 - Stable v1.0.0
