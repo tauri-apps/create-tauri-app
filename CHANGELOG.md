@@ -1,5 +1,10 @@
 # Changelog
 
+## \[1.0.0]
+
+- Stable v1.0.0
+  - [69968b6](https://www.github.com/tauri-apps/create-tauri-app/commit/69968b615280443ccbdd7271d2f00ace650de3c4) covector: prepare for stable v1.0.0 on 2022-06-19
+
 ## \[1.0.0-rc.5]
 
 - Fix crash when using yarn because of using `@latest` tag.
