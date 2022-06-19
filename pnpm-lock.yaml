@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@types/fs-extra': ^9.0.13
+  '@types/fs-extra': 9.0.13
   covector: 0.7.3
   execa: ^6.1.0
   fs-extra: ^10.1.0
