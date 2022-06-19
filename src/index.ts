@@ -140,16 +140,15 @@ const keypress = async (skip: boolean): Promise<void> => {
 };
 
 const runInit = async (argv: Argv): Promise<void> => {
-
   // prettier-ignore
   console.log(
     `
 We hope to help you create something special with ${bold(yellow('Tauri'))}!
 You will have a choice of one of the UI frameworks supported by the greater web tech community.
-This tool should get you quickly started. See our docs at ${cyan('https://tauri.studio/')}
+This tool should get you quickly started. See our docs at ${cyan('https://tauri.app/')}
 
 If you haven't already, please take a moment to setup your system.
-You may find the requirements here: ${cyan('https://tauri.studio/v1/guides/getting-started/prerequisites')}
+You may find the requirements here: ${cyan('https://tauri.app/v1/guides/getting-started/prerequisites')}
     `
   )
 
