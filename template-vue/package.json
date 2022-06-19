@@ -11,11 +11,11 @@
   },
   "dependencies": {
     "vue": "^3.2.36",
-    "@tauri-apps/api": "^1.0.0-rc.7"
+    "@tauri-apps/api": "^1.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.3",
     "vite": "^2.9.9",
-    "@tauri-apps/cli": "^1.0.0-rc.15"
+    "@tauri-apps/cli": "^1.0.0"
   }
 }
