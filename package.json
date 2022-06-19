@@ -1,6 +1,6 @@
 {
   "name": "create-tauri-app",
-  "version": "1.0.0-rc.4",
+  "version": "1.0.0-rc.5",
   "description": "Jump right into a Tauri App!",
   "repository": "git+https://github.com/tauri-apps/create-tauri-app.git",
   "license": "MIT OR Apache-2.0",

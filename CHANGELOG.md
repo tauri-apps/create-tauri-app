@@ -1,5 +1,10 @@
 # Changelog
 
+## \[1.0.0-rc.5]
+
+- Fix crash when using yarn because of using `@latest` tag.
+  - [761d0ac](https://www.github.com/tauri-apps/create-tauri-app/commit/761d0acaf1405aa25761ab8e118c2505b8896801) fix: don't use `@latest` tag with yarn, closes [#62](https://www.github.com/tauri-apps/create-tauri-app/pull/62) on 2022-06-05
+
 ## \[1.0.0-rc.4]
 
 - `create-tauri-app` will no longer install or prompt for `@tauri-apps/api` package in the `VanillaJs` recipe.
