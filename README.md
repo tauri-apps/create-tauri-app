@@ -79,6 +79,7 @@ Currently supported template presets include:
 - `solid`
 - `solid-ts`
 
+You can use `.` for the project name to scaffold in the current directory.
 
 ## Semver
 

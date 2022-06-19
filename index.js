@@ -52,29 +52,31 @@ You may find the requirements here: ${cyan('https://tauri.studio/v1/guides/getti
     await keypress()
   }
 
-  let targetDir = argv._[0]
+  let targetDir = formatTargetDir(argv._[0])
   let template = argv.template || argv.t
 
-  const defaultProjectName = !targetDir
-    ? 'tauri-app'
-    : targetDir.trim().replace(/\/+$/g, '')
+  const defaultTargetDir = 'tauri-app'
+  const getProjectName = () =>
+    targetDir === '.' ? path.basename(path.resolve()) : targetDir
 
-  let promptsResult = {}
+  let result = {}
 
   try {
-    promptsResult = await prompts(
+    result = await prompts(
       [
         {
           type: targetDir ? null : 'text',
           name: 'projectName',
           message: reset('Project name:'),
-          initial: defaultProjectName,
-          onState: (state) =>
-            (targetDir =
-              state.value.trim().replace(/\/+$/g, '') || defaultProjectName)
+          initial: defaultTargetDir,
+          onState: (state) => {
+            targetDir = formatTargetDir(state.value) || defaultTargetDir
+            console.log(targetDir)
+          }
         },
         {
           type: () =>
+            // @ts-expect-error `targetDir` can't be undefined as it is either initialized in the args passed to the cli or in the previous question
             !fs.existsSync(targetDir) || isEmpty(targetDir) ? null : 'confirm',
           name: 'overwrite',
           message: () =>
@@ -93,10 +95,12 @@ You may find the requirements here: ${cyan('https://tauri.studio/v1/guides/getti
           name: 'overwriteChecker'
         },
         {
-          type: () => (isValidPackageName(targetDir) ? null : 'text'),
+          // @ts-expect-error `getProjectName` can't return undefined because `targetDir` isn't, see above
+          type: () => (isValidPackageName(getProjectName()) ? null : 'text'),
           name: 'packageName',
           message: reset('Package name:'),
-          initial: () => toValidPackageName(targetDir),
+          // @ts-expect-error `getProjectName` can't return undefined because `targetDir` isn't, see above
+          initial: () => toValidPackageName(getProjectName()),
           validate: (dir) =>
             isValidPackageName(dir) || 'Invalid package.json name'
         },
@@ -110,7 +114,10 @@ You may find the requirements here: ${cyan('https://tauri.studio/v1/guides/getti
                 )
               : reset('Select a template:'),
           initial: 0,
-          choices: TEMPLATES.map((template) => green(template))
+          choices: TEMPLATES.map((template) => ({
+            title: green(template),
+            value: template
+          }))
         }
       ],
       {
@@ -125,8 +132,9 @@ You may find the requirements here: ${cyan('https://tauri.studio/v1/guides/getti
   }
 
   // user choice associated with prompts
-  const { overwrite, packageName } = promptsResult
+  const { overwrite, packageName } = result
 
+  // @ts-expect-error `targetDir` can't be undefined as it is either initialized in the args passed to the cli or in the questions above
   const root = path.join(cwd, targetDir)
 
   if (overwrite) {
@@ -136,7 +144,8 @@ You may find the requirements here: ${cyan('https://tauri.studio/v1/guides/getti
   }
 
   // determine template
-  template = TEMPLATES[promptsResult.template] || template
+  console.log(result.template)
+  template = result.template || template
 
   console.log(`\nScaffolding project in ${root}...`)
 
@@ -219,6 +228,9 @@ You may find the requirements here: ${cyan('https://tauri.studio/v1/guides/getti
   console.log()
 }
 
+/**
+ * @returns {Promise<void>}
+ */
 async function keypress() {
   process.stdin.setRawMode(true)
   return await new Promise((resolve, reject) => {
@@ -254,6 +266,13 @@ function toValidPackageName(projectName) {
     .replace(/\s+/g, '-')
     .replace(/^[._]/, '')
     .replace(/[^a-z0-9-~]+/g, '-')
+}
+
+/**
+ * @param {string | undefined} targetDir
+ */
+function formatTargetDir(targetDir) {
+  return targetDir?.trim().replace(/\/+$/g, '')
 }
 
 /**

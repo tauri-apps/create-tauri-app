@@ -1,14 +1,18 @@
 import { join } from 'path'
+import type { SyncOptions, ExecaSyncReturnValue } from 'execa'
 import { execaCommandSync } from 'execa'
-import { mkdirpSync, readdirSync, remove, writeFileSync } from 'fs-extra'
+import { mkdirpSync, readdirSync, removeSync, writeFileSync } from 'fs-extra'
 import { afterEach, beforeAll, expect, test } from 'vitest'
 
 const CLI_PATH = join(__dirname, '..')
 
-const projectName = 'test-app'
+const projectName = 'cli-spec-test-app'
 const genPath = join(__dirname, projectName)
 
-const run = (args, options = {}) => {
+const run = (
+  args: string[],
+  options: SyncOptions<string> = {}
+): ExecaSyncReturnValue => {
   return execaCommandSync(`node ${CLI_PATH} ${args.join(' ')} --ci`, options)
 }
 
@@ -22,18 +26,24 @@ const createNonEmptyDir = () => {
   writeFileSync(pkgJson, '{ "foo": "bar" }')
 }
 
-// Vue 3 starter template
+// Vue 3 template
 const templateFiles = readdirSync(join(CLI_PATH, 'template-vue'))
   // _gitignore is renamed to .gitignore
   .map((filePath) => (filePath === '_gitignore' ? '.gitignore' : filePath))
   .sort()
 
-beforeAll(() => remove(genPath))
-afterEach(() => remove(genPath))
+beforeAll(() => removeSync(genPath))
+afterEach(() => removeSync(genPath))
 
 test('prompts for the project name if none supplied', () => {
   const { stdout } = run([])
   expect(stdout).toContain('Project name:')
+})
+
+test('prompts for the template if none supplied when target dir is current directory', () => {
+  mkdirpSync(genPath)
+  const { stdout } = run(['.'], { cwd: genPath })
+  expect(stdout).toContain('Select a template:')
 })
 
 test('prompts for the template if none supplied', () => {
@@ -61,11 +71,11 @@ test('asks to overwrite non-empty target directory', () => {
 
 test('asks to overwrite non-empty current directory', () => {
   createNonEmptyDir()
-  const { stdout } = run(['.'], { cwd: genPath, input: 'test-app\n' })
+  const { stdout } = run(['.'], { cwd: genPath })
   expect(stdout).toContain(`Current directory is not empty.`)
 })
 
-test('successfully scaffolds a project based on vue starter template', () => {
+test('successfully scaffolds a project based on vue template', () => {
   const { stdout } = run([projectName, '--template', 'vue'], {
     cwd: __dirname
   })
