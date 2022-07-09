@@ -1,0 +1,21 @@
+{
+  "name": "{{package_name}}",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^1.0.0"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.46",
+    "svelte": "^3.48.0",
+    "vite": "^2.9.9",
+    "@tauri-apps/cli": "^1.0.0"
+  }
+}

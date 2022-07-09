@@ -1,0 +1,24 @@
+[package]
+name = "create-tauri-app"
+description = "Jump right into a Tauri App!"
+authors = [ "Tauri Programme within The Commons Conservancy" ]
+version = "2.0.0"
+edition = "2021"
+license = "Apache-2.0 OR MIT"
+readme = "README.md"
+repository = "https://github.com/tauri-apps/create-tauri-app"
+keywords = [ "tauri" ]
+categories = [ "gui" ]
+
+[dependencies]
+anyhow = "1.0.58"
+dialoguer = "0.10.1"
+rust-embed = { version = "6.4.0", features = ["compression", "interpolate-folder-path"] }
+
+
+[profile.release]
+panic = "abort" # Strip expensive panic clean-up logic
+codegen-units = 1 # Compile crates one after another so the compiler can optimize better
+lto = true # Enables link to optimizations
+opt-level = "s" # Optimize for binary size
+strip = true

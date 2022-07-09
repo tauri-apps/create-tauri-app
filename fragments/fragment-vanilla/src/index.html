@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tauri + Vanilla App</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <img src="assets/logo.png" />
+
+    <h1>Hello Tauri + Vanilla</h1>
+
+    <p>
+      Recommended IDE setup:
+      <a href="https://code.visualstudio.com/" target="_blank">VS Code</a>
+      +
+      <a href="https://github.com/tauri-apps/tauri-vscode" target="_blank"
+        >Tauri</a
+      >
+      +
+      <a href="https://github.com/rust-lang/rust-analyzer" target="_blank"
+        >rust-analyzer</a
+      >
+    </p>
+
+    <p>
+      <a href="https://tauri.studio/" target="_blank">Tauri Documentation</a>
+    </p>
+
+    <div>
+      <input id="greetInput" placeholder="Enter a name..." />
+      <button type="button" onclick="greet()">Greet</button>
+    </div>
+    <p id="greetMsg"></p>
+
+    <p>
+      Edit
+      <code>src-tauri/src/main.rs</code> to test app hot reload.
+    </p>
+
+    <script src="script.js"></script>
+  </body>
+</html>
