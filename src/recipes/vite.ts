@@ -15,7 +15,7 @@ const vite: Recipe = {
   configUpdate: ({ cfg, packageManager }) => ({
     ...cfg,
     distDir: `../dist`,
-    devPath: 'http://localhost:3000',
+    devPath: 'http://localhost:5173',
     beforeDevCommand: `${
       packageManager.name === 'npm' ? 'npm run' : packageManager.name
     } dev`,
