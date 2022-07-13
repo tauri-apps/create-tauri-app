@@ -1,5 +1,10 @@
 # Changelog
 
+## \[1.0.2]
+
+- Update the vite recipe to use port 5173, the new default in vite@v3.
+  - [ef82e5e](https://www.github.com/tauri-apps/create-tauri-app/commit/ef82e5e749e99191af04728b402e05562be11cd1) fix: Use vite's new default port 5173 in devPath ([#81](https://www.github.com/tauri-apps/create-tauri-app/pull/81)) on 2022-07-13
+
 ## \[1.0.1]
 
 - Update tauri.studio links to tauri.app
