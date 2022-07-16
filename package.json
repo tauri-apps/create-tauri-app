@@ -65,6 +65,6 @@
   },
   "resolutions": {
     "minimist": "1.2.6",
-    "ejs": "3.1.7"
+    "ejs": "3.1.8"
   }
 }
