@@ -25,7 +25,6 @@ const recipes = process.env.TAURI_RECIPE
       'vanillajs',
       'vite',
       'cra',
-      'svelte',
       'solid',
       'vuecli',
       'ngcli',
