@@ -1,5 +1,7 @@
 <img src=".github/splash.png" alt="Rapidly scaffold out a new tauri app project." />
 
+[![](https://img.shields.io/crates/v/create-tauri-app)](https://crates.io/crates/create-tauri-app)
+[![](https://img.shields.io/npm/v/create-tauri-app.svg)](https://www.npmjs.com/package/create-tauri-app)
 [![status](https://img.shields.io/badge/status-stable-blue.svg)](https://github.com/tauri-apps/tauri)
 [![Chat Server](https://img.shields.io/badge/chat-discord-7289da.svg)](https://discord.gg/SpmNs4S)
 [![website](https://img.shields.io/badge/website-tauri.app-purple.svg)](https://tauri.app)
