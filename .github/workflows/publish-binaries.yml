@@ -4,9 +4,6 @@ env:
   MACOSX_DEPLOYMENT_TARGET: '10.13'
 
 on:
-  push:
-    branches:
-      - rewrite-in-rust
   workflow_dispatch:
   repository_dispatch:
     types: [publish-binaries]
@@ -106,9 +103,9 @@ jobs:
         run: ls -R
         working-directory: binaries
 
-      # - uses: xresloader/upload-to-github-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     release_id: "${{ github.event.client_payload.release_id }}"
-      #     file: "binaries/*"
+      - uses: xresloader/upload-to-github-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: "${{ github.event.client_payload.release_id }}"
+          file: "binaries/*"
