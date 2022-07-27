@@ -4,6 +4,9 @@ env:
   MACOSX_DEPLOYMENT_TARGET: '10.13'
 
 on:
+  push:
+    branches:
+      - rewrite-in-rust
   workflow_dispatch:
   repository_dispatch:
     types: [publish-binaries]
