@@ -23,8 +23,10 @@ jobs:
             target: aarch64-apple-darwin
           - host: windows-latest
             target: x86_64-pc-windows-msvc
+            ext: .exe
           - host: windows-latest
             target: i686-pc-windows-msvc
+            ext: .exe
           - host: ubuntu-18.04
             target: x86_64-unknown-linux-gnu
           - host: ubuntu-18.04
@@ -70,7 +72,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: bindings-${{ matrix.settings.target }}
-          path: target/release/create-tauri-app(.exe)?
+          path: "target/release/create-tauri-app${{ matrix.settings.ext }}"
           if-no-files-found: error
 
 
