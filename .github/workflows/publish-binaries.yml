@@ -99,7 +99,7 @@ jobs:
             target="${target/create-tauri-app/create-tauri-app-${parent}}"
             target="${target/${parent}\//}"
             mv $file $target
-          done'
+          done
 
       - name: List binaries
         run: ls -R
