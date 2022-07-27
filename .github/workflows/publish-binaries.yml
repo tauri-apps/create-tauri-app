@@ -91,14 +91,14 @@ jobs:
       - name: rename files
         working-directory: binaries
         run: |
-          find . -name 'create-tauri-app*' -print0 | while read -d '' file\
+          'find . -name 'create-tauri-app*' -print0 | while read -d '' file\
           do\
             parent="$(basename $(dirname ${file}))"\
             target="${file#./}"\
             target="${target/create-tauri-app/create-tauri-app-${parent}}"\
             target="${target/${parent}\//}"\
             mv $file $target\
-          done
+          done'
 
       - name: List binaries
         run: ls -R
