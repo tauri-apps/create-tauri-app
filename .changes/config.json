@@ -4,41 +4,14 @@
   "pkgManagers": {
     "javascript": {
       "version": true,
-      "getPublishedVersion": "npm view ${ pkgFile.pkg.name } version",
-      "prepublish": [
-        {
-          "command": "yarn",
-          "dryRunCommand": true
-        },
-        {
-          "command": "echo \"# Yarn Audit\n\"",
-          "dryRunCommand": true,
-          "pipe": true
-        },
-        {
-          "command": "echo '<details>\n<summary>click to view</summary>\n\n```'",
-          "dryRunCommand": true,
-          "pipe": true
-        },
-        {
-          "command": "yarn audit --groups dependencies",
-          "dryRunCommand": true,
-          "runFromRoot": true,
-          "pipe": true
-        },
-        {
-          "command": "echo '```\n\n</details>\n'",
-          "dryRunCommand": true,
-          "pipe": true
-        },
-        {
-          "command": "npm pack",
-          "dryRunCommand": true
-        }
-      ],
+      "getPublishedVersion": "cargo search ${ pkg.pkg } --limit 1 | sed -nE 's/^[^\"]*\"//; s/\".*//1p' -",
       "publish": [
         {
-          "command": "echo \"# Yarn Package Publish\"",
+          "command": "cargo package --no-verify",
+          "dryRunCommand": true
+        },
+        {
+          "command": "echo \"# Cargo Publish\"",
           "dryRunCommand": true,
           "pipe": true
         },
@@ -48,8 +21,8 @@
           "pipe": true
         },
         {
-          "command": "yarn publish --access public",
-          "dryRunCommand": "npm publish --dry-run --access public",
+          "command": "cargo publish",
+          "dryRunCommand": "cargo publish --dry-run",
           "pipe": true
         },
         {
@@ -68,7 +41,7 @@
   "packages": {
     "create-tauri-app": {
       "path": ".",
-      "manager": "javascript"
+      "manager": "rust"
     }
   }
 }

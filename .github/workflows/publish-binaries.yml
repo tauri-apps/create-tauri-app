@@ -1,0 +1,87 @@
+name: publish binaries
+
+env:
+  MACOSX_DEPLOYMENT_TARGET: '10.13'
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [publish-binaries]
+
+jobs:
+  build:
+    fail-fast: false
+    matrix:
+      - host: macos-latest
+        target: x86_64-apple-darwin
+      - host: macos-latest
+          target: aarch64-apple-darwin
+      - host: windows-latest
+        target: x86_64-pc-windows-msvc
+      - host: windows-latest
+        target: i686-pc-windows-msvc
+      - host: ubuntu-18.04
+        target: x86_64-unknown-linux-gnu
+      - host: ubuntu-18.04
+        target: x86_64-unknown-linux-musl
+      - host: ubuntu-18.04
+        target: aarch64-unknown-linux-gnu
+      - host: ubuntu-18.04
+        target: armv7-unknown-linux-gnueabihf
+        setup: |
+              sudo apt-get update
+              sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf -y
+      - host: ubuntu-18.04
+        target: aarch64-unknown-linux-musl
+
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.host }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          override: true
+          toolchain: stable
+          target: ${{ matrix.settings.target }}
+
+      - name: setup system dependencies
+        run: ${{ matrix.settings.setup }}
+        if: ${{ matrix.settings.setup }}
+        shell: bash
+
+      - name: build
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+
+      - name: upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: bindings-${{ matrix.settings.target }}
+          path: target/release/create-tauri-app(.exe)?
+          if-no-files-found: error
+
+
+  publish:
+    needs:
+      - build
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: binaries
+
+      - name: List binaries
+        run: ls -R
+        working-directory: binaries
+
+      # - uses: xresloader/upload-to-github-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     release_id: "${{ github.event.client_payload.release_id }}"
+      #     file: "binaries/*"

@@ -6,20 +6,32 @@ name: Audit
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
   push:
     paths:
+      - '**/Cargo.lock'
+      - '**/Cargo.toml'
       - '**/package.json'
-      - '**/yarn.lock'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  full-audit:
+  audit-rust:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn audit
+      - name: rust audit
+        uses: actions-rs/audit-check@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-  prod-audit:
+  audit-js:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn audit --groups dependencies
+      - name: yarn audit
+        working-directory: tooling/cli/node
+        run: yarn audit
