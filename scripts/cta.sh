@@ -152,11 +152,11 @@ get_bitness() {
 # Supported configurations
 # 1. aarch64-apple-darwin
 # 2. x86_64-apple-darwin
-# 3. armv7-linux-gnueabihf
-# 4. aarch64-linux-gnu
-# 5. aarch64-linux-musl
-# 6. x86_64-linux-gnu
-# 7. x86_64-linux-musl
+# 3. armv7-unknown-linux-gnueabihf
+# 4. aarch64-unknown-linux-gnu
+# 5. aarch64-unknown-linux-musl
+# 6. x86_64-unknown-linux-gnu
+# 7. x86_64-unknown-linux-musl
 # 8. x86_64-pc-windows-msvc
 # 9. i686-pc-windows-msvc
 get_architecture() {
@@ -189,7 +189,7 @@ get_architecture() {
 
         *)
             check_proc
-            _ostype=linux-$_clibtype
+            _ostype=unknown-linux-$_clibtype
             _bitness=$(get_bitness)
             ;;
 

@@ -64,14 +64,10 @@ jobs:
           command: build
           args: --release
 
-      - name: List files
-        run: ls -R
-        working-directory: target/release
-
       - name: upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: bindings-${{ matrix.settings.target }}
+          name: "${{ matrix.settings.target }}"
           path: "target/release/create-tauri-app${{ matrix.settings.ext }}"
           if-no-files-found: error
 
@@ -87,6 +83,22 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           path: binaries
+
+      - name: List binaries
+        run: ls -R
+        working-directory: binaries
+
+      - name: rename files
+        working-directory: binaries
+        run: |
+        find . -name 'create-tauri-app*' -print0 | while read -d '' file
+        do
+          parent="$(basename $(dirname ${file}))"
+          target="${file#./}" # remove './' at the beginning
+          target="${target/create-tauri-app/create-tauri-app-${parent}}" # add arch which is the parent directory 
+          target="${target/${parent}\//}" # remove parent directory and trailing '/'
+          mv $file $target
+        done
 
       - name: List binaries
         run: ls -R
