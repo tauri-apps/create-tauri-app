@@ -61,6 +61,10 @@ jobs:
         with:
           command: test
 
+      - name: List files
+        run: ls -R
+        working-directory: target/release
+
       - name: upload artifact
         uses: actions/upload-artifact@v3
         with:

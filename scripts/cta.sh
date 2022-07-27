@@ -150,15 +150,15 @@ get_bitness() {
 
 
 # Supported configurations
-# 1. arm64-darwin
-# 2. x64-darwin
-# 3. arm-linux-gnueabihf
-# 4. arm64-linux-gnu
-# 5. arm64-linux-musl
-# 6. x64-linux-gnu
-# 7. x64-linux-musl
-# 8. ia32-windows
-# 9. x64-windows
+# 1. aarch64-apple-darwin
+# 2. x86_64-apple-darwin
+# 3. armv7-linux-gnueabihf
+# 4. aarch64-linux-gnu
+# 5. aarch64-linux-musl
+# 6. x86_64-linux-gnu
+# 7. x86_64-linux-musl
+# 8. x86_64-pc-windows-msvc
+# 9. i686-pc-windows-msvc
 get_architecture() {
     local _ostype _cputype _bitness _arch _clibtype
     _ostype="$(uname -s)"
@@ -180,11 +180,11 @@ get_architecture() {
 
     case "$_ostype" in
         Darwin)
-            _ostype=darwin
+            _ostype=apple-darwin
             ;;
 
         MINGW* | MSYS* | CYGWIN* | Windows_NT)
-            _ostype=windows
+            _ostype=pc-windows-msvc
             ;;
 
         *)
@@ -202,25 +202,25 @@ get_architecture() {
             ;;
 
         xscale | arm)
-            _cputype=arm
+            _cputype=armv7
             ;;
 
         armv6l)
-            _cputype=arm
+            _cputype=armv7
             _ostype="${_ostype}eabihf"
             ;;
 
         armv7l | armv8l)
-            _cputype=arm
+            _cputype=armv7
             _ostype="${_ostype}eabihf"
             ;;
 
         aarch64 | arm64)
-            _cputype=arm64
+            _cputype=aarch64
             ;;
 
         x86_64 | x86-64 | x64 | amd64)
-            _cputype=x64
+            _cputype=x86_64
             ;;
 
         *)
