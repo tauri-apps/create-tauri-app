@@ -79,12 +79,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Download all artifacts
+      - name: download all artifacts
         uses: actions/download-artifact@v3
         with:
           path: binaries
 
-      - name: List binaries
+      - name: list ./binaries
         run: ls -R
         working-directory: binaries
 
@@ -100,8 +100,9 @@ jobs:
             target="${target/${parent}\//}"
             mv $file $target
           done
+          find . -type d -empty -delete
 
-      - name: List binaries
+      - name: list ./binaries
         run: ls -R
         working-directory: binaries
 
