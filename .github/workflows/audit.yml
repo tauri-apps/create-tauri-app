@@ -33,5 +33,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: yarn audit
-        working-directory: tooling/cli/node
+        working-directory: node
         run: yarn audit
