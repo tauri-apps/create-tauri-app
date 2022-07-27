@@ -59,7 +59,7 @@ jobs:
       - name: build
         uses: actions-rs/cargo@v1
         with:
-          command: test
+          command: build
 
       - name: List files
         run: ls -R
