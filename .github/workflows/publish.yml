@@ -96,20 +96,18 @@ jobs:
             architecture: x64
             build: |
               pnpm build --target i686-pc-windows-msvc
-              pnpm test
           - host: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-debian
             build: |-
               set -e &&
               cd node &&
-              ls -ah &&
               pnpm build --target x86_64-unknown-linux-gnu &&
               strip *.node
           - host: ubuntu-latest
             target: x86_64-unknown-linux-musl
             docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-alpine
-            build: set -e && pnpm build && cd node && ls -ah && strip *.node
+            build: set -e && cd node && pnpm build && strip *.node
           - host: macos-latest
             target: aarch64-apple-darwin
             build: |
@@ -118,8 +116,6 @@ jobs:
               export CXX=$(xcrun -f clang++);
               SYSROOT=$(xcrun --sdk macosx --show-sdk-path);
               export CFLAGS="-isysroot $SYSROOT -isystem $SYSROOT";
-              cd node
-              ls -ah
               pnpm build --target aarch64-apple-darwin
               strip -x *.node
           - host: ubuntu-latest
@@ -128,7 +124,6 @@ jobs:
             build: |-
               set -e &&
               cd node &&
-              ls -ah &&
               pnpm build --target aarch64-unknown-linux-gnu &&
               aarch64-unknown-linux-gnu-strip *.node
           - host: ubuntu-latest
@@ -138,8 +133,6 @@ jobs:
               sudo apt-get update
               sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf -y
             build: |
-              cd node
-              ls -ah
               pnpm build --target=armv7-unknown-linux-gnueabihf
               arm-linux-gnueabihf-strip *.node
           - host: ubuntu-latest
@@ -148,9 +141,8 @@ jobs:
             docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-alpine
             build: |-
               set -e &&
-              cd node &&
-              ls -ah &&
               rustup target add aarch64-unknown-linux-musl &&
+              cd node &&
               pnpm build --target aarch64-unknown-linux-musl &&
               /aarch64-linux-musl-cross/bin/aarch64-linux-musl-strip *.node
 
@@ -236,10 +228,6 @@ jobs:
   #       with:
   #         path: binaries
 
-  #     - name: list ./binaries
-  #       run: ls -R
-  #       working-directory: binaries
-
   #     - name: rename files
   #       working-directory: binaries
   #       shell: bash
@@ -253,10 +241,6 @@ jobs:
   #           mv $file $target
   #         done
   #         find . -type d -empty -delete
-
-  #     - name: list ./binaries
-  #       run: ls -R
-  #       working-directory: binaries
 
   #     - uses: xresloader/upload-to-github-release@v1
   #       env:
