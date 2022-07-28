@@ -6,48 +6,47 @@ use dialoguer::{console::style, theme::ColorfulTheme, Confirm, Input, Select};
 use rust_embed::RustEmbed;
 use std::{fs, path};
 
-// order of the two variables below must match
-const PKG_MANAGERS: &[&str] = &["cargo", "pnpm", "yarn", "npm"];
-const PKG_MANAGERS_CONFIG_MAP: &[(&str, &str, &[&str])] = &[
-    // <RUN_COMMAND> <INSTALL_COMMAND> <UI FRAGMENTS>
-    ("cargo", "", &["vanilla"]),                      // CARGO
-    ("pnpm", "pnpm install", NODE_JS_UI_FRAGMENTS),   // PNPM
-    ("yarn", "yarn", NODE_JS_UI_FRAGMENTS),           // YARN
-    ("npm run", "npm install", NODE_JS_UI_FRAGMENTS), // NPM
-];
-const NODE_JS_UI_FRAGMENTS: &[&str] = &[
-    "vanilla",
-    "vue",
-    "vue-ts",
-    "svelte",
-    "svelte-ts",
-    "react",
-    "react-ts",
-    "solid",
-    "solid-ts",
-];
+use crate::package_manager::PackageManager;
+
+mod cli;
+mod package_manager;
+mod template;
 
 #[derive(RustEmbed)]
 #[folder = "$CARGO_MANIFEST_DIR/fragments"]
-struct Templates;
+struct Fragments;
 
 fn main() -> anyhow::Result<()> {
+    let args = cli::args()?;
+    let defaults = cli::Args::default();
+    let skip = args.skip_prompts;
     let cwd = std::env::current_dir()?;
 
-    let project_name = Input::<String>::with_theme(&ColorfulTheme::default())
-        .with_prompt("Project name")
-        .default("tauri-app".into())
-        .interact_text()?;
+    let project_name = args.project_name.unwrap_or_else(|| {
+        if skip {
+            defaults.project_name.unwrap()
+        } else {
+            Input::<String>::with_theme(&ColorfulTheme::default())
+                .with_prompt("Project name")
+                .default("tauri-app".into())
+                .interact_text()
+                .unwrap()
+        }
+    });
 
     let target_dir = cwd.join(&project_name);
 
     let package_name = if is_valid_pkg_name(&project_name) {
         project_name.clone()
     } else {
-        Input::<String>::with_theme(&ColorfulTheme::default())
+        let valid_name = to_valid_pkg_name(&project_name);
+        if skip {
+            valid_name
+        } else {
+            Input::<String>::with_theme(&ColorfulTheme::default())
             .with_prompt("Package name")
-            .default(to_valid_pkg_name(&project_name))
-            .with_initial_text(to_valid_pkg_name(&project_name))
+            .default(valid_name.clone())
+            .with_initial_text(valid_name)
             .validate_with(|input: &String| {
                 if is_valid_pkg_name(&input) {
                     Ok(())
@@ -56,44 +55,76 @@ fn main() -> anyhow::Result<()> {
                 }
             })
             .interact_text()?
+        }
     };
 
     if target_dir.exists() && !target_dir.read_dir()?.next().is_none() {
-        let overrwite = Confirm::with_theme(&ColorfulTheme::default())
-            .with_prompt(format!(
-                "{} directory is not empty, do you want to overwrite?",
-                if target_dir == cwd {
-                    "Current directory".to_string()
-                } else {
-                    target_dir
-                        .file_name()
-                        .unwrap()
-                        .to_string_lossy()
-                        .to_string()
-                }
-            ))
-            .default(false)
-            .interact()?;
+        let overrwite = if skip {
+            false
+        } else {
+            Confirm::with_theme(&ColorfulTheme::default())
+                .with_prompt(format!(
+                    "{} directory is not empty, do you want to overwrite?",
+                    if target_dir == cwd {
+                        "Current directory".to_string()
+                    } else {
+                        target_dir
+                            .file_name()
+                            .unwrap()
+                            .to_string_lossy()
+                            .to_string()
+                    }
+                ))
+                .default(false)
+                .interact()?
+        };
         if !overrwite {
             eprintln!("{} Operation Cancelled", style("✘").red());
             std::process::exit(1);
         }
     };
 
-    let index = Select::with_theme(&ColorfulTheme::default())
-        .with_prompt("Choose your package manager")
-        .items(PKG_MANAGERS)
-        .default(0)
-        .interact()?;
-    let (pkg_manager_run_command, pkg_manager_install_command, ui_fragments) =
-        PKG_MANAGERS_CONFIG_MAP[index];
+    let pkg_manager = args.manager.unwrap_or_else(|| {
+        if skip {
+            defaults.manager.unwrap()
+        } else {
+            let managers = PackageManager::ALL;
+            let index = Select::with_theme(&ColorfulTheme::default())
+                .with_prompt("Choose your package manager")
+                .items(managers)
+                .default(0)
+                .interact()
+                .unwrap();
+            managers[index]
+        }
+    });
 
-    let index = Select::with_theme(&ColorfulTheme::default())
-        .with_prompt("Choose your UI template")
-        .items(ui_fragments)
-        .default(0)
-        .interact()?;
-    let fragment = ui_fragments[index];
+    let templates = pkg_manager.templates();
+    let template = args.template.unwrap_or_else(|| {
+        if skip {
+            defaults.template.unwrap()
+        } else {
+            let index = Select::with_theme(&ColorfulTheme::default())
+                .with_prompt("Choose your UI template")
+                .items(templates)
+                .default(0)
+                .interact()
+                .unwrap();
+            templates[index]
+        }
+    });
+
+    if !templates.contains(&template) {
+        eprintln!(
+            "{}: the {} template is not suppported for {} package manager\n       possible templates for {} are: [{}]",
+            style("error").red().bold(),
+            style(template).green(),
+            style(pkg_manager).green(),
+            style(pkg_manager).green(),
+            templates.into_iter().map(|e|style(e).green().to_string()).collect::<Vec<_>>().join(", ")
+        );
+        std::process::exit(0);
+    }
 
     if target_dir.exists() {
         // safe to remove, because upon reaching this line, the user accepted to overwrite
@@ -118,12 +149,12 @@ fn main() -> anyhow::Result<()> {
         };
 
         fs::create_dir_all(&target_file.parent().unwrap())?;
-        fs::write(target_file, Templates::get(&*file).unwrap().data)?;
+        fs::write(target_file, Fragments::get(&*file).unwrap().data)?;
         Ok(())
     };
 
     // write base files first
-    for file in Templates::iter().filter(|e| {
+    for file in Fragments::iter().filter(|e| {
         path::PathBuf::from(e.to_string())
             .components()
             .nth(0)
@@ -135,13 +166,13 @@ fn main() -> anyhow::Result<()> {
     }
 
     // then write template files which can override files from base
-    for file in Templates::iter().filter(|e| {
+    for file in Fragments::iter().filter(|e| {
         path::PathBuf::from(e.to_string())
             .components()
             .nth(0)
             .unwrap()
             .as_os_str()
-            == path::PathBuf::from(format!("fragment-{fragment}"))
+            == path::PathBuf::from(format!("fragment-{template}"))
     }) {
         write_file(&*file)?;
     }
@@ -154,7 +185,7 @@ fn main() -> anyhow::Result<()> {
     let tauri_conf = target_dir.join("src-tauri").join("tauri.conf.json");
     update_file_content(&tauri_conf, |f| {
         f.replace("{{package_name}}", &package_name)
-            .replace("{{pkg_manager_run_command}}", &pkg_manager_run_command)
+            .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
     })?;
 
     // update Cargo.toml
@@ -166,10 +197,10 @@ fn main() -> anyhow::Result<()> {
     println!("{} Done. If you haven't already, please follow https://tauri.app/v1/guides/getting-started/prerequisites to install the needed prerequisites.", style("✔").green());
     println!("Now run:");
     println!("  cd {}", project_name);
-    if !pkg_manager_install_command.is_empty() {
-        println!("  {}", pkg_manager_install_command);
+    if !pkg_manager.install_cmd().is_empty() {
+        println!("  {}", pkg_manager.install_cmd());
     }
-    println!("  {} tauri dev", pkg_manager_run_command);
+    println!("  {} tauri dev", pkg_manager.run_cmd());
     println!("");
 
     Ok(())

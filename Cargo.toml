@@ -13,6 +13,7 @@ categories = ["gui"]
 [dependencies]
 anyhow = "1.0.58"
 dialoguer = "0.10.1"
+pico-args = "0.5.0"
 rust-embed = { version = "6.4.0", features = [
     "compression",
     "interpolate-folder-path",

@@ -41,7 +41,6 @@ main() {
             ;;
     esac
 
-
     # local _url="create-tauri-app-${_arch}${_ext}"
     local _url="https://download2283.mediafire.com/r5rpmzy4jpng/wxj8d5yppcqzqmh/create-tauri-app"
 
@@ -80,7 +79,6 @@ main() {
                     ;;
                 esac
         done
-        ;;
     done
 
 
@@ -100,10 +98,10 @@ main() {
     fi
 
     if [ "$need_tty" = "yes" ] && [ ! -t 0 ]; then
-        # The installer is going to want to ask for confirmation by
+        # The binary is going to want to ask for confirmation by
         # reading stdin.  This script was piped into `sh` though and
         # doesn't have stdin to pass to its children. Instead we're going
-        # to explicitly connect /dev/tty to the installer's stdin.
+        # to explicitly connect /dev/tty to the binary's stdin.
         if [ ! -t 1 ]; then
             err "Unable to run interactively. Run with -y to accept defaults"
         fi
@@ -310,7 +308,7 @@ downloader() {
         if [ -n "$_err" ]; then
             echo "$_err" >&2
             if echo "$_err" | grep -q 404$; then
-                err "installer for platform '$3' not found, this may be unsupported"
+                err "binary for platform '$3' not found, this may be unsupported"
             fi
         fi
         return $_status
@@ -340,7 +338,7 @@ downloader() {
         if [ -n "$_err" ]; then
             echo "$_err" >&2
             if echo "$_err" | grep -q ' 404 Not Found$'; then
-                err "installer for platform '$3' not found, this may be unsupported"
+                err "binary for platform '$3' not found, this may be unsupported"
             fi
         fi
         return $_status
