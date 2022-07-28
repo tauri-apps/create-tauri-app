@@ -1,6 +1,6 @@
 {
   "name": "create-tauri-app",
-  "version": "0.0.0",
+  "version": "1.0.2",
   "main": "index.js",
   "types": "index.d.ts",
   "napi": {
@@ -18,8 +18,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@napi-rs/cli": "^2.10.3",
-    "ava": "^4.3.0"
+    "@napi-rs/cli": "^2.10.3"
   },
   "engines": {
     "node": ">= 10"
@@ -29,7 +28,6 @@
     "build": "napi build --platform --release",
     "build:debug": "napi build --platform",
     "prepublishOnly": "napi prepublish -t npm",
-    "test": "ava",
     "version": "napi version"
   },
   "packageManager": "yarn@3.2.2",
