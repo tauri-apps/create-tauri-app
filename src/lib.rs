@@ -157,10 +157,24 @@ where
             .collect::<path::PathBuf>();
 
         let p = target_dir.join(&p);
-        let target_file = if p.file_name().unwrap() == "_gitignore" {
-            p.parent().unwrap().join(".gitignore")
-        } else {
-            p
+
+        let target_file = match &*p.file_name().unwrap().to_string_lossy() {
+            "_gitignore" => p.parent().unwrap().join(".gitignore"),
+            // render conditional files
+            // conditional files are files that start with a special conventions
+            //  _[<list of package managers separated by `-`>]_<file_name>
+            // ex: _[pnpm-npm-yarn]package.json
+            name if name.starts_with("_[") => {
+                let mut s = name.strip_prefix("_[").unwrap().split("]_");
+                let (managers_str, file_name) = (s.next().unwrap(), s.next().unwrap());
+                let managers_list = managers_str.split("-").collect::<Vec<_>>();
+                if managers_list.contains(&pkg_manager.to_string().as_str()) {
+                    p.parent().unwrap().join(file_name)
+                } else {
+                    return Ok(());
+                }
+            }
+            _ => p,
         };
 
         fs::create_dir_all(&target_file.parent().unwrap())?;
@@ -226,9 +240,11 @@ fn update_file_content<P: AsRef<path::Path>, F: FnMut(String) -> String>(
     p: P,
     mut f: F,
 ) -> anyhow::Result<()> {
-    let file = fs::read_to_string(&p)?;
-    let file = f(file);
-    fs::write(&p, file)?;
+    if p.as_ref().exists() {
+        let file = fs::read_to_string(&p)?;
+        let file = f(file);
+        fs::write(&p, file)?;
+    }
     Ok(())
 }
 
