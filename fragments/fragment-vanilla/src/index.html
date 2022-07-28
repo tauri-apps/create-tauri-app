@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tauri App</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="stylesheet" href="style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tauri App</title>
-</head>
-
-<body>
-  <div id="app">
-
-    <a href="https://tauri.app" target="_blank">
-      <img src="/assets/tauri.svg" class="logo" alt="Tauri logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="/assets/javascript.svg" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <div class="card">
-      <div>
-        <input id="greetInput" placeholder="Enter a name..." />
-        <button type="button" onclick="greet()">Greet</button>
+  <body>
+    <div id="app">
+      <a href="https://tauri.app" target="_blank">
+        <img src="/assets/tauri.svg" class="logo" alt="Tauri logo" />
+      </a>
+      <a
+        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+        target="_blank"
+      >
+        <img
+          src="/assets/javascript.svg"
+          class="logo vanilla"
+          alt="JavaScript logo"
+        />
+      </a>
+      <div class="card">
+        <div>
+          <input id="greetInput" placeholder="Enter a name..." />
+          <button type="button" onclick="greet()">Greet</button>
+        </div>
+        <p id="greetMsg"></p>
       </div>
-      <p id="greetMsg"></p>
+      <p class="read-the-docs">
+        Click on the Tauri and JavaScript logo to learn more
+      </p>
     </div>
-    <p class="read-the-docs">
-      Click on the Tauri and JavaScript logo to learn more
-    </p>
-  </div>
 
-  <script type="module" src="/main.js"></script>
-</body>
-
+    <script type="module" src="/main.js"></script>
+  </body>
 </html>

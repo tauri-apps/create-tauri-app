@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "format-fragments": "prettier --write --end-of-line=auto \"./fragments/**/*.{js,jsx,ts,tsx,html,css,json}\" --ignore-path .gitignore",
+    "format-fragments:check": "prettier --check --end-of-line=auto \"./fragments/**/*.{js,jsx,ts,tsx,html,css,json}\" --ignore-path .gitignore"
+  },
+  "dependencies": {
+    "prettier": "^2.7.1"
+  }
+}
