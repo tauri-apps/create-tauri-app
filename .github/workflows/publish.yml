@@ -145,13 +145,13 @@ jobs:
       - uses: pnpm/action-setup@v2.2.2
         with:
           version: 7
-      - run: ls -ah
       - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
           node-version: 16
           check-latest: true
           cache: 'pnpm'
+          cache-dependency-path: 'node/pnpm-lock.yaml'
       - name: Install
         uses: actions-rs/toolchain@v1
         if: ${{ !matrix.settings.docker }}
