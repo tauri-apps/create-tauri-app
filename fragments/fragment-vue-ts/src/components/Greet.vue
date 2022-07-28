@@ -12,7 +12,7 @@ async function greet() {
 
 <template>
   <div class="card">
-    <input v-model="name" placeholder="Enter a name..." />
+    <input id="greet-input" v-model="name" placeholder="Enter a name..." />
     <button type="button" @click="greet()">Greet</button>
   </div>
 
@@ -47,5 +47,9 @@ async function greet() {
 <style scoped>
 .read-the-docs {
   color: #888;
+}
+
+#greet-input {
+  margin-right: 5px;
 }
 </style>

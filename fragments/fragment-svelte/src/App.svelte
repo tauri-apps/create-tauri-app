@@ -1,65 +1,43 @@
 <script>
-  import logo from './assets/svelte.png'
+  import svelteLogo from './assets/svelte.svg'
   import Greet from './lib/Greet.svelte'
 </script>
 
 <main>
-  <img src={logo} alt="Svelte Logo" />
-  <h1>Hello world!</h1>
+  <div>
+    <a href="https://tauri.app" target="_blank">
+      <img src="/tauri.svg" class="logo" alt="Tauri Logo" />
+    </a>
+    <a href="https://vitejs.dev" target="_blank">
+      <img src="/vite.svg" class="logo" alt="Vite Logo" />
+    </a>
+    <a href="https://svelte.dev" target="_blank">
+      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
+    </a>
+  </div>
 
-  <Greet />
+  <div class="card">
+    <Greet />
+  </div>
 
-  <p>
-    Visit <a href="https://tauri.studio">tauri.studio</a> to learn how to build Tauri
-    apps.
-  </p>
-
-  <p>
-    Visit <a href="https://svelte.dev">svelte.dev</a> to learn how to build Svelte
-    apps.
+  <p class="read-the-docs">
+    Click on the Tauri and Vite and Svelte logos to learn more
   </p>
 </main>
 
 <style>
-  :root {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  .logo {
+    height: 6em;
+    padding: 1.5em;
+    will-change: filter;
   }
-
-  main {
-    text-align: center;
-    padding: 1em;
-    margin: 0 auto;
+  .logo:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
   }
-
-  img {
-    height: 16rem;
-    width: 16rem;
+  .logo.svelte:hover {
+    filter: drop-shadow(0 0 2em #ff3e00aa);
   }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4rem;
-    font-weight: 100;
-    line-height: 1.1;
-    margin: 2rem auto;
-    max-width: 14rem;
-  }
-
-  p {
-    max-width: 14rem;
-    margin: 1rem auto;
-    line-height: 1.35;
-  }
-
-  @media (min-width: 480px) {
-    h1 {
-      max-width: none;
-    }
-
-    p {
-      max-width: none;
-    }
+  .read-the-docs {
+    color: #888;
   }
 </style>

@@ -1,12 +1,12 @@
 {
   "build": {
-    "beforeDevCommand": "{{pkg_manager_run_command}} dev",
-    "beforeBuildCommand": "{{pkg_manager_run_command}} build",
+    "beforeDevCommand": "pnpm dev",
+    "beforeBuildCommand": "pnpm build",
     "devPath": "http://localhost:420",
     "distDir": "../dist"
   },
   "package": {
-    "productName": "{{package_name}}",
+    "productName": "tauri-app",
     "version": "0.0.0"
   },
   "tauri": {
@@ -57,7 +57,7 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "{{package_name}}",
+        "title": "tauri-app",
         "width": 800
       }
     ]
