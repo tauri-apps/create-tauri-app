@@ -1,13 +1,13 @@
-$BITNESS = if ([Environment]::Is64BitOperatingSystem) { "x64" } else { "ia32" }
-# $CTA_URL = "create-tauri-app-$BITNESS-windows.exe"
-$CTA_URL = "https://download2283.mediafire.com/r5rpmzy4jpng/wxj8d5yppcqzqmh/create-tauri-app.exe"
-$OUT_FILE = "$Env:TEMP\create-tauri-app.exe"
+$bitness = if ([Environment]::Is64BitOperatingSystem) { "x86_64" } else { "i686" }
+$tagName=""
+$url="https://github.com/tauri-apps/binary-releases/releases/download/$tagName/create-tauri-app-$bitness-pc-windows-msvc.exe"
+$outFile = "$Env:TEMP\create-tauri-app.exe"
 
 Write-Output "$($PSStyle.Bold)info:$($PSStyle.Reset) downloading create-tauri-app"
 
 $ProgressPreference = 'SilentlyContinue'
-Invoke-WebRequest -Uri $CTA_URL -OutFile $OUT_FILE
+Invoke-WebRequest -Uri $url -OutFile $outFile
 $ProgressPreference = 'Continue'
 
-Start-Process -FilePath $OUT_FILE -Wait -NoNewWindow -ArgumentList $args
+Start-Process -FilePath $outFile -Wait -NoNewWindow -ArgumentList $args
 

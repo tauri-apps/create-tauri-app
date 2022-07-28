@@ -41,8 +41,8 @@ main() {
             ;;
     esac
 
-    # local _url="create-tauri-app-${_arch}${_ext}"
-    local _url="https://download2283.mediafire.com/r5rpmzy4jpng/wxj8d5yppcqzqmh/create-tauri-app"
+    local _tagName=""
+    local _url="https://github.com/tauri-apps/binary-releases/releases/download/${tagName}/create-tauri-app-${_arch}${_ext}"
 
     local _dir
     _dir="$(ensure mktemp -d)"
