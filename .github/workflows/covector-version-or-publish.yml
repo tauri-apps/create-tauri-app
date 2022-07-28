@@ -56,5 +56,5 @@ jobs:
         with:
           token: ${{ secrets.TAURI_BOT_PAT }}
           repository: tauri-apps/tauri
-          event-type: publish-binaries
+          event-type: publish
           client-payload: '{"release_id": "${{ steps.covector.outputs.releaseId }}"}'

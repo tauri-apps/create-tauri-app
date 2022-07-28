@@ -4,6 +4,68 @@
   "pkgManagers": {
     "javascript": {
       "version": true,
+      "getPublishedVersion": "npm view ${ pkgFile.pkg.name } version",
+      "prepublish": [
+        {
+          "command": "pnpm install",
+          "dryRunCommand": true
+        },
+        {
+          "command": "echo \"# Pnpm Audit\n\"",
+          "dryRunCommand": true,
+          "pipe": true
+        },
+        {
+          "command": "echo '<details>\n<summary>click to view</summary>\n\n```'",
+          "dryRunCommand": true,
+          "pipe": true
+        },
+        {
+          "command": "pnpm audit --prod",
+          "dryRunCommand": true,
+          "runFromRoot": true,
+          "pipe": true
+        },
+        {
+          "command": "echo '```\n\n</details>\n'",
+          "dryRunCommand": true,
+          "pipe": true
+        },
+        {
+          "command": "pnpm pack",
+          "dryRunCommand": true
+        }
+      ],
+      "publish": [
+        {
+          "command": "echo \"# Pnpm Package Publish\"",
+          "dryRunCommand": true,
+          "pipe": true
+        },
+        {
+          "command": "echo '```'",
+          "dryRunCommand": true,
+          "pipe": true
+        },
+        {
+          "command": "pnpm publish --access public",
+          "dryRunCommand": "npm publish --dry-run --access public",
+          "pipe": true
+        },
+        {
+          "command": "echo '```'",
+          "dryRunCommand": true,
+          "pipe": true
+        }
+      ],
+      "postpublish": [
+        "git tag ${ pkg.pkg }-v${ pkgFile.versionMajor } -f",
+        "git tag ${ pkg.pkg }-v${ pkgFile.versionMajor }.${ pkgFile.versionMinor } -f",
+        "git push --tags -f"
+      ]
+    },
+    "rust": {
+      "version": true,
       "getPublishedVersion": "cargo search ${ pkg.pkg } --limit 1 | sed -nE 's/^[^\"]*\"//; s/\".*//1p' -",
       "publish": [
         {
@@ -42,6 +104,11 @@
     "create-tauri-app": {
       "path": ".",
       "manager": "rust"
+    },
+    "create-tauri-js": {
+      "path": "./node",
+      "manager": "javascript",
+      "dependencies": ["create-tauri-app"]
     }
   }
 }

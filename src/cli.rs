@@ -1,3 +1,5 @@
+use std::ffi::OsString;
+
 use dialoguer::console::style;
 use pico_args::Arguments;
 
@@ -26,8 +28,8 @@ impl Default for Args {
     }
 }
 
-pub fn args() -> anyhow::Result<Args> {
-    let mut pargs = Arguments::from_env();
+pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Args> {
+    let mut pargs = Arguments::from_vec(argv);
 
     if pargs.contains(["-h", "--help"]) {
         let help = format!(
@@ -49,7 +51,7 @@ pub fn args() -> anyhow::Result<Args> {
   {GREEN}-h{RESET}, {GREEN}--help{RESET}                    Prints help information
   {GREEN}-v{RESET}, {GREEN}--version{RESET}                 Prints version information
 "#,
-            name = env!("CARGO_PKG_NAME"),
+            name = bin_name.unwrap_or_else(|| env!("CARGO_PKG_NAME").to_string()),
             version = env!("CARGO_PKG_VERSION"),
             authors = env!("CARGO_PKG_AUTHORS"),
             desc = env!("CARGO_PKG_DESCRIPTION"),

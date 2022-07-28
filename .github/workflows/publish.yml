@@ -1,0 +1,304 @@
+name: publish binaries and napi modules
+
+env:
+  DEBUG: napi:*
+  APP_NAME: create-tauri-app
+  MACOSX_DEPLOYMENT_TARGET: '10.13'
+
+on:
+  push:
+    branches:
+      - rewrite-in-rust
+  workflow_dispatch:
+  repository_dispatch:
+    types: [publish-binaries]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        settings:
+          - host: macos-latest
+            target: x86_64-apple-darwin
+          - host: macos-latest
+            target: aarch64-apple-darwin
+          - host: windows-latest
+            target: x86_64-pc-windows-msvc
+            ext: .exe
+          - host: windows-latest
+            target: i686-pc-windows-msvc
+            ext: .exe
+          - host: ubuntu-18.04
+            target: x86_64-unknown-linux-gnu
+          - host: ubuntu-18.04
+            target: x86_64-unknown-linux-musl
+          - host: ubuntu-18.04
+            target: aarch64-unknown-linux-gnu
+          - host: ubuntu-18.04
+            target: armv7-unknown-linux-gnueabihf
+            setup: |
+                  sudo apt-get update
+                  sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf -y
+          - host: ubuntu-18.04
+            target: aarch64-unknown-linux-musl
+
+    name: ${{ matrix.settings.target }}
+    runs-on: ${{ matrix.settings.host }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          override: true
+          toolchain: stable
+          target: ${{ matrix.settings.target }}
+
+      - name: setup system dependencies
+        run: ${{ matrix.settings.setup }}
+        if: ${{ matrix.settings.setup }}
+        shell: bash
+
+      - name: build
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release
+
+      - name: upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: "${{ matrix.settings.target }}"
+          path: "target/release/create-tauri-app${{ matrix.settings.ext }}"
+          if-no-files-found: error
+
+  build-napi:
+    strategy:
+      working-directory: node
+      fail-fast: false
+      matrix:
+        settings:
+          - host: macos-latest
+            target: x86_64-apple-darwin
+            build: |
+              pnpm build
+              strip -x *.node
+          - host: windows-latest
+            build: pnpm build
+            target: x86_64-pc-windows-msvc
+          - host: windows-latest
+            build: |
+              pnpm build --target i686-pc-windows-msvc
+              pnpm test
+            target: i686-pc-windows-msvc
+          - host: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-debian
+            build: |-
+              set -e &&
+              pnpm build --target x86_64-unknown-linux-gnu &&
+              strip *.node
+          - host: ubuntu-latest
+            target: x86_64-unknown-linux-musl
+            docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-alpine
+            build: set -e && pnpm build && strip *.node
+          - host: macos-latest
+            target: aarch64-apple-darwin
+            build: |
+              sudo rm -Rf /Library/Developer/CommandLineTools/SDKs/*;
+              export CC=$(xcrun -f clang);
+              export CXX=$(xcrun -f clang++);
+              SYSROOT=$(xcrun --sdk macosx --show-sdk-path);
+              export CFLAGS="-isysroot $SYSROOT -isystem $SYSROOT";
+              pnpm build --target aarch64-apple-darwin
+              strip -x *.node
+          - host: ubuntu-latest
+            target: aarch64-unknown-linux-gnu
+            docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-debian-aarch64
+            build: |-
+              set -e &&
+              pnpm build --target aarch64-unknown-linux-gnu &&
+              aarch64-unknown-linux-gnu-strip *.node
+          - host: ubuntu-latest
+            target: armv7-unknown-linux-gnueabihf
+            setup: |
+              sudo apt-get update
+              sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf -y
+            build: |
+              pnpm build --target=armv7-unknown-linux-gnueabihf
+              arm-linux-gnueabihf-strip *.node
+          - host: ubuntu-latest
+            target: aarch64-unknown-linux-musl
+            docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-alpine
+            build: |-
+              set -e &&
+              rustup target add aarch64-unknown-linux-musl &&
+              pnpm build --target aarch64-unknown-linux-musl &&
+              /aarch64-linux-musl-cross/bin/aarch64-linux-musl-strip *.node
+    name: stable - ${{ matrix.settings.target }} - node@16
+    runs-on: ${{ matrix.settings.host }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          check-latest: true
+          cache: 'pnpm'
+      - name: Install
+        uses: actions-rs/toolchain@v1
+        if: ${{ !matrix.settings.docker }}
+        with:
+          profile: minimal
+          override: true
+          toolchain: stable
+          target: ${{ matrix.settings.target }}
+      - name: Cache cargo
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            .cargo-cache/registry/index/
+            .cargo-cache/registry/cache/
+            .cargo-cache/git/db/
+            target/
+          key: ${{ matrix.settings.target }}-cargo-${{ matrix.settings.host }}
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+      - name: Cache pnpm dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: npm-cache-build-${{ matrix.settings.target }}-node@16
+      - name: Setup toolchain
+        run: ${{ matrix.settings.setup }}
+        if: ${{ matrix.settings.setup }}
+        shell: bash
+      - name: Setup node x86
+        if: matrix.settings.target == 'i686-pc-windows-msvc'
+        run: pnpm config set supportedArchitectures.cpu "ia32"
+        shell: bash
+      - name: Install dependencies
+        run: pnpm install
+      - name: Setup node x86
+        uses: actions/setup-node@v3
+        if: matrix.settings.target == 'i686-pc-windows-msvc'
+        with:
+          node-version: 16
+          check-latest: true
+          cache: pnpm
+          architecture: x86
+      - name: Build in docker
+        uses: addnab/docker-run-action@v3
+        if: ${{ matrix.settings.docker }}
+        with:
+          image: ${{ matrix.settings.docker }}
+          options: '--user 0:0 -v ${{ github.workspace }}/.cargo-cache/git/db:/root/.cargo/git/db -v ${{ github.workspace }}/.cargo/registry/cache:/root/.cargo/registry/cache -v ${{ github.workspace }}/.cargo/registry/index:/root/.cargo/registry/index -v ${{ github.workspace }}:/build -w /build'
+          run: ${{ matrix.settings.build }}
+      - name: Build
+        run: ${{ matrix.settings.build }}
+        if: ${{ !matrix.settings.docker }}
+        shell: bash
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: bindings-${{ matrix.settings.target }}
+          path: ${{ env.APP_NAME }}.*.node
+          if-no-files-found: error
+
+  # publish:
+  #   needs:
+  #     - build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+
+  #     - name: download all artifacts
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         path: binaries
+
+  #     - name: list ./binaries
+  #       run: ls -R
+  #       working-directory: binaries
+
+  #     - name: rename files
+  #       working-directory: binaries
+  #       shell: bash
+  #       run: |
+  #         find . -name 'create-tauri-app*' -print0 | while read -d '' file
+  #         do
+  #           parent="$(basename $(dirname ${file}))"
+  #           target="${file#./}"
+  #           target="${target/create-tauri-app/create-tauri-app-${parent}}"
+  #           target="${target/${parent}\//}"
+  #           mv $file $target
+  #         done
+  #         find . -type d -empty -delete
+
+  #     - name: list ./binaries
+  #       run: ls -R
+  #       working-directory: binaries
+
+  #     - uses: xresloader/upload-to-github-release@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       with:
+  #         release_id: "${{ github.event.client_payload.release_id }}"
+  #         file: "binaries/*"
+  #          publish:
+
+  # publish-napi:
+  #   name: Publish
+  #   runs-on: ubuntu-latest
+  #   needs:
+  #     - build-napi
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Setup node
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 16
+  #         check-latest: true
+  #         cache: yarn
+  #     - name: Cache NPM dependencies
+  #       uses: actions/cache@v3
+  #       with:
+  #         path: .yarn/cache
+  #         key: npm-cache-ubuntu-latest-publish
+  #     - name: Install dependencies
+  #       run: yarn install
+  #     - name: Download all artifacts
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         path: artifacts
+  #     - name: Move artifacts
+  #       run: yarn artifacts
+  #     - name: List packages
+  #       run: ls -R ./npm
+  #       shell: bash
+  #     - name: Publish
+  #       run: |
+  #         if git log -1 --pretty=%B | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+$";
+  #         then
+  #           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+  #           npm publish --access public
+  #         elif git log -1 --pretty=%B | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+";
+  #         then
+  #           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+  #           npm publish --tag next --access public
+  #         else
+  #           echo "Not a release, skipping publish"
+  #         fi
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+

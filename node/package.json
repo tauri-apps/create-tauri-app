@@ -1,0 +1,47 @@
+{
+  "name": "create-tauri-app",
+  "version": "0.0.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "napi": {
+    "name": "create-tauri-app",
+    "triples": {
+      "additional": [
+        "aarch64-apple-darwin",
+        "aarch64-unknown-linux-gnu",
+        "aarch64-unknown-linux-musl",
+        "armv7-unknown-linux-gnueabihf",
+        "x86_64-unknown-linux-musl",
+        "i686-pc-windows-msvc"
+      ]
+    }
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@napi-rs/cli": "^2.10.3",
+    "ava": "^4.3.0"
+  },
+  "engines": {
+    "node": ">= 10"
+  },
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "prepublishOnly": "napi prepublish -t npm",
+    "test": "ava",
+    "version": "napi version"
+  },
+  "packageManager": "yarn@3.2.2",
+  "optionalDependencies": {
+    "create-tauri-app-win32-x64-msvc": "0.0.0",
+    "create-tauri-app-darwin-x64": "0.0.0",
+    "create-tauri-app-linux-x64-gnu": "0.0.0",
+    "create-tauri-app-darwin-arm64": "0.0.0",
+    "create-tauri-app-linux-arm64-gnu": "0.0.0",
+    "create-tauri-app-linux-arm64-musl": "0.0.0",
+    "create-tauri-app-linux-arm-gnueabihf": "0.0.0",
+    "create-tauri-app-linux-x64-musl": "0.0.0",
+    "create-tauri-app-win32-ia32-msvc": "0.0.0"
+  }
+}
