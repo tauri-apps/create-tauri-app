@@ -1,7 +1,7 @@
-import { createSignal } from 'solid-js'
-import { invoke } from '@tauri-apps/api/tauri'
-import logo from './logo.svg'
-import styles from './App.module.css'
+import { createSignal } from "solid-js"
+import logo from './assets/logo.svg';
+import { invoke } from "@tauri-apps/api/tauri"
+import './App.css'
 
 function App() {
   const [greetMsg, setGreetMsg] = createSignal('')
@@ -12,53 +12,44 @@ function App() {
   }
 
   return (
-    <div class={styles.App}>
-      <header class={styles.header}>
-        <img src={logo} class={styles.logo} alt="logo" />
-        <p>Hello Tauri + Solid + Typescript!</p>
-
-        <div>
-          <input
-            onChange={(e) => setName(e.currentTarget.value)}
-            placeholder="Enter a name..."
-          />
-          <button type="button" onClick={() => greet()}>
-            Greet
-          </button>
-        </div>
-        <p>{greetMsg}</p>
-
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          Edit <code>src-tauri/src/main.rs</code> and save to test app hot
-          reload.
-        </p>
-
-        <p>
-          <a
-            class={styles.link}
-            className="App-link"
-            href="https://tauri.studio"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Tauri Docs
-          </a>
-          {' | '}
-          <a
-            class={styles.link}
-            href="https://github.com/solidjs/solid"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Solid
-          </a>
-        </p>
-      </header>
+    <div className="App">
+    <div>
+      <a href="https://tauri.app" target="_blank">
+        <img src="/tauri.svg" className="logo" alt="Tauri logo" />
+      </a>
+      <a href="https://vitejs.dev" target="_blank">
+        <img src="/vite.svg" className="logo" alt="Vite logo" />
+      </a>
+      <a href="https://solidjs.com" target="_blank">
+        <img src={logo} className="logo react" alt="Solid logo" />
+      </a>
     </div>
-  )
+    <div className="card">
+      <div>
+        <input
+          id="greet-input"
+          onChange={(e) => setName(e.currentTarget.value)}
+          placeholder="Enter a name..."
+        />
+        <button type="button" onClick={() => greet()}>
+          Greet
+        </button>
+      </div>
+      <p>{greetMsg}</p>
+
+      <p>
+        Edit <code>src/App.jsx</code> and save to test HMR
+      </p>
+      <p>
+        Edit <code>src-tauri/src/main.rs</code> and save to test app hot
+        reload.
+      </p>
+    </div>
+    <p className="read-the-docs">
+      Click on the Tauri, Vite and Solid logos to learn more
+    </p>
+  </div>
+  );
 }
 
-export default App
+export default App;

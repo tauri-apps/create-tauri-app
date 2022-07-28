@@ -5,7 +5,7 @@
 
 #[tauri::command]
 fn greet(name: &str) -> String {
-    format!("Hello {name}! You've been greeted from rust!")
+    format!("Hello {}! You've been greeted from rust!", name)
 }
 
 fn main() {

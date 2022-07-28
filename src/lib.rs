@@ -22,7 +22,7 @@ where
     A: Into<OsString> + Clone,
 {
     if let Err(e) = try_run(args, bin_name) {
-        eprintln!("{}:{:#}", style("error").red().bold(), e);
+        eprintln!("{}: {:#}", style("error").red().bold(), e);
         exit(1);
     }
 }
