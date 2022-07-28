@@ -191,6 +191,8 @@ jobs:
         if: ${{ matrix.settings.setup }}
         shell: bash
 
+      - run: ls -ah
+
       - name: Install dependencies
         run: pnpm install
 
