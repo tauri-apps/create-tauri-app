@@ -1,9 +1,9 @@
 {
   "build": {
-    "beforeDevCommand": "{{before_dev_Command}}",
-    "beforeBuildCommand": "{{before_build_Command}}",
-    "devPath": "{{dev_path}}",
-    "distDir": "{{dist_dir}}"
+    "beforeDevCommand": "",
+    "beforeBuildCommand": "",
+    "devPath": "",
+    "distDir": ""
   },
   "package": {
     "productName": "{{package_name}}",

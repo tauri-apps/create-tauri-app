@@ -209,7 +209,8 @@ where
         f.replace("{{package_name}}", &package_name)
     })?;
 
-    println!("{} Done. If you haven't already, please follow https://tauri.app/v1/guides/getting-started/prerequisites to install the needed prerequisites.", style("✔").green());
+    println!("");
+    println!("Done. Please follow https://tauri.app/v1/guides/getting-started/prerequisites to install the needed prerequisites, if you haven't already.");
     println!("Now run:");
     println!("  cd {}", project_name);
     if !pkg_manager.install_cmd().is_empty() {

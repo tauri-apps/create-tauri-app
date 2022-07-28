@@ -9,7 +9,6 @@ fn greet(name: &str) -> String {
 }
 
 fn main() {
-    let context = tauri::generate_context!();
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![greet])
         .run(tauri::generate_context!())

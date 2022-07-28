@@ -1,10 +1,6 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { invoke } from '@tauri-apps/api/tauri'
-
-defineProps({
-  msg: String
-})
 
 const greetMsg = ref('')
 const name = ref('')
@@ -15,7 +11,21 @@ async function greet() {
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
+  <div class="card">
+    <input v-model="name" placeholder="Enter a name..." />
+    <button type="button" @click="greet()">Greet</button>
+  </div>
+
+  <p>{{ greetMsg }}</p>
+    <p>
+    Edit
+    <code>src/components/Greet.vue</code> to test hot module replacement.
+  </p>
+  <p>
+    Edit
+    <code>src-tauri/src/main.rs</code> to test app hot reload.
+  </p>
+  </div>
 
   <p>
     Recommended IDE setup:
@@ -31,31 +41,11 @@ async function greet() {
       >rust-analyzer</a
     >
   </p>
-
-  <p>
-    <a href="https://tauri.studio/" target="_blank">Tauri Documentation</a>
-    |
-    <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Documentation</a>
-  </p>
-
-  <div>
-    <input v-model="name" placeholder="Enter a name..." />
-    <button type="button" @click="greet()">Greet</button>
-  </div>
-  <p>{{ greetMsg }}</p>
-
-  <p>
-    Edit
-    <code>src/components/HelloWorld.vue</code> to test hot module replacement.
-  </p>
-  <p>
-    Edit
-    <code>src-tauri/src/main.rs</code> to test app hot reload.
-  </p>
+  <p class="read-the-docs">Click on the Tauri, Vite and Vue logos to learn more</p>
 </template>
 
 <style scoped>
-a {
-  color: #42b983;
+.read-the-docs {
+  color: #888;
 }
 </style>
