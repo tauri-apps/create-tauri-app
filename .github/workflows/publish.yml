@@ -74,8 +74,9 @@ jobs:
           if-no-files-found: error
 
   build-napi:
-    strategy:
+    env:
       working-directory: node
+    strategy:
       fail-fast: false
       matrix:
         settings:
