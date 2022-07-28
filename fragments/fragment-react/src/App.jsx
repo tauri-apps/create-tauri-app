@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import logo from './logo.svg'
-import { invoke } from '@tauri-apps/api'
+import reactLogo from './assets/react.svg'
+import { invoke } from "@tauri-apps/api/tauri"
 import './App.css'
 
 function App() {
@@ -13,12 +13,21 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Tauri + React!</p>
-
+      <div>
+        <a href="https://tauri.app" target="_blank">
+          <img src="/tauri.svg" className="logo" alt="Tauri logo" />
+        </a>
+        <a href="https://vitejs.dev" target="_blank">
+          <img src="/vite.svg" className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://reactjs.org" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <div className="card">
         <div>
           <input
+            id="greet-input"
             onChange={(e) => setName(e.currentTarget.value)}
             placeholder="Enter a name..."
           />
@@ -29,32 +38,16 @@ function App() {
         <p>{greetMsg}</p>
 
         <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
+          Edit <code>src/App.jsx</code> and save to test HMR
         </p>
         <p>
           Edit <code>src-tauri/src/main.rs</code> and save to test app hot
           reload.
         </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://tauri.studio"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Tauri Docs
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </p>
-      </header>
+      </div>
+      <p className="read-the-docs">
+        Click on the Tauri, Vite and React logos to learn more
+      </p>
     </div>
   )
 }
