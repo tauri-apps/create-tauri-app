@@ -1,6 +1,25 @@
 {
   "name": "create-tauri-app",
   "version": "1.0.2",
+  "description": "Rapidly scaffold out a new tauri app project.",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/tauri"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tauri-apps/create-tauri-app.git"
+  },
+  "contributors": [
+    "Tauri Team <team@tauri-apps.org> (https://tauri.app)"
+  ],
+  "bugs": {
+    "url": "https://github.com/tauri-apps/create-tauri-app/issues"
+  },
+  "homepage": "https://github.com/tauri-apps/create-tauri-app#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "index.js",
   "types": "index.d.ts",
   "napi": {
@@ -16,12 +35,15 @@
       ]
     }
   },
-  "license": "MIT",
+  "license": "Apache-2.0 OR MIT",
   "devDependencies": {
     "@napi-rs/cli": "^2.10.3"
   },
   "engines": {
     "node": ">= 10"
+  },
+  "bin": {
+    "create-tauri-app": "create-tauri-app.js"
   },
   "scripts": {
     "artifacts": "napi artifacts",
@@ -29,17 +51,5 @@
     "build:debug": "napi build --platform",
     "prepublishOnly": "napi prepublish -t npm",
     "version": "napi version"
-  },
-  "packageManager": "yarn@3.2.2",
-  "optionalDependencies": {
-    "create-tauri-app-win32-x64-msvc": "0.0.0",
-    "create-tauri-app-darwin-x64": "0.0.0",
-    "create-tauri-app-linux-x64-gnu": "0.0.0",
-    "create-tauri-app-darwin-arm64": "0.0.0",
-    "create-tauri-app-linux-arm64-gnu": "0.0.0",
-    "create-tauri-app-linux-arm64-musl": "0.0.0",
-    "create-tauri-app-linux-arm-gnueabihf": "0.0.0",
-    "create-tauri-app-linux-x64-musl": "0.0.0",
-    "create-tauri-app-win32-ia32-msvc": "0.0.0"
   }
 }
