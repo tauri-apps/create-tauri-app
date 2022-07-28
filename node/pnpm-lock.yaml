@@ -11,5 +11,4 @@ packages:
   /@napi-rs/cli/2.10.3:
     resolution: {integrity: sha512-J/3zqDX1VLhzl9RNpthAcCSLPaute7J7ImaP926xjJXAcfZmUM6QjJBCrvdMa3aGEfQ3TqDwidUnLj71JHW8QQ==}
     engines: {node: '>= 10'}
-    hasBin: true
     dev: true

@@ -194,7 +194,7 @@ jobs:
       - run: ls -ah
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: Build in docker
         uses: addnab/docker-run-action@v3
