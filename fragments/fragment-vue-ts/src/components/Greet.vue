@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { invoke } from '@tauri-apps/api/tauri'
+import { ref } from "vue";
+import { invoke } from "@tauri-apps/api/tauri";
 
-const greetMsg = ref('')
-const name = ref('')
+const greetMsg = ref("");
+const name = ref("");
 
 async function greet() {
-  greetMsg.value = await invoke('greet', { name: name.value })
+  greetMsg.value = await invoke("greet", { name: name.value });
 }
 </script>
 
