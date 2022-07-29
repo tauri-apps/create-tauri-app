@@ -1,6 +1,12 @@
-use std::{fmt::Display, str::FromStr};
+use std::{fmt::Display, fs, path, str::FromStr};
 
-use crate::colors::*;
+use rust_embed::RustEmbed;
+
+use crate::{colors::*, package_manager::PackageManager};
+
+#[derive(RustEmbed)]
+#[folder = "$CARGO_MANIFEST_DIR/fragments"]
+struct Fragments;
 
 #[derive(Debug, Clone, Copy, Default, PartialEq)]
 #[non_exhaustive]
@@ -37,6 +43,84 @@ impl<'a> Template {
             Template::Yew => format!("{ITALIC}{BLACK}You also need to install {YELLOW}tauri_cli {BLACK}({BLUE}cargo install tauri_cli{BLACK}) and {YELLOW}trunk {BLACK}({BLUE}https://trunkrs.dev/#install{BLACK}){RESET}"),
             _ => String::new(),
         }
+    }
+
+    pub fn render(
+        &self,
+        target_dir: &path::PathBuf,
+        pkg_manager: PackageManager,
+        package_name: &str,
+    ) -> anyhow::Result<()> {
+        let write_file = |file: &str| -> anyhow::Result<()> {
+            // remove the first component, which is certainly the fragment directory they were in before getting embeded into the binary
+            let p = path::PathBuf::from(file)
+                .components()
+                .skip(1)
+                .collect::<Vec<_>>()
+                .iter()
+                .collect::<path::PathBuf>();
+
+            let p = target_dir.join(&p);
+
+            let target_file = match &*p.file_name().unwrap().to_string_lossy() {
+                "_gitignore" => p.parent().unwrap().join(".gitignore"),
+                // render conditional files
+                // conditional files are files that start with a special conventions
+                //  _[<list of package managers separated by `-`>]_<file_name>
+                // ex: _[pnpm-npm-yarn]package.json
+                name if name.starts_with("_[") => {
+                    let mut s = name.strip_prefix("_[").unwrap().split("]_");
+                    let (managers_str, file_name) = (s.next().unwrap(), s.next().unwrap());
+                    let managers_list = managers_str.split("-").collect::<Vec<_>>();
+                    if managers_list.contains(&pkg_manager.to_string().as_str()) {
+                        p.parent().unwrap().join(file_name)
+                    } else {
+                        return Ok(());
+                    }
+                }
+                _ => p,
+            };
+
+            let mut data = Fragments::get(&*file).unwrap().data.to_vec();
+
+            if let Ok(str_) = String::from_utf8(data.to_vec()) {
+                data = str_
+                    .replace("{{package_name}}", &package_name)
+                    .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
+                    .as_bytes()
+                    .to_vec();
+            }
+
+            fs::create_dir_all(&target_file.parent().unwrap())?;
+            fs::write(target_file, &data)?;
+            Ok(())
+        };
+
+        // write base files first
+        for file in Fragments::iter().filter(|e| {
+            path::PathBuf::from(e.to_string())
+                .components()
+                .nth(0)
+                .unwrap()
+                .as_os_str()
+                == path::PathBuf::from("fragment-base")
+        }) {
+            write_file(&*file)?;
+        }
+
+        // then write template files which can override files from base
+        for file in Fragments::iter().filter(|e| {
+            path::PathBuf::from(e.to_string())
+                .components()
+                .nth(0)
+                .unwrap()
+                .as_os_str()
+                == path::PathBuf::from(format!("fragment-{self}"))
+        }) {
+            write_file(&*file)?;
+        }
+
+        Ok(())
     }
 }
 

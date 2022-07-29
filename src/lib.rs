@@ -3,8 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 use dialoguer::{theme::ColorfulTheme, Confirm, Input, Select};
-use rust_embed::RustEmbed;
-use std::{ffi::OsString, fs, path, process::exit};
+use std::{ffi::OsString, fs, process::exit};
 
 use crate::{colors::*, package_manager::PackageManager};
 
@@ -12,10 +11,6 @@ mod cli;
 mod colors;
 mod package_manager;
 mod template;
-
-#[derive(RustEmbed)]
-#[folder = "$CARGO_MANIFEST_DIR/fragments"]
-struct Fragments;
 
 pub fn run<I, A>(args: I, bin_name: Option<String>)
 where
@@ -144,74 +139,7 @@ where
     };
     fs::create_dir_all(&target_dir)?;
 
-    let write_file = |file: &str| -> anyhow::Result<()> {
-        // remove the first component, which is certainly the fragment directory they were in before getting embeded into the binary
-        let p = path::PathBuf::from(file)
-            .components()
-            .skip(1)
-            .collect::<Vec<_>>()
-            .iter()
-            .collect::<path::PathBuf>();
-
-        let p = target_dir.join(&p);
-
-        let target_file = match &*p.file_name().unwrap().to_string_lossy() {
-            "_gitignore" => p.parent().unwrap().join(".gitignore"),
-            // render conditional files
-            // conditional files are files that start with a special conventions
-            //  _[<list of package managers separated by `-`>]_<file_name>
-            // ex: _[pnpm-npm-yarn]package.json
-            name if name.starts_with("_[") => {
-                let mut s = name.strip_prefix("_[").unwrap().split("]_");
-                let (managers_str, file_name) = (s.next().unwrap(), s.next().unwrap());
-                let managers_list = managers_str.split("-").collect::<Vec<_>>();
-                if managers_list.contains(&pkg_manager.to_string().as_str()) {
-                    p.parent().unwrap().join(file_name)
-                } else {
-                    return Ok(());
-                }
-            }
-            _ => p,
-        };
-
-        let mut data = Fragments::get(&*file).unwrap().data.to_vec();
-
-        if let Ok(str_) = String::from_utf8(data.to_vec()) {
-            data = str_
-                .replace("{{package_name}}", &package_name)
-                .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
-                .as_bytes()
-                .to_vec();
-        }
-
-        fs::create_dir_all(&target_file.parent().unwrap())?;
-        fs::write(target_file, &data)?;
-        Ok(())
-    };
-
-    // write base files first
-    for file in Fragments::iter().filter(|e| {
-        path::PathBuf::from(e.to_string())
-            .components()
-            .nth(0)
-            .unwrap()
-            .as_os_str()
-            == path::PathBuf::from("fragment-base")
-    }) {
-        write_file(&*file)?;
-    }
-
-    // then write template files which can override files from base
-    for file in Fragments::iter().filter(|e| {
-        path::PathBuf::from(e.to_string())
-            .components()
-            .nth(0)
-            .unwrap()
-            .as_os_str()
-            == path::PathBuf::from(format!("fragment-{template}"))
-    }) {
-        write_file(&*file)?;
-    }
+    template.render(&target_dir, pkg_manager, &package_name)?;
 
     println!("");
     println!("Done, now run:");
