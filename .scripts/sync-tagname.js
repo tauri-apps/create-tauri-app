@@ -18,28 +18,27 @@ const inc = (content) => {
     /(.*__TAG_NAME__\s*=\s*("|')create-tauri-app-v)([0-9])+\.([0-9])+\.([0-9])+(("|').*)/,
     "s"
   );
-  const [, , , major, minor, patch] = re.exec(content);
+  const [, before, , major, minor, patch, after] = re.exec(content);
 
-  let replacement;
+  let ret;
   switch (bump) {
     case "major":
-      replacement = `$1${Number(major) + 1}.$4.$5$6`;
+      ret = `${before}${Number(major) + 1}.${minor}.${patch}${after}`;
       break;
     case "minor":
-      replacement = `$1$3.${Number(minor) + 1}.$5$6`;
+      ret = `${before}${major}.${Number(minor) + 1}.${patch}${after}`;
       break;
     case "patch":
-      replacement = `$1$3.$4.${Number(patch) + 1}$6`;
+      ret = `${before}${major}.${minor}.${Number(patch) + 1}${after}`;
       break;
     default:
       throw new Error("unexpected bump " + bump);
   }
-  return content.replace(re, replacement);
+  return ret
 };
 
-for (let file of ["scripts/cta.ps1", "scripts/cta.sh"]) {
+for (let file of ["create-tauri-app.ps1", "create-tauri-app.sh"]) {
   const content = readFileSync(file, "utf-8");
-  console.log(content);
   const updatedContent = inc(content);
   writeFileSync(file, updatedContent);
   console.log(`updated __TAG_NAME__  version in "${file}"`);
