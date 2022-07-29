@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-use dialoguer::{console::style, theme::ColorfulTheme, Confirm, Input, Select};
+use dialoguer::{theme::ColorfulTheme, Confirm, Input, Select};
 use rust_embed::RustEmbed;
 use std::{ffi::OsString, fs, path, process::exit};
 
-use crate::package_manager::PackageManager;
+use crate::{colors::*, package_manager::PackageManager};
 
 mod cli;
+mod colors;
 mod package_manager;
 mod template;
 
@@ -22,7 +23,7 @@ where
     A: Into<OsString> + Clone,
 {
     if let Err(e) = try_run(args, bin_name) {
-        eprintln!("{}: {:#}", style("error").red().bold(), e);
+        eprintln!("{BOLD}{RED}error{RESET}: {e:#}");
         exit(1);
     }
 }
@@ -94,7 +95,7 @@ where
                 .interact()?
         };
         if !overrwite {
-            eprintln!("{} Operation Cancelled", style("✘").red());
+            eprintln!("{BOLD}{RED}✘{RESET} Operation Cancelled");
             exit(1);
         }
     };
@@ -131,12 +132,8 @@ where
 
     if !templates.contains(&template) {
         eprintln!(
-            "{}: the {} template is not suppported for {} package manager\n       possible templates for {} are: [{}]",
-            style("error").red().bold(),
-            style(template).green(),
-            style(pkg_manager).green(),
-            style(pkg_manager).green(),
-            templates.into_iter().map(|e|style(e).green().to_string()).collect::<Vec<_>>().join(", ")
+            "{BOLD}{RED}error{RESET}: the {GREEN}{template}{RESET} template is not suppported for the {GREEN}{pkg_manager}{RESET} package manager\n       possible templates for {GREEN}{pkg_manager}{RESET} are: [{}]",
+            templates.into_iter().map(|e|format!("{GREEN}{e}{RESET}")).collect::<Vec<_>>().join(", ")
         );
         exit(1);
     }
@@ -177,8 +174,18 @@ where
             _ => p,
         };
 
+        let mut data = Fragments::get(&*file).unwrap().data.to_vec();
+
+        if let Ok(str_) = String::from_utf8(data.to_vec()) {
+            data = str_
+                .replace("{{package_name}}", &package_name)
+                .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
+                .as_bytes()
+                .to_vec();
+        }
+
         fs::create_dir_all(&target_file.parent().unwrap())?;
-        fs::write(target_file, Fragments::get(&*file).unwrap().data)?;
+        fs::write(target_file, &data)?;
         Ok(())
     };
 
@@ -206,45 +213,23 @@ where
         write_file(&*file)?;
     }
 
-    // update package.json
-    let pkg_json = target_dir.join("package.json");
-    update_file_content(&pkg_json, |f| f.replace("{{package_name}}", &package_name))?;
-
-    // update tauri.conf.json
-    let tauri_conf = target_dir.join("src-tauri").join("tauri.conf.json");
-    update_file_content(&tauri_conf, |f| {
-        f.replace("{{package_name}}", &package_name)
-            .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
-    })?;
-
-    // update Cargo.toml
-    let cargo_toml = target_dir.join("src-tauri").join("Cargo.toml");
-    update_file_content(&cargo_toml, |f| {
-        f.replace("{{package_name}}", &package_name)
-    })?;
-
     println!("");
-    println!("Done. Please follow https://tauri.app/v1/guides/getting-started/prerequisites to install the needed prerequisites, if you haven't already.");
-    println!("Now run:");
+    println!("Done, now run:");
     println!("  cd {}", project_name);
     if !pkg_manager.install_cmd().is_empty() {
         println!("  {}", pkg_manager.install_cmd());
     }
     println!("  {} tauri dev", pkg_manager.run_cmd());
     println!("");
-
-    Ok(())
-}
-
-fn update_file_content<P: AsRef<path::Path>, F: FnMut(String) -> String>(
-    p: P,
-    mut f: F,
-) -> anyhow::Result<()> {
-    if p.as_ref().exists() {
-        let file = fs::read_to_string(&p)?;
-        let file = f(file);
-        fs::write(&p, file)?;
+    println!(
+        "{}",
+        format!(
+            "{ITALIC}{BLACK}Please follow {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites {BLACK}to install the needed prerequisites, if you haven't already.{RESET}")
+    );
+    if !template.post_init_info().is_empty() {
+        println!("{}", template.post_init_info());
     }
+    println!("");
     Ok(())
 }
 

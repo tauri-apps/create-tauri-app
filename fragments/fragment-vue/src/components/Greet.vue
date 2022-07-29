@@ -17,30 +17,6 @@ async function greet() {
   </div>
 
   <p>{{ greetMsg }}</p>
-    <p>
-    Edit
-    <code>src/components/Greet.vue</code> to test hot module replacement.
-  </p>
-  <p>
-    Edit
-    <code>src-tauri/src/main.rs</code> to test app hot reload.
-  </p>
-
-  <p>
-    Recommended IDE setup:
-    <a href="https://code.visualstudio.com/" target="_blank">VS Code</a>
-    +
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-    +
-    <a href="https://github.com/tauri-apps/tauri-vscode" target="_blank"
-      >Tauri</a
-    >
-    +
-    <a href="https://github.com/rust-lang/rust-analyzer" target="_blank"
-      >rust-analyzer</a
-    >
-  </p>
-  <p class="read-the-docs">Click on the Tauri, Vite and Vue logos to learn more</p>
 </template>
 
 <style scoped>

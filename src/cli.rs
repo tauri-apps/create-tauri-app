@@ -1,13 +1,8 @@
 use std::ffi::OsString;
 
-use dialoguer::console::style;
 use pico_args::Arguments;
 
-use crate::{package_manager::PackageManager, template::Template};
-
-const GREEN: &str = "\x1b[32m";
-const YELLOW: &str = "\x1b[33m";
-const RESET: &str = "\x1b[0m";
+use crate::{colors::*, package_manager::PackageManager, template::Template};
 
 #[derive(Debug)]
 pub struct Args {
@@ -57,12 +52,12 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
             desc = env!("CARGO_PKG_DESCRIPTION"),
             managers = PackageManager::ALL
                 .into_iter()
-                .map(|e| style(e).green().to_string())
+                .map(|e| format!("{GREEN}{e}{RESET}"))
                 .collect::<Vec<_>>()
                 .join(", "),
             fragments = Template::ALL
                 .into_iter()
-                .map(|e| style(e).green().to_string())
+                .map(|e| format!("{GREEN}{e}{RESET}"))
                 .collect::<Vec<_>>()
                 .join(", "),
         );
