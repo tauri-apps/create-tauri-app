@@ -1,7 +1,10 @@
 #!/bin/sh
-# shellcheck shell=dash
 
-# This is a modified version of rustup script
+# Copyright 2019-2022 Tauri Programme within The Commons Conservancy
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
+
+# This is a modified version of rustup-init.sh script
 
 # This is just a little script that can be downloaded from the internet to
 # run create-tauri-app. It just does platform detection, downloads the binary
@@ -41,8 +44,8 @@ main() {
             ;;
     esac
 
-    local _tagName=""
-    local _url="https://github.com/tauri-apps/binary-releases/releases/download/${tagName}/create-tauri-app-${_arch}${_ext}"
+    local __TAG_NAME__="create-tauri-app-v1.0.2"
+    local _url="https://github.com/tauri-apps/binary-releases/releases/download/${__TAG_NAME__}/create-tauri-app-${_arch}${_ext}"
 
     local _dir
     _dir="$(ensure mktemp -d)"

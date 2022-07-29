@@ -103,7 +103,8 @@
   "packages": {
     "create-tauri-app": {
       "path": ".",
-      "manager": "rust"
+      "manager": "rust",
+      "postversion": "node .scripts/sync-tagname.js ${ release.type }"
     },
     "create-tauri-js": {
       "path": "./node",

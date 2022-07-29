@@ -1,6 +1,10 @@
+# Copyright 2019-2022 Tauri Programme within The Commons Conservancy
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
+
 $bitness = if ([Environment]::Is64BitOperatingSystem) { "x86_64" } else { "i686" }
-$tagName=""
-$url="https://github.com/tauri-apps/binary-releases/releases/download/$tagName/create-tauri-app-$bitness-pc-windows-msvc.exe"
+$__TAG_NAME__ = "create-tauri-app-v1.0.2"
+$url="https://github.com/tauri-apps/binary-releases/releases/download/$__TAG_NAME__/create-tauri-app-$bitness-pc-windows-msvc.exe"
 $outFile = "$Env:TEMP\create-tauri-app.exe"
 
 Write-Output "$($PSStyle.Bold)info:$($PSStyle.Reset) downloading create-tauri-app"
