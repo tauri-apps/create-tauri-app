@@ -18,13 +18,16 @@ const inc = (content) => {
     /(.*__TAG_NAME__\s*=\s*("|')create-tauri-app-v)([0-9])+\.([0-9])+\.([0-9])+(-([a-zA-z]+\.([0-9])+))?(("|').*)/,
     "s"
   );
-  const [, before, , major, minor, patch, , , premajor, after] = re.exec(content);
+  const [, before, , major, minor, patch, premajorStr, , premajor, after] =
+    re.exec(content);
 
   let ret;
   switch (bump) {
     case "premajor":
-      const pre = JSON.parse(readFileSync('.changes/pre.json').toString());
-      ret = `${before}${major}.0.0-${pre.tag}.${Number(premajor)+1}${after}`;
+      const pre = JSON.parse(readFileSync(".changes/pre.json").toString());
+      ret = `${before}${
+        premajorStr && premajorStr.includes(pre.tag) ? major : Number(major) + 1
+      }.0.0-${pre.tag}.${premajor ? Number(premajor) + 1 : 0}${after}`;
       break;
     case "major":
       ret = `${before}${Number(major) + 1}.${minor}.${patch}${after}`;
@@ -38,7 +41,7 @@ const inc = (content) => {
     default:
       throw new Error("unexpected bump " + bump);
   }
-  return ret
+  return ret;
 };
 
 for (let file of ["create-tauri-app.ps1", "create-tauri-app.sh"]) {
