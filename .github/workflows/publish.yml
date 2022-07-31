@@ -6,12 +6,12 @@ env:
   MACOSX_DEPLOYMENT_TARGET: '10.13'
 
 on:
-  # push:
-  #   branches:
-  #     - rewrite-in-rust
-  workflow_dispatch:
-  repository_dispatch:
-    types: [publish-binaries]
+  workflow_dispatch: # todo: adjust before merging for stable 2.0, maybe use repository_dispatch
+    inputs:
+      releasedId:
+        description: 'Relasee Id'
+        required: true
+        type: number
 
 jobs:
   build:
@@ -246,7 +246,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          release_id: "${{ github.event.client_payload.release_id }}"
+          release_id: "${{ inputs.releasedId }}"
           file: "binaries/*"
 
   publish-napi:

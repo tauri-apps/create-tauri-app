@@ -7,7 +7,7 @@ name: version or publish
 on:
   push:
     branches:
-      - dev
+      - rewrite-in-rust # TODO: adjust before merging for stable 2.0
 
 jobs:
   version-or-publish:
@@ -42,19 +42,19 @@ jobs:
         uses: tauri-apps/create-pull-request@v3.4.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: release/version-updates
-          title: Apply Version Updates From Current Changes
+          branch: release/version-updates-alpha
+          title: Apply Version Updates From Current Changes (Alpha) # TODO: adjust before merging for stable 2.0
           commit-message: 'apply version updates'
           labels: 'version updates'
           body: ${{ steps.covector.outputs.change }}
 
-      - name: Trigger publishing binaries workflow
+      - name: Trigger publish.yml workflow
         if: |
           steps.covector.outputs.successfulPublish == 'true' &&
           contains(steps.covector.outputs.packagesPublished, 'create-tauri-app')
-        uses: peter-evans/repository-dispatch@v1
+        uses: benc-uk/workflow-dispatch@v1 # TODO: adjust before merging for stable 2.0 maybe use repository dispatch???
         with:
+          workflow: publish binaries and napi modules
+          repo: tauri-apps/create-tauri-app
+          inputs: '{"releaseId": ${{ steps.covector.outputs.releaseId }} }'
           token: ${{ secrets.TAURI_BOT_PAT }}
-          repository: tauri-apps/tauri
-          event-type: publish
-          client-payload: '{"release_id": "${{ steps.covector.outputs.releaseId }}"}'
