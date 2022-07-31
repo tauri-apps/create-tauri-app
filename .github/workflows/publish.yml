@@ -245,7 +245,6 @@ jobs:
         with:
           release_id: "${{ github.event.client_payload.release_id }}"
           file: "binaries/*"
-           publish:
 
   publish-napi:
     name: Publish
