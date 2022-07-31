@@ -1,4 +1,4 @@
-<img src=".github/splash.png" alt="Rapidly scaffold out a new tauri app project." />
+<img src="../.github/splash.png" alt="Rapidly scaffold out a new tauri app project." />
 
 [![](https://img.shields.io/crates/v/create-tauri-app)](https://crates.io/crates/create-tauri-app)
 [![](https://img.shields.io/npm/v/create-tauri-app.svg)](https://www.npmjs.com/package/create-tauri-app)
@@ -10,7 +10,53 @@
 
 
 ## Usage
-TODO
+
+With NPM:
+
+``` bash
+npm create tauri-app@latest
+```
+
+With Yarn:
+
+``` bash
+yarn create tauri-app
+```
+
+With PNPM:
+
+``` bash
+pnpm create tauri-app
+```
+
+You can also directly specify the project name and the template you want to use via additional command line options. For example, to scaffold a Vite + Vue project, run:
+
+```bash
+# npm 6.x
+npm create tauri-app@latest my-tauri-app --template svelte
+# npm 7+, extra double-dash is needed:
+npm create tauri-app@latest my-tauri-app -- --template svelte
+# yarn
+yarn create tauri-app my-tauri-app --template svelte
+# pnpm
+pnpm create tauri-app my-tauri-app --template svelte
+```
+
+Currently supported template presets include:
+
+- `vanilla`
+- `vue`
+- `vue-ts`
+- `react`
+- `react-ts`
+- `svelte`
+- `svelte-ts`
+- `solid`
+- `solid-ts`
+- `yew`
+
+You can use `.` for the project name to scaffold in the current directory.
+
 
 ## Semver
 **create-tauri-app** is following [Semantic Versioning 2.0](https://semver.org/).

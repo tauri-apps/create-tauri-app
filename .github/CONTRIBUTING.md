@@ -41,7 +41,30 @@ Hi! We, the maintainers, are really excited that you are interested in contribut
   - Provide detailed description of the bug in the PR, or link to an issue that does.
 
 ## Development Guide
-TODO
+
+You need to have [Rust](https://www.rust-lang.org) and [Cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html) installed.
+
+### Testing your changes
+
+```bash
+cargo run
+```
+
+or
+
+```bash
+cargo run -- <cli arguments>
+```
+
+### Templates
+
+A template is a just combination of two fragments, [`fragment-base`](../fragments/fragment-base) (which is shared between all templates) and another fragment that is specific to the template.
+
+#### Adding a new template
+
+- Add a directory in `<repo-root>/fragments` and name `fragment-template` where `template` is the name of the template and add all the files you need there as they should appear after the template is created.
+- In `<repo-root>/src/template.rs`, add an entry in the `Template` enum, modify `post_init_info` if needed and modify `FromStr` and `Display` implementation
+- In `<repo-root>/src/package_manager.rs` add your new template to the appropraite package manager in the `templates` method
 
 ## Financial Contribution
 
