@@ -1,18 +1,18 @@
 [workspace]
-members = ["node"]
+members = [ "node" ]
 
 [package]
 name = "create-tauri-app"
 description = "Rapidly scaffold out a new tauri app project."
-authors = ["Tauri Programme within The Commons Conservancy"]
-version = "1.0.2"
+authors = [ "Tauri Programme within The Commons Conservancy" ]
+version = "2.0.0-alpha.0"
 edition = "2021"
 license = "Apache-2.0 OR MIT"
 readme = "README.md"
 repository = "https://github.com/tauri-apps/create-tauri-app"
-keywords = ["tauri"]
-categories = ["gui"]
-include = ["/fragments"]
+keywords = [ "tauri" ]
+categories = [ "gui" ]
+include = [ "/fragments" ]
 
 [[bin]]
 name = "cargo-create-tauri-app"
@@ -22,15 +22,11 @@ path = "src/main.rs"
 anyhow = "1.0.58"
 dialoguer = "0.10.1"
 pico-args = "0.5.0"
-rust-embed = { version = "6.4.0", features = [
-    "compression",
-    "interpolate-folder-path",
-] }
-
+rust-embed = { version = "6.4.0", features = [ "compression", "interpolate-folder-path" ] }
 
 [profile.release]
-panic = "abort"   # Strip expensive panic clean-up logic
-codegen-units = 1 # Compile crates one after another so the compiler can optimize better
-lto = true        # Enables link to optimizations
-opt-level = "s"   # Optimize for binary size
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "s"
 strip = true

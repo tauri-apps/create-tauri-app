@@ -22,6 +22,10 @@ const inc = (content) => {
 
   let ret;
   switch (bump) {
+    case "premajor":
+      const pre = JSON.parse(readFileSync('.changes/pre.json').toString());
+      ret = `${before}${Number(major) + 1}.0.0-${pre.tag}.0${after}`;  
+      break;
     case "major":
       ret = `${before}${Number(major) + 1}.${minor}.${patch}${after}`;
       break;
