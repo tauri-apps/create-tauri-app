@@ -15,16 +15,16 @@ const bump = process.argv[2];
 
 const inc = (content) => {
   const re = new RegExp(
-    /(.*__TAG_NAME__\s*=\s*("|')create-tauri-app-v)([0-9])+\.([0-9])+\.([0-9])+(("|').*)/,
+    /(.*__TAG_NAME__\s*=\s*("|')create-tauri-app-v)([0-9])+\.([0-9])+\.([0-9])+(-([a-zA-z]+\.([0-9])+))?(("|').*)/,
     "s"
   );
-  const [, before, , major, minor, patch, after] = re.exec(content);
+  const [, before, , major, minor, patch, , , premajor, after] = re.exec(content);
 
   let ret;
   switch (bump) {
     case "premajor":
       const pre = JSON.parse(readFileSync('.changes/pre.json').toString());
-      ret = `${before}${Number(major) + 1}.0.0-${pre.tag}.0${after}`;  
+      ret = `${before}${major}.0.0-${pre.tag}.${Number(premajor)+1}${after}`;
       break;
     case "major":
       ret = `${before}${Number(major) + 1}.${minor}.${patch}${after}`;
