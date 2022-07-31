@@ -14,15 +14,15 @@
 With Bash:
 
 ``` bash
-curl <script-url> | sh
+curl https://create.tauri.app/sh | sh
 # or
-wget <script-url> | sh
+wget https://create.tauri.app/sh | sh
 ```
 
 With Powershell:
 
 ``` powershell
-iwr <script-url> | iex
+iwr https://create.tauri.app/ps1 | iex
 ```
 
 With Cargo:
@@ -54,11 +54,11 @@ You can also directly specify the project name and the template you want to use 
 
 ```bash
 # curl
-curl <script-url> | sh --template svelte
+curl https://create.tauri.app/sh | sh --template svelte
 # wget
-wget <script-url> | sh --template svelte
+wget https://create.tauri.app/sh | sh --template svelte
 # powershell
-iwr <script-url> | iex --template svelte
+iwr https://create.tauri.app/ps1 | iex --template svelte
 # cargo
 cargo create-tauri-app --template svelte
 # npm 6.x
