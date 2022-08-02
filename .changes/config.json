@@ -103,13 +103,12 @@
     "create-tauri-app": {
       "path": ".",
       "manager": "rust",
-      "postversion": "cargo check"
+      "postversion": "cargo check && node .scripts/sync-tagname.js ${ release.type }"
     },
     "create-tauri-js": {
       "path": "./node",
       "manager": "javascript",
-      "dependencies": ["create-tauri-app"],
-      "postversion": "node ../.scripts/sync-tagname.js ${ release.type }"
+      "dependencies": ["create-tauri-app"]
     }
   }
 }
