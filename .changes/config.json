@@ -109,7 +109,7 @@
       "path": "./node",
       "manager": "javascript",
       "dependencies": ["create-tauri-app"],
-      "postversion": "node .scripts/sync-tagname.js ${ release.type }"
+      "postversion": "node ../.scripts/sync-tagname.js ${ release.type }"
     }
   }
 }
