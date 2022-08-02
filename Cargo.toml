@@ -12,7 +12,13 @@ readme = "README.md"
 repository = "https://github.com/tauri-apps/create-tauri-app"
 keywords = [ "tauri" ]
 categories = [ "gui" ]
-include = [ "/fragments" ]
+include = [
+    "/fragments",
+    "/src",
+    "*.rs",
+    "/LICENSE*",
+    "/CHANGELOG.md",
+]
 
 [[bin]]
 name = "cargo-create-tauri-app"
