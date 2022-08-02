@@ -23,12 +23,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: install stable
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
-
       - uses: pnpm/action-setup@v2.2.2
         with:
           version: 7
@@ -39,8 +33,6 @@ jobs:
           check-latest: true
           cache: 'pnpm'
           cache-dependency-path: 'node/pnpm-lock.yaml'
-
-      - run: cargo update
 
       - name: cargo login
         run: cargo login ${{ secrets.CRATE_TOKEN  }}
