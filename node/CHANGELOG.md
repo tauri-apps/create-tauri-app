@@ -1,5 +1,11 @@
 # Changelog
 
+## \[2.0.0-alpha.0]
+
+- Rewrite in rust.
+  - [60576c3](https://www.github.com/tauri-apps/create-tauri-app/commit/60576c3e247d50e859d602dc8fe733bb8cf2ca3f) changefile on 2022-07-27
+  - [07e7902](https://www.github.com/tauri-apps/create-tauri-app/commit/07e7902b565b8fe9cefc860d647ce109221ee5df) fix npm bump on 2022-07-31
+
 ## \[1.0.2]
 
 - Update the vite recipe to use port 5173, the new default in vite@v3.
