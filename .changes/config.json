@@ -23,7 +23,6 @@
         {
           "command": "pnpm audit --prod",
           "dryRunCommand": true,
-          "runFromRoot": true,
           "pipe": true
         },
         {
