@@ -8,7 +8,6 @@ on:
   push:
     branches:
       - dev
-      - rewrite-in-rust # TODO: remove before merging for stable 2.0
   pull_request:
     paths:
       - 'fragments/**'
