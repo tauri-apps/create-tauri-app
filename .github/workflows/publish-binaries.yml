@@ -68,7 +68,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: "${{ matrix.settings.target }}"
-          path: "target/release/create-tauri-app${{ matrix.settings.ext }}"
+          path: "target/release/cargo-create-tauri-app${{ matrix.settings.ext }}"
           if-no-files-found: error
 
   publish:
@@ -91,7 +91,7 @@ jobs:
           do
             parent="$(basename $(dirname ${file}))"
             target="${file#./}"
-            target="${target/create-tauri-app/create-tauri-app-${parent}}"
+            target="${target/cargo-create-tauri-app/create-tauri-app-${parent}}"
             target="${target/${parent}\//}"
             mv $file $target
           done
