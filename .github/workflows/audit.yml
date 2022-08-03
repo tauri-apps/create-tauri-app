@@ -32,6 +32,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: yarn audit
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          check-latest: true
+          cache: 'pnpm'
+          cache-dependency-path: 'node/pnpm-lock.yaml'
+      - name: pnpm audit
         working-directory: node
-        run: yarn audit
+        run: pnpm audit
