@@ -108,7 +108,7 @@
         "node .scripts/sync-tagname.js ${ release.type }"
       ]
     },
-    "create-tauri-js": {
+    "create-tauri-app-js": {
       "path": "./node",
       "manager": "javascript",
       "dependencies": ["create-tauri-app"]
