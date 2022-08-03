@@ -23,6 +23,7 @@ const inc = (content) => {
 
   let ret;
   switch (bump) {
+    case "prerelease":
     case "premajor":
       const pre = JSON.parse(readFileSync(".changes/pre.json").toString());
       ret = `${before}${
