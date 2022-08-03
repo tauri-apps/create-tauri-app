@@ -83,6 +83,9 @@ jobs:
         with:
           path: binaries
 
+      - run: ls -R
+        working-directory: binaries
+
       - name: rename files
         working-directory: binaries
         shell: bash
@@ -96,6 +99,9 @@ jobs:
             mv $file $target
           done
           find . -type d -empty -delete
+
+      - run: ls -R
+        working-directory: binaries
 
       - uses: xresloader/upload-to-github-release@v1
         env:
