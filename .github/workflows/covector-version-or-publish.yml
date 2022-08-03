@@ -64,13 +64,24 @@ jobs:
           labels: 'version updates'
           body: ${{ steps.covector.outputs.change }}
 
-      - name: Trigger publish.yml workflow
+      - name: Trigger publish-binaries.yml workflow
         if: |
           steps.covector.outputs.successfulPublish == 'true' &&
           contains(steps.covector.outputs.packagesPublished, 'create-tauri-app')
         uses: benc-uk/workflow-dispatch@v1 # TODO: adjust before merging for stable 2.0 maybe use repository dispatch???
         with:
-          workflow: publish binaries and napi modules
+          workflow: publish binaries
+          repo: tauri-apps/create-tauri-app
+          inputs: '{"releaseId": ${{ steps.covector.outputs.releaseId }} }'
+          token: ${{ secrets.TAURI_BOT_PAT }}
+
+      - name: Trigger publish-napi.yml workflow
+        if: |
+          steps.covector.outputs.successfulPublish == 'true' &&
+          contains(steps.covector.outputs.packagesPublished, 'create-tauri-app-js')
+        uses: benc-uk/workflow-dispatch@v1 # TODO: adjust before merging for stable 2.0 maybe use repository dispatch???
+        with:
+          workflow: publish napi modules
           repo: tauri-apps/create-tauri-app
           inputs: '{"releaseId": ${{ steps.covector.outputs.releaseId }} }'
           token: ${{ secrets.TAURI_BOT_PAT }}
