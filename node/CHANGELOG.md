@@ -1,5 +1,11 @@
 # Changelog
 
+## \[2.0.0-alpha.4]
+
+- 2.0.0-alpha.4
+  - Bumped due to a bump in create-tauri-app.
+  - [f3f6007](https://www.github.com/tauri-apps/create-tauri-app/commit/f3f60072ada609c6563151ed2a522bd6fed6ad47) alpha.4 on 2022-08-03
+
 ## \[2.0.0-alpha.3]
 
 - 2.0.0-alpha.3
