@@ -90,7 +90,7 @@ jobs:
         working-directory: binaries
         shell: bash
         run: |
-          find . -name 'create-tauri-app*' -print0 | while read -d '' file
+          find . -name 'cargo-create-tauri-app*' -print0 | while read -d '' file
           do
             parent="$(basename $(dirname ${file}))"
             target="${file#./}"
