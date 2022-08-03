@@ -8,8 +8,8 @@ env:
 on:
   workflow_dispatch: # TODO: adjust before merging for stable 2.0, maybe use repository_dispatch
     inputs:
-      releasedId:
-        description: 'Relasee Id'
+      releaseId:
+        description: 'Release Id'
         required: true
         type: number
 
