@@ -72,7 +72,7 @@ jobs:
         with:
           workflow: publish binaries
           repo: tauri-apps/create-tauri-app
-          inputs: '{"releaseId": ${{ steps.covector.outputs.releaseId }} }'
+          inputs: '{"releaseId": "${{ steps.covector.outputs.releaseId }}" }'
           token: ${{ secrets.TAURI_BOT_PAT }}
 
       - name: Trigger publish-napi.yml workflow
@@ -83,5 +83,4 @@ jobs:
         with:
           workflow: publish napi modules
           repo: tauri-apps/create-tauri-app
-          inputs: '{"releaseId": ${{ steps.covector.outputs.releaseId }} }'
           token: ${{ secrets.TAURI_BOT_PAT }}

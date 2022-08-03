@@ -9,7 +9,7 @@ on:
       releaseId:
         description: 'Release Id'
         required: true
-        type: number
+        type: string
 
 jobs:
   build:
