@@ -47,7 +47,7 @@
           "pipe": true
         },
         {
-          "command": "pnpm publish --access public",
+          "command": "pnpm publish --access public --tag next",
           "dryRunCommand": "npm publish --dry-run --access public",
           "pipe": true
         },
