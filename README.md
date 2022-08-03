@@ -22,7 +22,7 @@ wget https://create.tauri.app/sh | sh
 With Powershell:
 
 ``` powershell
-iwr https://create.tauri.app/ps1 | iex
+iwr -UseBasicParsing https://create.tauri.app/ps1 | iex
 ```
 
 With Cargo:
@@ -57,8 +57,7 @@ You can also directly specify the project name and the template you want to use 
 curl https://create.tauri.app/sh | sh --template svelte
 # wget
 wget https://create.tauri.app/sh | sh --template svelte
-# powershell
-iwr https://create.tauri.app/ps1 | iex --template svelte
+# TODO: powershell
 # cargo
 cargo create-tauri-app --template svelte
 # npm 6.x

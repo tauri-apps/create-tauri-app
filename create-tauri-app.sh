@@ -86,7 +86,7 @@ main() {
 
 
     if $_ansi_escapes_are_valid; then
-        printf "\33[1minfo:\33[0m downloading create-tauri-app\n" 1>&2
+        printf "\33[1m\33[32minfo:\33[0m downloading create-tauri-app\n" 1>&2
     else
         printf '%s\n' 'info: downloading create-tauri-app' 1>&2
     fi

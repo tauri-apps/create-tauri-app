@@ -7,10 +7,11 @@ $__TAG_NAME__ = "create-tauri-app-v2.0.0-alpha.7"
 $url="https://github.com/tauri-apps/create-tauri-app/releases/download/$__TAG_NAME__/create-tauri-app-$bitness-pc-windows-msvc.exe"
 $outFile = "$Env:TEMP\create-tauri-app.exe"
 
-Write-Output "$($PSStyle.Bold)info:$($PSStyle.Reset) downloading create-tauri-app"
+Write-Output "$($PSStyle.Bold)$($PSStyle.Foreground.Green)info:$($PSStyle.Reset) downloading create-tauri-app"
 
+$oldProgressPreference = $ProgressPreference
 $ProgressPreference = 'SilentlyContinue'
 Invoke-WebRequest -Uri $url -OutFile $outFile
-$ProgressPreference = 'Continue'
+$ProgressPreference = $oldProgressPreference
 
 Start-Process -FilePath $outFile -Wait -NoNewWindow -ArgumentList $args
