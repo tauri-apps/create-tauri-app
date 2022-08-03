@@ -106,6 +106,12 @@
       "postversion": [
         "cargo check",
         "node .scripts/sync-tagname.js ${ release.type }"
+      ],
+      "assets": [
+        {
+          "path": "${ pkg.path }/target/package/create-tauri-app-${ pkgFile.version }.crate",
+          "name": "${ pkg.pkg }-${ pkgFile.version }.crate"
+        }
       ]
     },
     "create-tauri-app-js": {
