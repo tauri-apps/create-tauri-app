@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.0.0-alpha.5]
+
+- 2.0.0-alpha.5
+  - [bc68a1d](https://www.github.com/tauri-apps/create-tauri-app/commit/bc68a1d1770239e21d0fee8e03ff1d20e96c970b) alpha.5 on 2022-08-03
+
 ## \[2.0.0-alpha.4]
 
 - 2.0.0-alpha.4
