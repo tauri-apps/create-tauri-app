@@ -199,10 +199,11 @@ jobs:
         run: ls -R ./npm
         shell: bash
 
+      # TODO: adjust before merging for stable 2.0, publish to latest tag
       - name: Publish
         run: |
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-          npm publish
+          npm publish --tag next
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
