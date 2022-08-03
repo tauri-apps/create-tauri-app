@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.0.0-alpha.1]
+
+- 2.0.0-alpha.1
+  - [82199ba](https://www.github.com/tauri-apps/create-tauri-app/commit/82199baf6de47ab9fe48ebc13fb481ba910adaf5) split publish workflow on 2022-08-03
+
 ## \[2.0.0-alpha.0]
 
 - Rewrite in rust.
