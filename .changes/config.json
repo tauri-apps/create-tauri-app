@@ -111,7 +111,10 @@
     "create-tauri-app-js": {
       "path": "./node",
       "manager": "javascript",
-      "dependencies": ["create-tauri-app"]
+      "dependencies": ["create-tauri-app"],
+      "prepublish": [],
+      "publish": [],
+      "postpublish": []
     }
   }
 }
