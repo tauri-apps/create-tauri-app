@@ -1,5 +1,11 @@
 # Changelog
 
+## \[2.0.0-alpha.7]
+
+- 2.0.0-alpha.7
+  - Bumped due to a bump in create-tauri-app.
+  - [2237271](https://www.github.com/tauri-apps/create-tauri-app/commit/2237271f724cbc468a0f2e4c46ce42293b4d6a8b) alpha.7 on 2022-08-03
+
 ## \[2.0.0-alpha.6]
 
 - 2.0.0-alpha.6
