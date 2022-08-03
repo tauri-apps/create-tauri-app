@@ -1,6 +1,7 @@
 {
   "tag": "alpha",
   "changes": [
+    ".changes/alpha.1.md",
     ".changes/rewrite.md"
   ]
 }
