@@ -1,0 +1,13 @@
+name = "create-tauri-app"
+main = "index.js"
+compatibility_date = "2022-08-04"
+
+[[rules]]
+type = "Text"
+globs = ["**/*.sh"]
+fallthrough = true
+
+[[rules]]
+type = "Text"
+globs = ["**/*.ps1"]
+fallthrough = true

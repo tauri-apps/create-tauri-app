@@ -1,5 +1,6 @@
-/target
 /node_modules
+/target
+
 pnpm-lock.yaml
 package-json.lock
 yarn.lock
