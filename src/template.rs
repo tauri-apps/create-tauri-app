@@ -44,7 +44,7 @@ impl<'a> Template {
 
     pub fn post_init_info(&self) -> String {
         match self {
-            Template::Yew => format!("{ITALIC}{BLACK}You also need to install {YELLOW}tauri_cli {BLACK}({BLUE}cargo install tauri_cli{BLACK}) and {YELLOW}trunk {BLACK}({BLUE}https://trunkrs.dev/#install{BLACK}){RESET}"),
+            Template::Yew => format!("{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}tauri_cli{WHITE} {DIM}({DIMRESET}{BLUE}cargo install tauri_cli{WHITE}{DIM}) and{DIMRESET} {YELLOW}trunk{WHITE} {DIM}({DIMRESET}{BLUE}https://trunkrs.dev/#install{WHITE}{DIM}){DIMRESET}{RESET}"),
             _ => String::new(),
         }
     }
