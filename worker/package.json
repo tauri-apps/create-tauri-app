@@ -4,5 +4,8 @@
   "license": "Apache-2.0 OR MIT",
   "devDependencies": {
     "wrangler": "^2.0.24"
+  },
+  "resolutions": {
+    "undici": ">=5.8.0"
   }
 }
