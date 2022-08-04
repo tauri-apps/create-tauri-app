@@ -33,4 +33,4 @@ jobs:
           check-latest: true
 
       - run: pnpm install
-      - run: pnpm format-fragments:check
+      - run: pnpm format:check

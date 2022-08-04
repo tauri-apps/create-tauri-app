@@ -42,6 +42,9 @@ jobs:
           check-latest: true
           cache: 'pnpm'
           cache-dependency-path: 'node/pnpm-lock.yaml'
-      - name: pnpm audit
+      - name: audit node package
         working-directory: node
+        run: pnpm audit
+      - name: audit cloudflare worker
+        working-directory: worker
         run: pnpm audit
