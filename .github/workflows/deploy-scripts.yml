@@ -8,7 +8,7 @@ on:
   push:
     branches:
       - dev
-  pull_request:
+      - rewrite-in-rust # TODO remove before merging to dev
     paths:
       - '.github/workflows/deploy-scripts.yml'
       - 'worker'
