@@ -22,7 +22,7 @@ wget https://create.tauri.app/sh | sh
 With Powershell:
 
 ``` powershell
-iwr -UseBasicParsing https://create.tauri.app/ps1 | iex
+iwr https://create.tauri.app/ps1 | iex
 ```
 
 With Cargo:
