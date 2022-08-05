@@ -1,5 +1,11 @@
 # Changelog
 
+## \[2.0.0-alpha.8]
+
+- Use dimmed white instead of black
+  - Bumped due to a bump in create-tauri-app.
+  - [a0b876d](https://www.github.com/tauri-apps/create-tauri-app/commit/a0b876d3a2333f2b152f8dd7063549f74e24210a) add missing changefile on 2022-08-05
+
 ## \[2.0.0-alpha.7]
 
 - 2.0.0-alpha.7
