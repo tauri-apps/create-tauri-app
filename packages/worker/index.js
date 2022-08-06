@@ -4,7 +4,7 @@ import index from "./index.html";
 
 export default {
   async fetch(request) {
-    const { pathname } = new URL(request.url);
+    const { pathname, searchParams } = new URL(request.url);
 
     if (
       pathname.startsWith("/sh") ||
@@ -21,6 +21,23 @@ export default {
     ) {
       return new Response(ps, {
         headers: { "Content-Type": "text/plain" },
+      });
+    }
+
+    if (pathname.startsWith("/bin")) {
+      const res = await fetch(
+        `https://github.com/tauri-apps/create-tauri-app/releases/download/${searchParams.get(
+          "tag"
+        )}/create-tauri-app-${searchParams.get("arch")}${searchParams.get(
+          "ext"
+        )}`
+      );
+
+      return new Response(await res.arrayBuffer(), {
+        headers: {
+           "Content-Type": "application/octet-stream",
+           "Content-disposition": `attachment; filename=create-taui-app${searchParams.get("ext")}`
+        },
       });
     }
 

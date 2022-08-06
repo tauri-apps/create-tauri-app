@@ -4,7 +4,8 @@
 
 $bitness = if ([Environment]::Is64BitOperatingSystem) { "x86_64" } else { "i686" }
 $__TAG_NAME__ = "create-tauri-app-v2.0.0-alpha.10"
-$url="https://github.com/tauri-apps/create-tauri-app/releases/download/$__TAG_NAME__/create-tauri-app-$bitness-pc-windows-msvc.exe"
+# $url="https://github.com/tauri-apps/create-tauri-app/releases/download/$__TAG_NAME__/create-tauri-app-$bitness-pc-windows-msvc.exe"
+$url="https://create.tauri.app/bin?tag=$__TAG_NAME__&arch=$bitness-pc-windows-msvc&ext=.exe"
 $outFile = "$Env:TEMP\create-tauri-app.exe"
 
 Write-Output "$($PSStyle.Bold)$($PSStyle.Foreground.Green)info:$($PSStyle.Reset) downloading create-tauri-app"
