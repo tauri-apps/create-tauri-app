@@ -11,9 +11,7 @@ on:
       - rewrite-in-rust # TODO remove before merging to dev
     paths:
       - '.github/workflows/deploy-scripts.yml'
-      - 'worker'
-      - 'create-tauri-app.sh'
-      - 'create-tauri-app.ps1'
+      - 'packages/worker/**'
 
 jobs:
   deploy:

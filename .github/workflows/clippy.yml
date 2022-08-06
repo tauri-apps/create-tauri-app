@@ -8,7 +8,17 @@ on:
   push:
     branches:
       - dev
+    paths:
+      - '.github/workflows/clippy.yml'
+      - 'packages/cli/**'
+      - 'Cargo.lock'
+      - 'Cargo.toml'
   pull_request:
+    paths:
+      - .github/workflows/clippy.yml
+      - packages/cli/**
+      - Cargo.lock
+      - Cargo.toml
 
 concurrency:
    group: ${{ github.workflow }}-${{ github.ref }}

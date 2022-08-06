@@ -8,12 +8,15 @@ on:
   push:
     branches:
       - dev
+    paths:
+      - '.github/workflows/test.yml'
+      - 'packages/cli/**'
+      - 'Cargo.lock'
+      - 'Cargo.toml'
   pull_request:
     paths:
       - '.github/workflows/test.yml'
-      - 'packages/cli/src/**'
-      - 'packages/cli/fragments/**'
-      - 'packages/cli/Cargo.toml'
+      - 'packages/cli/**'
       - 'Cargo.lock'
       - 'Cargo.toml'
 
