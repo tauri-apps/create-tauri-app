@@ -32,8 +32,6 @@ jobs:
           node-version: 16
           check-latest: true
           registry-url: 'https://registry.npmjs.org'
-          cache: 'pnpm'
-          cache-dependency-path: '**/pnpm-lock.yaml'
 
       - name: cargo login
         run: cargo login ${{ secrets.CRATE_TOKEN  }}
