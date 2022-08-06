@@ -1,2 +1,2 @@
 ignore:
-  - fragments
+  - packages/cli/fragments

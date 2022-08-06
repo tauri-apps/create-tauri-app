@@ -101,7 +101,7 @@
   },
   "packages": {
     "create-tauri-app": {
-      "path": ".",
+      "path": "./packages/cli",
       "manager": "rust",
       "postversion": [
         "cargo check",
@@ -115,7 +115,7 @@
       ]
     },
     "create-tauri-app-js": {
-      "path": "./node",
+      "path": "./packages/cli/node",
       "manager": "javascript",
       "dependencies": ["create-tauri-app"],
       "prepublish": [],

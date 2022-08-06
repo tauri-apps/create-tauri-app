@@ -58,13 +58,13 @@ cargo run -- <cli arguments>
 
 ### Templates
 
-A template is a just combination of two fragments, [`fragment-base`](../fragments/fragment-base) (which is shared between all templates) and another fragment that is specific to the template.
+A template is a just combination of two fragments, [`fragment-base`](../packages/cli/fragments/fragment-base) (which is shared between all templates) and another fragment that is specific to the template.
 
 #### Adding a new template
 
-- Add a directory in `<repo-root>/fragments` and name `fragment-template` where `template` is the name of the template and add all the files you need there as they should appear after the template is created.
-- In `<repo-root>/src/template.rs`, add an entry in the `Template` enum, modify `post_init_info` if needed and modify `FromStr` and `Display` implementation
-- In `<repo-root>/src/package_manager.rs` add your new template to the appropraite package manager in the `templates` method
+- Add a directory in `<repo-root>/packages/cli/fragments` and name `fragment-template` where `template` is the name of the template and add all the files you need there as they should appear after the template is created.
+- In `<repo-root>/packages/cli/src/template.rs`, add an entry in the `Template` enum, modify `post_init_info` if needed and modify `FromStr` and `Display` implementation
+- In `<repo-root>/packages/cli/src/package_manager.rs` add your new template to the appropraite package manager in the `templates` method
 
 ## Financial Contribution
 

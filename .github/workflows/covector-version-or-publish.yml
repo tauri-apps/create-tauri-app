@@ -33,7 +33,7 @@ jobs:
           check-latest: true
           registry-url: 'https://registry.npmjs.org'
           cache: 'pnpm'
-          cache-dependency-path: 'node/pnpm-lock.yaml'
+          cache-dependency-path: '**/pnpm-lock.yaml'
 
       - name: cargo login
         run: cargo login ${{ secrets.CRATE_TOKEN  }}

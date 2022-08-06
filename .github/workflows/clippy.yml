@@ -2,41 +2,31 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-License-Identifier: MIT
 
-name: test create-tauri-app
+name: clippy
 
 on:
   push:
     branches:
       - dev
   pull_request:
-    paths:
-      - '.github/workflows/test.yml'
-      - 'packages/cli/src/**'
-      - 'packages/cli/fragments/**'
-      - 'packages/cli/Cargo.toml'
-      - 'Cargo.lock'
-      - 'Cargo.toml'
-
-env:
-  RUST_BACKTRACE: 1
 
 concurrency:
    group: ${{ github.workflow }}-${{ github.ref }}
    cancel-in-progress: true
 
 jobs:
-  test:
+  clippy:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-
+      - uses: actions/checkout@v3
       - name: install stable
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
+          components: clippy
 
-      - uses: actions-rs/cargo@v1
+      - name: clippy
+        uses: actions-rs/cargo@v1
         with:
-          command: test
+          command: clippy --all-targets --all-features -- -D warnings

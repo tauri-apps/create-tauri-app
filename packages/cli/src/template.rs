@@ -51,7 +51,7 @@ impl<'a> Template {
 
     pub fn render(
         &self,
-        target_dir: &path::PathBuf,
+        target_dir: &path::Path,
         pkg_manager: PackageManager,
         package_name: &str,
     ) -> anyhow::Result<()> {
@@ -75,8 +75,10 @@ impl<'a> Template {
                 name if name.starts_with("_[") => {
                     let mut s = name.strip_prefix("_[").unwrap().split("]_");
                     let (managers_str, file_name) = (s.next().unwrap(), s.next().unwrap());
-                    let managers_list = managers_str.split("-").collect::<Vec<_>>();
-                    if managers_list.contains(&pkg_manager.to_string().as_str()) {
+                    if managers_str
+                        .split('-')
+                        .any(|x| x == pkg_manager.to_string().as_str())
+                    {
                         p.parent().unwrap().join(file_name)
                     } else {
                         return Ok(());
@@ -89,7 +91,7 @@ impl<'a> Template {
 
             if let Ok(str_) = String::from_utf8(data.to_vec()) {
                 data = str_
-                    .replace("{{package_name}}", &package_name)
+                    .replace("{{package_name}}", package_name)
                     .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
                     .as_bytes()
                     .to_vec();
@@ -104,10 +106,10 @@ impl<'a> Template {
         for file in Fragments::iter().filter(|e| {
             path::PathBuf::from(e.to_string())
                 .components()
-                .nth(0)
+                .next()
                 .unwrap()
                 .as_os_str()
-                == path::PathBuf::from("fragment-base")
+                == "fragment-base"
         }) {
             write_file(&*file)?;
         }
@@ -116,7 +118,7 @@ impl<'a> Template {
         for file in Fragments::iter().filter(|e| {
             path::PathBuf::from(e.to_string())
                 .components()
-                .nth(0)
+                .next()
                 .unwrap()
                 .as_os_str()
                 == path::PathBuf::from(format!("fragment-{self}"))

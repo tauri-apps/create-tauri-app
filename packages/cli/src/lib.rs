@@ -59,7 +59,7 @@ where
             .default(valid_name.clone())
             .with_initial_text(valid_name)
             .validate_with(|input: &String| {
-                if is_valid_pkg_name(&input) {
+                if is_valid_pkg_name(input) {
                     Ok(())
                 } else {
                     Err("Package name should only include alphanumeric character and hyphens \"-\" and doesn't start with numbers")
@@ -69,7 +69,7 @@ where
         }
     };
 
-    if target_dir.exists() && !target_dir.read_dir()?.next().is_none() {
+    if target_dir.exists() && target_dir.read_dir()?.next().is_some() {
         let overrwite = if skip {
             false
         } else {
@@ -128,7 +128,7 @@ where
     if !templates.contains(&template) {
         eprintln!(
             "{BOLD}{RED}error{RESET}: the {GREEN}{template}{RESET} template is not suppported for the {GREEN}{pkg_manager}{RESET} package manager\n       possible templates for {GREEN}{pkg_manager}{RESET} are: [{}]",
-            templates.into_iter().map(|e|format!("{GREEN}{e}{RESET}")).collect::<Vec<_>>().join(", ")
+            templates.iter().map(|e|format!("{GREEN}{e}{RESET}")).collect::<Vec<_>>().join(", ")
         );
         exit(1);
     }
@@ -141,23 +141,22 @@ where
 
     template.render(&target_dir, pkg_manager, &package_name)?;
 
-    println!("");
+    println!();
     println!("Done, now run:");
     println!("  cd {}", project_name);
     if !pkg_manager.install_cmd().is_empty() {
         println!("  {}", pkg_manager.install_cmd());
     }
     println!("  {} tauri dev", pkg_manager.run_cmd());
-    println!("");
+    println!();
     println!(
-        "{}",
-        format!(
-            "{ITALIC}{DIM}Please follow{DIMRESET} {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites{WHITE} {DIM}to install the needed prerequisites, if you haven't already.{DIMRESET}{RESET}")
+       
+            "{ITALIC}{DIM}Please follow{DIMRESET} {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites{WHITE} {DIM}to install the needed prerequisites, if you haven't already.{DIMRESET}{RESET}"
     );
     if !template.post_init_info().is_empty() {
         println!("{}", template.post_init_info());
     }
-    println!("");
+    println!();
     Ok(())
 }
 
@@ -165,7 +164,7 @@ fn is_valid_pkg_name(project_name: &str) -> bool {
     !project_name
         .chars()
         .next()
-        .map(|c| c.is_digit(10))
+        .map(|c| c.is_ascii_digit())
         .unwrap_or_default()
         && !project_name
             .chars()
@@ -176,16 +175,16 @@ fn to_valid_pkg_name(project_name: &str) -> String {
     let mut ret = project_name
         .trim()
         .to_lowercase()
-        .replace(".", "-")
-        .replace(":", "-")
-        .replace(";", "-")
-        .replace(" ", "-")
-        .replace("\\", "-")
-        .replace("/", "-")
-        .replace("~", "-");
+        .replace('.', "-")
+        .replace(':', "-")
+        .replace(';', "-")
+        .replace(' ', "-")
+        .replace('\\', "-")
+        .replace('/', "-")
+        .replace('~', "-");
 
     if let Some(ch) = ret.chars().next() {
-        if ch.is_digit(10) || ch == '-' {
+        if ch.is_ascii_digit() || ch == '-' {
             ret.remove(0);
         }
     }
@@ -198,16 +197,16 @@ mod test {
     use super::*;
     #[test]
     fn valiadtes_pkg_name() {
-        assert_eq!(is_valid_pkg_name("tauri-app"), true);
-        assert_eq!(is_valid_pkg_name("tauri_app"), true);
-        assert_eq!(is_valid_pkg_name("t2auriapp"), true);
-        assert_eq!(is_valid_pkg_name("1tauriapp"), false);
-        assert_eq!(is_valid_pkg_name("tauri app"), false);
-        assert_eq!(is_valid_pkg_name("tauri:app"), false);
-        assert_eq!(is_valid_pkg_name("tauri.app"), false);
-        assert_eq!(is_valid_pkg_name("tauri/app"), false);
-        assert_eq!(is_valid_pkg_name("tauri\\app"), false);
-        assert_eq!(is_valid_pkg_name("tauri~app"), false);
+        assert!(is_valid_pkg_name("tauri-app"));
+        assert!(is_valid_pkg_name("tauri_app"));
+        assert!(is_valid_pkg_name("t2auriapp"));
+        assert!(!is_valid_pkg_name("1tauriapp"));
+        assert!(!is_valid_pkg_name("tauri app"));
+        assert!(!is_valid_pkg_name("tauri:app"));
+        assert!(!is_valid_pkg_name("tauri.app"));
+        assert!(!is_valid_pkg_name("tauri/app"));
+        assert!(!is_valid_pkg_name("tauri\\app"));
+        assert!(!is_valid_pkg_name("tauri~app"));
     }
 
     #[test]

@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-License-Identifier: MIT
 
-name: deploy .{sh,ps1} scripts
+name: deploy .{sh,ps1} scripts worker
 
 on:
   push:
@@ -23,6 +23,6 @@ jobs:
       - uses: cloudflare/wrangler-action@2.0.0
         with:
           command: publish
-          workingDirectory: 'worker'
+          workingDirectory: 'packages/worker'
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}

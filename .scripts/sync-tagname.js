@@ -6,10 +6,11 @@
 
 /*
 This script is solely intended to be run as part of the `covector version` step to
-keep the tagName in `scripts/cta.{ps1,sh}` up to date with other version bumps.
+keep the tagName in `packages/worker/scripts/cta.{ps1,sh}` up to date with other version bumps.
 */
 
 const { readFileSync, writeFileSync } = require("fs");
+const { join } = require("path");
 
 const bump = process.argv[2];
 
@@ -25,7 +26,9 @@ const inc = (content) => {
   switch (bump) {
     case "prerelease":
     case "premajor":
-      const pre = JSON.parse(readFileSync(".changes/pre.json").toString());
+      const pre = JSON.parse(
+        readFileSync(join(__dirname, "../.changes/pre.json")).toString()
+      );
       ret = `${before}${
         premajorStr && premajorStr.includes(pre.tag) ? major : Number(major) + 1
       }.0.0-${pre.tag}.${premajor ? Number(premajor) + 1 : 0}${after}`;
@@ -45,7 +48,10 @@ const inc = (content) => {
   return ret;
 };
 
-for (let file of ["create-tauri-app.ps1", "create-tauri-app.sh"]) {
+for (let file of [
+  join(__dirname, "../packages/worker/scripts/create-tauri-app.ps1"),
+  join(__dirname, "../packages/worker/scripts/create-tauri-app.sh"),
+]) {
   const content = readFileSync(file, "utf-8");
   const updatedContent = inc(content);
   writeFileSync(file, updatedContent);

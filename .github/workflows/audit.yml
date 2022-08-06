@@ -13,6 +13,8 @@ on:
       - '**/Cargo.lock'
       - '**/Cargo.toml'
       - '**/package.json'
+      - '**/pnpm-lock.yaml'
+  pull_request:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -41,10 +43,6 @@ jobs:
           node-version: 16
           check-latest: true
           cache: 'pnpm'
-          cache-dependency-path: 'node/pnpm-lock.yaml'
-      - name: audit node package
-        working-directory: node
-        run: pnpm audit
-      - name: audit cloudflare worker
-        working-directory: worker
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - name: js audit
         run: pnpm audit

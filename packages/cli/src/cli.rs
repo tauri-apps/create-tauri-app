@@ -55,12 +55,12 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
             authors = env!("CARGO_PKG_AUTHORS"),
             desc = env!("CARGO_PKG_DESCRIPTION"),
             managers = PackageManager::ALL
-                .into_iter()
+                .iter()
                 .map(|e| format!("{GREEN}{e}{RESET}"))
                 .collect::<Vec<_>>()
                 .join(", "),
             fragments = Template::ALL
-                .into_iter()
+                .iter()
                 .map(|e| format!("{GREEN}{e}{RESET}"))
                 .collect::<Vec<_>>()
                 .join(", "),
