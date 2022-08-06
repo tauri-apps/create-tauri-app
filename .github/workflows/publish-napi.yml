@@ -96,7 +96,7 @@ jobs:
           node-version: 16
           check-latest: true
           cache: 'pnpm'
-          cache-dependency-path: 'packages/cli/node/pnpm-lock.yaml'
+          cache-dependency-path: '**/pnpm-lock.yaml'
           architecture: ${{ matrix.settings.architecture }}
 
       - name: Install
@@ -130,7 +130,7 @@ jobs:
         shell: bash
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install -w --filter .
 
       - name: Build in docker
         uses: addnab/docker-run-action@v3
@@ -171,7 +171,7 @@ jobs:
           node-version: 16
           check-latest: true
           cache: pnpm
-          cache-dependency-path: 'packages/cli/node/pnpm-lock.yaml'
+          cache-dependency-path: '**/pnpm-lock.yaml'
 
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -185,7 +185,7 @@ jobs:
           key: pnpm-cache-build-${{ matrix.settings.target }}-node@16
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install -w --filter .
 
       - name: Download all artifacts
         uses: actions/download-artifact@v3
