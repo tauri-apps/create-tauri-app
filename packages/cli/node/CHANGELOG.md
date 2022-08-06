@@ -1,5 +1,11 @@
 # Changelog
 
+## \[2.0.0-alpha.9]
+
+- Add missing shebang for node cli
+  - Bumped due to a bump in create-tauri-app.
+  - [4d16ce2](https://www.github.com/tauri-apps/create-tauri-app/commit/4d16ce204e76086357963c5e595779b82493960d) add missing shebang on 2022-08-06
+
 ## \[2.0.0-alpha.8]
 
 - Use dimmed white instead of black
