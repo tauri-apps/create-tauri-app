@@ -35,8 +35,10 @@ export default {
 
       return new Response(await res.arrayBuffer(), {
         headers: {
-           "Content-Type": "application/octet-stream",
-           "Content-disposition": `attachment; filename=create-taui-app${searchParams.get("ext")}`
+          "Content-Type": "application/octet-stream",
+          "Content-disposition": `attachment; filename=create-taui-app${searchParams.get(
+            "ext"
+          )}`,
         },
       });
     }
