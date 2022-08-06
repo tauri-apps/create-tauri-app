@@ -44,7 +44,7 @@ main() {
             ;;
     esac
 
-    local __TAG_NAME__="create-tauri-app-v2.0.0-alpha.9"
+    local __TAG_NAME__="create-tauri-app-v2.0.0-alpha.10"
     local _url="https://github.com/tauri-apps/create-tauri-app/releases/download/${__TAG_NAME__}/create-tauri-app-${_arch}${_ext}"
 
     local _dir

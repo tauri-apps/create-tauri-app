@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 $bitness = if ([Environment]::Is64BitOperatingSystem) { "x86_64" } else { "i686" }
-$__TAG_NAME__ = "create-tauri-app-v2.0.0-alpha.9"
+$__TAG_NAME__ = "create-tauri-app-v2.0.0-alpha.10"
 $url="https://github.com/tauri-apps/create-tauri-app/releases/download/$__TAG_NAME__/create-tauri-app-$bitness-pc-windows-msvc.exe"
 $outFile = "$Env:TEMP\create-tauri-app.exe"
 
