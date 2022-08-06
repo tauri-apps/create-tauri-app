@@ -18,6 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: tree scripts -o index.html -H ""
+        working-directory: packages/worker
+
       - uses: cloudflare/wrangler-action@2.0.0
         with:
           command: publish

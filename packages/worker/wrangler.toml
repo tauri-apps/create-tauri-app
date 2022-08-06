@@ -4,10 +4,5 @@ compatibility_date = "2022-08-04"
 
 [[rules]]
 type = "Text"
-globs = ["**/*.sh"]
-fallthrough = true
-
-[[rules]]
-type = "Text"
-globs = ["**/*.ps1"]
+globs = ["**/*.sh", "**/*.ps1", "index.html"]
 fallthrough = true
