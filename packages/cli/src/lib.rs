@@ -149,10 +149,7 @@ where
     }
     println!("  {} tauri dev", pkg_manager.run_cmd());
     println!();
-    println!(
-       
-            "{ITALIC}{DIM}Please follow{DIMRESET} {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites{WHITE} {DIM}to install the needed prerequisites, if you haven't already.{DIMRESET}{RESET}"
-    );
+    println!("{ITALIC}{DIM}Please follow{DIMRESET} {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites{WHITE} {DIM}to install the needed prerequisites, if you haven't already.{DIMRESET}{RESET}");
     if !template.post_init_info().is_empty() {
         println!("{}", template.post_init_info());
     }
