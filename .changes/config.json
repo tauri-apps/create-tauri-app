@@ -105,7 +105,7 @@
       "manager": "rust",
       "postversion": [
         "cargo check",
-        "node .scripts/sync-tagname.js ${ release.type }"
+        "node ../../.scripts/sync-tagname.js ${ release.type }"
       ],
       "assets": [
         {
