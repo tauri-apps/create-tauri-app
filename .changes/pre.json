@@ -9,6 +9,7 @@
     ".changes/alpha.6.md",
     ".changes/alpha.7.md",
     ".changes/dim-color.md",
+    ".changes/missing-shebang.md",
     ".changes/rewrite.md"
   ]
 }
