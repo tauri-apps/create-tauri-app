@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.0.0-alpha.10]
+
+- 2.0.0-alpha.10
+  - [a899bf7](https://www.github.com/tauri-apps/create-tauri-app/commit/a899bf7a8d50b926f960bbee9cde1b737671d003) alpha.10 on 2022-08-06
+
 ## \[2.0.0-alpha.9]
 
 - Add missing shebang for node cli
