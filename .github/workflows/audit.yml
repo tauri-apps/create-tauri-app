@@ -17,6 +17,11 @@ on:
       - '**/package.json'
       - '**/pnpm-lock.yaml'
   pull_request:
+    paths:
+      - '**/Cargo.lock'
+      - '**/Cargo.toml'
+      - '**/package.json'
+      - '**/pnpm-lock.yaml'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
