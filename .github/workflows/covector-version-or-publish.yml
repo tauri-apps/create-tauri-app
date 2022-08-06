@@ -47,7 +47,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          command: 'version-or-publish'
+          command: 'version'
           createRelease: true
           draftRelease: true
 
