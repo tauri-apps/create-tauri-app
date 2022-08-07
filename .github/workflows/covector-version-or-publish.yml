@@ -81,4 +81,5 @@ jobs:
         with:
           workflow: publish napi modules
           repo: tauri-apps/create-tauri-app
+          inputs: '{"releaseId": "${{ steps.covector.outputs.create-tauri-app-js-releaseId }}" }'
           token: ${{ secrets.TAURI_BOT_PAT }}
