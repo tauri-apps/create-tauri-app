@@ -108,4 +108,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           release_id: "${{ inputs.releaseId }}"
-          file: "binaries/*"
+          file: "binaries/*;create-tauri-app.sh;create-tauri-app.ps1"

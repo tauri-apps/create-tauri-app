@@ -44,9 +44,9 @@ main() {
             ;;
     esac
 
-    local __TAG_NAME__="create-tauri-app-v2.0.0-alpha.1"
+    local __TAG_NAME__="create-tauri-app-v2.0.0-alpha.10"
     # local _url="https://github.com/tauri-apps/create-tauri-app/releases/download/${__TAG_NAME__}/create-tauri-app-${_arch}${_ext}"
-    local _url="https://create.tauri.app/bin?tag=${__TAG_NAME__}&arch=${_arch}&ext=${_ext}"
+    local _url="https://create.tauri.app/download/bin?tag=${__TAG_NAME__}&arch=${_arch}&ext=${_ext}"
 
     local _dir
     _dir="$(ensure mktemp -d)"
