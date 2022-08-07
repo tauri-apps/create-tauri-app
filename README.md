@@ -54,9 +54,9 @@ You can also directly specify the project name and the template you want to use 
 
 ```bash
 # curl
-curl https://create.tauri.app/sh | sh --template svelte
+curl https://create.tauri.app/sh | sh -s -- --template svelte
 # wget
-wget https://create.tauri.app/sh | sh --template svelte
+wget https://create.tauri.app/sh | sh -s -- --template svelte
 # TODO: powershell
 # cargo
 cargo create-tauri-app --template svelte
