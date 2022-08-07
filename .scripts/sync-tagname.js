@@ -16,7 +16,7 @@ const bump = process.argv[2];
 
 const inc = (content) => {
   const re = new RegExp(
-    /(.*__TAG_NAME__\s*=\s*("|')create-tauri-app-v)([0-9])+\.([0-9])+\.([0-9])+(-([a-zA-z]+\.([0-9])+))?(("|').*)/,
+    /(.*__TAG_NAME__\s*=\s*("|')create-tauri-app-v)([0-9])+\.([0-9])+\.([0-9])+(-([a-zA-z]+\.([0-9]+)))?(("|').*)/,
     "s"
   );
   const [, before, , major, minor, patch, premajorStr, , premajor, after] =
@@ -49,8 +49,8 @@ const inc = (content) => {
 };
 
 for (let file of [
-  join(__dirname, "../packages/worker/scripts/create-tauri-app.ps1"),
-  join(__dirname, "../packages/worker/scripts/create-tauri-app.sh"),
+  join(__dirname, "../create-tauri-app.ps1"),
+  join(__dirname, "../create-tauri-app.sh"),
 ]) {
   const content = readFileSync(file, "utf-8");
   const updatedContent = inc(content);
