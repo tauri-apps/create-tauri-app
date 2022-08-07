@@ -18,10 +18,24 @@ export default {
       });
     }
 
+    if (pathname.startsWith("/v")) {
+      const [, version, script] = /^\/v\/(.+?)\/(sh|ps)/g.exec(pathname);
+      const ext = script === "ps" ? "ps1" : "sh";
+
+      const res = await fetch(
+        `https://github.com/tauri-apps/create-tauri-app/releases/download/create-tauri-app-v${version}/create-tauri-app.${ext}`
+      );
+
+      return new Response(await res.text(), {
+        headers: { "Content-Type": "text/plain" },
+      });
+    }
+
     if (pathname.startsWith("/download/bin")) {
       const tag = searchParams.get("tag");
       const arch = searchParams.get("arch");
       const ext = searchParams.get("ext");
+
       const res = await fetch(
         `https://github.com/tauri-apps/create-tauri-app/releases/download/${tag}/create-tauri-app-${arch}${ext}`
       );
