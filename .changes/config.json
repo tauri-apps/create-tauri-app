@@ -105,7 +105,9 @@
       "manager": "rust",
       "postversion": [
         "cargo check",
-        "node ../../.scripts/sync-tagname.js ${ release.type }"
+        "node ../../.scripts/sync-scripts-tagname.js ${ release.type }",
+        "cp ../../create-tauri-app.ps1 ../worker/scripts",
+        "cp ../../create-tauri-app.sh ../worker/scripts"
       ],
       "assets": [
         {

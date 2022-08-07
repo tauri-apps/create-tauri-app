@@ -1,5 +1,5 @@
-import sh from "../../create-tauri-app.sh";
-import ps from "../../create-tauri-app.ps1";
+import sh from "./scripts/create-tauri-app.sh";
+import ps from "./scripts/create-tauri-app.ps1";
 import index from "./index.html";
 
 export default {
