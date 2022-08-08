@@ -16,11 +16,6 @@
       Greet
     </button>
   </div>
-  <p>{greetMsg}</p>
+  <p><b>{greetMsg}</b></p>
 </div>
 
-<style>
-#greet-input {
-  margin-right: 5px;
-}
-</style>
