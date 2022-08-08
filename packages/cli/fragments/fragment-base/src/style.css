@@ -14,11 +14,13 @@
   -webkit-text-size-adjust: 100%;
 }
 
-body {
+.container {
   margin: 0;
   padding-top: 20vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  text-align: center;
 }
 
 .logo {
@@ -92,6 +94,7 @@ input {
 
   input,
   button {
-    background-color: #f6f6f6;
+    background-color: #0f0f0f;
+    color: #f6f6f6;
   }
 }
