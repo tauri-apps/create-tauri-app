@@ -59,8 +59,8 @@ pub fn app() -> Html {
     };
 
     html! {
-        <main id="container">
-            <div id="row">
+        <main class="container">
+            <div class="row">
                 <a href="https://tauri.app" target="_blank">
                     <img src="public/tauri.svg" class="logo tauri" alt="Tauri logo"/>
                 </a>
