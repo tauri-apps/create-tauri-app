@@ -1,10 +1,9 @@
-import type { Component } from "solid-js";
 import { createSignal } from "solid-js";
 import logo from "./assets/logo.svg";
 import { invoke } from "@tauri-apps/api/tauri";
 import "./App.css";
 
-const App: Component = () => {
+function App() {
   const [greetMsg, setGreetMsg] = createSignal("");
   const [name, setName] = createSignal("");
 
@@ -13,19 +12,27 @@ const App: Component = () => {
   }
 
   return (
-    <div className="App">
-      <div>
+    <div className="container">
+      <h1>Welcome to Tauri!</h1>
+      
+      <div className="row">
         <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo" alt="Tauri logo" />
+          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
         </a>
         <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
+          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
         </a>
         <a href="https://solidjs.com" target="_blank">
-          <img src={logo} className="logo react" alt="Solid logo" />
+          <img src={logo} className="logo solid" alt="Solid logo" />
         </a>
       </div>
-      <div className="card">
+
+      <p>
+        Click on the Tauri, Vite, and Solid logos to learn more about each
+        framework.
+      </p>
+
+      <div className="row">
         <div>
           <input
             id="greet-input"
@@ -36,21 +43,11 @@ const App: Component = () => {
             Greet
           </button>
         </div>
-        <p>{greetMsg}</p>
-
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-        <p>
-          Edit <code>src-tauri/src/main.rs</code> and save to test app hot
-          reload.
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Tauri, Vite and Solid logos to learn more
-      </p>
+
+      <p>{greetMsg}</p>
     </div>
   );
-};
+}
 
 export default App;
