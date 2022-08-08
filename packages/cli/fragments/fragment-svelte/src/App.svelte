@@ -15,7 +15,7 @@
     </a>
   </div>
 
-  <p class="read-the-docs">
+  <p>
     Click on the Tauri, Vite, and Svelte logos to learn more about each framework
   </p>
 
