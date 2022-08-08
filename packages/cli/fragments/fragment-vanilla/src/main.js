@@ -1,8 +1,15 @@
 const { invoke } = window.__TAURI__.tauri;
 
-const greetInput = document.querySelector("#greetInput");
-const greetMsg = document.querySelector("#greetMsg");
+let greetInputEl;
+let greetMsgEl;
+
+window.addEventListener("DOMContentLoaded", () => {
+  greetInputEl = document.querySelector("#greetInput");
+  greetMsgEl = document.querySelector("#greetMsg");
+})
 
 async function greet() {
-  greetMsg.textContent = await invoke("greet", { name: greetInput.value });
+  greetMsgEl.textContent = await invoke("greet", { name: greetInputEl.value });
 }
+
+window.greet = greet;
