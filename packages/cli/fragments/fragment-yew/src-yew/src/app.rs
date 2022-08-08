@@ -86,7 +86,7 @@ pub fn app() -> Html {
                 <button type="button" onclick={greet}>{"Greet"}</button>
             </div>
 
-            <p>{ &*greet_msg }</p>
+            <p><b>{ &*greet_msg }</b></p>
         </main>
     }
 }
