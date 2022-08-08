@@ -1,43 +1,37 @@
 <script lang="ts">
-  import svelteLogo from './assets/svelte.svg'
   import Greet from './lib/Greet.svelte'
 </script>
 
 <main>
- <div>
+  <div class="row">
     <a href="https://tauri.app" target="_blank">
-      <img src="/tauri.svg" class="logo" alt="Tauri Logo" />
+      <img src="/tauri.svg" class="logo tauri" alt="Tauri Logo" />
     </a>
     <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite Logo" />
+      <img src="/vite.svg" class="logo vite" alt="Vite Logo" />
     </a>
     <a href="https://svelte.dev" target="_blank">
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
+      <img src="/svelte.svg" class="logo svelte" alt="Svelte Logo" />
     </a>
   </div>
 
-  <div class="card">
+  <p>
+    Click on the Tauri, Vite, and Svelte logos to learn more about each framework
+  </p>
+
+  <div class="row">
     <Greet />
   </div>
 
-  <p class="read-the-docs">
-    Click on the Tauri and Vite and Svelte logos to learn more
-  </p>
+
 </main>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
+  .logo.vite:hover {
     filter: drop-shadow(0 0 2em #ff3e00aa);
   }
-  .read-the-docs {
-    color: #888;
+
+  .logo.svelte:hover {
+    filter: drop-shadow(0 0 2em #ff3e00aa);
   }
 </style>
