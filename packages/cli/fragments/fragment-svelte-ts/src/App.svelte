@@ -2,7 +2,7 @@
   import Greet from './lib/Greet.svelte'
 </script>
 
-<main>
+<main class="container">
   <h1>Welcome to Tauri!</h1>
 
   <div class="row">
