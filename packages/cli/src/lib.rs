@@ -142,17 +142,17 @@ where
     template.render(&target_dir, pkg_manager, &package_name)?;
 
     println!();
-    println!("Done, now run:");
+    println!("{ITALIC}{DIM}Please follow{DIMRESET} {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites{WHITE} {DIM}to install the needed prerequisites, if you haven't already.{DIMRESET}{RESET}");
+    if !template.post_init_info().is_empty() {
+        println!("{}", template.post_init_info());
+    }
+    println!();
+    println!("Done, Now run:");
     println!("  cd {}", project_name);
     if !pkg_manager.install_cmd().is_empty() {
         println!("  {}", pkg_manager.install_cmd());
     }
     println!("  {} tauri dev", pkg_manager.run_cmd());
-    println!();
-    println!("{ITALIC}{DIM}Please follow{DIMRESET} {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites{WHITE} {DIM}to install the needed prerequisites, if you haven't already.{DIMRESET}{RESET}");
-    if !template.post_init_info().is_empty() {
-        println!("{}", template.post_init_info());
-    }
     println!();
     Ok(())
 }
