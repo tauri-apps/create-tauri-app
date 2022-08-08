@@ -59,32 +59,18 @@ pub fn app() -> Html {
     };
 
     html! {
-        <main id="app">
-            <div>
+        <main id="container">
+            <div id="row">
                 <a href="https://tauri.app" target="_blank">
-                    <img src="public/tauri.svg" class="logo" alt="Tauri logo"/>
+                    <img src="public/tauri.svg" class="logo tauri" alt="Tauri logo"/>
                 </a>
                 <a href="https://yew.rs" target="_blank">
                     <img src="public/yew.png" class="logo yew" alt="Yew logo"/>
                 </a>
             </div>
 
-            <div class="card">
-                <input id="greet-input" ref={&*greet_input_ref} placeholder="Enter a name..." />
-                <button type="button" onclick={greet}>{"Greet"}</button>
-            </div>
-
-            <p>{ &*greet_msg }</p>
-
-
-            <p>
-                {"Edit "}
-                <code>{"src-yew/src/app.rs"}</code> {" to test yew hot reload."}
-            </p>
-            <p>
-                {"Edit "}
-                <code>{"src-tauri/src/main.rs"}</code> {" to test app hot reload."}
-            </p>
+            <p>{"Click on the Tauri and Yew logos to learn more about each
+      framework."}</p>
 
             <p>
                 {"Recommended IDE setup: "}
@@ -94,7 +80,13 @@ pub fn app() -> Html {
                 {" + "}
                 <a href="https://github.com/rust-lang/rust-analyzer" target="_blank">{"rust-analyzer"}</a>
             </p>
-            <p class="read-the-docs">{"Click on the Tauri and Yew logos to learn more"}</p>
+
+            <div class="row">
+                <input id="greet-input" ref={&*greet_input_ref} placeholder="Enter a name..." />
+                <button type="button" onclick={greet}>{"Greet"}</button>
+            </div>
+
+            <p>{ &*greet_msg }</p>
         </main>
     }
 }
