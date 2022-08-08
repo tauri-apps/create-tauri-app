@@ -3,6 +3,8 @@
 </script>
 
 <main>
+  <h1>Welcome to Tauri!</h1>
+
   <div class="row">
     <a href="https://tauri.app" target="_blank">
       <img src="/tauri.svg" class="logo tauri" alt="Tauri Logo" />
@@ -16,7 +18,7 @@
   </div>
 
   <p>
-    Click on the Tauri, Vite, and Svelte logos to learn more about each framework
+    Click on the Tauri, Vite, and Svelte logos to learn more about each framework.
   </p>
 
   <div class="row">
