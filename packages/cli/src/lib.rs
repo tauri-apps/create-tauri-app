@@ -172,12 +172,12 @@ fn to_valid_pkg_name(project_name: &str) -> String {
     let mut ret = project_name
         .trim()
         .to_lowercase()
-        .replace('.', "-")
+        .replace('.', "")
         .replace(':', "-")
         .replace(';', "-")
         .replace(' ', "-")
-        .replace('\\', "-")
-        .replace('/', "-")
+        .replace('\\', "")
+        .replace('/', "")
         .replace('~', "-");
 
     if let Some(ch) = ret.chars().next() {
@@ -215,10 +215,10 @@ mod test {
         assert_eq!(to_valid_pkg_name("tauri app"), "tauri-app");
         assert_eq!(to_valid_pkg_name("tauri:app"), "tauri-app");
         assert_eq!(to_valid_pkg_name("tauri;app"), "tauri-app");
-        assert_eq!(to_valid_pkg_name("tauri.app"), "tauri-app");
-        assert_eq!(to_valid_pkg_name("tauri/app"), "tauri-app");
-        assert_eq!(to_valid_pkg_name("tauri\\app"), "tauri-app");
+        assert_eq!(to_valid_pkg_name("tauri.app"), "tauriapp");
+        assert_eq!(to_valid_pkg_name("tauri/app"), "tauriapp");
+        assert_eq!(to_valid_pkg_name("tauri\\app"), "tauriapp");
         assert_eq!(to_valid_pkg_name("tauri~app"), "tauri-app");
-        assert_eq!(to_valid_pkg_name("-tauri.app"), "tauri-app");
+        assert_eq!(to_valid_pkg_name("-tauri.app"), "tauriapp");
     }
 }
