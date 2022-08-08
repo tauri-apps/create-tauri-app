@@ -72,7 +72,7 @@ button:focus-visible {
 
 input {
   outline: none;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid #ffffff17;
 }
 
 .card {
@@ -88,7 +88,7 @@ input {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    color: #2135474f;
     background-color: #ffffff;
   }
 
@@ -96,12 +96,13 @@ input {
     color: #747bff;
   }
 
+  input,
   button {
     background-color: #f9f9f9;
   }
 
   input {
-    border-bottom: 1px solid #213547;
+    border-bottom: 1px solid #2135474f;
   }
 }
 
