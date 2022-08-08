@@ -45,7 +45,6 @@ function App() {
         </div>
       </div>
       <p>{greetMsg}</p>
-
     </div>
   );
 }

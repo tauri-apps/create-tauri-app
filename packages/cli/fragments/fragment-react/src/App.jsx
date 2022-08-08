@@ -44,9 +44,8 @@ function App() {
           </button>
         </div>
       </div>
-      
-      <p>{greetMsg}</p>
 
+      <p>{greetMsg}</p>
     </div>
   );
 }

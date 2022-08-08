@@ -7,7 +7,7 @@ import Greet from "./components/Greet.vue";
 <template>
   <div class="container">
     <h1>Welcome to Tauri!</h1>
-    
+
     <div class="row">
       <a href="https://tauri.app" target="_blank">
         <img src="/tauri.svg" class="logo tauri" alt="Tauri logo" />
