@@ -10,7 +10,7 @@
 </script>
 
 <div>
-  <div>
+  <div class="row">
     <input id="greet-input" placeholder="Enter a name..." bind:value={name} />
     <button on:click={greet}>
       Greet
