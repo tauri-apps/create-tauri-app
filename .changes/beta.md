@@ -1,5 +1,6 @@
 ---
-"create-tauri-app": "patch"
+"create-tauri-app": "major"
+"create-tauri-app-js": "major"
 ---
 
 * Beta
