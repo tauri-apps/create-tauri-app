@@ -1,9 +1,9 @@
 {
   "build": {
-    "beforeBuildCommand": "trunk --config src-yew/Trunk.toml build",
-    "beforeDevCommand": "trunk --config src-yew/Trunk.toml serve",
+    "beforeBuildCommand": "trunk build",
+    "beforeDevCommand": "trunk serve",
     "devPath": "http://localhost:1420",
-    "distDir": "../src-yew/dist",
+    "distDir": "../dist",
     "withGlobalTauri": true
   },
   "package": {
