@@ -1,5 +1,13 @@
 # Changelog
 
+## \[2.0.0-beta.0]
+
+- - Beta
+- Changed all templates server port to 1420
+- Updated styles of all templates
+- [d8c1abc](https://www.github.com/tauri-apps/create-tauri-app/commit/d8c1abccbe256e4dc0e07d90d7bd6ee43e48fcf6) prepare for beta on 2022-08-09
+- [600566a](https://www.github.com/tauri-apps/create-tauri-app/commit/600566a79a8e108330033795a36eeea095cfc8ce) fix covector bump on 2022-08-09
+
 ## \[2.0.0-alpha.11]
 
 - 2.0.0-alpha.11
