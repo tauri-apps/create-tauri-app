@@ -1,17 +1,4 @@
 {
-  "tag": "alpha",
-  "changes": [
-    ".changes/alpha.1.md",
-    ".changes/alpha.10.md",
-    ".changes/alpha.11.md",
-    ".changes/alpha.2.md",
-    ".changes/alpha.3.md",
-    ".changes/alpha.4.md",
-    ".changes/alpha.5.md",
-    ".changes/alpha.6.md",
-    ".changes/alpha.7.md",
-    ".changes/dim-color.md",
-    ".changes/missing-shebang.md",
-    ".changes/rewrite.md"
-  ]
+  "tag": "beta",
+  "changes": []
 }

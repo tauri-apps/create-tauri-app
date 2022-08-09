@@ -56,9 +56,9 @@ jobs:
         uses: tauri-apps/create-pull-request@v3.4.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: release/version-updates-alpha # TODO: adjust before merging for stable 2.0
-          title: Apply Version Updates From Current Changes (Alpha) # TODO: adjust before merging for stable 2.0
-          commit-message: 'apply version updates (alpha)' # TODO: adjust before merging for stable 2.0
+          branch: release/version-updates-beta # TODO: adjust before merging for stable 2.0
+          title: Apply Version Updates From Current Changes (Beta) # TODO: adjust before merging for stable 2.0
+          commit-message: 'apply version updates (beta)' # TODO: adjust before merging for stable 2.0
           labels: 'version updates'
           body: ${{ steps.covector.outputs.change }}
 

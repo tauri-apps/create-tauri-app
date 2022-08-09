@@ -19,19 +19,23 @@ const inc = (content) => {
     /(.*__TAG_NAME__\s*=\s*("|')create-tauri-app-v)([0-9])+\.([0-9])+\.([0-9])+(-([a-zA-z]+\.([0-9]+)))?(("|').*)/,
     "s"
   );
-  const [, before, , major, minor, patch, premajorStr, , premajor, after] =
+  const [, before, , major, minor, patch, preStr, , pre, after] =
     re.exec(content);
 
   let ret;
   switch (bump) {
-    case "prerelease":
+    case "prepatch":
+    case "preminor":
     case "premajor":
-      const pre = JSON.parse(
+    case "prerelease":
+      const preJSON = JSON.parse(
         readFileSync(join(__dirname, "../.changes/pre.json")).toString()
       );
       ret = `${before}${
-        premajorStr && premajorStr.includes(pre.tag) ? major : Number(major) + 1
-      }.0.0-${pre.tag}.${premajor ? Number(premajor) + 1 : 0}${after}`;
+        preStr && (preStr.includes("alpha") || preStr.includes("beta"))
+          ? major
+          : Number(major) + 1
+      }.0.0-${preJSON.tag}.${pre && preStr.includes(preJSON.tag) ? Number(pre) + 1 : 0}${after}`;
       break;
     case "major":
       ret = `${before}${Number(major) + 1}.${minor}.${patch}${after}`;
