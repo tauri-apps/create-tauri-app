@@ -16,7 +16,7 @@
 
 .container {
   margin: 0;
-  padding-top: 20vh;
+  padding-top: 10vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -61,8 +61,10 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
+  color: #0f0f0f;
   background-color: #ffffff;
   transition: border-color 0.25s;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 button {
@@ -73,13 +75,13 @@ button:hover {
   border-color: #396cd8;
 }
 
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+input,
+button {
+  outline: none;
 }
 
-input {
-  outline: none;
+#greet-input {
+  margin-right: 5px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -94,10 +96,7 @@ input {
 
   input,
   button {
-    background-color: #0f0f0f;
-  }
-
-  input {
-    border-bottom: 1px solid #2135474f;
+    color: #ffffff;
+    background-color: #0f0f0f98;
   }
 }
