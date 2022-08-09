@@ -1,5 +1,11 @@
 # Changelog
 
+## \[2.0.0-beta.1]
+
+- Add missing `lang="ts"` for `App.vue` in `vue-ts` template
+  - Bumped due to a bump in create-tauri-app.
+  - [4132eb8](https://www.github.com/tauri-apps/create-tauri-app/commit/4132eb8b946b62cf93fa237a5ca95fb13a2b1fac) fix vue-ts template on 2022-08-09
+
 ## \[2.0.0-beta.0]
 
 - - Beta
