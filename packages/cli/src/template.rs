@@ -65,40 +65,43 @@ impl<'a> Template {
                 .collect::<path::PathBuf>();
 
             let p = target_dir.join(&p);
+            let file_name = p.file_name().unwrap().to_string_lossy();
 
-            let target_file = match &*p.file_name().unwrap().to_string_lossy() {
-                "_gitignore" => p.parent().unwrap().join(".gitignore"),
-                // render conditional files
-                // conditional files are files that start with a special conventions
-                //  _[<list of package managers separated by `-`>]_<file_name>
-                // ex: _[pnpm-npm-yarn]package.json
+            let target_file_name = match &*file_name {
+                "_gitignore" => ".gitignore",
+                // conditional files:
+                // are files that start with a special convention
+                //     "_[<list of package managers separated by `-`>]_<file_name>"
+                // ex: "_[pnpm-npm-yarn]_package.json"
                 name if name.starts_with("_[") => {
                     let mut s = name.strip_prefix("_[").unwrap().split("]_");
-                    let (managers_str, file_name) = (s.next().unwrap(), s.next().unwrap());
-                    if managers_str
-                        .split('-')
-                        .any(|x| x == pkg_manager.to_string().as_str())
-                    {
-                        p.parent().unwrap().join(file_name)
+                    let (mut managers, name) = (s.next().unwrap().split('-'), s.next().unwrap());
+                    if managers.any(|x| x == pkg_manager.to_string()) {
+                        name
                     } else {
+                        // skip writing this file
                         return Ok(());
                     }
                 }
-                _ => p,
+                _ => &file_name,
             };
 
             let mut data = Fragments::get(&*file).unwrap().data.to_vec();
 
-            if let Ok(str_) = String::from_utf8(data.to_vec()) {
-                data = str_
-                    .replace("{{package_name}}", package_name)
-                    .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
-                    .as_bytes()
-                    .to_vec();
+            // Only modify specific set of files
+            if ["Cargo.toml", "package.json", "tauri.conf.json"].contains(&target_file_name) {
+                if let Ok(str_) = String::from_utf8(data.to_vec()) {
+                    data = str_
+                        .replace("{{package_name}}", package_name)
+                        .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
+                        .as_bytes()
+                        .to_vec();
+                }
             }
 
-            fs::create_dir_all(&target_file.parent().unwrap())?;
-            fs::write(target_file, &data)?;
+            let parent = p.parent().unwrap();
+            fs::create_dir_all(&parent)?;
+            fs::write(parent.join(target_file_name), &data)?;
             Ok(())
         };
 
