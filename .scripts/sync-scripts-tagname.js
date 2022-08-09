@@ -35,7 +35,9 @@ const inc = (content) => {
         preStr && (preStr.includes("alpha") || preStr.includes("beta"))
           ? major
           : Number(major) + 1
-      }.0.0-${preJSON.tag}.${pre && preStr.includes(preJSON.tag) ? Number(pre) + 1 : 0}${after}`;
+      }.0.0-${preJSON.tag}.${
+        pre && preStr.includes(preJSON.tag) ? Number(pre) + 1 : 0
+      }${after}`;
       break;
     case "major":
       ret = `${before}${Number(major) + 1}.${minor}.${patch}${after}`;
