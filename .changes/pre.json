@@ -12,6 +12,7 @@
     ".changes/alpha.7.md",
     ".changes/dim-color.md",
     ".changes/missing-shebang.md",
-    ".changes/rewrite.md"
+    ".changes/rewrite.md",
+    ".changes/serverport.md"
   ]
 }

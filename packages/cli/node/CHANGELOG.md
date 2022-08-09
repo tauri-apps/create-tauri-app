@@ -1,5 +1,11 @@
 # Changelog
 
+## \[2.0.0-alpha.12]
+
+- Update all templates server port.
+  - Bumped due to a bump in create-tauri-app.
+  - [efeb674](https://www.github.com/tauri-apps/create-tauri-app/commit/efeb6744c0b4ae5774d9fa85ac044da273eff397) server port changefile on 2022-08-08
+
 ## \[2.0.0-alpha.11]
 
 - 2.0.0-alpha.11
