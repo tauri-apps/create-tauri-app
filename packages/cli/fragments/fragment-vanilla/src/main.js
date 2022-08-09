@@ -4,8 +4,8 @@ let greetInputEl;
 let greetMsgEl;
 
 window.addEventListener("DOMContentLoaded", () => {
-  greetInputEl = document.querySelector("#greetInput");
-  greetMsgEl = document.querySelector("#greetMsg");
+  greetInputEl = document.querySelector("#greet-input");
+  greetMsgEl = document.querySelector("#greet-msg");
 });
 
 async function greet() {

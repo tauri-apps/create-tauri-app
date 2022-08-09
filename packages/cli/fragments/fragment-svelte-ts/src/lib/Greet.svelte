@@ -16,5 +16,5 @@
       Greet
     </button>
   </div>
-  <p><b>{greetMsg}</b></p>
+  <p>{greetMsg}</p>
 </div>
