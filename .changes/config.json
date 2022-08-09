@@ -4,64 +4,7 @@
   "pkgManagers": {
     "javascript": {
       "version": true,
-      "getPublishedVersion": "npm view ${ pkgFile.pkg.name } version --tag next",
-      "prepublish": [
-        {
-          "command": "pnpm install",
-          "dryRunCommand": true
-        },
-        {
-          "command": "echo \"# Pnpm Audit\n\"",
-          "dryRunCommand": true,
-          "pipe": true
-        },
-        {
-          "command": "echo '<details>\n<summary>click to view</summary>\n\n```'",
-          "dryRunCommand": true,
-          "pipe": true
-        },
-        {
-          "command": "pnpm audit --prod",
-          "dryRunCommand": true,
-          "pipe": true
-        },
-        {
-          "command": "echo '```\n\n</details>\n'",
-          "dryRunCommand": true,
-          "pipe": true
-        },
-        {
-          "command": "pnpm pack",
-          "dryRunCommand": true
-        }
-      ],
-      "publish": [
-        {
-          "command": "echo \"# Pnpm Package Publish\"",
-          "dryRunCommand": true,
-          "pipe": true
-        },
-        {
-          "command": "echo '<details>\n<summary>click to view</summary>\n\n```'",
-          "dryRunCommand": true,
-          "pipe": true
-        },
-        {
-          "command": "pnpm publish --access public",
-          "dryRunCommand": "npm publish --dry-run --access public",
-          "pipe": true
-        },
-        {
-          "command": "echo '```\n\n</details>\n'",
-          "dryRunCommand": true,
-          "pipe": true
-        }
-      ],
-      "postpublish": [
-        "git tag ${ pkg.pkg }-v${ pkgFile.versionMajor } -f",
-        "git tag ${ pkg.pkg }-v${ pkgFile.versionMajor }.${ pkgFile.versionMinor } -f",
-        "git push --tags -f"
-      ]
+      "getPublishedVersion": "npm view ${ pkgFile.pkg.name } version --tag next"
     },
     "rust": {
       "version": true,
@@ -72,12 +15,7 @@
           "dryRunCommand": true
         },
         {
-          "command": "echo \"# Cargo Publish\"",
-          "dryRunCommand": true,
-          "pipe": true
-        },
-        {
-          "command": "echo '<details>\n<summary>click to view</summary>\n\n```'",
+          "command": "echo '<details>\n<summary><em><h4>Cargo Publish</h4></em></summary>\n\n```'",
           "dryRunCommand": true,
           "pipe": true
         },
