@@ -325,7 +325,7 @@ You may find the requirements here: ${cyan('https://tauri.app/v1/guides/getting-
     updatePackageJson((pkg) => {
       return {
         ...pkg,
-        name: appName,
+        name: appName === '.' ? defaults.appName : appName,
         scripts: {
           ...pkg.scripts,
           tauri: "tauri",
