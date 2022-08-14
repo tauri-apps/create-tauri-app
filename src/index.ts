@@ -325,7 +325,7 @@ You may find the requirements here: ${cyan('https://tauri.app/v1/guides/getting-
     updatePackageJson((pkg) => {
       return {
         ...pkg,
-        name: appName === '.' ? defaults.appName : appName,
+        name: toValidPackageName(appName) === '.' ? defaults.appName : toValidPackageName(appName),
         scripts: {
           ...pkg.scripts,
           tauri: "tauri",
@@ -372,6 +372,15 @@ You may find the requirements here: ${cyan('https://tauri.app/v1/guides/getting-
     });
   }
 };
+
+function toValidPackageName(appName: string) {
+  return appName
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/^[._]/, '')
+    .replace(/[^a-z0-9-~]+/g, '-')
+}
 
 function logStep(msg: string): void {
   const out = `${green(">>")} ${bold(cyan(msg))}`;
