@@ -306,7 +306,6 @@ You may find the requirements here: ${cyan('https://tauri.app/v1/guides/getting-
     });
   }
   const validName =  isValidPackageName(appName) ? appName : toValidPackageName(appName) || defaults.appName
-  cfg.appName = validName
   // Vue CLI plugin automatically runs these
   if (recipe.shortName !== "vuecli") {
     logStep("Installing any additional needed dependencies");
@@ -339,7 +338,7 @@ You may find the requirements here: ${cyan('https://tauri.app/v1/guides/getting-
     const initArgs = [
       "init",
       "--app-name",
-      cfg.appName,
+      validName,
       "--window-title",
       cfg.windowTitle,
       "--dist-dir",
@@ -384,7 +383,7 @@ function toValidPackageName(appName: string) {
 }
 
 function isValidPackageName(appName: string) {
-  return /^(?:@[a-z0-9-*~][a-z0-9-*._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/.test(
+  return /^(?:@[a-z0-9-*][a-z0-9-*._]*\/)?[a-z0-9-][a-z0-9-._]*$/.test(
     appName
   )
 }
