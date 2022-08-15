@@ -290,6 +290,8 @@ You may find the requirements here: ${cyan('https://tauri.app/v1/guides/getting-
     ...(updatedConfig ?? {}),
   };
 
+  const validName =  isValidPackageName(appName) ? appName : toValidPackageName(appName) || defaults.appName
+  cfg.appName = validName
   // note that our app directory is reliant on the appName and
   // generally there are issues if the path has spaces (see Windows)
   // TODO: prevent app names with spaces or escape here?
@@ -305,7 +307,6 @@ You may find the requirements here: ${cyan('https://tauri.app/v1/guides/getting-
       answers: recipeAnswers ?? {},
     });
   }
-  const validName =  isValidPackageName(appName) ? appName : toValidPackageName(appName) || defaults.appName
   // Vue CLI plugin automatically runs these
   if (recipe.shortName !== "vuecli") {
     logStep("Installing any additional needed dependencies");
