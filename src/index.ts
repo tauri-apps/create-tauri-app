@@ -290,6 +290,8 @@ You may find the requirements here: ${cyan('https://tauri.app/v1/guides/getting-
     ...(updatedConfig ?? {}),
   };
 
+  const validName =  isValidPackageName(appName) ? appName : toValidPackageName(appName) || defaults.appName
+  cfg.appName = validName
   // note that our app directory is reliant on the appName and
   // generally there are issues if the path has spaces (see Windows)
   // TODO: prevent app names with spaces or escape here?
@@ -305,7 +307,6 @@ You may find the requirements here: ${cyan('https://tauri.app/v1/guides/getting-
       answers: recipeAnswers ?? {},
     });
   }
-
   // Vue CLI plugin automatically runs these
   if (recipe.shortName !== "vuecli") {
     logStep("Installing any additional needed dependencies");
@@ -325,7 +326,7 @@ You may find the requirements here: ${cyan('https://tauri.app/v1/guides/getting-
     updatePackageJson((pkg) => {
       return {
         ...pkg,
-        name: appName === '.' ? defaults.appName : appName,
+        name: validName,
         scripts: {
           ...pkg.scripts,
           tauri: "tauri",
@@ -338,7 +339,7 @@ You may find the requirements here: ${cyan('https://tauri.app/v1/guides/getting-
     const initArgs = [
       "init",
       "--app-name",
-      cfg.appName,
+      validName,
       "--window-title",
       cfg.windowTitle,
       "--dist-dir",
@@ -372,6 +373,21 @@ You may find the requirements here: ${cyan('https://tauri.app/v1/guides/getting-
     });
   }
 };
+
+function toValidPackageName(appName: string) {
+  return appName
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/^[._]/, '')
+    .replace(/[^a-z0-9-]+/g, '-')
+}
+
+function isValidPackageName(appName: string) {
+  return /^(?:@[a-z0-9-*][a-z0-9-*._]*\/)?[a-z0-9-][a-z0-9-._]*$/.test(
+    appName
+  )
+}
 
 function logStep(msg: string): void {
   const out = `${green(">>")} ${bold(cyan(msg))}`;
