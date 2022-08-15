@@ -39,7 +39,7 @@
     "scaffe": "1.2.0"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "22.0.0",
+    "@rollup/plugin-commonjs": "22.0.2",
     "@rollup/plugin-node-resolve": "13.3.0",
     "@rollup/plugin-typescript": "8.3.2",
     "@types/cross-spawn": "6.0.2",
