@@ -12,7 +12,7 @@ use crate::{colors::*, package_manager::PackageManager};
 #[folder = "$CARGO_MANIFEST_DIR/fragments"]
 struct Fragments;
 
-#[derive(Debug, Clone, Copy, Default, PartialEq)]
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum Template {
     #[default]
@@ -86,7 +86,7 @@ impl<'a> Template {
                 _ => &file_name,
             };
 
-            let mut data = Fragments::get(&*file).unwrap().data.to_vec();
+            let mut data = Fragments::get(file).unwrap().data.to_vec();
 
             // Only modify specific set of files
             if ["Cargo.toml", "package.json", "tauri.conf.json"].contains(&target_file_name) {

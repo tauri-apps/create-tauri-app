@@ -6,7 +6,7 @@ use std::{fmt::Display, str::FromStr};
 
 use crate::template::Template;
 
-#[derive(Debug, Clone, Copy, Default, PartialEq)]
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum PackageManager {
     #[default]
