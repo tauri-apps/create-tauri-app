@@ -6,7 +6,7 @@
 
 /*
 This script is solely intended to be run as part of the `covector version` step to
-keep the tagName in `packages/worker/scripts/cta.{ps1,sh}` up to date with other version bumps.
+keep the tagName in `create-tauri-app.{ps1,sh}` up to date with other version bumps.
 */
 
 const { readFileSync, writeFileSync } = require("fs");
@@ -31,16 +31,14 @@ const inc = (content) => {
       const preJSON = JSON.parse(
         readFileSync(join(__dirname, "../.changes/pre.json")).toString()
       );
-      ret = `${before}${
-        preStr && (preStr.includes("alpha") || preStr.includes("beta"))
-          ? major
-          : Number(major) + 1
-      }.0.0-${preJSON.tag}.${
-        pre && preStr.includes(preJSON.tag) ? Number(pre) + 1 : 0
-      }${after}`;
+      ret = `${before}${preStr && (preStr.includes("alpha") || preStr.includes("beta"))
+        ? major
+        : Number(major) + 1
+        }.0.0-${preJSON.tag}.${pre && preStr.includes(preJSON.tag) ? Number(pre) + 1 : 0
+        }${after}`;
       break;
     case "major":
-      ret = `${before}${Number(major) + 1}.${minor}.${patch}${after}`;
+      ret = `${before}${Number(major) + 1}.0.0${after}`;
       break;
     case "minor":
       ret = `${before}${major}.${Number(minor) + 1}.${patch}${after}`;

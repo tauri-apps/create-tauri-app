@@ -57,7 +57,6 @@ You can also directly specify the project name and the template you want to use 
 sh <(curl https://create.tauri.app/sh) --template svelte
 # wget
 sh <(wget https://create.tauri.app/sh) --template svelte
-# TODO: powershell
 # cargo
 cargo create-tauri-app --template svelte
 # npm 6.x

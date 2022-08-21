@@ -4,7 +4,7 @@
   "pkgManagers": {
     "javascript": {
       "version": true,
-      "getPublishedVersion": "npm view ${ pkgFile.pkg.name } version --tag next"
+      "getPublishedVersion": "npm view ${ pkgFile.pkg.name } version"
     },
     "rust": {
       "version": true,

@@ -7,7 +7,7 @@ name: version or publish
 on:
   push:
     branches:
-      - rewrite-in-rust # TODO: adjust before merging for stable 2.0
+      - dev
 
 jobs:
   version-or-publish:
@@ -49,16 +49,15 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           command: 'version-or-publish'
           createRelease: true
-          draftRelease: true
 
       - name: Create Pull Request With Versions Bumped
         if: steps.covector.outputs.commandRan == 'version'
         uses: tauri-apps/create-pull-request@v3.4.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: release/version-updates-beta # TODO: adjust before merging for stable 2.0
-          title: Apply Version Updates From Current Changes (Beta) # TODO: adjust before merging for stable 2.0
-          commit-message: 'apply version updates (beta)' # TODO: adjust before merging for stable 2.0
+          branch: release/version-updates
+          title: Apply Version Updates From Current Changes
+          commit-message: 'apply version updates'
           labels: 'version updates'
           body: ${{ steps.covector.outputs.change }}
 
@@ -66,20 +65,20 @@ jobs:
         if: |
           steps.covector.outputs.successfulPublish == 'true' &&
           contains(steps.covector.outputs.packagesPublished, 'create-tauri-app')
-        uses: benc-uk/workflow-dispatch@v1 # TODO: adjust before merging for stable 2.0 maybe use repository dispatch???
+        uses: peter-evans/repository-dispatch@v2
         with:
-          workflow: publish binaries
-          repo: tauri-apps/create-tauri-app
-          inputs: '{"releaseId": "${{ steps.covector.outputs.create-tauri-app-releaseId }}" }'
           token: ${{ secrets.TAURI_BOT_PAT }}
+          repo: tauri-apps/create-tauri-app
+          event-type: publish-binaries
+          client-payload: '{"releaseId": "${{ steps.covector.outputs.create-tauri-app-releaseId }}" }'
 
       - name: Trigger publish-napi.yml workflow
         if: |
           steps.covector.outputs.successfulPublish == 'true' &&
           contains(steps.covector.outputs.packagesPublished, 'create-tauri-app-js')
-        uses: benc-uk/workflow-dispatch@v1 # TODO: adjust before merging for stable 2.0 maybe use repository dispatch???
+        uses: peter-evans/repository-dispatch@v2
         with:
-          workflow: publish napi modules
-          repo: tauri-apps/create-tauri-app
-          inputs: '{"releaseId": "${{ steps.covector.outputs.create-tauri-app-js-releaseId }}" }'
           token: ${{ secrets.TAURI_BOT_PAT }}
+          repo: tauri-apps/create-tauri-app
+          event-type: publish-napi
+          client-payload: '{"releaseId": "${{ steps.covector.outputs.create-tauri-app-js-releaseId }}" }'

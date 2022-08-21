@@ -1,7 +1,0 @@
-{
-  "tag": "beta",
-  "changes": [
-    ".changes/beta.md",
-    ".changes/vue-ts.md"
-  ]
-}
