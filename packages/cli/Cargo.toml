@@ -17,6 +17,6 @@ path = "src/main.rs"
 
 [dependencies]
 anyhow = "1.0.62"
-dialoguer = "0.10.1"
+dialoguer = "0.10.2"
 pico-args = "0.5.0"
 rust-embed = { version = "6.4.0", features = [ "compression", "interpolate-folder-path" ] }
