@@ -1,5 +1,11 @@
 # Changelog
 
+## \[2.0.2]
+
+- Fix react-ts template port.
+  - Bumped due to a bump in create-tauri-app.
+  - [4598b99](https://www.github.com/tauri-apps/create-tauri-app/commit/4598b9951da3275bc03be92d373056e8cc1b8c02) fix(cli/fragments): fix react-ts port on 2022-08-22
+
 ## \[2.0.1]
 
 - Fix missing features in yew fragment
