@@ -16,9 +16,9 @@ importers:
 
   packages/cli/node:
     specifiers:
-      '@napi-rs/cli': 2.11.0
+      '@napi-rs/cli': 2.11.4
     devDependencies:
-      '@napi-rs/cli': 2.11.0
+      '@napi-rs/cli': 2.11.4
 
   packages/worker:
     specifiers:
@@ -323,8 +323,8 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@napi-rs/cli/2.11.0:
-    resolution: {integrity: sha512-cM6F4x4rXZR4Wd845DCCOS2He8ndEotrXKaM/rdo5CGTX6bJEzEQIZR+cBBMh14vStZdU9oUlSzYOE1Es321nQ==}
+  /@napi-rs/cli/2.11.4:
+    resolution: {integrity: sha512-rjU651owB4GJetO3pnu3B8TyVM3Fis3AYb+U16bKxYyykp81S+dJlIgWc8Lc0t55PYbHlBM3hxdgy4pultxMAw==}
     engines: {node: '>= 10'}
     hasBin: true
     dev: true
