@@ -1,5 +1,14 @@
 # Changelog
 
+## \[2.0.4]
+
+- Add `@types/node` as a dev dependency to typescript templates.
+  - Bumped due to a bump in create-tauri-app.
+  - [ff7265c](https://www.github.com/tauri-apps/create-tauri-app/commit/ff7265c8a6e070c45c41a0586f45b3ce291a8121) feat(cli/templates): add `@typs/node` to typescript templates on 2022-08-22
+- Fix `solid` and `solid-ts` vite config file.
+  - Bumped due to a bump in create-tauri-app.
+  - [246ada4](https://www.github.com/tauri-apps/create-tauri-app/commit/246ada459fb1e084d5b5750fbf7811ec38716666) fix(cli/tamplates): fix solid template vite config on 2022-08-22
+
 ## \[2.0.3]
 
 - Fix css import in react templates.
