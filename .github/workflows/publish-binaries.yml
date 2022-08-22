@@ -111,3 +111,4 @@ jobs:
         with:
           release_id: "${{ github.event.client_payload.releaseId || inputs.releaseId }}"
           file: "binaries/*;create-tauri-app.sh;create-tauri-app.ps1"
+          draft: false
