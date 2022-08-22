@@ -1,5 +1,11 @@
 # Changelog
 
+## \[2.0.1]
+
+- Fix missing features in yew fragment
+  - Bumped due to a bump in create-tauri-app.
+  - [71e5449](https://www.github.com/tauri-apps/create-tauri-app/commit/71e544909aa8b6e42bc412f332b917ad9d52fc76) fix: missing features in yew fragment, fixes [#122](https://www.github.com/tauri-apps/create-tauri-app/pull/122) ([#123](https://www.github.com/tauri-apps/create-tauri-app/pull/123)) on 2022-08-22
+
 ## \[2.0.0]
 
 - New templates that are customized towards a better experience with Tauri.
