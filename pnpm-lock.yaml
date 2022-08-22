@@ -7,8 +7,8 @@ importers:
 
   .:
     specifiers:
-      covector: ^0.7.3
-      prettier: ^2.7.1
+      covector: 0.7.3
+      prettier: 2.7.1
     dependencies:
       prettier: 2.7.1
     devDependencies:
@@ -16,13 +16,13 @@ importers:
 
   packages/cli/node:
     specifiers:
-      '@napi-rs/cli': ^2.11.0
+      '@napi-rs/cli': 2.11.0
     devDependencies:
       '@napi-rs/cli': 2.11.0
 
   packages/worker:
     specifiers:
-      wrangler: ^2.0.24
+      wrangler: 2.0.24
     devDependencies:
       wrangler: 2.0.24
 
