@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.0.3]
+
+- Fix css import in react templates.
+  - [a448c5e](https://www.github.com/tauri-apps/create-tauri-app/commit/a448c5e1779c6d0f195693d79427d930fec0915e) fix(cli/tempaltes): fix css imports in react templates on 2022-08-22
+
 ## \[2.0.2]
 
 - Fix react-ts template port.
