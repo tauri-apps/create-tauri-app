@@ -1,3 +1,10 @@
 {
-  "extends": ["config:base"]
+  "extends": ["config:base", ":disableDependencyDashboard"],
+  "packageRules": [
+    {
+      "matchPaths": ["packages/cli/fragments/**"],
+      "rangeStrategy": "replace",
+      "extends": ["schedule:monthly"]
+    }
+  ]
 }
