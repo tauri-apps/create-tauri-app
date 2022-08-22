@@ -1,5 +1,12 @@
 # Changelog
 
+## \[2.0.0]
+
+- New templates that are customized towards a better experience with Tauri.
+  - [6c50fc3](https://www.github.com/tauri-apps/create-tauri-app/commit/6c50fc38019f5284d78873750a3fcdd1d7835931) refactor: rewrite in rust ([#90](https://www.github.com/tauri-apps/create-tauri-app/pull/90)) on 2022-08-22
+- Rewrote `create-tauri-app` in rust to make it accessible to all communities and not only Node.js, and now you can use `create-tauri-app` through `npm`, `yarn`, `pnpm`, `cargo` or directly through your shell using `powershell` or `bash`. Check out the [README.md](https://github.com/tauri-apps/create-tauri-app#create-tauri-app) for different ways to use it.
+  - [6c50fc3](https://www.github.com/tauri-apps/create-tauri-app/commit/6c50fc38019f5284d78873750a3fcdd1d7835931) refactor: rewrite in rust ([#90](https://www.github.com/tauri-apps/create-tauri-app/pull/90)) on 2022-08-22
+
 ## \[2.0.0-beta.1]
 
 - Add missing `lang="ts"` for `App.vue` in `vue-ts` template
