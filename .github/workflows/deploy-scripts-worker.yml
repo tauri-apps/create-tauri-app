@@ -1,0 +1,25 @@
+# Copyright 2019-2021 Tauri Programme within The Commons Conservancy
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
+
+name: deploy .{sh,ps1} scripts worker
+
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - '.github/workflows/deploy-scripts.yml'
+      - 'packages/worker/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: cloudflare/wrangler-action@2.0.0
+        with:
+          command: publish
+          workingDirectory: 'packages/worker'
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}

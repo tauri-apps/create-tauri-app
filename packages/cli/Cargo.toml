@@ -1,0 +1,22 @@
+[package]
+name = "create-tauri-app"
+description = "Rapidly scaffold out a new tauri app project."
+authors = [ "Tauri Programme within The Commons Conservancy" ]
+version = "1.0.2"
+edition = "2021"
+license = "Apache-2.0 OR MIT"
+readme = "README.md"
+repository = "https://github.com/tauri-apps/create-tauri-app"
+keywords = [ "tauri" ]
+categories = [ "gui" ]
+include = [ "/fragments", "/src", "*.rs", "/LICENSE*", "/CHANGELOG.md" ]
+
+[[bin]]
+name = "cargo-create-tauri-app"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "1.0.58"
+dialoguer = "0.10.1"
+pico-args = "0.5.0"
+rust-embed = { version = "6.4.0", features = [ "compression", "interpolate-folder-path" ] }

@@ -1,48 +1,92 @@
-# create-tauri-app
+<img src=".github/splash.png" alt="Rapidly scaffold out a new tauri app project." />
 
- <img align="right" src="https://github.com/tauri-apps/tauri/raw/dev/app-icon.png" height="128" width="128">
-
+[![](https://img.shields.io/crates/v/create-tauri-app)](https://crates.io/crates/create-tauri-app)
+[![](https://img.shields.io/npm/v/create-tauri-app.svg)](https://www.npmjs.com/package/create-tauri-app)
 [![status](https://img.shields.io/badge/status-stable-blue.svg)](https://github.com/tauri-apps/tauri)
 [![Chat Server](https://img.shields.io/badge/chat-discord-7289da.svg)](https://discord.gg/SpmNs4S)
 [![website](https://img.shields.io/badge/website-tauri.app-purple.svg)](https://tauri.app)
 [![https://good-labs.github.io/greater-good-affirmation/assets/images/badge.svg](https://good-labs.github.io/greater-good-affirmation/assets/images/badge.svg)](https://good-labs.github.io/greater-good-affirmation)
 [![support](https://img.shields.io/badge/sponsor-Open%20Collective-blue.svg)](https://opencollective.com/tauri)
 
-| Component | Version                                     |
-| --------- | ------------------------------------------- |
-| create-tauri-app   | ![](https://img.shields.io/npm/v/create-tauri-app.svg) |
-
-## About Tauri
-Tauri is a polyglot and generic system that is very composable and allows engineers to make a wide variety of applications. It is used for building applications for Desktop Computers using a combination of Rust tools and HTML rendered in a Webview. Apps built with Tauri can ship with any number of pieces of an optional JS API / Rust API so that webviews can control the system via message passing. In fact, developers can extend the default API with their own functionality and bridge the Webview and Rust-based backend easily.
-
-Tauri apps can have custom menus and have tray-type interfaces. They can be updated, and are managed by the user's operating system as expected. They are very small, because they use the system's webview. They do not ship a runtime, since the final binary is compiled from rust. This makes the reversing of Tauri apps not a trivial task.
-
-## This module
-This is a toolkit that will enable engineering teams to rapidly scaffold out a new tauri-apps project using the frontend framework of their choice (as long as it has been configured).
-
-To learn more about the details of how all of these pieces fit together, please consult this [ARCHITECTURE.md](https://github.com/tauri-apps/tauri/blob/dev/ARCHITECTURE.md) document.
 
 ## Usage
-Run and answer the prompts to get started with your first Tauri app!
 
-With npx:
+With Bash:
 
-```shell
-npx create-tauri-app
+``` bash
+sh <(curl https://create.tauri.app/sh)
+# or
+sh <(wget https://create.tauri.app/sh)
 ```
 
-With npm:
-```shell
-npm x create-tauri-app
+With Powershell:
+
+``` powershell
+iwr https://create.tauri.app/ps | iex
 ```
 
-With yarn:
-```shell
+With Cargo:
+
+``` bash
+cargo install create-tauri-app
+cargo create-tauri-app
+```
+
+With NPM:
+
+``` bash
+npm create tauri-app@latest
+```
+
+With Yarn:
+
+``` bash
 yarn create tauri-app
 ```
 
+With PNPM:
+
+``` bash
+pnpm create tauri-app
+```
+
+You can also directly specify the project name and the template you want to use via additional command line options. For example, to scaffold a Vite + Vue project, run:
+
+```bash
+# curl
+sh <(curl https://create.tauri.app/sh) --template svelte
+# wget
+sh <(wget https://create.tauri.app/sh) --template svelte
+# cargo
+cargo create-tauri-app --template svelte
+# npm 6.x
+npm create tauri-app@latest my-tauri-app --template svelte
+# npm 7+, extra double-dash is needed:
+npm create tauri-app@latest my-tauri-app -- --template svelte
+# yarn
+yarn create tauri-app my-tauri-app --template svelte
+# pnpm
+pnpm create tauri-app my-tauri-app --template svelte
+```
+
+Currently supported template presets include:
+
+- `vanilla`
+- `vue`
+- `vue-ts`
+- `react`
+- `react-ts`
+- `svelte`
+- `svelte-ts`
+- `solid`
+- `solid-ts`
+- `yew`
+
+You can use `.` for the project name to scaffold in the current directory.
+
 ## Semver
-**tauri** is following [Semantic Versioning 2.0](https://semver.org/).
+**create-tauri-app** is following [Semantic Versioning 2.0](https://semver.org/).
+
 ## Licenses
 Code: (c) 2021 - The Tauri Programme within The Commons Conservancy.
 

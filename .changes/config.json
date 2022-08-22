@@ -4,56 +4,28 @@
   "pkgManagers": {
     "javascript": {
       "version": true,
-      "getPublishedVersion": "npm view ${ pkgFile.pkg.name } version",
-      "prepublish": [
+      "getPublishedVersion": "npm view ${ pkgFile.pkg.name } version"
+    },
+    "rust": {
+      "version": true,
+      "getPublishedVersion": "cargo search ${ pkg.pkg } --limit 1 | sed -nE 's/^[^\"]*\"//; s/\".*//1p' -",
+      "publish": [
         {
-          "command": "yarn",
+          "command": "cargo package --no-verify",
           "dryRunCommand": true
         },
         {
-          "command": "echo \"# Yarn Audit\n\"",
+          "command": "echo '<details>\n<summary><em><h4>Cargo Publish</h4></em></summary>\n\n```'",
           "dryRunCommand": true,
           "pipe": true
         },
         {
-          "command": "echo '<details>\n<summary>click to view</summary>\n\n```'",
-          "dryRunCommand": true,
-          "pipe": true
-        },
-        {
-          "command": "yarn audit --groups dependencies",
-          "dryRunCommand": true,
-          "runFromRoot": true,
+          "command": "cargo publish",
+          "dryRunCommand": "cargo publish --dry-run",
           "pipe": true
         },
         {
           "command": "echo '```\n\n</details>\n'",
-          "dryRunCommand": true,
-          "pipe": true
-        },
-        {
-          "command": "npm pack",
-          "dryRunCommand": true
-        }
-      ],
-      "publish": [
-        {
-          "command": "echo \"# Yarn Package Publish\"",
-          "dryRunCommand": true,
-          "pipe": true
-        },
-        {
-          "command": "echo '```'",
-          "dryRunCommand": true,
-          "pipe": true
-        },
-        {
-          "command": "yarn publish --access public",
-          "dryRunCommand": "npm publish --dry-run --access public",
-          "pipe": true
-        },
-        {
-          "command": "echo '```'",
           "dryRunCommand": true,
           "pipe": true
         }
@@ -67,8 +39,28 @@
   },
   "packages": {
     "create-tauri-app": {
-      "path": ".",
-      "manager": "javascript"
+      "path": "./packages/cli",
+      "manager": "rust",
+      "postversion": [
+        "cargo check",
+        "node ../../.scripts/sync-scripts-tagname.js ${ release.type }",
+        "cp ../../create-tauri-app.ps1 ../worker/scripts",
+        "cp ../../create-tauri-app.sh ../worker/scripts"
+      ],
+      "assets": [
+        {
+          "path": "${ pkg.path }/target/package/create-tauri-app-${ pkgFile.version }.crate",
+          "name": "${ pkg.pkg }-${ pkgFile.version }.crate"
+        }
+      ]
+    },
+    "create-tauri-app-js": {
+      "path": "./packages/cli/node",
+      "manager": "javascript",
+      "dependencies": ["create-tauri-app"],
+      "prepublish": [],
+      "publish": [],
+      "postpublish": []
     }
   }
 }

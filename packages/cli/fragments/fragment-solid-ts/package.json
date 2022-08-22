@@ -1,0 +1,23 @@
+{
+  "name": "{{package_name}}",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "tauri": "tauri"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.7.4",
+    "vite": "^3.0.0",
+    "vite-plugin-solid": "^2.3.0",
+    "@tauri-apps/cli": "^1.0.0"
+  },
+  "dependencies": {
+    "solid-js": "^1.4.7",
+    "@tauri-apps/api": "^1.0.0"
+  }
+}

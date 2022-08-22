@@ -2,24 +2,54 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-License-Identifier: MIT
 
-name: Audit
+name: audit
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
   push:
+    branches:
+      - dev
     paths:
+      - '**/Cargo.lock'
+      - '**/Cargo.toml'
       - '**/package.json'
-      - '**/yarn.lock'
+      - '**/pnpm-lock.yaml'
+  pull_request:
+    paths:
+      - '**/Cargo.lock'
+      - '**/Cargo.toml'
+      - '**/package.json'
+      - '**/pnpm-lock.yaml'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  full-audit:
+  audit-rust:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn audit
+      - name: rust audit
+        uses: actions-rs/audit-check@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-  prod-audit:
+  audit-js:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: yarn audit --groups dependencies
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          check-latest: true
+          cache: 'pnpm'
+          cache-dependency-path: '**/pnpm-lock.yaml'
+      - run: pnpm install
+      - run: pnpm audit

@@ -22,17 +22,24 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
-          registry-url: 'https://registry.npmjs.org'
-          cache: yarn
-          cache-dependency-path: yarn.lock
 
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          check-latest: true
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: cargo login
+        run: cargo login ${{ secrets.CRATE_TOKEN  }}
       - name: git config
         run: |
           git config --global user.name "${{ github.event.pusher.name }}"
           git config --global user.email "${{ github.event.pusher.email }}"
+
       - name: covector version or publish (publish when no change files present)
         uses: jbolda/covector/packages/action@covector-v0
         id: covector
@@ -42,6 +49,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           command: 'version-or-publish'
           createRelease: true
+
       - name: Create Pull Request With Versions Bumped
         if: steps.covector.outputs.commandRan == 'version'
         uses: tauri-apps/create-pull-request@v3.4.1
@@ -52,3 +60,25 @@ jobs:
           commit-message: 'apply version updates'
           labels: 'version updates'
           body: ${{ steps.covector.outputs.change }}
+
+      - name: Trigger publish-binaries.yml workflow
+        if: |
+          steps.covector.outputs.successfulPublish == 'true' &&
+          contains(steps.covector.outputs.packagesPublished, 'create-tauri-app')
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.TAURI_BOT_PAT }}
+          repo: tauri-apps/create-tauri-app
+          event-type: publish-binaries
+          client-payload: '{"releaseId": "${{ steps.covector.outputs.create-tauri-app-releaseId }}" }'
+
+      - name: Trigger publish-napi.yml workflow
+        if: |
+          steps.covector.outputs.successfulPublish == 'true' &&
+          contains(steps.covector.outputs.packagesPublished, 'create-tauri-app-js')
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.TAURI_BOT_PAT }}
+          repo: tauri-apps/create-tauri-app
+          event-type: publish-napi
+          client-payload: '{"releaseId": "${{ steps.covector.outputs.create-tauri-app-js-releaseId }}" }'

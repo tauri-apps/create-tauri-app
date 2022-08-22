@@ -1,0 +1,9 @@
+[workspace]
+members = ["packages/cli", "packages/cli/node"]
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true

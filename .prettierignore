@@ -1,0 +1,5 @@
+/.changes
+/.github
+node_modules
+node/index.js
+node/index.d.ts
