@@ -3,10 +3,6 @@ import solidPlugin from "vite-plugin-solid";
 
 export default defineConfig({
   plugins: [solidPlugin()],
-  build: {
-    target: "esnext",
-    polyfillDynamicImport: false,
-  },
 
   // Vite optons tailored for Tauri developemnt and only applied in `tauri dev` or `tauri build`
   // prevent vite from obscuring rust errors
@@ -20,7 +16,6 @@ export default defineConfig({
   // https://tauri.studio/v1/api/config#buildconfig.beforedevcommand
   envPrefix: ["VITE_", "TAURI_"],
   build: {
-    polyfillDynamicImport: false,
     // Tauri supports es2021
     target: ["es2021", "chrome100", "safari13"],
     // don't minify for debug builds
