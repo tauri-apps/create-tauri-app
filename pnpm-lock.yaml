@@ -22,9 +22,9 @@ importers:
 
   packages/worker:
     specifiers:
-      wrangler: 2.0.24
+      wrangler: 2.0.27
     devDependencies:
-      wrangler: 2.0.24
+      wrangler: 2.0.27
 
 packages:
 
@@ -2035,6 +2035,7 @@ packages:
   /unified/9.2.2:
     resolution: {integrity: sha512-Sg7j110mtefBD+qunSLO1lqOEKdrwBFBrR6Qd8f4uwkhWNlbkaqwHse6e7QvD3AP/MNoJdEDLaf8OxYyoWgorQ==}
     dependencies:
+      '@types/unist': 2.0.6
       bail: 1.0.5
       extend: 3.0.2
       is-buffer: 2.0.5
@@ -2127,8 +2128,8 @@ packages:
       typical: 5.2.0
     dev: true
 
-  /wrangler/2.0.24:
-    resolution: {integrity: sha512-I43FZzbzSApcgha30E0XEdd5B2dW7BVHFc5SRu/zVLjtY0AwAJctuOz9v5RVKOAjbj8mLvSXCdcZoBCK/7Oi/g==}
+  /wrangler/2.0.27:
+    resolution: {integrity: sha512-dH0Nv41OiFsHu+mZFMGv1kEO6lOEoxon8kKHToG0YSpGBsObsxurkoyWJDvkAgtnrM00QF8F1Chy15zs0sjJkg==}
     engines: {node: '>=16.7.0'}
     hasBin: true
     dependencies:
