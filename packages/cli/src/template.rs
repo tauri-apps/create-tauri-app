@@ -69,6 +69,7 @@ impl<'a> Template {
 
             let target_file_name = match &*file_name {
                 "_gitignore" => ".gitignore",
+                "_Cargo.toml" => "Cargo.toml",
                 // conditional files:
                 // are files that start with a special convention
                 //     "_[<list of package managers separated by `-`>]_<file_name>"
