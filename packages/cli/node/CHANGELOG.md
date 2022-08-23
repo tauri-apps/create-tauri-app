@@ -1,5 +1,11 @@
 # Changelog
 
+## \[2.0.5]
+
+- Fix packaging templates when publishing to crates.io
+  - Bumped due to a bump in create-tauri-app.
+  - [613cfd3](https://www.github.com/tauri-apps/create-tauri-app/commit/613cfd3294046bed51c955d2259894306c3569ea) fix(cli): rename Cargo.toml in fragments to \_Cargo.toml on 2022-08-23
+
 ## \[2.0.4]
 
 - Add `@types/node` as a dev dependency to typescript templates.
