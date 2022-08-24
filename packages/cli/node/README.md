@@ -1,4 +1,4 @@
-<img src="../../../.github/splash.png" alt="Rapidly scaffold out a new tauri app project." />
+<img src="https://github.com/tauri-apps/create-tauri-app/raw/dev/.github/splash.png" alt="Rapidly scaffold out a new Tauri app project." />
 
 [![](https://img.shields.io/crates/v/create-tauri-app)](https://crates.io/crates/create-tauri-app)
 [![](https://img.shields.io/npm/v/create-tauri-app.svg)](https://www.npmjs.com/package/create-tauri-app)
