@@ -2,8 +2,7 @@
   padding: 1.5em !important;
 }
 
-/* To fix image style on hover */
-a > span {
+span.logos > a > span {
   overflow: inherit !important;
 }
 

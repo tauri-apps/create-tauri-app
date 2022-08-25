@@ -18,33 +18,39 @@ function App() {
       <h1>Welcome to Tauri!</h1>
 
       <div className="row">
-        <a href="https://nextjs.org" target="_blank">
-          <Image
-            width={144}
-            height={144}
-            src={nextLogo}
-            className="logo next"
-            alt="Next logo"
-          />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <Image
-            width={144}
-            height={144}
-            src={tauriLogo}
-            className="logo tauri"
-            alt="Tauri logo"
-          />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <Image
-            width={144}
-            height={144}
-            src={reactLogo}
-            className="logo react"
-            alt="React logo"
-          />
-        </a>
+        <span className="logos">
+          <a href="https://nextjs.org" target="_blank">
+            <Image
+              width={144}
+              height={144}
+              src={nextLogo}
+              className="logo next"
+              alt="Next logo"
+            />
+          </a>
+        </span>
+        <span className="logos">
+          <a href="https://tauri.app" target="_blank">
+            <Image
+              width={144}
+              height={144}
+              src={tauriLogo}
+              className="logo tauri"
+              alt="Tauri logo"
+            />
+          </a>
+        </span>
+        <span className="logos">
+          <a href="https://reactjs.org" target="_blank">
+            <Image
+              width={144}
+              height={144}
+              src={reactLogo}
+              className="logo react"
+              alt="React logo"
+            />
+          </a>
+        </span>
       </div>
 
       <p>
