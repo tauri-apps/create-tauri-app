@@ -1,9 +1,10 @@
 {
   "build": {
-    "beforeDevCommand": "",
-    "beforeBuildCommand": "",
-    "devPath": "",
-    "distDir": ""
+    "beforeBuildCommand": "{{fragment_before_dev_command}}",
+    "beforeDevCommand": "{{fragment_before_build_command}}",
+    "devPath": "{{fragment_dev_path}}",
+    "distDir": "{{fragment_dist_dir}}",
+    "withGlobalTauri": "{{fragment_with_global_tauri}}"
   },
   "package": {
     "productName": "{{package_name}}",
