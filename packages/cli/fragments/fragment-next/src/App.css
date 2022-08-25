@@ -2,6 +2,11 @@
   padding: 1.5em !important;
 }
 
+/* To fix image style on hover */
+a > span {
+  overflow: inherit !important;
+}
+
 .logo.next:hover {
   filter: drop-shadow(0 0 2em #36373f);
 }
