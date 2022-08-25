@@ -64,7 +64,7 @@ impl<'a> Template {
             .with_context(|| "Failed to get manifest bytes")?
             .data;
         let manifest_str = String::from_utf8(manifest_bytes.to_vec())?;
-        let manifest: Manifest = Manifest::parse(&manifest_str, pkg_manager)?;
+        let manifest = Manifest::parse(&manifest_str, pkg_manager)?;
 
         let write_file = |file: &str| -> anyhow::Result<()> {
             let manifest = manifest.clone();
