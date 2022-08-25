@@ -26,6 +26,8 @@ pub enum Template {
     Solid,
     SolidTs,
     Yew,
+    Next,
+    NextTs,
 }
 
 impl<'a> Template {
@@ -40,6 +42,8 @@ impl<'a> Template {
         Template::Solid,
         Template::SolidTs,
         Template::Yew,
+        Template::Next,
+        Template::NextTs,
     ];
 
     pub fn post_init_info(&self) -> Option<String> {
@@ -115,7 +119,7 @@ impl<'a> Template {
                 .as_os_str()
                 == "fragment-base"
         }) {
-            write_file(&*file)?;
+            write_file(&file)?;
         }
 
         // then write template files which can override files from base
@@ -127,7 +131,7 @@ impl<'a> Template {
                 .as_os_str()
                 == path::PathBuf::from(format!("fragment-{self}"))
         }) {
-            write_file(&*file)?;
+            write_file(&file)?;
         }
 
         Ok(())
@@ -147,6 +151,8 @@ impl Display for Template {
             Template::Solid => write!(f, "solid"),
             Template::SolidTs => write!(f, "solid-ts"),
             Template::Yew => write!(f, "yew"),
+            Template::Next => write!(f, "next"),
+            Template::NextTs => write!(f, "next-ts"),
         }
     }
 }
@@ -165,6 +171,8 @@ impl FromStr for Template {
             "solid" => Ok(Template::Solid),
             "solid-ts" => Ok(Template::SolidTs),
             "yew" => Ok(Template::Yew),
+            "next" => Ok(Template::Next),
+            "next-ts" => Ok(Template::NextTs),
             _ => Err("Invalid template".to_string()),
         }
     }

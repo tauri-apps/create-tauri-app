@@ -38,6 +38,8 @@ impl PackageManager {
                 Template::ReactTs,
                 Template::Solid,
                 Template::SolidTs,
+                Template::Next,
+                Template::NextTs,
             ],
         }
     }
