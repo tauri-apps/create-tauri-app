@@ -42,10 +42,10 @@ impl<'a> Template {
         Template::Yew,
     ];
 
-    pub fn post_init_info(&self) -> String {
+    pub fn post_init_info(&self) -> Option<String> {
         match self {
-            Template::Yew => format!("{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}tauri-cli{WHITE} {DIM}({DIMRESET}{BLUE}cargo install tauri-cli{WHITE}{DIM}) and{DIMRESET} {YELLOW}trunk{WHITE} {DIM}({DIMRESET}{BLUE}https://trunkrs.dev/#install{WHITE}{DIM}){DIMRESET}{RESET}"),
-            _ => String::new(),
+            Template::Yew => Some(format!("{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}tauri-cli{WHITE} {DIM}({DIMRESET}{BLUE}cargo install tauri-cli{WHITE}{DIM}) and{DIMRESET} {YELLOW}trunk{WHITE} {DIM}({DIMRESET}{BLUE}https://trunkrs.dev/#install{WHITE}{DIM}){DIMRESET}{RESET}")),
+            _ => None,
         }
     }
 

@@ -148,14 +148,14 @@ where
 
     println!();
     println!("{ITALIC}{DIM}Please follow{DIMRESET} {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites{WHITE} {DIM}to install the needed prerequisites, if you haven't already.{DIMRESET}{RESET}");
-    if !template.post_init_info().is_empty() {
-        println!("{}", template.post_init_info());
+    if let Some(info) = template.post_init_info() {
+        println!("{}", info);
     }
     println!();
     println!("Done, Now run:");
     println!("  cd {}", project_name);
-    if !pkg_manager.install_cmd().is_empty() {
-        println!("  {}", pkg_manager.install_cmd());
+    if let Some(cmd) = pkg_manager.install_cmd() {
+        println!("  {}", cmd);
     }
     println!("  {} tauri dev", pkg_manager.run_cmd());
     println!();

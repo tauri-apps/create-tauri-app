@@ -41,12 +41,12 @@ impl PackageManager {
             ],
         }
     }
-    pub const fn install_cmd(&self) -> &str {
+    pub const fn install_cmd(&self) -> Option<&str> {
         match self {
-            PackageManager::Pnpm => "pnpm install",
-            PackageManager::Yarn => "yarn",
-            PackageManager::Npm => "npm install",
-            _ => "",
+            PackageManager::Pnpm => Some("pnpm install"),
+            PackageManager::Yarn => Some("yarn"),
+            PackageManager::Npm => Some("npm install"),
+            _ => None,
         }
     }
 
