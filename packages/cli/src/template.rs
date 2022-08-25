@@ -220,7 +220,7 @@ struct Manifest {
 impl Manifest {
     fn parse(s: &str, pkg_manager: PackageManager) -> Result<Self, anyhow::Error> {
         let mut manifest = Manifest::default();
-        for (i, line) in s.split("\n").enumerate() {
+        for (i, line) in s.split('\n').enumerate() {
             if line.contains('=') {
                 let mut s = line.split('=');
                 let (k, v) = (
