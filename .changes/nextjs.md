@@ -1,5 +1,5 @@
 ---
-"create-tauri-app": patch
+"create-tauri-app": minor
 ---
 
-Add `next` and `next-ts` template
+Add `next` and `next-ts` templates
