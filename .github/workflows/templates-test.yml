@@ -48,7 +48,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        settings:
+        manager: [pnpm, yarn, npm, cargo]
+        include:
           - manager: pnpm
             install_cmd: pnpm install
             run_cmd: pnpm
