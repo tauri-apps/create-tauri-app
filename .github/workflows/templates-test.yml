@@ -37,11 +37,14 @@ jobs:
           command: build
           args: --release
 
+      - name: add cli to .tar archive
+        run: tar -rf cli.tar target/release/cargo-create-tauri-app
+
       - name: upload cli artifact
         uses: actions/upload-artifact@v3
         with:
           name: create-tauri-app
-          path: "target/release/cargo-create-tauri-app"
+          path: create-tauri-app.tar
           if-no-files-found: error
 
       - name: set matrix
@@ -88,7 +91,10 @@ jobs:
       - name: download cli artifact
         uses: actions/download-artifact@v3
 
-      - run: chmod -x ./create-tauri-app/cargo-create-tauri-app
+      - run: |
+          ls -lahR
+          tar -xf create-tauri-app/create-tauri-app.tar
+          ls -lahR
 
       - name: bootstrap a ${{ matrix.settings.template }} project
         run: ./create-tauri-app/cargo-create-tauri-app tauri-app -m ${{ matrix.settings.manager }} -t ${{ matrix.settings.template }} -y
