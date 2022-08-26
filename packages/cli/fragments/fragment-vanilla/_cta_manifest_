@@ -1,3 +1,6 @@
 devPath = ../dist
 distDir = ../dist
 withGlobalTauri = true
+
+[files]
+tauri.svg = src/assets/tauri.svg
