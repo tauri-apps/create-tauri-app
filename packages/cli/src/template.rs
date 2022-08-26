@@ -235,7 +235,7 @@ impl<'a> Manifest<'a> {
         let mut manifest = Manifest::default();
         let mut is_files_section = false;
         for (i, line) in s.split('\n').enumerate() {
-            let line = line.split("#").next().unwrap().trim();
+            let line = line.split('#').next().unwrap().trim();
 
             if line.is_empty() {
                 continue;
