@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-use std::{fmt::Display, fs, path, str::FromStr};
+use std::{collections::HashMap, fmt::Display, fs, path, str::FromStr};
 
 use anyhow::{bail, Context};
 use rust_embed::RustEmbed;
@@ -148,7 +148,7 @@ impl<'a> Template {
                 .next()
                 .unwrap()
                 .as_os_str()
-                == "fragment-base"
+                == "base"
         }) {
             write_file(&file)?;
         }
@@ -163,6 +163,17 @@ impl<'a> Template {
                 == path::PathBuf::from(format!("fragment-{self}"))
         }) {
             write_file(&file)?;
+        }
+
+        // then write extra files specified in the fragment manifest
+        for (src, dest) in manifest.files {
+            let data = Fragments::get(&format!("_assets_/{}", src))
+                .with_context(|| format!("Failed to get asset file bytes: {src}"))?
+                .data;
+            let dest = target_dir.join(dest);
+            let parent = dest.parent().unwrap();
+            fs::create_dir_all(&parent)?;
+            fs::write(dest, &data)?;
         }
 
         Ok(())
@@ -216,12 +227,25 @@ struct Manifest<'a> {
     dev_path: Option<&'a str>,
     dist_dir: Option<&'a str>,
     with_global_tauri: bool,
+    files: HashMap<&'a str, &'a str>,
 }
 
 impl<'a> Manifest<'a> {
     fn parse(s: &'a str) -> Result<Self, anyhow::Error> {
         let mut manifest = Manifest::default();
+        let mut is_files_section = false;
         for (i, line) in s.split('\n').enumerate() {
+            let line = line.split("#").next().unwrap().trim();
+
+            if line.is_empty() {
+                continue;
+            }
+
+            if line == "[files]" {
+                is_files_section = true;
+                continue;
+            }
+
             if line.contains('=') {
                 let mut s = line.split('=');
                 let (k, v) = (
@@ -251,6 +275,9 @@ impl<'a> Manifest<'a> {
                     "devPath" => manifest.dev_path = Some(v),
                     "distDir" => manifest.dist_dir = Some(v),
                     "withGlobalTauri" => manifest.with_global_tauri = v.parse()?,
+                    _ if is_files_section => {
+                        manifest.files.insert(k, v);
+                    }
                     _ => {}
                 }
             }

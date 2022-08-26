@@ -13,6 +13,6 @@ Relationship information.
                 </text>
 Created: 2019-05-20T09:00:00Z
 PackageDownloadLocation: git://github.com/tauri-apps/create-tauri-app
-PackageDownloadLocation: git+https://github.com/tauri-apps/tacreate-tauri-appuri.git
+PackageDownloadLocation: git+https://github.com/tauri-apps/create-tauri-app.git
 PackageDownloadLocation: git+ssh://github.com/tauri-apps/create-tauri-app.git
 Creator: Person: Daniel Thompson-Yvetot
