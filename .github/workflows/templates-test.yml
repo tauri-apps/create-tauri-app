@@ -103,5 +103,10 @@ jobs:
         if: matrix.settings.install_cmd  != ''
         working-directory: tauri-app
 
+      - name: install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libayatana-appindicator3-dev librsvg2-dev patchelf
+
       - run: ${{ matrix.settings.run_cmd }} tauri build
         working-directory: tauri-app
