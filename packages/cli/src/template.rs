@@ -4,6 +4,7 @@
 
 use std::{fmt::Display, fs, path, str::FromStr};
 
+use anyhow::{bail, Context};
 use rust_embed::RustEmbed;
 
 use crate::{colors::*, package_manager::PackageManager};
@@ -59,7 +60,15 @@ impl<'a> Template {
         pkg_manager: PackageManager,
         package_name: &str,
     ) -> anyhow::Result<()> {
+        let manifest_bytes = Fragments::get(&format!("fragment-{}/_cta_manifest_", self))
+            .with_context(|| "Failed to get manifest bytes")?
+            .data;
+        let manifest_str = String::from_utf8(manifest_bytes.to_vec())?;
+        let manifest = Manifest::parse(&manifest_str)?;
+
         let write_file = |file: &str| -> anyhow::Result<()> {
+            let manifest = manifest.clone();
+
             // remove the first component, which is certainly the fragment directory they were in before getting embeded into the binary
             let p = path::PathBuf::from(file)
                 .components()
@@ -74,10 +83,11 @@ impl<'a> Template {
             let target_file_name = match &*file_name {
                 "_gitignore" => ".gitignore",
                 "_Cargo.toml" => "Cargo.toml",
+                "_cta_manifest_" => return Ok(()),
                 // conditional files:
-                // are files that start with a special convention
-                //     "_[<list of package managers separated by `-`>]_<file_name>"
-                // ex: "_[pnpm-npm-yarn]_package.json"
+                // are files that start with a special syntax
+                //          "_[<list of package managers separated by `-`>]_<file_name>"
+                // example: "_[pnpm-npm-yarn]_package.json"
                 name if name.starts_with("_[") => {
                     let mut s = name.strip_prefix("_[").unwrap().split("]_");
                     let (mut managers, name) = (s.next().unwrap().split('-'), s.next().unwrap());
@@ -98,6 +108,27 @@ impl<'a> Template {
                 if let Ok(str_) = String::from_utf8(data.to_vec()) {
                     data = str_
                         .replace("{{package_name}}", package_name)
+                        .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
+                        .replace(
+                            "{{fragment_before_dev_command}}",
+                            manifest.before_dev_command.unwrap_or_default(),
+                        )
+                        .replace(
+                            "{{fragment_before_build_command}}",
+                            manifest.before_build_command.unwrap_or_default(),
+                        )
+                        .replace(
+                            "{{fragment_dev_path}}",
+                            manifest.dev_path.unwrap_or_default(),
+                        )
+                        .replace(
+                            "{{fragment_dist_dir}}",
+                            manifest.dist_dir.unwrap_or_default(),
+                        )
+                        .replace(
+                            r#""withGlobalTauri": "{{fragment_with_global_tauri}}""#,
+                            &format!(r#""withGlobalTauri": {}"#, manifest.with_global_tauri),
+                        )
                         .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
                         .as_bytes()
                         .to_vec();
@@ -175,5 +206,55 @@ impl FromStr for Template {
             "next-ts" => Ok(Template::NextTs),
             _ => Err("Invalid template".to_string()),
         }
+    }
+}
+
+#[derive(Default, Clone)]
+struct Manifest<'a> {
+    before_dev_command: Option<&'a str>,
+    before_build_command: Option<&'a str>,
+    dev_path: Option<&'a str>,
+    dist_dir: Option<&'a str>,
+    with_global_tauri: bool,
+}
+
+impl<'a> Manifest<'a> {
+    fn parse(s: &'a str) -> Result<Self, anyhow::Error> {
+        let mut manifest = Manifest::default();
+        for (i, line) in s.split('\n').enumerate() {
+            if line.contains('=') {
+                let mut s = line.split('=');
+                let (k, v) = (
+                    s.next()
+                        .with_context(|| {
+                            format!("parsing manifest: key is not found in line {}", i + 1)
+                        })?
+                        .trim(),
+                    s.next()
+                        .with_context(|| {
+                            format!("parsing manifest: value is not found in line {}", i + 1)
+                        })?
+                        .trim(),
+                );
+
+                if k.is_empty() {
+                    bail!("parsing manifest: key is empty in line {}", i + 1);
+                }
+
+                if v.is_empty() {
+                    bail!("parsing manifest: value is empty in line {}", i + 1);
+                }
+
+                match k {
+                    "devCommand" => manifest.before_dev_command = Some(v),
+                    "buildCommand" => manifest.before_build_command = Some(v),
+                    "devPath" => manifest.dev_path = Some(v),
+                    "distDir" => manifest.dist_dir = Some(v),
+                    "withGlobalTauri" => manifest.with_global_tauri = v.parse()?,
+                    _ => {}
+                }
+            }
+        }
+        Ok(manifest)
     }
 }
