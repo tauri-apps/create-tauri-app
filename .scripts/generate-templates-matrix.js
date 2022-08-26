@@ -42,12 +42,14 @@ const matrix = [
 const outMatrix = [];
 matrix
   .map((e) => e.templates)
-  .forEach((t, i) => {
+  .forEach((ts, i) => {
     let { templates, ...managerInfo } = matrix[i];
-    outMatrix.push({
-      template: t,
-      ...managerInfo,
-    });
+    for (const t of ts) {
+      outMatrix.push({
+        template: t,
+        ...managerInfo,
+      });
+    }
   });
 
 console.log(JSON.stringify(outMatrix));
