@@ -67,28 +67,28 @@ jobs:
 
     steps:
       - uses: pnpm/action-setup@v2.2.2
-        if: "${{matrix.manager}}" == "pnpm"
+        if: ${{matrix.manager}} == "pnpm"
         with:
           version: 7
 
       - name: Install Node.js@16
-        if: "${{matrix.manager}}" != "cargo"
+        if: ${{matrix.manager}} != "cargo"
         uses: actions/setup-node@v2
         with:
           node-version: 16
 
       - name: Install Rust stable
-        if: "${{matrix.manager}}" == "cargo"
+        if: ${{matrix.manager}} == "cargo"
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
 
       - run: cargo install tauri-cli
-        if: "${{matrix.manager}}" == "cargo"
+        if: ${{matrix.manager}} == "cargo"
 
       - run: cargo install --locked trunk
-        if: "${{matrix.template}}" == "yew"
+        if: ${{matrix.template}} == "yew"
 
       - name: download cli artifact
         uses: actions/download-artifact@v3
@@ -99,6 +99,6 @@ jobs:
       - run: cd ./tauri-app
 
       - run: ${{matrix.install_cmd}}
-        if: "${{matrix.install_cmd}}" != ""
+        if: ${{matrix.install_cmd}}
 
       - run: ${{matrix.run_cmd }} tauri build
