@@ -44,15 +44,11 @@ jobs:
           path: "target/release/cargo-create-tauri-app"
           if-no-files-found: error
 
-      - name: Install Node.js@16
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
-
       - name: set matrix
         id: set-matrix
+        shell: bash
         run: |
-          $OUT=(node .scripts/generate-templates-matrix.js)
+          $OUT=$(node .scripts/generate-templates-matrix.js)
           echo "::set-output name=matrix::$OUT"
 
   test:
