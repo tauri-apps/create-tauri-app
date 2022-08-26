@@ -1,0 +1,110 @@
+# Copyright 2019-2021 Tauri Programme within The Commons Conservancy
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
+
+name: test create-tauri-app
+
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - '.github/workflows/fragments-test.yml'
+      - 'packages/cli/**'
+  pull_request:
+    paths:
+      - '.github/workflows/fragments-test.yml'
+      - 'packages/cli/**'
+
+env:
+  RUST_BACKTRACE: 1
+
+concurrency:
+   group: ${{ github.workflow }}-${{ github.ref }}
+   cancel-in-progress: true
+
+jobs:
+  build-cli:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install stable
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release
+
+      - name: upload cli artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: create-tauri-app
+          path: "target/release/cargo-create-tauri-app"
+          if-no-files-found: error
+
+  test:
+    needs: build-cli
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        settings:
+          - manager: pnpm
+            install_cmd: pnpm install
+            run_cmd: pnpm
+            template: [svelte, svelte-ts, vue, vue-ts, solid, solid-ts, react, react-ts, vanilla, next, next-ts]
+          - manager: yarn
+            install_cmd: yarn
+            run_cmd: yarn
+            template: [svelte, svelte-ts, vue, vue-ts, solid, solid-ts, react, react-ts, vanilla, next, next-ts]
+          - manager: npm
+            install_cmd: npm
+            run_cmd: npm run
+            template: [svelte, svelte-ts, vue, vue-ts, solid, solid-ts, react, react-ts, vanilla, next, next-ts]
+          - manager: cargo
+            run_cmd: cargo
+            template: [vanilla, yew]
+
+    steps:
+      - uses: pnpm/action-setup@v2.2.2
+        if: "${{matrix.manager}}" == "pnpm"
+        with:
+          version: 7
+
+      - name: Install Node.js@16
+        if: "${{matrix.manager}}" != "cargo"
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install Rust stable
+        if: "${{matrix.manager}}" == "cargo"
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - run: cargo install tauri-cli
+        if: "${{matrix.manager}}" == "cargo"
+
+      - run: cargo install --locked trunk
+        if: "${{matrix.template}}" == "yew"
+
+      - name: download cli artifact
+        uses: actions/download-artifact@v3
+
+      - name: bootstrap a ${{ matrix.template }} project
+        run: ./create-tauri-app tauri-app -m ${{ matrix.manager }} -t ${{ matrix.template }} -y
+
+      - run: cd ./tauri-app
+
+      - run: ${{matrix.install_cmd}}
+        if: "${{matrix.install_cmd}}" != ""
+
+      - run: ${{matrix.run_cmd }} tauri build
