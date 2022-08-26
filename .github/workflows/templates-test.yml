@@ -114,6 +114,6 @@ jobs:
         if: matrix.settings.manager != 'npm'
         working-directory: tauri-app
 
-      - run: ${{ matrix.settings.run_cmd }} tauri build -- -- -b none
+      - run: ${{ matrix.settings.run_cmd }} tauri build -- -b none
         if: matrix.settings.manager == 'npm'
         working-directory: tauri-app
