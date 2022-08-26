@@ -42,22 +42,18 @@ jobs:
           path: "target/release/cargo-create-tauri-app"
           if-no-files-found: error
 
+      - name: set matrix
+        id: set-matrix
+        run: |
+          $OUT=(node .scripts/generate-templates-matrix.js)
+          echo "::set-output name=matrix::$OUT"
+
   test:
     needs: build-cli
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        settings: [
-          { manager: pnpm, install_cmd: pnpm install, run_cmd: pnpm},
-          { manager: yarn, install_cmd: yarn, run_cmd: yarn},
-          { manager: npm, install_cmd: npm install, run_cmd: npm run},
-          { manager: cargo, run_cmd: cargo},
-        ]
-        template: [svelte, svelte-ts, vue, vue-ts, solid, solid-ts, react, react-ts, vanilla, next, next-ts]
-        include:
-            - settings: { manager: cargo, run_cmd: cargo}
-              template: [vanilla, yew]
+      matrix: ${{fromJson(needs.job1.outputs.matrix)}}
 
     name: ${{matrix.settings.manager}} - ${{matrix.template}}
     steps:
@@ -94,6 +90,6 @@ jobs:
       - run: cd ./tauri-app
 
       - run: ${{matrix.install_cmd}}
-        if: ${{matrix.install_cmd}}
+        if: ${{matrix.install_cmd}} != ""
 
       - run: ${{matrix.run_cmd }} tauri build
