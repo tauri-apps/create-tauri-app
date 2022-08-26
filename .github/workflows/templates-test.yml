@@ -83,7 +83,7 @@ jobs:
         if: matrix.settings.manager == 'cargo'
 
       - run: cargo install --locked trunk
-        if: matrix.settings.template }} == 'yew'
+        if: matrix.settings.template == 'yew'
 
       - name: download cli artifact
         uses: actions/download-artifact@v3
