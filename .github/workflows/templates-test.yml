@@ -62,28 +62,28 @@ jobs:
     name: ${{matrix.settings.manager}} - ${{matrix.settings.template}}
     steps:
       - uses: pnpm/action-setup@v2.2.2
-        if: ${{matrix.settings.manager}} == "pnpm"
+        if: ${{matrix.settings.manager == "pnpm" }}
         with:
           version: 7
 
       - name: Install Node.js@16
-        if: ${{matrix.settings.manager}} != "cargo"
+        if: ${{matrix.settings.manager != "cargo" }}
         uses: actions/setup-node@v2
         with:
           node-version: 16
 
       - name: Install Rust stable
-        if: ${{matrix.settings.manager}} == "cargo"
+        if: ${{matrix.settings.manager == "cargo" }}
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
 
       - run: cargo install tauri-cli
-        if: ${{matrix.settings.manager}} == "cargo"
+        if: ${{matrix.settings.manager == "cargo" }}
 
       - run: cargo install --locked trunk
-        if: ${{matrix.settings.template}} == "yew"
+        if: ${{matrix.settings.template == "yew" }}
 
       - name: download cli artifact
         uses: actions/download-artifact@v3
