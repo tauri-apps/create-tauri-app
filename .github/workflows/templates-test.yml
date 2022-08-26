@@ -2,12 +2,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-License-Identifier: MIT
 
-name: test create-tauri-app
+name: test create-tauri-app templates
 
 on:
   pull_request:
     paths:
-      - '.github/workflows/fragments-test.yml'
+      - '.github/workflows/templates-test.yml'
       - 'packages/cli/**'
 
 env:
