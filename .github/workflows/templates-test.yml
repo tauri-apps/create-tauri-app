@@ -96,13 +96,9 @@ jobs:
       - name: bootstrap a ${{ matrix.settings.template }} project
         run: ./target/release/cargo-create-tauri-app tauri-app -m ${{ matrix.settings.manager }} -t ${{ matrix.settings.template }} -y
 
-      - run: ls -lah
-
-      - run: cd ./tauri-app
-
-      - run: ls -lah
-
       - run: ${{ matrix.settings.install_cmd }}
         if: matrix.settings.install_cmd  != ''
+        working-directory: tauri-app
 
       - run: ${{ matrix.settings.run_cmd }} tauri build
+        working-directory: tauri-app
