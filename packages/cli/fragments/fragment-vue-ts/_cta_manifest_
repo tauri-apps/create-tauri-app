@@ -1,4 +1,13 @@
+# Copyright 2019-2022 Tauri Programme within The Commons Conservancy
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
+
 devCommand = {{pkg_manager_run_command}} dev
 buildCommand = {{pkg_manager_run_command}} build
 devPath = http://localhost:1420
 distDir = ../dist
+
+[files]
+vite.svg = public/vite.svg
+tauri.svg = public/tauri.svg
+vue.svg = src/assets/vue.svg

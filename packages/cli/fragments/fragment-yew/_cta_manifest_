@@ -1,4 +1,11 @@
+# Copyright 2019-2022 Tauri Programme within The Commons Conservancy
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
+
 devCommand = trunk build
 buildCommand = trunk build
 devPath = http://localhost:1420
 distDir = ../dist
+
+[files]
+tauri.svg = public/tauri.svg
