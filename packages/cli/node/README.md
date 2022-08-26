@@ -64,7 +64,7 @@ You can use `.` for the project name to scaffold in the current directory.
 **create-tauri-app** is following [Semantic Versioning 2.0](https://semver.org/).
 
 ## Licenses
-Code: (c) 2021 - The Tauri Programme within The Commons Conservancy.
+Code: (c) 2022 - The Tauri Programme within The Commons Conservancy.
 
 MIT or MIT/Apache 2.0 where applicable.
 
