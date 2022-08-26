@@ -66,41 +66,41 @@ jobs:
             run_cmd: cargo
             template: [vanilla, yew]
 
-    name: ${{matrix.settings.manager}} - ${{matrix.settings.template}}
+    name: ${{matrix.manager}} - ${{matrix.template}}
     steps:
       - uses: pnpm/action-setup@v2.2.2
-        if: ${{matrix.settings.manager}} == "pnpm"
+        if: ${{matrix.manager}} == "pnpm"
         with:
           version: 7
 
       - name: Install Node.js@16
-        if: ${{matrix.settings.manager}} != "cargo"
+        if: ${{matrix.manager}} != "cargo"
         uses: actions/setup-node@v2
         with:
           node-version: 16
 
       - name: Install Rust stable
-        if: ${{matrix.settings.manager}} == "cargo"
+        if: ${{matrix.manager}} == "cargo"
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
 
       - run: cargo install tauri-cli
-        if: ${{matrix.settings.manager}} == "cargo"
+        if: ${{matrix.manager}} == "cargo"
 
       - run: cargo install --locked trunk
-        if: ${{matrix.settings.template}} == "yew"
+        if: ${{matrix.template}} == "yew"
 
       - name: download cli artifact
         uses: actions/download-artifact@v3
 
-      - name: bootstrap a ${{ matrix.settings.template }} project
-        run: ./create-tauri-app tauri-app -m ${{ matrix.settings.manager }} -t ${{ matrix.settings.template }} -y
+      - name: bootstrap a ${{ matrix.template }} project
+        run: ./create-tauri-app tauri-app -m ${{ matrix.manager }} -t ${{ matrix.template }} -y
 
       - run: cd ./tauri-app
 
-      - run: ${{matrix.settings.install_cmd}}
-        if: ${{matrix.settings.install_cmd}}
+      - run: ${{matrix.install_cmd}}
+        if: ${{matrix.install_cmd}}
 
-      - run: ${{matrix.settings.run_cmd }} tauri build
+      - run: ${{matrix.run_cmd }} tauri build
