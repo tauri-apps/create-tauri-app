@@ -38,7 +38,7 @@ jobs:
           args: --release
 
       - name: add cli to .tar archive
-        run: tar -rf cli.tar target/release/cargo-create-tauri-app
+        run: tar -rf create-tauri-app.tar target/release/cargo-create-tauri-app
 
       - name: upload cli artifact
         uses: actions/upload-artifact@v3
