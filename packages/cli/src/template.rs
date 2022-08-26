@@ -60,11 +60,11 @@ impl<'a> Template {
         pkg_manager: PackageManager,
         package_name: &str,
     ) -> anyhow::Result<()> {
-        let manifest_bytes = Fragments::get(&format!("fragment-{}/_manifest.ini", self))
+        let manifest_bytes = Fragments::get(&format!("fragment-{}/_cta_manifest_", self))
             .with_context(|| "Failed to get manifest bytes")?
             .data;
         let manifest_str = String::from_utf8(manifest_bytes.to_vec())?;
-        let manifest = Manifest::parse(&manifest_str, pkg_manager)?;
+        let manifest = Manifest::parse(&manifest_str)?;
 
         let write_file = |file: &str| -> anyhow::Result<()> {
             let manifest = manifest.clone();
@@ -83,11 +83,11 @@ impl<'a> Template {
             let target_file_name = match &*file_name {
                 "_gitignore" => ".gitignore",
                 "_Cargo.toml" => "Cargo.toml",
-                "_manifest.ini" => return Ok(()),
+                "_cta_manifest_" => return Ok(()),
                 // conditional files:
-                // are files that start with a special convention
-                //     "_[<list of package managers separated by `-`>]_<file_name>"
-                // ex: "_[pnpm-npm-yarn]_package.json"
+                // are files that start with a special syntax
+                //          "_[<list of package managers separated by `-`>]_<file_name>"
+                // example: "_[pnpm-npm-yarn]_package.json"
                 name if name.starts_with("_[") => {
                     let mut s = name.strip_prefix("_[").unwrap().split("]_");
                     let (mut managers, name) = (s.next().unwrap().split('-'), s.next().unwrap());
@@ -129,6 +129,7 @@ impl<'a> Template {
                             r#""withGlobalTauri": "{{fragment_with_global_tauri}}""#,
                             &format!(r#""withGlobalTauri": {}"#, manifest.with_global_tauri),
                         )
+                        .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
                         .as_bytes()
                         .to_vec();
                 }
@@ -209,16 +210,16 @@ impl FromStr for Template {
 }
 
 #[derive(Default, Clone)]
-struct Manifest {
-    before_dev_command: Option<String>,
-    before_build_command: Option<String>,
-    dev_path: Option<String>,
-    dist_dir: Option<String>,
+struct Manifest<'a> {
+    before_dev_command: Option<&'a str>,
+    before_build_command: Option<&'a str>,
+    dev_path: Option<&'a str>,
+    dist_dir: Option<&'a str>,
     with_global_tauri: bool,
 }
 
-impl Manifest {
-    fn parse(s: &str, pkg_manager: PackageManager) -> Result<Self, anyhow::Error> {
+impl<'a> Manifest<'a> {
+    fn parse(s: &'a str) -> Result<Self, anyhow::Error> {
         let mut manifest = Manifest::default();
         for (i, line) in s.split('\n').enumerate() {
             if line.contains('=') {
@@ -245,16 +246,10 @@ impl Manifest {
                 }
 
                 match k {
-                    "devCommand" => {
-                        manifest.before_dev_command =
-                            Some(v.replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd()))
-                    }
-                    "buildCommand" => {
-                        manifest.before_build_command =
-                            Some(v.replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd()))
-                    }
-                    "devPath" => manifest.dev_path = Some(v.to_string()),
-                    "distDir" => manifest.dist_dir = Some(v.to_string()),
+                    "devCommand" => manifest.before_dev_command = Some(v),
+                    "buildCommand" => manifest.before_build_command = Some(v),
+                    "devPath" => manifest.dev_path = Some(v),
+                    "distDir" => manifest.dist_dir = Some(v),
                     "withGlobalTauri" => manifest.with_global_tauri = v.parse()?,
                     _ => {}
                 }
