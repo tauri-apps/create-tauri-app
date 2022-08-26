@@ -108,5 +108,5 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libayatana-appindicator3-dev librsvg2-dev patchelf
 
-      - run: ${{ matrix.settings.run_cmd }} tauri build
+      - run: ${{ matrix.settings.run_cmd }} tauri build -b none
         working-directory: tauri-app
