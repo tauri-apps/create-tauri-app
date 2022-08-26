@@ -5,12 +5,6 @@
 name: test create-tauri-app
 
 on:
-  push:
-    branches:
-      - dev
-    paths:
-      - '.github/workflows/fragments-test.yml'
-      - 'packages/cli/**'
   pull_request:
     paths:
       - '.github/workflows/fragments-test.yml'
