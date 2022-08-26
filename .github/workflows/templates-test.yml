@@ -94,7 +94,7 @@ jobs:
       - run: tar -xf create-tauri-app/create-tauri-app.tar
 
       - name: bootstrap a ${{ matrix.settings.template }} project
-        run: ./create-tauri-app/target/release/cargo-create-tauri-app tauri-app -m ${{ matrix.settings.manager }} -t ${{ matrix.settings.template }} -y
+        run: ./target/release/cargo-create-tauri-app tauri-app -m ${{ matrix.settings.manager }} -t ${{ matrix.settings.template }} -y
 
       - run: cd ./tauri-app
 
