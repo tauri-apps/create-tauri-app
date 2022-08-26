@@ -111,19 +111,19 @@ impl<'a> Template {
                         .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
                         .replace(
                             "{{fragment_before_dev_command}}",
-                            &manifest.before_dev_command.unwrap_or_default(),
+                            manifest.before_dev_command.unwrap_or_default(),
                         )
                         .replace(
                             "{{fragment_before_build_command}}",
-                            &manifest.before_build_command.unwrap_or_default(),
+                            manifest.before_build_command.unwrap_or_default(),
                         )
                         .replace(
                             "{{fragment_dev_path}}",
-                            &manifest.dev_path.unwrap_or_default(),
+                            manifest.dev_path.unwrap_or_default(),
                         )
                         .replace(
                             "{{fragment_dist_dir}}",
-                            &manifest.dist_dir.unwrap_or_default(),
+                            manifest.dist_dir.unwrap_or_default(),
                         )
                         .replace(
                             r#""withGlobalTauri": "{{fragment_with_global_tauri}}""#,
