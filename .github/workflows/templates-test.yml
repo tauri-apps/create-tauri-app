@@ -48,46 +48,39 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        manager: [pnpm, yarn, npm, cargo]
+        settings: [
+          { manager: pnpm, install_cmd: pnpm install, run_cmd: pnpm},
+          { manager: yarn, install_cmd: yarn, run_cmd: yarn},
+          { manager: npm, install_cmd: npm install, run_cmd: npm run},
+          { manager: cargo, run_cmd: cargo},
+        ]
+        template: [svelte, svelte-ts, vue, vue-ts, solid, solid-ts, react, react-ts, vanilla, next, next-ts]
         include:
-          - manager: pnpm
-            install_cmd: pnpm install
-            run_cmd: pnpm
-            template: [svelte, svelte-ts, vue, vue-ts, solid, solid-ts, react, react-ts, vanilla, next, next-ts]
-          - manager: yarn
-            install_cmd: yarn
-            run_cmd: yarn
-            template: [svelte, svelte-ts, vue, vue-ts, solid, solid-ts, react, react-ts, vanilla, next, next-ts]
-          - manager: npm
-            install_cmd: npm
-            run_cmd: npm run
-            template: [svelte, svelte-ts, vue, vue-ts, solid, solid-ts, react, react-ts, vanilla, next, next-ts]
-          - manager: cargo
-            run_cmd: cargo
-            template: [vanilla, yew]
+            - settings: { manager: cargo, run_cmd: cargo}
+              template: [vanilla, yew]
 
-    name: ${{matrix.manager}} - ${{matrix.template}}
+    name: ${{matrix.settings.manager}} - ${{matrix.template}}
     steps:
       - uses: pnpm/action-setup@v2.2.2
-        if: ${{matrix.manager}} == "pnpm"
+        if: ${{matrix.settings.manager}} == "pnpm"
         with:
           version: 7
 
       - name: Install Node.js@16
-        if: ${{matrix.manager}} != "cargo"
+        if: ${{matrix.settings.manager}} != "cargo"
         uses: actions/setup-node@v2
         with:
           node-version: 16
 
       - name: Install Rust stable
-        if: ${{matrix.manager}} == "cargo"
+        if: ${{matrix.settings.manager}} == "cargo"
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
 
       - run: cargo install tauri-cli
-        if: ${{matrix.manager}} == "cargo"
+        if: ${{matrix.settings.manager}} == "cargo"
 
       - run: cargo install --locked trunk
         if: ${{matrix.template}} == "yew"
@@ -96,7 +89,7 @@ jobs:
         uses: actions/download-artifact@v3
 
       - name: bootstrap a ${{ matrix.template }} project
-        run: ./create-tauri-app tauri-app -m ${{ matrix.manager }} -t ${{ matrix.template }} -y
+        run: ./create-tauri-app tauri-app -m ${{ matrix.settings.manager }} -t ${{ matrix.template }} -y
 
       - run: cd ./tauri-app
 
