@@ -20,6 +20,8 @@ concurrency:
 jobs:
   build-cli:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
 
     steps:
       - uses: actions/checkout@v2
@@ -53,7 +55,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix: ${{fromJson(needs.job1.outputs.matrix)}}
+      matrix: ${{fromJson(needs.build-cli.outputs.matrix)}}
 
     name: ${{matrix.settings.manager}} - ${{matrix.template}}
     steps:
