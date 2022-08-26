@@ -49,4 +49,4 @@ matrix.map(e => e.templates).forEach((t, i) => {
     })
 })
 
-console.log(JSON.stringify(outMatrix));
+console.log(JSON.stringify(outMatrix).replace("\"", "\\\""));
