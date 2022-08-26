@@ -100,5 +100,5 @@ jobs:
         if: matrix.settings.install_cmd  != ''
         working-directory: tauri-app
 
-      - run: ${{ matrix.settings.run_cmd }} tauri build
+      - run: ${{ matrix.settings.run_cmd }} tauri build --debug
         working-directory: tauri-app
