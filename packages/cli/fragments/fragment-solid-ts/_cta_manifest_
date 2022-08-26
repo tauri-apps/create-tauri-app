@@ -10,5 +10,4 @@ distDir = ../dist
 [files]
 vite.svg = public/vite.svg
 tauri.svg = public/tauri.svg
-solid.ico = src/assets/favicon.ico
 solid.svg = src/assets/logo.svg
