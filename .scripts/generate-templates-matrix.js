@@ -48,7 +48,7 @@ matrix
     let { templates, ...managerInfo } = matrix[i];
     for (const t of ts) {
       if (
-        changedFiles.any(
+        changedFiles.some(
           (e) =>
             e.includes(`fragment-${t}`) ||
             e.includes("packages/cli/src") ||
