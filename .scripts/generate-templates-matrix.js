@@ -52,7 +52,8 @@ matrix
           (e) =>
             e.includes(`fragment-${t}`) ||
             e.includes("packages/cli/src") ||
-            e.includes("packages/cli/Cargo.toml")
+            e.includes("packages/cli/Cargo.toml") ||
+            e.includes(".github/workflows/templates-test.yml")
         )
       ) {
         outMatrix.push({
