@@ -1,6 +1,4 @@
-console.log(process.argv)
-
-const changedFiles = JSON.parse(process.argv[2]);
+const changedFiles = process.argv[2].split(",")
 
 const nodeJsTemplates = [
   "svelte",

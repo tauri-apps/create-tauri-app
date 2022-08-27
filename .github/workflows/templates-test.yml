@@ -47,17 +47,15 @@ jobs:
           path: create-tauri-app.tar
           if-no-files-found: error
 
-      - name: get changed files
-        id: changes
-        uses: jitterbit/get-changed-files@v1
-        with:
-          format: 'json'
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v29.0.1
 
       - name: set matrix
         id: set-matrix
         shell: bash
         run: |
-          OUT="$(node .scripts/generate-templates-matrix.js ${{ steps.changes.outputs.all }})"
+          OUT="$(node .scripts/generate-templates-matrix.js ${{ steps.changed-files.outputs.all_changed_files }})"
           echo "::set-output name=matrix::$OUT"
 
   test:
