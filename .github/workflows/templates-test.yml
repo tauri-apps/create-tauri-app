@@ -61,7 +61,7 @@ jobs:
   test:
     needs: build-cli
     runs-on: ubuntu-latest
-    if: needs.build-cli.outputs.matrix
+    if: needs.build-cli.outputs.matrix != ""
     strategy:
       fail-fast: false
       matrix:
