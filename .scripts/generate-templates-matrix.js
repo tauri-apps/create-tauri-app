@@ -64,5 +64,6 @@ matrix
   });
 
 console.log(JSON.stringify({
+  settings: [],
   include: outMatrix
 }));
