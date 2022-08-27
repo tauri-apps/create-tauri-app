@@ -64,7 +64,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        settings: ${{ fromJson(needs.build-cli.outputs.matrix) || [] }}
+        settings: ${{ fromJson(needs.build-cli.outputs.matrix) }} || []
 
     name: ${{ matrix.settings.manager }} - ${{ matrix.settings.template }}
     steps:
