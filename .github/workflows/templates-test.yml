@@ -53,12 +53,11 @@ jobs:
         with:
           format: 'json'
 
-
       - name: set matrix
         id: set-matrix
         shell: bash
         run: |
-          OUT="$(node .scripts/generate-templates-matrix.js ${{ steps.changes.outpouts.all }})"
+          OUT="$(node .scripts/generate-templates-matrix.js ${{ steps.changes.outputs.all }})"
           echo "::set-output name=matrix::$OUT"
 
   test:
