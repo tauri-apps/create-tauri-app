@@ -1,3 +1,5 @@
+console.log(process.argv)
+
 const changedFiles = JSON.parse(process.argv[2]);
 
 const nodeJsTemplates = [
