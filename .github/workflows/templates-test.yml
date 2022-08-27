@@ -61,10 +61,11 @@ jobs:
   test:
     needs: build-cli
     runs-on: ubuntu-latest
+    if: ${{ fromJson(needs.build-cli.outputs.matrix) }}
     strategy:
       fail-fast: false
       matrix:
-        settings: ${{ fromJson(needs.build-cli.outputs.matrix) }} || []
+        settings: ${{ fromJson(needs.build-cli.outputs.matrix) }}
 
     name: ${{ matrix.settings.manager }} - ${{ matrix.settings.template }}
     steps:
