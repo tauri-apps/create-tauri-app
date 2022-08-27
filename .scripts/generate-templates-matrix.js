@@ -1,3 +1,5 @@
+const changedFiles = JSON.parse(process.argv[2]);
+
 const nodeJsTemplates = [
   "svelte",
   "svelte-ts",
@@ -45,10 +47,19 @@ matrix
   .forEach((ts, i) => {
     let { templates, ...managerInfo } = matrix[i];
     for (const t of ts) {
-      outMatrix.push({
-        template: t,
-        ...managerInfo,
-      });
+      if (
+        changedFiles.any(
+          (e) =>
+            e.includes(`fragment-${t}`) ||
+            e.includes("packages/cli/src") ||
+            e.includes("packages/cli/Cargo.toml")
+        )
+      ) {
+        outMatrix.push({
+          template: t,
+          ...managerInfo,
+        });
+      }
     }
   });
 
