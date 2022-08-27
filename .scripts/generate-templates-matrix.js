@@ -63,4 +63,6 @@ matrix
     }
   });
 
-console.log(JSON.stringify(outMatrix));
+console.log(JSON.stringify({
+  include: outMatrix
+}));
