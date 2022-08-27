@@ -1,5 +1,12 @@
 # Changelog
 
+## \[2.1.0]
+
+- Add `next` and `next-ts` templates
+  - [cbe1200](https://www.github.com/tauri-apps/create-tauri-app/commit/cbe1200f72b606d8f100ecc335bb7df4fb49e4b3) feat(cli/templates) add `next` and `next-ts` ([#137](https://www.github.com/tauri-apps/create-tauri-app/pull/137)) on 2022-08-25
+  - [4dc7efb](https://www.github.com/tauri-apps/create-tauri-app/commit/4dc7efb85960b75198c5be207b412589486c4360) chore: fix change file bump on 2022-08-25
+  - [7ff112e](https://www.github.com/tauri-apps/create-tauri-app/commit/7ff112e6b1866937c38e1c55590ce0eed08c9c77) chore: bump the node cli to minor on 2022-08-27
+
 ## \[2.0.5]
 
 - Fix packaging templates when publishing to crates.io
