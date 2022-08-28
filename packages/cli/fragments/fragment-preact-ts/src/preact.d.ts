@@ -1,1 +1,1 @@
-import JSX = preact.JSX
+import JSX = preact.JSX;

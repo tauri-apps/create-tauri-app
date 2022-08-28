@@ -13,7 +13,7 @@ const nodeJsTemplates = [
   "next",
   "next-ts",
   "preact",
-  "preact-ts"
+  "preact-ts",
 ];
 
 const matrix = [

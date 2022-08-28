@@ -1,11 +1,10 @@
-import { defineConfig } from 'vite'
-import preact from '@preact/preset-vite'
+import { defineConfig } from "vite";
+import preact from "@preact/preset-vite";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [preact()],
 
-  
   // Vite optons tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   // prevent vite from obscuring rust errors
   clearScreen: false,
@@ -25,4 +24,4 @@ export default defineConfig({
     // produce sourcemaps for debug builds
     sourcemap: !!process.env.TAURI_DEBUG,
   },
-})
+});
