@@ -29,6 +29,8 @@ pub enum Template {
     Yew,
     Next,
     NextTs,
+    Preact,
+    PreactTs
 }
 
 impl<'a> Template {
@@ -45,6 +47,8 @@ impl<'a> Template {
         Template::Yew,
         Template::Next,
         Template::NextTs,
+        Template::Preact,
+        Template::PreactTs
     ];
 
     pub fn post_init_info(&self) -> Option<String> {
@@ -195,6 +199,8 @@ impl Display for Template {
             Template::Yew => write!(f, "yew"),
             Template::Next => write!(f, "next"),
             Template::NextTs => write!(f, "next-ts"),
+            Template::Preact => write!(f, "preact"),
+            Template::PreactTs => write!(f, "preact-ts"),
         }
     }
 }
@@ -215,6 +221,8 @@ impl FromStr for Template {
             "yew" => Ok(Template::Yew),
             "next" => Ok(Template::Next),
             "next-ts" => Ok(Template::NextTs),
+            "preact" => Ok(Template::Preact),
+            "preact-ts" => Ok(Template::PreactTs),
             _ => Err("Invalid template".to_string()),
         }
     }

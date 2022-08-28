@@ -1,0 +1,36 @@
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 1em #646cffaa);
+}
+
+.logo.preact:hover {
+  filter: drop-shadow(0 0 1em #673ab8aa);
+}
+.logo.tauri:hover {
+  filter: drop-shadow(0 0 2em #fff41daa);
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.row {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
