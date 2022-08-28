@@ -12,6 +12,8 @@ const nodeJsTemplates = [
   "vanilla",
   "next",
   "next-ts",
+  "preact",
+  "preact-ts"
 ];
 
 const matrix = [
