@@ -30,7 +30,7 @@ pub enum Template {
     Next,
     NextTs,
     Preact,
-    PreactTs
+    PreactTs,
 }
 
 impl<'a> Template {
@@ -48,7 +48,7 @@ impl<'a> Template {
         Template::Next,
         Template::NextTs,
         Template::Preact,
-        Template::PreactTs
+        Template::PreactTs,
     ];
 
     pub fn post_init_info(&self) -> Option<String> {

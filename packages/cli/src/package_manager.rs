@@ -41,7 +41,7 @@ impl PackageManager {
                 Template::Next,
                 Template::NextTs,
                 Template::Preact,
-                Template::PreactTs
+                Template::PreactTs,
             ],
         }
     }
