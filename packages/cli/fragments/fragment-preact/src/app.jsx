@@ -30,7 +30,7 @@ export function App() {
           Edit <code>src/app.jsx</code> and save to test HMR
         </p>
       </div>
-      <p class="read-the-docs">
+      <p>
         Click on the Tauri, Vite and Preact logos to learn more
       </p>
     </>
