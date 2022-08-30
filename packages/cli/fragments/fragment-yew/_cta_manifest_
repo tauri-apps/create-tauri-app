@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-License-Identifier: MIT
 
-devCommand = trunk serve
-buildCommand = trunk build
+beforeDevCommand = trunk serve
+beforeBuildCommand = trunk build
 devPath = http://localhost:1420
 distDir = ../dist
 withGlobalTauri = true
