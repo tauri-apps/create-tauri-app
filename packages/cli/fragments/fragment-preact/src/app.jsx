@@ -28,7 +28,7 @@ export function App() {
 
       <p>Click on the Tauri, Vite, and Preact logos to learn more.</p>
 
-      <div className="row">
+      <div class="row">
         <div>
           <input
             id="greet-input"
