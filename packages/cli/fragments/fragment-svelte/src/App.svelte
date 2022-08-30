@@ -18,7 +18,7 @@
   </div>
 
   <p>
-    Click on the Tauri, Vite and Svelte logos to learn more.
+    Click on the Tauri, Vite, and Svelte logos to learn more.
   </p>
 
   <div class="row">
