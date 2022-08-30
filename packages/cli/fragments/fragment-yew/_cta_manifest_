@@ -2,10 +2,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-License-Identifier: MIT
 
-devCommand = trunk build
+devCommand = trunk serve
 buildCommand = trunk build
 devPath = http://localhost:1420
 distDir = ../dist
+withGlobalTauri = true
 
 [files]
 tauri.svg = public/tauri.svg
