@@ -16,7 +16,7 @@ export function App<FC>() {
       <h1>Welcome to Tauri!</h1>
       <div class="row">
         <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" class="logo" alt="Vite logo" />
+          <img src="/vite.svg" class="logo vite" alt="Vite logo" />
         </a>
         <a href="https://tauri.app" target="_blank">
           <img src="/tauri.svg" class="logo tauri" alt="Tauri logo" />
