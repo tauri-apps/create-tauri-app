@@ -1,5 +1,16 @@
 # Changelog
 
+## \[2.1.1]
+
+- Add an optimized macOS icon so that building from a template doesn't cause errors.
+  - [a28848c](https://www.github.com/tauri-apps/create-tauri-app/commit/a28848c009c111da367e19be3bc93669f9b8bf6b) fix: add missing `icon.icns` file, closes [#143](https://www.github.com/tauri-apps/create-tauri-app/pull/143) ([#152](https://www.github.com/tauri-apps/create-tauri-app/pull/152)) on 2022-08-30
+- Fix solid template IDE type errors by changing `className` to `class`
+  - [ea9a90c](https://www.github.com/tauri-apps/create-tauri-app/commit/ea9a90c30385ac3e3ea081ac43c1479e563b3bac) fix(cli/fragments): change solid's `className` to `class`, closes [#144](https://www.github.com/tauri-apps/create-tauri-app/pull/144) ([#150](https://www.github.com/tauri-apps/create-tauri-app/pull/150)) on 2022-08-30
+- Fixed yew template "beforeDevCommand" from "trunk build" to "trunk serve". Before when you called "tauri dev" infinite loop will occur waiting for dev server to become available at "http://localhost:1420".
+  - [675b091](https://www.github.com/tauri-apps/create-tauri-app/commit/675b091f3033dec0413d9d43329be8c46dd31f9c) fix(cli/fragments): fix yew fragment beforeDevCommand and withGlobalTauri ([#147](https://www.github.com/tauri-apps/create-tauri-app/pull/147)) on 2022-08-30
+- Changed "withGlobalTauri" for yew template from "false" to "true" so example frontend can actually "invoke" backend methods
+  - [675b091](https://www.github.com/tauri-apps/create-tauri-app/commit/675b091f3033dec0413d9d43329be8c46dd31f9c) fix(cli/fragments): fix yew fragment beforeDevCommand and withGlobalTauri ([#147](https://www.github.com/tauri-apps/create-tauri-app/pull/147)) on 2022-08-30
+
 ## \[2.1.0]
 
 - Add `next` and `next-ts` templates

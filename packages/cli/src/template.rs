@@ -278,8 +278,8 @@ impl<'a> Manifest<'a> {
                 }
 
                 match k {
-                    "devCommand" => manifest.before_dev_command = Some(v),
-                    "buildCommand" => manifest.before_build_command = Some(v),
+                    "beforeDevCommand" => manifest.before_dev_command = Some(v),
+                    "beforeBuildCommand" => manifest.before_build_command = Some(v),
                     "devPath" => manifest.dev_path = Some(v),
                     "distDir" => manifest.dist_dir = Some(v),
                     "withGlobalTauri" => manifest.with_global_tauri = v.parse()?,
