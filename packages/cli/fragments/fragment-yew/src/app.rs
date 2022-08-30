@@ -69,8 +69,7 @@ pub fn app() -> Html {
                 </a>
             </div>
 
-            <p>{"Click on the Tauri and Yew logos to learn more about each
-      framework."}</p>
+            <p>{"Click on the Tauri and Yew logos to learn more."}</p>
 
             <p>
                 {"Recommended IDE setup: "}

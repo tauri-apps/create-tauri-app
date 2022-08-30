@@ -65,6 +65,7 @@ A template is a just combination of two fragments, [`fragment-base`](../packages
 - Add a directory in `<repo-root>/packages/cli/fragments` and name `fragment-template` where `template` is the name of the template and add all the files you need there as they should appear after the template is created.
 - In `<repo-root>/packages/cli/src/template.rs`, add an entry in the `Template` enum, modify `post_init_info` if needed and modify `FromStr` and `Display` implementation
 - In `<repo-root>/packages/cli/src/package_manager.rs` add your new template to the appropraite package manager in the `templates` method
+- Modify `<repo-root>/.scripts/generate-templates-matrix.js` and append the template name inside the template list for the appropriate package manager so the CI would run tests for it.
 
 ## Financial Contribution
 

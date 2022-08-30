@@ -53,10 +53,7 @@ function App() {
         </span>
       </div>
 
-      <p>
-        Click on the Tauri, Next, and React logos to learn more about each
-        framework.
-      </p>
+      <p>Click on the Tauri, Next, and React logos to learn more.</p>
 
       <div className="row">
         <div>

@@ -40,6 +40,8 @@ impl PackageManager {
                 Template::SolidTs,
                 Template::Next,
                 Template::NextTs,
+                Template::Preact,
+                Template::PreactTs,
             ],
         }
     }

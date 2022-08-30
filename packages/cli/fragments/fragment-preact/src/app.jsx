@@ -1,20 +1,19 @@
-import { createSignal } from "solid-js";
-import logo from "./assets/logo.svg";
+import { useState } from "preact/hooks";
+import preactLogo from "./assets/preact.svg";
 import { invoke } from "@tauri-apps/api/tauri";
-import "./App.css";
+import "./app.css";
 
-function App() {
-  const [greetMsg, setGreetMsg] = createSignal("");
-  const [name, setName] = createSignal("");
+export function App() {
+  const [greetMsg, setGreetMsg] = useState("");
+  const [name, setName] = useState("");
 
-  async function greet() {
-    setGreetMsg(await invoke("greet", { name: name() }));
-  }
+  const greet = async () => {
+    setGreetMsg(await invoke("greet", { name }));
+  };
 
   return (
     <div class="container">
       <h1>Welcome to Tauri!</h1>
-
       <div class="row">
         <a href="https://vitejs.dev" target="_blank">
           <img src="/vite.svg" class="logo vite" alt="Vite logo" />
@@ -22,12 +21,12 @@ function App() {
         <a href="https://tauri.app" target="_blank">
           <img src="/tauri.svg" class="logo tauri" alt="Tauri logo" />
         </a>
-        <a href="https://solidjs.com" target="_blank">
-          <img src={logo} class="logo solid" alt="Solid logo" />
+        <a href="https://preactjs.com" target="_blank">
+          <img src={preactLogo} class="logo preact" alt="Preact logo" />
         </a>
       </div>
 
-      <p>Click on the Tauri, Vite, and Solid logos to learn more.</p>
+      <p>Click on the Tauri, Vite, and Preact logos to learn more.</p>
 
       <div class="row">
         <div>
@@ -41,10 +40,7 @@ function App() {
           </button>
         </div>
       </div>
-
       <p>{greetMsg}</p>
     </div>
   );
 }
-
-export default App;
