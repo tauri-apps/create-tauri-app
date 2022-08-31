@@ -1,5 +1,11 @@
 # Changelog
 
+## \[2.2.0]
+
+- Add `preact` and `preact-ts` templates.
+  - [0f778e2](https://www.github.com/tauri-apps/create-tauri-app/commit/0f778e26d724cb5b8114d58b7a634a4cfdf978e0) feat: add `preact` and `preact-tS` templates ([#145](https://www.github.com/tauri-apps/create-tauri-app/pull/145)) on 2022-08-30
+  - [3801c7d](https://www.github.com/tauri-apps/create-tauri-app/commit/3801c7def4faa06ba73a440da842308938869b3d) chore: change preact bump to minor on 2022-08-31
+
 ## \[2.1.1]
 
 - Add an optimized macOS icon so that building from a template doesn't cause errors.
