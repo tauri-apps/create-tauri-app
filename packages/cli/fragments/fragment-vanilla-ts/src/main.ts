@@ -1,10 +1,4 @@
-import { invoke } from "@tauri-apps/api";
-
-declare global {
-  interface Window {
-    greet: () => void;
-  }
-}
+const { invoke } = window.__TAURI__;
 
 let greetInputEl: HTMLInputElement | null;
 let greetMsgEl: HTMLElement | null;
