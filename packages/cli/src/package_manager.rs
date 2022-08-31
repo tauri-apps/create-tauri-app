@@ -30,6 +30,7 @@ impl PackageManager {
             PackageManager::Cargo => &[Template::Vanilla, Template::Yew],
             PackageManager::Pnpm | PackageManager::Yarn | PackageManager::Npm => &[
                 Template::Vanilla,
+                Template::VanillaTs,
                 Template::Vue,
                 Template::VueTs,
                 Template::Svelte,

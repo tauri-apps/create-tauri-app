@@ -18,6 +18,7 @@ struct Fragments;
 pub enum Template {
     #[default]
     Vanilla,
+    VanillaTs,
     Vue,
     VueTs,
     Svelte,
@@ -49,6 +50,7 @@ impl<'a> Template {
         Template::NextTs,
         Template::Preact,
         Template::PreactTs,
+        Template::VanillaTs,
     ];
 
     pub fn post_init_info(&self) -> Option<String> {
@@ -188,6 +190,7 @@ impl Display for Template {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Template::Vanilla => write!(f, "vanilla"),
+            Template::VanillaTs => write!(f, "vanilla-ts"),
             Template::Vue => write!(f, "vue"),
             Template::VueTs => write!(f, "vue-ts"),
             Template::Svelte => write!(f, "svelte"),
@@ -223,6 +226,7 @@ impl FromStr for Template {
             "next-ts" => Ok(Template::NextTs),
             "preact" => Ok(Template::Preact),
             "preact-ts" => Ok(Template::PreactTs),
+            "vanilla-ts" => Ok(Template::VanillaTs),
             _ => Err("Invalid template".to_string()),
         }
     }

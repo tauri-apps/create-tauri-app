@@ -10,6 +10,7 @@ const nodeJsTemplates = [
   "react",
   "react-ts",
   "vanilla",
+  "vanilla-ts",
   "next",
   "next-ts",
   "preact",
