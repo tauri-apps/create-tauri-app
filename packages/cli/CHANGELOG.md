@@ -1,5 +1,13 @@
 # Changelog
 
+## \[2.3.0]
+
+- Add `vanilla-ts` templates.
+  - [8799cdf](https://www.github.com/tauri-apps/create-tauri-app/commit/8799cdf010f94ee880dc18a04d520a7496015d49) feat(cli/templates) add `vanilla-ts` template, closes [#155](https://www.github.com/tauri-apps/create-tauri-app/pull/155) ([#156](https://www.github.com/tauri-apps/create-tauri-app/pull/156)) on 2022-08-31
+- Fix yew template triggering trunk rebuilds when tauri files change.
+  - [d00f8b5](https://www.github.com/tauri-apps/create-tauri-app/commit/d00f8b57ec6269545dbb81e4e1682eaf51925d55) fix(cli/fragments/yew): ignore `src-tauri` for `trunk serve`, closes [#160](https://www.github.com/tauri-apps/create-tauri-app/pull/160) on 2022-09-05
+  - [717ffd7](https://www.github.com/tauri-apps/create-tauri-app/commit/717ffd7b43edd51f9d1cb0552f95d53e8689d51b) chore: adjust changefile on 2022-09-05
+
 ## \[2.2.0]
 
 - Add `preact` and `preact-ts` templates.
