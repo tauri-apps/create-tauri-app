@@ -22,7 +22,7 @@ sh <(wget https://create.tauri.app/sh)
 With Powershell:
 
 ``` powershell
-iwr https://create.tauri.app/ps | iex
+iwr -useb https://create.tauri.app/ps | iex
 ```
 
 With Cargo:
