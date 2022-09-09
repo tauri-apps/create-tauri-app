@@ -19,6 +19,7 @@ pub enum Template {
     #[default]
     Vanilla,
     VanillaTs,
+    Angular,
     Vue,
     VueTs,
     Svelte,
@@ -36,6 +37,7 @@ pub enum Template {
 
 impl<'a> Template {
     pub const ALL: &'a [Template] = &[
+        Template::Angular,
         Template::Vanilla,
         Template::Vue,
         Template::VueTs,
@@ -110,7 +112,7 @@ impl<'a> Template {
             let mut data = Fragments::get(file).unwrap().data.to_vec();
 
             // Only modify specific set of files
-            if ["Cargo.toml", "package.json", "tauri.conf.json"].contains(&target_file_name) {
+            if ["Cargo.toml", "package.json", "tauri.conf.json", "angular.json"].contains(&target_file_name) {
                 if let Ok(str_) = String::from_utf8(data.to_vec()) {
                     data = str_
                         .replace("{{package_name}}", package_name)
@@ -191,6 +193,7 @@ impl Display for Template {
         match self {
             Template::Vanilla => write!(f, "vanilla"),
             Template::VanillaTs => write!(f, "vanilla-ts"),
+            Template::Angular => write!(f, "angular"),
             Template::Vue => write!(f, "vue"),
             Template::VueTs => write!(f, "vue-ts"),
             Template::Svelte => write!(f, "svelte"),
@@ -213,6 +216,7 @@ impl FromStr for Template {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "vanilla" => Ok(Template::Vanilla),
+            "angular" => Ok(Template::Angular),
             "vue" => Ok(Template::Vue),
             "vue-ts" => Ok(Template::VueTs),
             "svelte" => Ok(Template::Svelte),
