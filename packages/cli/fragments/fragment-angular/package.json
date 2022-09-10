@@ -6,7 +6,7 @@
     "scripts": {
       "tauri": "tauri",
       "ng": "ng",
-      "dev": "ng serve",
+      "dev": "ng serve --port 1420",
       "build": "ng build",
       "watch": "ng build --watch --configuration development"
     },

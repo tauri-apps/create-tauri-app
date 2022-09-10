@@ -20,8 +20,8 @@ import { invoke } from '@tauri-apps/api/tauri';
 
       <div class="row">
         <div>
-          <input #nameInput placeholder="Enter a name..." />
-          <button type="button" (click)="greet(nameInput.value)">Greet</button>
+          <input #greetInput id="greet-input" placeholder="Enter a name..." />
+          <button type="button" (click)="greet(greetInput.value)">Greet</button>
         </div>
       </div>
 
