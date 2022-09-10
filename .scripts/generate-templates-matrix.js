@@ -17,7 +17,7 @@ const nodeJsTemplates = [
   "preact-ts",
 ];
 
-const matrix = [
+const matrixConfig = [
   {
     manager: "pnpm",
     install_cmd: "pnpm install",
@@ -45,16 +45,16 @@ const matrix = [
 ];
 
 const outMatrix = [];
-matrix
+matrixConfig
   .map((e) => e.templates)
   .forEach((ts, i) => {
-    let { templates, ...managerInfo } = matrix[i];
+    let { templates, ...managerInfo } = matrixConfig[i];
     for (const t of ts) {
       if (
         changedFiles.some(
           (e) =>
             e.includes(`packages/cli/base`) ||
-            e.includes(`packages/cli/fragment-${t}`) ||
+            e.includes(`packages/cli/fragments/fragment-${t}`) ||
             e.includes("packages/cli/src") ||
             e.includes("packages/cli/Cargo.toml") ||
             e.includes(".github/workflows/templates-test.yml")
