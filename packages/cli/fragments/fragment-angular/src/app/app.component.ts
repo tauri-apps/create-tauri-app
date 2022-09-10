@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { invoke } from '@tauri-apps/api/tauri';
+import { Component } from "@angular/core";
+import { invoke } from "@tauri-apps/api/tauri";
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   template: `
     <div class="container">
       <h1>Welcome to Tauri + Angular!</h1>
@@ -12,7 +12,11 @@ import { invoke } from '@tauri-apps/api/tauri';
           <img src="/assets/tauri.svg" class="logo tauri" alt="Tauri logo" />
         </a>
         <a href="https://angular.io" target="_blank">
-          <img src="/assets/angular.svg" class="logo angular" alt="Angular logo" />
+          <img
+            src="/assets/angular.svg"
+            class="logo angular"
+            alt="Angular logo"
+          />
         </a>
       </div>
 
@@ -28,18 +32,20 @@ import { invoke } from '@tauri-apps/api/tauri';
       <p>{{ greetingMessage }}</p>
     </div>
   `,
-  styles: [`
-    .logo.angular:hover {
-      filter: drop-shadow(0 0 2em #e32727);
-    }
-  `],
+  styles: [
+    `
+      .logo.angular:hover {
+        filter: drop-shadow(0 0 2em #e32727);
+      }
+    `,
+  ],
   standalone: true,
 })
 export class AppComponent {
-  greetingMessage = '';
+  greetingMessage = "";
 
   greet(name: string): void {
-    invoke<string>('greet', { name }).then((text) => {
+    invoke<string>("greet", { name }).then((text) => {
       this.greetingMessage = text;
     });
   }

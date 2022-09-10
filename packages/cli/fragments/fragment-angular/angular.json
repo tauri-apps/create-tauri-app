@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "cli": {
-  	"analytics": false
+    "analytics": false
   },
   "projects": {
     "{{package_name}}": {
@@ -21,13 +21,8 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/style.css"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/style.css"],
             "scripts": []
           },
           "configurations": {
