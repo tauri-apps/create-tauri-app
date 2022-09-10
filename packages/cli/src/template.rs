@@ -13,10 +13,9 @@ use crate::{colors::*, package_manager::PackageManager};
 #[folder = "$CARGO_MANIFEST_DIR/fragments"]
 struct Fragments;
 
-#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum Template {
-    #[default]
     Vanilla,
     VanillaTs,
     Vue,
@@ -32,6 +31,12 @@ pub enum Template {
     NextTs,
     Preact,
     PreactTs,
+}
+
+impl Default for Template {
+    fn default() -> Self {
+        Template::Vanilla
+    }
 }
 
 impl<'a> Template {
@@ -55,7 +60,18 @@ impl<'a> Template {
 
     pub fn post_init_info(&self) -> Option<String> {
         match self {
-            Template::Yew => Some(format!("{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}tauri-cli{WHITE} {DIM}({DIMRESET}{BLUE}cargo install tauri-cli{WHITE}{DIM}) and{DIMRESET} {YELLOW}trunk{WHITE} {DIM}({DIMRESET}{BLUE}https://trunkrs.dev/#install{WHITE}{DIM}){DIMRESET}{RESET}")),
+            Template::Yew => Some(
+                format!(
+                    "{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}tauri-cli{WHITE} {DIM}({DIMRESET}{BLUE}cargo install tauri-cli{WHITE}{DIM}) and{DIMRESET} {YELLOW}trunk{WHITE} {DIM}({DIMRESET}{BLUE}https://trunkrs.dev/#install{WHITE}{DIM}){DIMRESET}{RESET}",
+                    ITALIC = ITALIC,
+                    DIM = DIM,
+                    DIMRESET = DIMRESET,
+                    YELLOW = YELLOW,
+                    WHITE = WHITE,
+                    BLUE = BLUE,
+                    RESET = RESET
+                ),
+            ),
             _ => None,
         }
     }
@@ -166,7 +182,7 @@ impl<'a> Template {
                 .next()
                 .unwrap()
                 .as_os_str()
-                == path::PathBuf::from(format!("fragment-{self}"))
+                == path::PathBuf::from(format!("fragment-{}", self))
         }) {
             write_file(&file)?;
         }
@@ -174,7 +190,7 @@ impl<'a> Template {
         // then write extra files specified in the fragment manifest
         for (src, dest) in manifest.files {
             let data = Fragments::get(&format!("_assets_/{}", src))
-                .with_context(|| format!("Failed to get asset file bytes: {src}"))?
+                .with_context(|| format!("Failed to get asset file bytes: {}", src))?
                 .data;
             let dest = target_dir.join(dest);
             let parent = dest.parent().unwrap();
