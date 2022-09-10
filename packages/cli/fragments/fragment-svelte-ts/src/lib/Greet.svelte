@@ -4,8 +4,8 @@
   let name = "";
   let greetMsg = ""
 
-  // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
   async function greet(){
+    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
     greetMsg = await invoke("greet", { name })
   }
 </script>
