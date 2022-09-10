@@ -8,6 +8,7 @@ window.addEventListener("DOMContentLoaded", () => {
   greetMsgEl = document.querySelector("#greet-msg");
 });
 
+// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 async function greet() {
   if (greetMsgEl && greetInputEl) {
     greetMsgEl.textContent = await invoke("greet", {

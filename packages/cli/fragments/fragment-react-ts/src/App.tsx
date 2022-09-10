@@ -7,6 +7,7 @@ function App() {
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
 
+  // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
   async function greet() {
     setGreetMsg(await invoke("greet", { name }));
   }
