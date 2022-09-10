@@ -1,5 +1,13 @@
 # Changelog
 
+## \[2.3.1]
+
+- Fix build on MSRV 1.57.
+  - [7ee3aaa](https://www.github.com/tauri-apps/create-tauri-app/commit/7ee3aaa4dd3de7296ac28319f8c7b5b5b08b995e) fix: allow building on msrv 1.57 ([#170](https://www.github.com/tauri-apps/create-tauri-app/pull/170)) on 2022-09-10
+- Fix building in `next` and `next-ts` templates by removing the `experimental` option from `next.config.js` since `images.unoptimized` is now stable.
+  - [975a851](https://www.github.com/tauri-apps/create-tauri-app/commit/975a851818975599ad0e7ca145f7f13d8b3f2875) fix(cli/fragment-next): update to stable next.config.js ([#168](https://www.github.com/tauri-apps/create-tauri-app/pull/168)) on 2022-09-10
+  - [7ee3aaa](https://www.github.com/tauri-apps/create-tauri-app/commit/7ee3aaa4dd3de7296ac28319f8c7b5b5b08b995e) fix: allow building on msrv 1.57 ([#170](https://www.github.com/tauri-apps/create-tauri-app/pull/170)) on 2022-09-10
+
 ## \[2.3.0]
 
 - Add `vanilla-ts` templates.
