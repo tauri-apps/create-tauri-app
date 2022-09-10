@@ -8,5 +8,4 @@ devPath = http://localhost:4200
 distDir = ../dist
 
 [files]
-angular.svg = src/assets/angular.svg
 tauri.svg = src/assets/tauri.svg
