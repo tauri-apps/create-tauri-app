@@ -18,7 +18,13 @@ where
     A: Into<OsString> + Clone,
 {
     if let Err(e) = try_run(args, bin_name) {
-        eprintln!("{BOLD}{RED}error{RESET}: {e:#}");
+        eprintln!(
+            "{BOLD}{RED}error{RESET}: {:#}",
+            e,
+            BOLD = BOLD,
+            RED = RED,
+            RESET = RESET
+        );
         exit(1);
     }
 }
@@ -95,7 +101,12 @@ where
                 .interact()?
         };
         if !overrwite {
-            eprintln!("{BOLD}{RED}✘{RESET} Operation Cancelled");
+            eprintln!(
+                "{BOLD}{RED}✘{RESET} Operation Cancelled",
+                BOLD = BOLD,
+                RED = RED,
+                RESET = RESET
+            );
             exit(1);
         }
     };
@@ -132,8 +143,14 @@ where
 
     if !templates.contains(&template) {
         eprintln!(
-            "{BOLD}{RED}error{RESET}: the {GREEN}{template}{RESET} template is not suppported for the {GREEN}{pkg_manager}{RESET} package manager\n       possible templates for {GREEN}{pkg_manager}{RESET} are: [{}]",
-            templates.iter().map(|e|format!("{GREEN}{e}{RESET}")).collect::<Vec<_>>().join(", ")
+            "{BOLD}{RED}error{RESET}: the {GREEN}{}{RESET} template is not suppported for the {GREEN}{pkg_manager}{RESET} package manager\n       possible templates for {GREEN}{pkg_manager}{RESET} are: [{}]",
+            template,
+            templates.iter().map(|e|format!("{GREEN}{}{RESET}", e, GREEN = GREEN, RESET = RESET)).collect::<Vec<_>>().join(", "),
+            pkg_manager = pkg_manager,
+            BOLD = BOLD,
+            RED = RED,
+            RESET = RESET,
+            GREEN = GREEN,
         );
         exit(1);
     }
@@ -147,7 +164,15 @@ where
     template.render(&target_dir, pkg_manager, &package_name)?;
 
     println!();
-    println!("{ITALIC}{DIM}Please follow{DIMRESET} {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites{WHITE} {DIM}to install the needed prerequisites, if you haven't already.{DIMRESET}{RESET}");
+    println!(
+        "{ITALIC}{DIM}Please follow{DIMRESET} {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites{WHITE} {DIM}to install the needed prerequisites, if you haven't already.{DIMRESET}{RESET}",
+        ITALIC = ITALIC,
+        DIM = DIM,
+        DIMRESET = DIMRESET,
+        WHITE = WHITE,
+        BLUE = BLUE,
+        RESET=RESET
+    );
     if let Some(info) = template.post_init_info() {
         println!("{}", info);
     }

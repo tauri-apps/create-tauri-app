@@ -30,6 +30,9 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        toolchain: [1.57, stable]
 
     steps:
       - uses: actions/checkout@v2
@@ -37,7 +40,7 @@ jobs:
       - name: install stable
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: stable
+          toolchain: ${{ matrix.toolchain }}
           override: true
 
       - uses: actions-rs/cargo@v1

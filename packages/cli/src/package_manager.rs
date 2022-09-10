@@ -6,14 +6,19 @@ use std::{fmt::Display, str::FromStr};
 
 use crate::template::Template;
 
-#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum PackageManager {
-    #[default]
     Cargo,
     Pnpm,
     Yarn,
     Npm,
+}
+
+impl Default for PackageManager {
+    fn default() -> Self {
+        PackageManager::Cargo
+    }
 }
 
 impl<'a> PackageManager {
