@@ -1,5 +1,12 @@
 # Changelog
 
+## \[2.4.0]
+
+- Add `angular` template
+  - [459228f](https://www.github.com/tauri-apps/create-tauri-app/commit/459228fd06b6bc41624c1274555dc0c1852d3ac8) Add Angular template ([#167](https://www.github.com/tauri-apps/create-tauri-app/pull/167)) on 2022-09-11
+  - [27f6568](https://www.github.com/tauri-apps/create-tauri-app/commit/27f65687566486fcbfef4509898bceb9db780149) chore: typo on 2022-09-11
+  - [8b43ad1](https://www.github.com/tauri-apps/create-tauri-app/commit/8b43ad1bb621ade4d89ae8e52f560eeb68558955) Update angular.md on 2022-09-11
+
 ## \[2.3.1]
 
 - Fix build on MSRV 1.57.
