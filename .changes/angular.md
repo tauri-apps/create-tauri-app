@@ -3,4 +3,4 @@
 "create-tauri-app-js": patch
 ---
 
-Add `angluar` tempalte
+Add `angular` tempalte
