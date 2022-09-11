@@ -36,6 +36,7 @@ impl PackageManager {
             PackageManager::Pnpm | PackageManager::Yarn | PackageManager::Npm => &[
                 Template::Vanilla,
                 Template::VanillaTs,
+                Template::Angular,
                 Template::Vue,
                 Template::VueTs,
                 Template::Svelte,

@@ -1,6 +1,7 @@
 const changedFiles = process.argv.slice(2);
 
 const nodeJsTemplates = [
+  "angular",
   "svelte",
   "svelte-ts",
   "vue",
