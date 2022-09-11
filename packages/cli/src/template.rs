@@ -112,7 +112,14 @@ impl<'a> Template {
             let mut data = Fragments::get(file).unwrap().data.to_vec();
 
             // Only modify specific set of files
-            if ["Cargo.toml", "package.json", "tauri.conf.json", "angular.json"].contains(&target_file_name) {
+            if [
+                "Cargo.toml",
+                "package.json",
+                "tauri.conf.json",
+                "angular.json",
+            ]
+            .contains(&target_file_name)
+            {
                 if let Ok(str_) = String::from_utf8(data.to_vec()) {
                     data = str_
                         .replace("{{package_name}}", package_name)
