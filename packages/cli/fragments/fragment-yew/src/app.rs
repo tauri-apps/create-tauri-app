@@ -34,7 +34,7 @@ pub fn app() -> Html {
                     if name.is_empty() {
                         return;
                     }
-    
+
                     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
                     let new_msg = invoke(
                         "greet",

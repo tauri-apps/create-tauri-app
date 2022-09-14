@@ -60,7 +60,7 @@ impl<'a> Template {
         Template::VanillaTs,
     ];
 
-    pub fn post_init_info(&self) -> Option<String> {
+    pub fn post_init_info(&self, pkg_manager: PackageManager) -> Option<String> {
         match self {
             Template::Yew => Some(
                 format!(
@@ -74,6 +74,17 @@ impl<'a> Template {
                     RESET = RESET
                 ),
             ),
+            Template::Vanilla if pkg_manager == PackageManager::Cargo => Some(
+                    format!(
+                        "{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}tauri-cli{WHITE} {DIM}({DIMRESET}{BLUE}cargo install tauri-cli{WHITE}{DIM})",
+                        ITALIC = ITALIC,
+                        DIM = DIM,
+                        DIMRESET = DIMRESET,
+                        YELLOW = YELLOW,
+                        WHITE = WHITE,
+                        BLUE = BLUE,
+                    ),
+                ),
             _ => None,
         }
     }

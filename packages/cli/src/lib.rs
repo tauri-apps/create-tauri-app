@@ -173,7 +173,7 @@ where
         BLUE = BLUE,
         RESET=RESET
     );
-    if let Some(info) = template.post_init_info() {
+    if let Some(info) = template.post_init_info(pkg_manager) {
         println!("{}", info);
     }
     println!();
