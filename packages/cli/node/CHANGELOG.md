@@ -1,5 +1,11 @@
 # Changelog
 
+## \[2.4.1]
+
+- Update `tauri` dependencies in templates to `1.1`
+  - Bumped due to a bump in create-tauri-app.
+  - [84e0ba0](https://www.github.com/tauri-apps/create-tauri-app/commit/84e0ba03a7c4f764398b3bb4eef4f0320a24b63c) chore(deps): update tauri to 1.1 in templates. close [#179](https://www.github.com/tauri-apps/create-tauri-app/pull/179) on 2022-09-16
+
 ## \[2.4.0]
 
 - Add `angular` template
