@@ -2,6 +2,7 @@
   "extends": ["config:base", ":disableDependencyDashboard"],
   "packageRules": [
     {
+      "groupName": "templates dependencies",
       "matchPaths": ["packages/cli/fragments/**"],
       "rangeStrategy": "replace",
       "extends": ["schedule:monthly"]
