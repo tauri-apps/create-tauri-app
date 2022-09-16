@@ -64,7 +64,7 @@ impl<'a> Template {
         match self {
             Template::Yew => Some(
                 format!(
-                    "{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}tauri-cli{WHITE} {DIM}({DIMRESET}{BLUE}cargo install tauri-cli{WHITE}{DIM}) and{DIMRESET} {YELLOW}trunk{WHITE} {DIM}({DIMRESET}{BLUE}https://trunkrs.dev/#install{WHITE}{DIM}){DIMRESET}{RESET}",
+                    "{ITALIC}{DIM}You also need to install {DIMRESET}{YELLOW}tauri-cli{WHITE}{DIM} ({DIMRESET}{BLUE}cargo install tauri-cli{WHITE}{DIM}), {DIMRESET}{YELLOW}trunk{WHITE}{DIM} ({DIMRESET}{BLUE}https://trunkrs.dev/#install{WHITE}{DIM}) and {DIMRESET}{YELLOW}wasm32{WHITE}{DIM} rust target ({DIMRESET}{BLUE}rustup target add wasm32-unknown-unknown{WHITE}{DIM}){DIMRESET}{RESET}",
                     ITALIC = ITALIC,
                     DIM = DIM,
                     DIMRESET = DIMRESET,
