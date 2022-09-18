@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use serde_wasm_bindgen::to_value;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen_futures::spawn_local;
 use yew::prelude::*;
@@ -38,7 +39,7 @@ pub fn app() -> Html {
                     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
                     let new_msg = invoke(
                         "greet",
-                        JsValue::from_serde(&GreetArgs { name: &*name }).unwrap(),
+                        to_value(&GreetArgs { name: &*name }).unwrap(),
                     )
                     .await;
                     log(&new_msg.as_string().unwrap());
