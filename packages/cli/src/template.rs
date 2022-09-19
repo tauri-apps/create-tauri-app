@@ -32,6 +32,7 @@ pub enum Template {
     NextTs,
     Preact,
     PreactTs,
+    ClojureScript,
 }
 
 impl Default for Template {
@@ -58,6 +59,7 @@ impl<'a> Template {
         Template::Preact,
         Template::PreactTs,
         Template::VanillaTs,
+        Template::ClojureScript,
     ];
 
     pub fn post_init_info(&self, pkg_manager: PackageManager) -> Option<String> {
@@ -241,6 +243,7 @@ impl Display for Template {
             Template::NextTs => write!(f, "next-ts"),
             Template::Preact => write!(f, "preact"),
             Template::PreactTs => write!(f, "preact-ts"),
+            Template::ClojureScript => write!(f, "clojurescript"),
         }
     }
 }
@@ -265,6 +268,7 @@ impl FromStr for Template {
             "preact" => Ok(Template::Preact),
             "preact-ts" => Ok(Template::PreactTs),
             "vanilla-ts" => Ok(Template::VanillaTs),
+            "clojurescript" => Ok(Template::ClojureScript),
             _ => Err("Invalid template".to_string()),
         }
     }

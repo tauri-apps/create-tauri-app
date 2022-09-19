@@ -1,0 +1,23 @@
+{:deps {:aliases [:develop :test]}
+
+ :nrepl {:init-ns user}
+
+ :dev-http {3000 "public"
+            3001 "target/test"}
+
+ :build-defaults {:closure-defines {goog.DEBUG true}
+                  :compiler-options {:output-feature-set :es-next}}
+
+ :builds {:app {:target :browser
+                :output-dir "public/js"
+                :asset-path "/js"
+                :modules {:main {:init-fn app.core/-main}}
+                :devtools {:preloads [devtools.preload]}
+                :dev {:external-config {:devtools/config {:features-to-install [:formatters :hints]}}}}
+
+          :test {:target :browser-test
+                 :test-dir "target/test"
+                 :devtools {}}
+
+          :ci {:target :karma
+               :output-to "target/test/js/ci.js"}}}

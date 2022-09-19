@@ -49,6 +49,7 @@ impl PackageManager {
                 Template::NextTs,
                 Template::Preact,
                 Template::PreactTs,
+                Template::ClojureScript,
             ],
         }
     }
