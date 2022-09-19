@@ -1,5 +1,11 @@
 # Changelog
 
+## \[2.4.2]
+
+- Replace deprecated functions in `yew` template.
+  - Bumped due to a bump in create-tauri-app.
+  - [16b0210](https://www.github.com/tauri-apps/create-tauri-app/commit/16b02100ced05ff46235bb64ff276fa834007eb5) fix(cli/fragments/yew): replace deprecated code ([#182](https://www.github.com/tauri-apps/create-tauri-app/pull/182)) on 2022-09-19
+
 ## \[2.4.1]
 
 - Update `tauri` dependencies in templates to `1.1`
