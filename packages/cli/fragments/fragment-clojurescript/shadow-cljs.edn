@@ -2,8 +2,8 @@
 
  :nrepl {:init-ns user}
 
- :dev-http {3000 "public"
-            3001 "target/test"}
+ :dev-http {1420 "public"
+            1421 "target/test"}
 
  :build-defaults {:closure-defines {goog.DEBUG true}
                   :compiler-options {:output-feature-set :es-next}}

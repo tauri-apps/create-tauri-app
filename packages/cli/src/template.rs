@@ -87,6 +87,18 @@ impl<'a> Template {
                         BLUE = BLUE,
                     ),
                 ),
+          Template::ClojureScript => Some(
+            format!(
+              "{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}java{WHITE} {DIM}(e.g. {DIMRESET}{BLUE}https://adoptium.net{WHITE}{DIM}) and{DIMRESET} {YELLOW}clojure{WHITE} {DIM}({DIMRESET}{BLUE}https://clojure.org/guides/install_clojure{WHITE}{DIM}){DIMRESET}{RESET}",
+              ITALIC = ITALIC,
+              DIM = DIM,
+              DIMRESET = DIMRESET,
+              YELLOW = YELLOW,
+              WHITE = WHITE,
+              BLUE = BLUE,
+              RESET = RESET
+            ),
+          ),
             _ => None,
         }
     }

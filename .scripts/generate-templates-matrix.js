@@ -16,7 +16,7 @@ const nodeJsTemplates = [
   "next-ts",
   "preact",
   "preact-ts",
-  "clojurescript"
+  "clojurescript",
 ];
 
 const matrixConfig = [

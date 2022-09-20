@@ -4,10 +4,8 @@
 
 beforeDevCommand = {{pkg_manager_run_command}} dev
 beforeBuildCommand = {{pkg_manager_run_command}} build
-devPath = http://localhost:3000
+devPath = http://localhost:1420
 distDir = ../dist
-withGlobalTauri = true
 
 [files]
-cljs.svg = public/cljs.svg
 tauri.svg = public/tauri.svg
