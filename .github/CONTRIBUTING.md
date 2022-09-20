@@ -63,9 +63,28 @@ A template is a just combination of two fragments, [`fragment-base`](../packages
 #### Adding a new template
 
 - Add a directory in `<repo-root>/packages/cli/fragments` and name `fragment-template` where `template` is the name of the template and add all the files you need there as they should appear after the template is created.
+- A template also must have a `_cta_manifest_` file which contains info about the template:
+  ```ini
+  beforeDevCommand = {{pkg_manager_run_command}} dev
+  beforeBuildCommand = {{pkg_manager_run_command}} build
+  devPath = http://localhost:1420
+  distDir = ../dist
+
+  # the next sction is used to determine what files to copy from `fragments/_assets_`
+  # if you introduce a new file like an icon that is shared between multiple templates,
+  # it should be added to `fragments/_assets_` and add entry for it here
+  # for example: `tauri.svg` is shared between all templates so it lives in `fragments/_assets_`
+  # and is always added to the next section
+  [files]
+  # the first part is the path of the file under `_fragments/_assets_`
+  # the second part is the path that the file will be copied to under the final template directory
+  tauri.svg = public/tauri.svg
+  ```
 - In `<repo-root>/packages/cli/src/template.rs`, add an entry in the `Template` enum, modify `post_init_info` if needed and modify `FromStr` and `Display` implementation
 - In `<repo-root>/packages/cli/src/package_manager.rs` add your new template to the appropraite package manager in the `templates` method
 - Modify `<repo-root>/.scripts/generate-templates-matrix.js` and append the template name inside the template list for the appropriate package manager so the CI would run tests for it.
+- If the template requires system dependencies, add a post init note in `<repo-root>/packages/cli/src/template.rs` in `post_init_info` method.
+- Before making a commit, make sure to run `cargo fmt --all` and `pnpm format` in the repo root.
 
 ## Financial Contribution
 

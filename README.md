@@ -72,6 +72,7 @@ pnpm create tauri-app my-tauri-app --template svelte
 Currently supported template presets include:
 
 - `vanilla`
+- `vanilla-ts`
 - `vue`
 - `vue-ts`
 - `react`
@@ -85,6 +86,7 @@ Currently supported template presets include:
 - `next-ts`
 - `preact`
 - `preact-ts`
+- `angular`
 
 You can use `.` for the project name to scaffold in the current directory.
 
