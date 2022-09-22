@@ -5,12 +5,6 @@
     [reagent.core :as r]
     [reagent.dom :as dom]))
 
-
-(defn square
-  [x]
-  (* x x))
-
-
 ;;  Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 
 (def root
