@@ -46,7 +46,7 @@
     (dom/render [root])))
 
 
-(defn -main
+(defn main
   "Application entry point."
   {:export true}
   [& _args]

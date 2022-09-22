@@ -1,6 +1,0 @@
-{:paths ["src/main/clojure"]
-
- :deps {reagent/reagent {:mvn/version "1.1.1"}}
-
- :aliases {:develop {:extra-deps {thheller/shadow-cljs {:mvn/version "2.20.2"}
-                                  binaryage/devtools {:mvn/version "1.0.6"}}}}}

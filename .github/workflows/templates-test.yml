@@ -95,9 +95,6 @@ jobs:
           cargo install --locked trunk
         if: matrix.settings.template == 'yew'
 
-      - run: sudo apt install -y clojure
-        if: matrix.settings.template == 'clojurescript'
-
       - name: download cli artifact
         uses: actions/download-artifact@v3
 
