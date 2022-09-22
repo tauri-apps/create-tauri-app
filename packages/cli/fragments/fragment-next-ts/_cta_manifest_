@@ -11,3 +11,4 @@ distDir = ../dist
 next.svg = src/assets/next.svg
 react.svg = src/assets/react.svg
 tauri.svg = src/assets/tauri.svg
+style.css = src/style.css
