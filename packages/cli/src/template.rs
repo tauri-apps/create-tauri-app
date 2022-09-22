@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-use std::{collections::HashMap, fmt::Display, fs, path, str::FromStr};
+use std::{collections::HashMap, fmt::Display, fs, io::Write, path, str::FromStr};
 
 use anyhow::{bail, Context};
 use rust_embed::RustEmbed;
@@ -229,7 +229,11 @@ impl<'a> Template {
             let dest = target_dir.join(dest);
             let parent = dest.parent().unwrap();
             fs::create_dir_all(&parent)?;
-            fs::write(dest, &data)?;
+            let mut file = fs::OpenOptions::new()
+                .append(true)
+                .create(true)
+                .open(dest)?;
+            file.write_all(&data)?;
         }
 
         Ok(())
