@@ -87,6 +87,7 @@ Currently supported template presets include:
 - `preact`
 - `preact-ts`
 - `angular`
+- `clojurescript`
 
 You can use `.` for the project name to scaffold in the current directory.
 

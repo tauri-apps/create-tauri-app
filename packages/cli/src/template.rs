@@ -32,6 +32,7 @@ pub enum Template {
     NextTs,
     Preact,
     PreactTs,
+    ClojureScript,
 }
 
 impl Default for Template {
@@ -58,6 +59,7 @@ impl<'a> Template {
         Template::Preact,
         Template::PreactTs,
         Template::VanillaTs,
+        Template::ClojureScript,
     ];
 
     pub fn post_init_info(&self, pkg_manager: PackageManager) -> Option<String> {
@@ -85,6 +87,18 @@ impl<'a> Template {
                         BLUE = BLUE,
                     ),
                 ),
+          Template::ClojureScript => Some(
+            format!(
+              "{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}java{WHITE} {DIM}(e.g. {DIMRESET}{BLUE}https://adoptium.net{WHITE}{DIM}) and{DIMRESET} {YELLOW}clojure{WHITE} {DIM}({DIMRESET}{BLUE}https://clojure.org/guides/install_clojure{WHITE}{DIM}){DIMRESET}{RESET}",
+              ITALIC = ITALIC,
+              DIM = DIM,
+              DIMRESET = DIMRESET,
+              YELLOW = YELLOW,
+              WHITE = WHITE,
+              BLUE = BLUE,
+              RESET = RESET
+            ),
+          ),
             _ => None,
         }
     }
@@ -241,6 +255,7 @@ impl Display for Template {
             Template::NextTs => write!(f, "next-ts"),
             Template::Preact => write!(f, "preact"),
             Template::PreactTs => write!(f, "preact-ts"),
+            Template::ClojureScript => write!(f, "clojurescript"),
         }
     }
 }
@@ -265,6 +280,7 @@ impl FromStr for Template {
             "preact" => Ok(Template::Preact),
             "preact-ts" => Ok(Template::PreactTs),
             "vanilla-ts" => Ok(Template::VanillaTs),
+            "clojurescript" => Ok(Template::ClojureScript),
             _ => Err("Invalid template".to_string()),
         }
     }

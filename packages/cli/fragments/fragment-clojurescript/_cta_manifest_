@@ -5,10 +5,8 @@
 beforeDevCommand = {{pkg_manager_run_command}} dev
 beforeBuildCommand = {{pkg_manager_run_command}} build
 devPath = http://localhost:1420
-distDir = ../dist
+distDir = ../public
 
 [files]
-next.svg = src/assets/next.svg
-react.svg = src/assets/react.svg
-tauri.svg = src/assets/tauri.svg
-style.css = src/style.css
+tauri.svg = public/tauri.svg
+style.css = public/style.css

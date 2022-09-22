@@ -1,0 +1,10 @@
+{:source-paths ["src/main/clojure"]
+
+ :dependencies [[reagent/reagent "1.1.1"]]
+
+ :dev-http {1420 "public"}
+
+ :builds {:app {:target :browser
+                :output-dir "public/js"
+                :asset-path "/js"
+                :modules {:main {:init-fn app.core/main}}}}}

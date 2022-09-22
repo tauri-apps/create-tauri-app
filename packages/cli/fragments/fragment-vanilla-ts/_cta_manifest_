@@ -7,3 +7,4 @@ withGlobalTauri = true
 [files]
 tauri.svg = src/assets/tauri.svg
 vite.svg = src/assets/vite.svg
+style.css = src/style.css
