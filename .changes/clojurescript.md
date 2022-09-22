@@ -1,6 +1,6 @@
 ---
-"create-tauri-app": patch
-"create-tauri-app-js": patch
+"create-tauri-app": minor
+"create-tauri-app-js": minor
 ---
 
 Add `clojurescript` template.
