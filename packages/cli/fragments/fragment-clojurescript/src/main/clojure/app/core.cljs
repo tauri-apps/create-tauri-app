@@ -5,14 +5,13 @@
     [reagent.core :as r]
     [reagent.dom :as dom]))
 
-;;  Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-
 (def root
   (let [*name (r/atom "")
         *message (r/atom "")
         handle-input (fn [new-value]
                        (reset! *name new-value))
         greet! (fn [name]
+                 ;;  Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
                  (-> (.invoke tauri "greet" #js {:name name})
                      (.then (fn [res]
                               (reset! *message res)))))]
