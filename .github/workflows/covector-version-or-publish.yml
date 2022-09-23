@@ -34,7 +34,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: cargo login
-        run: cargo login ${{ secrets.CRATE_TOKEN  }}
+        run: cargo login ${{ secrets.ORG_CRATES_IO_TOKEN  }}
       - name: git config
         run: |
           git config --global user.name "${{ github.event.pusher.name }}"
@@ -44,7 +44,7 @@ jobs:
         uses: jbolda/covector/packages/action@covector-v0
         id: covector
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.ORG_NPM_TOKEN }}
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           command: 'version-or-publish'
@@ -67,7 +67,7 @@ jobs:
           contains(steps.covector.outputs.packagesPublished, 'create-tauri-app')
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.TAURI_BOT_PAT }}
+          token: ${{ secrets.ORG_TAURI_BOT_PAT }}
           repo: tauri-apps/create-tauri-app
           event-type: publish-binaries
           client-payload: '{"releaseId": "${{ steps.covector.outputs.create-tauri-app-releaseId }}" }'
@@ -78,7 +78,7 @@ jobs:
           contains(steps.covector.outputs.packagesPublished, 'create-tauri-app-js')
         uses: peter-evans/repository-dispatch@v2
         with:
-          token: ${{ secrets.TAURI_BOT_PAT }}
+          token: ${{ secrets.ORG_TAURI_BOT_PAT }}
           repo: tauri-apps/create-tauri-app
           event-type: publish-napi
           client-payload: '{"releaseId": "${{ steps.covector.outputs.create-tauri-app-js-releaseId }}" }'
