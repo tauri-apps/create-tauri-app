@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.5.0]
+
+- Add `clojurescript` template.
+  - [6ca747e](https://www.github.com/tauri-apps/create-tauri-app/commit/6ca747eb6ff5eaded5bb073e5f1dd551a843b19b) feat(cli/templates) add clojurescript ([#185](https://www.github.com/tauri-apps/create-tauri-app/pull/185)) on 2022-09-22
+
 ## \[2.4.2]
 
 - Replace deprecated functions in `yew` template.
