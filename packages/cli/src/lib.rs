@@ -9,8 +9,8 @@ use crate::{colors::*, package_manager::PackageManager};
 
 mod cli;
 mod colors;
-mod package_manager;
-mod template;
+pub mod package_manager;
+pub mod template;
 
 pub fn run<I, A>(args: I, bin_name: Option<String>)
 where
