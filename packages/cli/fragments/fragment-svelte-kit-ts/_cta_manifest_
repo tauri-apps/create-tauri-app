@@ -11,4 +11,4 @@ distDir = ../build
 vite.svg = static/vite.svg
 tauri.svg = static/tauri.svg
 svelte.svg = static/svelte.svg
-style.css = src/routes/(app)/app.css
+style.css = src/app.css
