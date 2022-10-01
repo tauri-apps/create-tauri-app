@@ -81,7 +81,6 @@ jobs:
           node-version: 16
 
       - name: Install Rust stable
-        if: matrix.settings.manager == 'cargo'
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
