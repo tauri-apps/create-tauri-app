@@ -1,4 +1,4 @@
-const { invoke } = window.__TAURI__.tauri;
+import { invoke } from "@tauri-apps/api/tauri";
 
 let greetInputEl: HTMLInputElement | null;
 let greetMsgEl: HTMLElement | null;
