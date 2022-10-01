@@ -79,7 +79,8 @@ Currently supported template presets include:
 - `react-ts`
 - `svelte`
 - `svelte-ts`
-- `sveltekit`
+- `svelte-kit`
+- `svelte-kit-ts`
 - `solid`
 - `solid-ts`
 - `yew`
