@@ -4,6 +4,8 @@ const nodeJsTemplates = [
   "angular",
   "svelte",
   "svelte-ts",
+  "svelte-kit",
+  "svelte-kit-ts",
   "vue",
   "vue-ts",
   "solid",
