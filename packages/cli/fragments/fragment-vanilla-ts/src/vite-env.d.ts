@@ -1,3 +1,3 @@
 interface Window {
-  greet: () => Promise<void>
+  greet: () => Promise<void>;
 }
