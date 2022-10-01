@@ -1,7 +1,3 @@
-export {};
-
-declare global {
-  interface Window {
-    greet: () => Promise<void>;
-  }
+interface Window {
+  greet: () => Promise<void>
 }
