@@ -1,7 +1,7 @@
-import type * as TauriApiTypes from "@tauri-apps/api";
+export {};
 
 declare global {
   interface Window {
-    __TAURI__: typeof TauriApiTypes;
+    greet: () => Promise<void>;
   }
 }
