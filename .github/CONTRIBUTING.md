@@ -58,7 +58,7 @@ cargo run -- <cli arguments>
 
 ### Templates
 
-A template is a just combination of two fragments, [`fragment-base`](../packages/cli/fragments/fragment-base) (which is shared between all templates) and another fragment that is specific to the template.
+A template is a just combination of two fragments, [`fragment-base`](../packages/cli/fragments/base) (which is shared between all templates) and another fragment that is specific to the template.
 
 #### Adding a new template
 
