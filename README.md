@@ -9,87 +9,105 @@
 [![support](https://img.shields.io/badge/sponsor-Open%20Collective-blue.svg)](https://opencollective.com/tauri)
 
 
-## Usage
+# Usage
 
-With Bash:
+## Bash:
 
-``` bash
+### curl
+``` 
 sh <(curl https://create.tauri.app/sh)
-# or
+```
+### wget
+```
 sh <(wget https://create.tauri.app/sh)
 ```
 
-With Powershell:
+## Powershell:
 
 ``` powershell
 iwr -useb https://create.tauri.app/ps | iex
 ```
 
-With Cargo:
+## Cargo:
 
 ``` bash
 cargo install create-tauri-app
 cargo create-tauri-app
 ```
 
-With NPM:
+## NPM:
 
 ``` bash
 npm create tauri-app@latest
 ```
 
-With Yarn:
+## Yarn:
 
 ``` bash
 yarn create tauri-app
 ```
 
-With PNPM:
+## PNPM:
 
 ``` bash
 pnpm create tauri-app
 ```
 
-You can also directly specify the project name and the template you want to use via additional command line options. For example, to scaffold a Vite + Vue project, run:
+<br>
 
-```bash
-# curl
+ Additional command line options allow you to directly specify the template to use.
+---
+
+### curl
+```
 sh <(curl https://create.tauri.app/sh) --template svelte
-# wget
+```
+### wget
+```
 sh <(wget https://create.tauri.app/sh) --template svelte
-# cargo
+```
+### cargo
+```
 cargo create-tauri-app --template svelte
-# npm 6.x
+```
+### npm 6.x
+```
 npm create tauri-app@latest my-tauri-app --template svelte
-# npm 7+, extra double-dash is needed:
+```
+### npm 7+, extra double-dash is needed:
+```
 npm create tauri-app@latest my-tauri-app -- --template svelte
-# yarn
+```
+### yarn
+```
 yarn create tauri-app my-tauri-app --template svelte
-# pnpm
+```
+### pnpm
+```
 pnpm create tauri-app my-tauri-app --template svelte
 ```
 
 Currently supported template presets include:
 
-- `vanilla`
-- `vanilla-ts`
-- `vue`
-- `vue-ts`
-- `react`
-- `react-ts`
-- `svelte`
-- `svelte-ts`
-- `solid`
-- `solid-ts`
-- `yew`
-- `next`
-- `next-ts`
-- `preact`
-- `preact-ts`
 - `angular`
 - `clojurescript`
+- `next-ts`
+- `next`
+- `preact-ts`
+- `preact`
+- `react-ts`
+- `react`
+- `solid-ts`
+- `solid`
+- `svelte-ts`
+- `svelte`
+- `vanilla-ts`
+- `vanilla`
+- `vue-ts`
+- `vue`
+- `yew`
 
-You can use `.` for the project name to scaffold in the current directory.
+Use `.` for the project name to scaffold in the current directory.
 
 ## Semver
 **create-tauri-app** is following [Semantic Versioning 2.0](https://semver.org/).
