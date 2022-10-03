@@ -4,8 +4,6 @@ const nodeJsTemplates = [
   "angular",
   "svelte",
   "svelte-ts",
-  "svelte-kit",
-  "svelte-kit-ts",
   "vue",
   "vue-ts",
   "solid",
@@ -19,6 +17,8 @@ const nodeJsTemplates = [
   "preact",
   "preact-ts",
   "clojurescript",
+  "svelte-kit",
+  "svelte-kit-ts",
 ];
 
 const matrixConfig = [

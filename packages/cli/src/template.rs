@@ -23,8 +23,6 @@ pub enum Template {
     VueTs,
     Svelte,
     SvelteTs,
-    SvelteKit,
-    SvelteKitTs,
     React,
     ReactTs,
     Solid,
@@ -35,6 +33,8 @@ pub enum Template {
     Preact,
     PreactTs,
     ClojureScript,
+    SvelteKit,
+    SvelteKitTs,
 }
 
 impl Default for Template {
@@ -51,8 +51,6 @@ impl<'a> Template {
         Template::VueTs,
         Template::Svelte,
         Template::SvelteTs,
-        Template::SvelteKit,
-        Template::SvelteKitTs,
         Template::React,
         Template::ReactTs,
         Template::Solid,
@@ -64,6 +62,8 @@ impl<'a> Template {
         Template::PreactTs,
         Template::VanillaTs,
         Template::ClojureScript,
+        Template::SvelteKit,
+        Template::SvelteKitTs,
     ];
 
     pub fn post_init_info(&self, pkg_manager: PackageManager) -> Option<String> {
@@ -254,8 +254,6 @@ impl Display for Template {
             Template::VueTs => write!(f, "vue-ts"),
             Template::Svelte => write!(f, "svelte"),
             Template::SvelteTs => write!(f, "svelte-ts"),
-            Template::SvelteKit => write!(f, "svelte-kit"),
-            Template::SvelteKitTs => write!(f, "svelte-kit-ts"),
             Template::React => write!(f, "react"),
             Template::ReactTs => write!(f, "react-ts"),
             Template::Solid => write!(f, "solid"),
@@ -266,6 +264,8 @@ impl Display for Template {
             Template::Preact => write!(f, "preact"),
             Template::PreactTs => write!(f, "preact-ts"),
             Template::ClojureScript => write!(f, "clojurescript"),
+            Template::SvelteKit => write!(f, "svelte-kit"),
+            Template::SvelteKitTs => write!(f, "svelte-kit-ts"),
         }
     }
 }
@@ -280,8 +280,6 @@ impl FromStr for Template {
             "vue-ts" => Ok(Template::VueTs),
             "svelte" => Ok(Template::Svelte),
             "svelte-ts" => Ok(Template::SvelteTs),
-            "svelte-kit" => Ok(Template::Svelte),
-            "svelte-kit-ts" => Ok(Template::SvelteTs),
             "react" => Ok(Template::React),
             "react-ts" => Ok(Template::ReactTs),
             "solid" => Ok(Template::Solid),
@@ -293,6 +291,8 @@ impl FromStr for Template {
             "preact-ts" => Ok(Template::PreactTs),
             "vanilla-ts" => Ok(Template::VanillaTs),
             "clojurescript" => Ok(Template::ClojureScript),
+            "svelte-kit" => Ok(Template::Svelte),
+            "svelte-kit-ts" => Ok(Template::SvelteTs),
             _ => Err("Invalid template".to_string()),
         }
     }
