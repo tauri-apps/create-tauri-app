@@ -11,7 +11,7 @@
   <a href="https://tauri.app" target="_blank">
     <img src="/tauri.svg" class="logo tauri" alt="Tauri Logo" />
   </a>
-  <a href="https://svelte.dev" target="_blank">
+  <a href="https://kit.svelte.dev" target="_blank">
     <img src="/svelte.svg" class="logo svelte" alt="Svelte Logo" />
   </a>
 </div>

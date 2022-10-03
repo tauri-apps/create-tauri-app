@@ -41,8 +41,6 @@ impl PackageManager {
                 Template::VueTs,
                 Template::Svelte,
                 Template::SvelteTs,
-                Template::SvelteKit,
-                Template::SvelteKitTs,
                 Template::React,
                 Template::ReactTs,
                 Template::Solid,
@@ -52,6 +50,8 @@ impl PackageManager {
                 Template::Preact,
                 Template::PreactTs,
                 Template::ClojureScript,
+                Template::SvelteKit,
+                Template::SvelteKitTs,
             ],
         }
     }
