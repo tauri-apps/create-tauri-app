@@ -3,4 +3,4 @@
 "create-tauri-app-js": minor
 ---
 
-Add `svelte-kit` template.
+Add `svelte-kit` and `svelte-kit-ts` template.
