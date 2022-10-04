@@ -1,5 +1,15 @@
 # Changelog
 
+## \[2.6.0]
+
+- Fix crash when nodejs binary has the version in its name, for example `node18`
+  - [09c0ed6](https://www.github.com/tauri-apps/create-tauri-app/commit/09c0ed6bfba893fbfb1ac304720b72716f7137d1) fix(cli/node): fix invoking the node cli from a shim, closes [#193](https://www.github.com/tauri-apps/create-tauri-app/pull/193) ([#207](https://www.github.com/tauri-apps/create-tauri-app/pull/207)) on 2022-10-04
+- Add `svelte-kit` and `svelte-kit-ts` template.
+  - [0b09cc1](https://www.github.com/tauri-apps/create-tauri-app/commit/0b09cc167784b4400c2078e61f1b7bbe45ba54a3) feat: add `Sveltekit` templates ([#200](https://www.github.com/tauri-apps/create-tauri-app/pull/200)) on 2022-10-04
+- Use `import` in vanilla-ts instead of the global Tauri object.
+  - [dcca18c](https://www.github.com/tauri-apps/create-tauri-app/commit/dcca18c2de3bd14304bee849015c33880304d647) fix: Use `import` in vanilla-ts fragment. ([#198](https://www.github.com/tauri-apps/create-tauri-app/pull/198)) on 2022-10-01
+  - [ee4469b](https://www.github.com/tauri-apps/create-tauri-app/commit/ee4469b97a05ab66ccbb28807eb2e53f333b5d48) chore: fix changefile on 2022-10-04
+
 ## \[2.5.0]
 
 - Add `clojurescript` template.
