@@ -9,36 +9,79 @@
 [![support](https://img.shields.io/badge/sponsor-Open%20Collective-blue.svg)](https://opencollective.com/tauri)
 
 
-## Usage
+# Usage
 
-With NPM:
+## Bash:
+
+``` 
+sh <(curl https://create.tauri.app/sh)
+```
+
+```
+sh <(wget https://create.tauri.app/sh)
+```
+
+## Powershell:
+
+``` powershell
+iwr -useb https://create.tauri.app/ps | iex
+```
+
+## Cargo:
+
+``` bash
+cargo install create-tauri-app
+cargo create-tauri-app
+```
+
+## NPM:
 
 ``` bash
 npm create tauri-app@latest
 ```
 
-With Yarn:
+## Yarn:
 
 ``` bash
 yarn create tauri-app
 ```
 
-With PNPM:
+## PNPM:
 
 ``` bash
 pnpm create tauri-app
 ```
 
-You can also directly specify the project name and the template you want to use via additional command line options. For example, to scaffold a Vite + Vue project, run:
+<br>
 
-```bash
-# npm 6.x
+ Additional command line options allow you to directly specify the template to use.
+---
+
+```
+sh <(curl https://create.tauri.app/sh) --template svelte
+```
+
+```
+sh <(wget https://create.tauri.app/sh) --template svelte
+```
+
+```
+cargo create-tauri-app --template svelte
+```
+
+```
 npm create tauri-app@latest my-tauri-app --template svelte
-# npm 7+, extra double-dash is needed:
+```
+
+```
 npm create tauri-app@latest my-tauri-app -- --template svelte
-# yarn
+```
+
+```
 yarn create tauri-app my-tauri-app --template svelte
-# pnpm
+```
+
+```
 pnpm create tauri-app my-tauri-app --template svelte
 ```
 
@@ -46,23 +89,23 @@ Currently supported template presets include:
 
 - `vanilla`
 - `vanilla-ts`
+- `angular`
 - `vue`
 - `vue-ts`
-- `react`
-- `react-ts`
 - `svelte`
 - `svelte-ts`
+- `react`
+- `react-ts`
 - `solid`
 - `solid-ts`
+- `yew`
 - `next`
 - `next-ts`
 - `preact`
 - `preact-ts`
-- `angular`
-- `clojurescript`
+- `clojureScript`
 
 You can use `.` for the project name to scaffold in the current directory.
-
 
 ## Semver
 **create-tauri-app** is following [Semantic Versioning 2.0](https://semver.org/).

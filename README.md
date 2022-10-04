@@ -13,11 +13,10 @@
 
 ## Bash:
 
-### curl
 ``` 
 sh <(curl https://create.tauri.app/sh)
 ```
-### wget
+
 ```
 sh <(wget https://create.tauri.app/sh)
 ```
@@ -58,56 +57,55 @@ pnpm create tauri-app
  Additional command line options allow you to directly specify the template to use.
 ---
 
-### curl
 ```
 sh <(curl https://create.tauri.app/sh) --template svelte
 ```
-### wget
+
 ```
 sh <(wget https://create.tauri.app/sh) --template svelte
 ```
-### cargo
+
 ```
 cargo create-tauri-app --template svelte
 ```
-### npm 6.x
+
 ```
 npm create tauri-app@latest my-tauri-app --template svelte
 ```
-### npm 7+, extra double-dash is needed:
+
 ```
 npm create tauri-app@latest my-tauri-app -- --template svelte
 ```
-### yarn
+
 ```
 yarn create tauri-app my-tauri-app --template svelte
 ```
-### pnpm
+
 ```
 pnpm create tauri-app my-tauri-app --template svelte
 ```
 
 Currently supported template presets include:
 
-- `angular`
-- `clojurescript`
-- `next-ts`
-- `next`
-- `preact-ts`
-- `preact`
-- `react-ts`
-- `react`
-- `solid-ts`
-- `solid`
-- `svelte-ts`
-- `svelte`
-- `vanilla-ts`
 - `vanilla`
-- `vue-ts`
+- `vanilla-ts`
+- `angular`
 - `vue`
+- `vue-ts`
+- `svelte`
+- `svelte-ts`
+- `react`
+- `react-ts`
+- `solid`
+- `solid-ts`
 - `yew`
+- `next`
+- `next-ts`
+- `preact`
+- `preact-ts`
+- `clojureScript`
 
-Use `.` for the project name to scaffold in the current directory.
+You can use `.` for the project name to scaffold in the current directory.
 
 ## Semver
 **create-tauri-app** is following [Semantic Versioning 2.0](https://semver.org/).
