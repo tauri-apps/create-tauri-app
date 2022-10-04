@@ -43,8 +43,9 @@ impl Default for Template {
 
 impl<'a> Template {
     pub const ALL: &'a [Template] = &[
-        Template::Angular,
         Template::Vanilla,
+        Template::VanillaTs,
+        Template::Angular,
         Template::Vue,
         Template::VueTs,
         Template::Svelte,
@@ -58,12 +59,22 @@ impl<'a> Template {
         Template::NextTs,
         Template::Preact,
         Template::PreactTs,
-        Template::VanillaTs,
         Template::ClojureScript,
     ];
 
     pub fn post_init_info(&self, pkg_manager: PackageManager) -> Option<String> {
         match self {
+            Template::Vanilla if pkg_manager == PackageManager::Cargo => Some(
+                format!(
+                    "{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}tauri-cli{WHITE} {DIM}({DIMRESET}{BLUE}cargo install tauri-cli{WHITE}{DIM})",
+                    ITALIC = ITALIC,
+                    DIM = DIM,
+                    DIMRESET = DIMRESET,
+                    YELLOW = YELLOW,
+                    WHITE = WHITE,
+                    BLUE = BLUE,
+                ),
+            ),
             Template::Yew => Some(
                 format!(
                     "{ITALIC}{DIM}You also need to install {DIMRESET}{YELLOW}tauri-cli{WHITE}{DIM} ({DIMRESET}{BLUE}cargo install tauri-cli{WHITE}{DIM}), {DIMRESET}{YELLOW}trunk{WHITE}{DIM} ({DIMRESET}{BLUE}https://trunkrs.dev/#install{WHITE}{DIM}) and {DIMRESET}{YELLOW}wasm32{WHITE}{DIM} rust target ({DIMRESET}{BLUE}rustup target add wasm32-unknown-unknown{WHITE}{DIM}){DIMRESET}{RESET}",
@@ -76,17 +87,6 @@ impl<'a> Template {
                     RESET = RESET
                 ),
             ),
-            Template::Vanilla if pkg_manager == PackageManager::Cargo => Some(
-                    format!(
-                        "{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}tauri-cli{WHITE} {DIM}({DIMRESET}{BLUE}cargo install tauri-cli{WHITE}{DIM})",
-                        ITALIC = ITALIC,
-                        DIM = DIM,
-                        DIMRESET = DIMRESET,
-                        YELLOW = YELLOW,
-                        WHITE = WHITE,
-                        BLUE = BLUE,
-                    ),
-                ),
           Template::ClojureScript => Some(
             format!(
               "{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}java{WHITE} {DIM}(e.g. {DIMRESET}{BLUE}https://adoptium.net{WHITE}{DIM}) and{DIMRESET} {YELLOW}clojure{WHITE} {DIM}({DIMRESET}{BLUE}https://clojure.org/guides/install_clojure{WHITE}{DIM}){DIMRESET}{RESET}",
@@ -269,6 +269,7 @@ impl FromStr for Template {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "vanilla" => Ok(Template::Vanilla),
+            "vanilla-ts" => Ok(Template::VanillaTs),
             "angular" => Ok(Template::Angular),
             "vue" => Ok(Template::Vue),
             "vue-ts" => Ok(Template::VueTs),
@@ -283,7 +284,6 @@ impl FromStr for Template {
             "next-ts" => Ok(Template::NextTs),
             "preact" => Ok(Template::Preact),
             "preact-ts" => Ok(Template::PreactTs),
-            "vanilla-ts" => Ok(Template::VanillaTs),
             "clojurescript" => Ok(Template::ClojureScript),
             _ => Err("Invalid template".to_string()),
         }
