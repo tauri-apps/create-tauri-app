@@ -18,7 +18,6 @@ struct Fragments;
 pub enum Template {
     Vanilla,
     VanillaTs,
-    Angular,
     Vue,
     VueTs,
     Svelte,
@@ -32,6 +31,7 @@ pub enum Template {
     NextTs,
     Preact,
     PreactTs,
+    Angular,
     ClojureScript,
 }
 
@@ -43,8 +43,8 @@ impl Default for Template {
 
 impl<'a> Template {
     pub const ALL: &'a [Template] = &[
-        Template::Angular,
         Template::Vanilla,
+        Template::VanillaTs,
         Template::Vue,
         Template::VueTs,
         Template::Svelte,
@@ -58,7 +58,7 @@ impl<'a> Template {
         Template::NextTs,
         Template::Preact,
         Template::PreactTs,
-        Template::VanillaTs,
+        Template::Angular,
         Template::ClojureScript,
     ];
 

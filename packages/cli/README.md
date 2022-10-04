@@ -9,14 +9,16 @@
 [![support](https://img.shields.io/badge/sponsor-Open%20Collective-blue.svg)](https://opencollective.com/tauri)
 
 
-## Usage
+# Usage
 
-With Cargo:
+## Cargo:
 
 ``` bash
 cargo install create-tauri-app
 cargo create-tauri-app
 ```
+
+<br>
 
 You can also directly specify the project name and the template you want to use via additional command line options. For example, to scaffold a Vite + Vue project, run:
 
@@ -30,10 +32,10 @@ Currently supported template presets include:
 - `vanilla-ts`
 - `vue`
 - `vue-ts`
-- `react`
-- `react-ts`
 - `svelte`
 - `svelte-ts`
+- `react`
+- `react-ts`
 - `solid`
 - `solid-ts`
 - `yew`
@@ -42,6 +44,7 @@ Currently supported template presets include:
 - `preact`
 - `preact-ts`
 - `angular`
+- `clojurescript`
 
 You can use `.` for the project name to scaffold in the current directory.
 

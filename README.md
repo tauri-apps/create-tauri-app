@@ -9,46 +9,50 @@
 [![support](https://img.shields.io/badge/sponsor-Open%20Collective-blue.svg)](https://opencollective.com/tauri)
 
 
-## Usage
+# Usage
 
-With Bash:
+## Bash:
 
-``` bash
+``` 
 sh <(curl https://create.tauri.app/sh)
-# or
+```
+or 
+```
 sh <(wget https://create.tauri.app/sh)
 ```
 
-With Powershell:
+## Powershell:
 
 ``` powershell
 iwr -useb https://create.tauri.app/ps | iex
 ```
 
-With Cargo:
+## Cargo:
 
 ``` bash
 cargo install create-tauri-app
 cargo create-tauri-app
 ```
 
-With NPM:
+## NPM:
 
 ``` bash
 npm create tauri-app@latest
 ```
 
-With Yarn:
+## Yarn:
 
 ``` bash
 yarn create tauri-app
 ```
 
-With PNPM:
+## PNPM:
 
 ``` bash
 pnpm create tauri-app
 ```
+
+<br>
 
 You can also directly specify the project name and the template you want to use via additional command line options. For example, to scaffold a Vite + Vue project, run:
 
@@ -75,10 +79,10 @@ Currently supported template presets include:
 - `vanilla-ts`
 - `vue`
 - `vue-ts`
-- `react`
-- `react-ts`
 - `svelte`
 - `svelte-ts`
+- `react`
+- `react-ts`
 - `solid`
 - `solid-ts`
 - `yew`
