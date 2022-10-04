@@ -9,8 +9,24 @@ use crate::{colors::*, package_manager::PackageManager};
 
 mod cli;
 mod colors;
-pub mod package_manager;
-pub mod template;
+mod package_manager;
+mod template;
+
+pub mod internal {
+    //! Re-export of create-tauri-app internals
+    //!
+    //! ## Warning
+    //!
+    //! This is meant to be used internally only so use at your own risk
+    //! and expect APIs to break without a prior notice.
+    pub mod package_manager {
+        pub use crate::package_manager::*;
+    }
+
+    pub mod template {
+        pub use crate::template::*;
+    }
+}
 
 pub fn run<I, A>(args: I, bin_name: Option<String>)
 where
