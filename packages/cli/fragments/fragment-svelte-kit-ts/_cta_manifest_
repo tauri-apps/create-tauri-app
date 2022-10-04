@@ -12,4 +12,4 @@ vite.svg = static/vite.svg
 tauri.svg = static/tauri.svg
 svelte.svg = static/svelte.svg
 style.css = src/app.css
-favicon.png = static/favicon.png
+svelte.png = static/favicon.png
