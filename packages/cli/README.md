@@ -11,22 +11,6 @@
 
 # Usage
 
-## Bash:
-
-``` 
-sh <(curl https://create.tauri.app/sh)
-```
-
-```
-sh <(wget https://create.tauri.app/sh)
-```
-
-## Powershell:
-
-``` powershell
-iwr -useb https://create.tauri.app/ps | iex
-```
-
 ## Cargo:
 
 ``` bash
@@ -34,62 +18,18 @@ cargo install create-tauri-app
 cargo create-tauri-app
 ```
 
-## NPM:
-
-``` bash
-npm create tauri-app@latest
-```
-
-## Yarn:
-
-``` bash
-yarn create tauri-app
-```
-
-## PNPM:
-
-``` bash
-pnpm create tauri-app
-```
-
 <br>
 
- Additional command line options allow you to directly specify the template to use.
----
+You can also directly specify the project name and the template you want to use via additional command line options. For example, to scaffold a Vite + Vue project, run:
 
-```
-sh <(curl https://create.tauri.app/sh) --template svelte
-```
-
-```
-sh <(wget https://create.tauri.app/sh) --template svelte
-```
-
-```
+```bash
 cargo create-tauri-app --template svelte
-```
-
-```
-npm create tauri-app@latest my-tauri-app --template svelte
-```
-
-```
-npm create tauri-app@latest my-tauri-app -- --template svelte
-```
-
-```
-yarn create tauri-app my-tauri-app --template svelte
-```
-
-```
-pnpm create tauri-app my-tauri-app --template svelte
 ```
 
 Currently supported template presets include:
 
 - `vanilla`
 - `vanilla-ts`
-- `angular`
 - `vue`
 - `vue-ts`
 - `svelte`
@@ -103,7 +43,8 @@ Currently supported template presets include:
 - `next-ts`
 - `preact`
 - `preact-ts`
-- `clojureScript`
+- `angular`
+- `clojurescript`
 
 You can use `.` for the project name to scaffold in the current directory.
 
