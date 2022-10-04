@@ -79,8 +79,6 @@ Currently supported template presets include:
 - `react-ts`
 - `svelte`
 - `svelte-ts`
-- `svelte-kit`
-- `svelte-kit-ts`
 - `solid`
 - `solid-ts`
 - `yew`
@@ -90,6 +88,8 @@ Currently supported template presets include:
 - `preact-ts`
 - `angular`
 - `clojurescript`
+- `svelte-kit`
+- `svelte-kit-ts`
 
 You can use `.` for the project name to scaffold in the current directory.
 
