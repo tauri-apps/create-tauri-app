@@ -50,6 +50,8 @@ impl PackageManager {
                 Template::PreactTs,
                 Template::Angular,
                 Template::ClojureScript,
+                Template::SvelteKit,
+                Template::SvelteKitTs,
             ],
         }
     }

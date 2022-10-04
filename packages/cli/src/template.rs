@@ -33,6 +33,8 @@ pub enum Template {
     PreactTs,
     Angular,
     ClojureScript,
+    SvelteKit,
+    SvelteKitTs,
 }
 
 impl Default for Template {
@@ -60,6 +62,8 @@ impl<'a> Template {
         Template::PreactTs,
         Template::Angular,
         Template::ClojureScript,
+        Template::SvelteKit,
+        Template::SvelteKitTs,
     ];
 
     pub fn post_init_info(&self, pkg_manager: PackageManager) -> Option<String> {
@@ -260,6 +264,8 @@ impl Display for Template {
             Template::Preact => write!(f, "preact"),
             Template::PreactTs => write!(f, "preact-ts"),
             Template::ClojureScript => write!(f, "clojurescript"),
+            Template::SvelteKit => write!(f, "svelte-kit"),
+            Template::SvelteKitTs => write!(f, "svelte-kit-ts"),
         }
     }
 }
@@ -285,6 +291,8 @@ impl FromStr for Template {
             "preact-ts" => Ok(Template::PreactTs),
             "vanilla-ts" => Ok(Template::VanillaTs),
             "clojurescript" => Ok(Template::ClojureScript),
+            "svelte-kit" => Ok(Template::Svelte),
+            "svelte-kit-ts" => Ok(Template::SvelteTs),
             _ => Err("Invalid template".to_string()),
         }
     }

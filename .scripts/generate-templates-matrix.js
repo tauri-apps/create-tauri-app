@@ -17,6 +17,8 @@ const nodeJsTemplates = [
   "preact",
   "preact-ts",
   "clojurescript",
+  "svelte-kit",
+  "svelte-kit-ts",
 ];
 
 const matrixConfig = [
