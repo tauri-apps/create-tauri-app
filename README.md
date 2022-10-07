@@ -54,23 +54,23 @@ pnpm create tauri-app
 
 <br>
 
-You can also directly specify the project name and the template you want to use via additional command line options. For example, to scaffold a Vite + Vue project, run:
+You can also directly specify the project name, package manager and the template you want to use via additional command line options. For example, to scaffold a Vue project in a `my-tauri-app` directory, using `pnpm`, run:
 
 ```bash
 # curl
-sh <(curl https://create.tauri.app/sh) --template svelte
+sh <(curl https://create.tauri.app/sh) my-tauri-app --template svelte --manager pnpm
 # wget
-sh <(wget https://create.tauri.app/sh) --template svelte
+sh <(wget https://create.tauri.app/sh) my-tauri-app --template svelte --manager pnpm
 # cargo
-cargo create-tauri-app --template svelte
+cargo create-tauri-app my-tauri-app --template svelte --manager pnpm
 # npm 6.x
-npm create tauri-app@latest my-tauri-app --template svelte
+npm create tauri-app@latest my-tauri-app --template svelte --manager pnpm
 # npm 7+, extra double-dash is needed:
-npm create tauri-app@latest my-tauri-app -- --template svelte
+npm create tauri-app@latest my-tauri-app -- --template svelte --manager pnpm
 # yarn
-yarn create tauri-app my-tauri-app --template svelte
+yarn create tauri-app my-tauri-app --template svelte --manager pnpm
 # pnpm
-pnpm create tauri-app my-tauri-app --template svelte
+pnpm create tauri-app my-tauri-app --template svelte --manager pnpm
 ```
 
 Currently supported template presets include:

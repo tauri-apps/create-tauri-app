@@ -131,14 +131,28 @@ where
         if skip {
             defaults.manager.unwrap()
         } else {
-            let managers = PackageManager::ALL;
-            let index = Select::with_theme(&ColorfulTheme::default())
-                .with_prompt("Choose your package manager")
-                .items(managers)
-                .default(0)
-                .interact()
-                .unwrap();
-            managers[index]
+            let managers = PackageManager::ALL.to_vec();
+            let managers = args
+                .template
+                .map(|t| {
+                    managers
+                        .to_owned()
+                        .into_iter()
+                        .filter(|p| p.templates().contains(&t))
+                        .collect::<Vec<_>>()
+                })
+                .unwrap_or(managers);
+            if managers.len() == 1 {
+                managers[0]
+            } else {
+                let index = Select::with_theme(&ColorfulTheme::default())
+                    .with_prompt("Choose your package manager")
+                    .items(&managers)
+                    .default(0)
+                    .interact()
+                    .unwrap();
+                managers[index]
+            }
         }
     });
 
