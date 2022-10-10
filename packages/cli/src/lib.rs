@@ -136,8 +136,8 @@ where
                 .template
                 .map(|t| {
                     managers
-                        .to_owned()
-                        .into_iter()
+                        .iter()
+                        .copied()
                         .filter(|p| p.templates().contains(&t))
                         .collect::<Vec<_>>()
                 })
