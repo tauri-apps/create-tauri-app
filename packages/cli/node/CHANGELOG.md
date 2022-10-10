@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.6.1]
+
+- Only prompt for supported package managers when using `--template` cli option.
+  - [8ba553c](https://www.github.com/tauri-apps/create-tauri-app/commit/8ba553cda5a4c765a4d2e7be2cadb291c2bcbc75) feat: only prompt for pkg managers supported by template, closes [#208](https://www.github.com/tauri-apps/create-tauri-app/pull/208) ([#209](https://www.github.com/tauri-apps/create-tauri-app/pull/209)) on 2022-10-10
+
 ## \[2.6.0]
 
 - Fix crash when nodejs binary has the version in its name, for example `node18`
