@@ -22,9 +22,9 @@ importers:
 
   packages/worker:
     specifiers:
-      wrangler: 2.1.10
+      wrangler: 2.1.11
     devDependencies:
-      wrangler: 2.1.10
+      wrangler: 2.1.11
 
 packages:
 
@@ -2238,8 +2238,8 @@ packages:
       typical: 5.2.0
     dev: true
 
-  /wrangler/2.1.10:
-    resolution: {integrity: sha512-hiaTNvkKw8axZljxHOjtDXIVo4GOrDclyxr0cF2aypzAwtrGlaYWD+WP0Z66BqRLpUpbF3BdzrPn1k+xGp0u+Q==}
+  /wrangler/2.1.11:
+    resolution: {integrity: sha512-zXydDzU+KKOwYDD9IX+XdSZMFEPWTghzTN/CiZc+pxHGIjTuQBtbk97trY3i9YKeih/QOSlo+H7Clfoq+6rZLw==}
     engines: {node: '>=16.13.0'}
     hasBin: true
     dependencies:
