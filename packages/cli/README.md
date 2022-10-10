@@ -20,10 +20,10 @@ cargo create-tauri-app
 
 <br>
 
-You can also directly specify the project name and the template you want to use via additional command line options. For example, to scaffold a Vite + Vue project, run:
+You can also directly specify the project name, package manager and the template you want to use via additional command line options. For example, to scaffold a Yew project in a `my-tauri-app` directory, using `cargo`, run:
 
 ```bash
-cargo create-tauri-app --template svelte
+cargo create-tauri-app my-tauri-app --template yew --manager cargo
 ```
 
 Currently supported template presets include:
