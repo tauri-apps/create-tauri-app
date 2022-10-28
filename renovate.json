@@ -1,11 +1,13 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base", ":disableDependencyDashboard"],
   "packageRules": [
     {
       "groupName": "templates dependencies",
-      "matchPaths": ["packages/cli/fragments/**"],
-      "rangeStrategy": "replace",
-      "extends": ["schedule:monthly"]
+      "groupSlug": "templatesDeps",
+      "commitMessagePrefix": "chore(deps)",
+      "paths": ["packages/cli/fragments/**"],
+      "schedule": ["before 3am on the first day of the month"]
     }
   ]
 }
