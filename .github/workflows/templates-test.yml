@@ -26,7 +26,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: install stable
+      - name: install rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
@@ -80,7 +80,7 @@ jobs:
         with:
           node-version: 16
 
-      - name: Install Rust stable
+      - name: Install rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable

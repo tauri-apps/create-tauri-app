@@ -37,7 +37,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: install stable
+      - name: install rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: ${{ matrix.toolchain }}

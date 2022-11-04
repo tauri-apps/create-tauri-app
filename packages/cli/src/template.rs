@@ -196,7 +196,7 @@ impl<'a> Template {
             }
 
             let parent = p.parent().unwrap();
-            fs::create_dir_all(&parent)?;
+            fs::create_dir_all(parent)?;
             fs::write(parent.join(target_file_name), &data)?;
             Ok(())
         };
@@ -232,7 +232,7 @@ impl<'a> Template {
                 .data;
             let dest = target_dir.join(dest);
             let parent = dest.parent().unwrap();
-            fs::create_dir_all(&parent)?;
+            fs::create_dir_all(parent)?;
             let mut file = fs::OpenOptions::new()
                 .append(true)
                 .create(true)
