@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.6.2]
+
+- Change `vanilla` and `vanilla-ts` templates to attach the click handler through Javascript, instead of assigining to the `window` object.
+  - [f5f8628](https://www.github.com/tauri-apps/create-tauri-app/commit/f5f862869c3eb8805dc052dc8594714f3a923831) refactor: remove vanilla templates assignment to window object ([#212](https://www.github.com/tauri-apps/create-tauri-app/pull/212)) on 2022-10-11
+
 ## \[2.6.1]
 
 - Only prompt for supported package managers when using `--template` cli option.
