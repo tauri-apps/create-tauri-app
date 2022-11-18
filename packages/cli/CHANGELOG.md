@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.6.3]
+
+- Update `tauri` to latest version `1.2`.
+  - [2da95ed](https://www.github.com/tauri-apps/create-tauri-app/commit/2da95ed48fc2c44d6b73d67206ceaa1963217648) chore(deps): update tauri to latest version, closes [#229](https://www.github.com/tauri-apps/create-tauri-app/pull/229) on 2022-11-18
+
 ## \[2.6.2]
 
 - Change `vanilla` and `vanilla-ts` templates to attach the click handler through Javascript, instead of assigining to the `window` object.
