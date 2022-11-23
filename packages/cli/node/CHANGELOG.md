@@ -1,5 +1,11 @@
 # Changelog
 
+## \[2.6.4]
+
+- Fix a few panics introduced by some changes in latest `rust-embed` crate versions.
+  - Bumped due to a bump in create-tauri-app.
+  - [8034aac](https://www.github.com/tauri-apps/create-tauri-app/commit/8034aacd075dcf54c6d462dd465af66e14012fec) fix: fix few panics with latest `rust-embed`, closes [#236](https://www.github.com/tauri-apps/create-tauri-app/pull/236) ([#237](https://www.github.com/tauri-apps/create-tauri-app/pull/237)) on 2022-11-23
+
 ## \[2.6.3]
 
 - Update `tauri` to latest version `1.2`.
