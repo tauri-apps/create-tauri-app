@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.6.5]
+
+- Revert back to `rust-embed` 6.4.
+  - [ea586ca](https://www.github.com/tauri-apps/create-tauri-app/commit/ea586caf8cf2149f7fc722e7e6dcb416a7e5c295) fix: revert `rust-embed` to 6.4 on 2022-11-23
+
 ## \[2.6.4]
 
 - Fix a few panics introduced by some changes in latest `rust-embed` crate versions.
