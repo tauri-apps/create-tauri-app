@@ -120,6 +120,11 @@ impl<'a> Template {
         let manifest = Manifest::parse(&manifest_str)?;
 
         let write_file = |file: &str| -> anyhow::Result<()> {
+            let fragment_file = Fragments::get(file).unwrap();
+            if fragment_file.metadata.is_dir() {
+                return Ok(());
+            }
+
             let manifest = manifest.clone();
 
             // remove the first component, which is certainly the fragment directory they were in before getting embeded into the binary
@@ -154,7 +159,7 @@ impl<'a> Template {
                 _ => &file_name,
             };
 
-            let mut data = Fragments::get(file).unwrap().data.to_vec();
+            let mut data = fragment_file.data.to_vec();
 
             // Only modify specific set of files
             if [
@@ -206,8 +211,8 @@ impl<'a> Template {
             path::PathBuf::from(e.to_string())
                 .components()
                 .next()
-                .unwrap()
-                .as_os_str()
+                .map(|c| c.as_os_str())
+                .unwrap_or_default()
                 == "base"
         }) {
             write_file(&file)?;
@@ -218,8 +223,8 @@ impl<'a> Template {
             path::PathBuf::from(e.to_string())
                 .components()
                 .next()
-                .unwrap()
-                .as_os_str()
+                .map(|c| c.as_os_str())
+                .unwrap_or_default()
                 == path::PathBuf::from(format!("fragment-{}", self))
         }) {
             write_file(&file)?;
