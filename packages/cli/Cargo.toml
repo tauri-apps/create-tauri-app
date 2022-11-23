@@ -20,4 +20,4 @@ path = "src/main.rs"
 anyhow = "1.0"
 dialoguer = "0.10.2"
 pico-args = "0.5.0"
-rust-embed = { version = "6.4.2", features = [ "compression", "interpolate-folder-path" ] }
+rust-embed = { version = "6.5.0", features = [ "compression", "interpolate-folder-path" ] }
