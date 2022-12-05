@@ -1,5 +1,15 @@
 # Changelog
 
+## \[2.7.0]
+
+- Disable allowlist by default for all templates.
+  - [78e7cab](https://www.github.com/tauri-apps/create-tauri-app/commit/78e7cab4c3e16881ad354672a9c553800edd1b22) feat: disable allowlist by default ([#246](https://www.github.com/tauri-apps/create-tauri-app/pull/246)) on 2022-12-05
+  - [4a26bd8](https://www.github.com/tauri-apps/create-tauri-app/commit/4a26bd8e9bc36ef8318bf6c49ee860ac49a9dd70) chore: update bump to minor on 2022-12-05
+- Disable SSR by default in `svelte-kit` and `svelte-kit-ts` templates.
+  - [79da92d](https://www.github.com/tauri-apps/create-tauri-app/commit/79da92d38acd25106d6054c0442c11e40499d217) Fix: disable SSR by default in SvelteKit templates (fix for "feat: Sveltekit templates [#200](https://www.github.com/tauri-apps/create-tauri-app/pull/200)") ([#241](https://www.github.com/tauri-apps/create-tauri-app/pull/241)) on 2022-11-24
+- Update `yew` template to use `yew@0.20`
+  - [386e870](https://www.github.com/tauri-apps/create-tauri-app/commit/386e8701873ffbdd6f097eb31ab335d3f8d45d64) chore: add changefile on 2022-12-05
+
 ## \[2.6.5]
 
 - Revert back to `rust-embed` 6.4.
