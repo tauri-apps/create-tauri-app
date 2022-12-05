@@ -11,7 +11,7 @@ serde = { version = "1.0.140", features = ["derive"] }
 wasm-bindgen = { version = "0.2.82", features = ["serde-serialize"] }
 wasm-bindgen-futures = "0.4.32"
 web-sys = "0.3.59"
-yew = "0.19"
+yew = { version="0.20.0", features = ["csr"] }
 
 [workspace]
 members = ["src-tauri"]
