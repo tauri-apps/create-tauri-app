@@ -57,7 +57,7 @@ matrixConfig
       if (
         changedFiles.some(
           (e) =>
-            e.includes(`packages/cli/base`) ||
+            e.includes(`packages/cli/fragments/base`) ||
             e.includes(`packages/cli/fragments/fragment-${t}`) ||
             e.includes("packages/cli/src") ||
             e.includes("packages/cli/Cargo.toml") ||
