@@ -22,9 +22,9 @@ importers:
 
   packages/worker:
     specifiers:
-      wrangler: 2.5.0
+      wrangler: 2.6.0
     devDependencies:
-      wrangler: 2.5.0
+      wrangler: 2.6.0
 
 packages:
 
@@ -1961,6 +1961,7 @@ packages:
 
   /sourcemap-codec/1.4.8:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
+    deprecated: Please use @jridgewell/sourcemap-codec instead
     dev: true
 
   /spdx-correct/3.1.1:
@@ -2238,8 +2239,8 @@ packages:
       typical: 5.2.0
     dev: true
 
-  /wrangler/2.5.0:
-    resolution: {integrity: sha512-7Y7Vh4yi1Vpa/o2o48VgWMv6G/3u8SPR3CJEWgntL4zPZog7iIxl0R2QjthWpsPHI7+PK6cFtnpSaSrcdEk+vw==}
+  /wrangler/2.6.0:
+    resolution: {integrity: sha512-ktAH4lwOfl3cjNzgURiT9Au3ZOB5wMibbCJZ6cWSavhC4ctrsEc6FTi19h3cYHjNhDFCipj9UUuKPG/eeYWlzw==}
     engines: {node: '>=16.13.0'}
     hasBin: true
     dependencies:
