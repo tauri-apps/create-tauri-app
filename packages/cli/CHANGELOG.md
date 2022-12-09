@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.7.1]
+
+- Enable `allowlist > shell > open` in the generated project's `tauri.conf.json` so clicking to open external links would work.
+  - [bab7f59](https://www.github.com/tauri-apps/create-tauri-app/commit/bab7f5952ce70f7294e4c2551e3ae8ca755851a1) fix(fragments/base): enable `allowlist>shell>open` ([#254](https://www.github.com/tauri-apps/create-tauri-app/pull/254)) on 2022-12-09
+
 ## \[2.7.0]
 
 - Disable allowlist by default for all templates.
