@@ -3,5 +3,5 @@
 "create-tauri-app-js": "patch"
 ---
 
-Update all templates to `vite@4.0.0`.
+Update `vanilla-ts`, `vue`, `vue-ts`, `solid`, `solid-ts`, `svelte`, `svelte-ts`, `react`, `react-ts` templates to use `vite@4.0.0`.
 

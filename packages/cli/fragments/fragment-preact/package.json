@@ -17,6 +17,6 @@
     "@babel/core": "^7.12.10",
     "@preact/preset-vite": "^2.4.0",
     "@tauri-apps/cli": "^1.2.2",
-    "vite": "^4.0.0"
+    "vite": "^3.0.7"
   }
 }
