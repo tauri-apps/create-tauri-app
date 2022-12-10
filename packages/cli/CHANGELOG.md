@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.7.2]
+
+- Update `vanilla-ts`, `vue`, `vue-ts`, `solid`, `solid-ts`, `svelte`, `svelte-ts`, `react`, `react-ts` templates to use `vite@4.0.0`.
+  - [c9e5fd5](https://www.github.com/tauri-apps/create-tauri-app/commit/c9e5fd5488b2f5cb53b4ff4856e2162d762968b9) chore(deps): update to `vite@4` ([#257](https://www.github.com/tauri-apps/create-tauri-app/pull/257)) on 2022-12-11
+
 ## \[2.7.1]
 
 - Enable `allowlist > shell > open` in the generated project's `tauri.conf.json` so clicking to open external links would work.
