@@ -230,7 +230,7 @@ fn is_valid_pkg_name(project_name: &str) -> bool {
 
 fn to_valid_pkg_name(project_name: &str) -> String {
     #[allow(clippy::collapsible_str_replace)]
-    let mut ret = project_name
+    let ret = project_name
         .trim()
         .to_lowercase()
         .replace(':', "-")
@@ -241,11 +241,10 @@ fn to_valid_pkg_name(project_name: &str) -> String {
         .replace('\\', "")
         .replace('/', "");
 
-    if let Some(ch) = ret.chars().next() {
-        if ch.is_ascii_digit() || ch == '-' {
-            ret.remove(0);
-        }
-    }
+    let ret = ret
+        .chars()
+        .skip_while(|ch| ch.is_ascii_digit() || *ch == '-')
+        .collect::<String>();
 
     ret
 }
