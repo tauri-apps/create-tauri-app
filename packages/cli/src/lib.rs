@@ -272,6 +272,8 @@ mod test {
         assert_eq!(to_valid_pkg_name("tauri_app"), "tauri_app");
         assert_eq!(to_valid_pkg_name("t2auriapp"), "t2auriapp");
         assert_eq!(to_valid_pkg_name("1tauriapp"), "tauriapp");
+        assert_eq!(to_valid_pkg_name("123tauriapp"), "tauriapp");
+        assert_eq!(to_valid_pkg_name("123-tauriapp"), "tauriapp");
         assert_eq!(to_valid_pkg_name("tauri app"), "tauri-app");
         assert_eq!(to_valid_pkg_name("tauri:app"), "tauri-app");
         assert_eq!(to_valid_pkg_name("tauri;app"), "tauri-app");
@@ -280,5 +282,6 @@ mod test {
         assert_eq!(to_valid_pkg_name("tauri\\app"), "tauriapp");
         assert_eq!(to_valid_pkg_name("tauri~app"), "tauri-app");
         assert_eq!(to_valid_pkg_name("-tauri.app"), "tauriapp");
+        assert_eq!(to_valid_pkg_name("-123tauri.app"), "tauriapp");
     }
 }
