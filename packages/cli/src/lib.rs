@@ -230,7 +230,7 @@ fn is_valid_pkg_name(project_name: &str) -> bool {
 
 fn to_valid_pkg_name(project_name: &str) -> String {
     #[allow(clippy::collapsible_str_replace)]
-    let mut ret = project_name
+    let ret = project_name
         .trim()
         .to_lowercase()
         .replace(':', "-")
@@ -241,11 +241,10 @@ fn to_valid_pkg_name(project_name: &str) -> String {
         .replace('\\', "")
         .replace('/', "");
 
-    if let Some(ch) = ret.chars().next() {
-        if ch.is_ascii_digit() || ch == '-' {
-            ret.remove(0);
-        }
-    }
+    let ret = ret
+        .chars()
+        .skip_while(|ch| ch.is_ascii_digit() || *ch == '-')
+        .collect::<String>();
 
     ret
 }
@@ -273,6 +272,8 @@ mod test {
         assert_eq!(to_valid_pkg_name("tauri_app"), "tauri_app");
         assert_eq!(to_valid_pkg_name("t2auriapp"), "t2auriapp");
         assert_eq!(to_valid_pkg_name("1tauriapp"), "tauriapp");
+        assert_eq!(to_valid_pkg_name("123tauriapp"), "tauriapp");
+        assert_eq!(to_valid_pkg_name("123-tauriapp"), "tauriapp");
         assert_eq!(to_valid_pkg_name("tauri app"), "tauri-app");
         assert_eq!(to_valid_pkg_name("tauri:app"), "tauri-app");
         assert_eq!(to_valid_pkg_name("tauri;app"), "tauri-app");
@@ -281,5 +282,8 @@ mod test {
         assert_eq!(to_valid_pkg_name("tauri\\app"), "tauriapp");
         assert_eq!(to_valid_pkg_name("tauri~app"), "tauri-app");
         assert_eq!(to_valid_pkg_name("-tauri.app"), "tauriapp");
+        assert_eq!(to_valid_pkg_name("-123tauri.app"), "tauriapp");
+        assert_eq!(to_valid_pkg_name("-2-123tau2ri-app-2"), "tau2ri-app-2");
+        assert_eq!(to_valid_pkg_name("1-2-3tau2ri-app2-"), "tau2ri-app2-");
     }
 }
