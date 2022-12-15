@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.7.3]
+
+- Add `shell-open` cargo feature to match the allowlist in the generated project.
+  - [fb6e439](https://www.github.com/tauri-apps/create-tauri-app/commit/fb6e4392b57334f68f41260fbdceb59761f31f5f) fix: add `shell-open` cargo feature to base ([#264](https://www.github.com/tauri-apps/create-tauri-app/pull/264)) on 2022-12-15
+
 ## \[2.7.2]
 
 - Update `vanilla-ts`, `vue`, `vue-ts`, `solid`, `solid-ts`, `svelte`, `svelte-ts`, `react`, `react-ts` templates to use `vite@4.0.0`.
