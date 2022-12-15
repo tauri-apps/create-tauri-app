@@ -283,5 +283,7 @@ mod test {
         assert_eq!(to_valid_pkg_name("tauri~app"), "tauri-app");
         assert_eq!(to_valid_pkg_name("-tauri.app"), "tauriapp");
         assert_eq!(to_valid_pkg_name("-123tauri.app"), "tauriapp");
+        assert_eq!(to_valid_pkg_name("-2-123tau2ri-app-2"), "tau2ri-app-2");
+        assert_eq!(to_valid_pkg_name("1-2-3tau2ri-app2-"), "tau2ri-app2-");
     }
 }
