@@ -130,7 +130,7 @@ impl<'a> Template {
                 .iter()
                 .collect::<path::PathBuf>();
 
-            let p = target_dir.join(&p);
+            let p = target_dir.join(p);
             let file_name = p.file_name().unwrap().to_string_lossy();
 
             let target_file_name = match &*file_name {
