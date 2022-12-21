@@ -43,6 +43,60 @@ impl Default for Template {
     }
 }
 
+impl Display for Template {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Template::Vanilla => write!(f, "vanilla"),
+            Template::VanillaTs => write!(f, "vanilla-ts"),
+            Template::Angular => write!(f, "angular"),
+            Template::Vue => write!(f, "vue"),
+            Template::VueTs => write!(f, "vue-ts"),
+            Template::Svelte => write!(f, "svelte"),
+            Template::SvelteTs => write!(f, "svelte-ts"),
+            Template::React => write!(f, "react"),
+            Template::ReactTs => write!(f, "react-ts"),
+            Template::Solid => write!(f, "solid"),
+            Template::SolidTs => write!(f, "solid-ts"),
+            Template::Yew => write!(f, "yew"),
+            Template::Next => write!(f, "next"),
+            Template::NextTs => write!(f, "next-ts"),
+            Template::Preact => write!(f, "preact"),
+            Template::PreactTs => write!(f, "preact-ts"),
+            Template::ClojureScript => write!(f, "clojurescript"),
+            Template::SvelteKit => write!(f, "svelte-kit"),
+            Template::SvelteKitTs => write!(f, "svelte-kit-ts"),
+        }
+    }
+}
+
+impl FromStr for Template {
+    type Err = String;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "vanilla" => Ok(Template::Vanilla),
+            "angular" => Ok(Template::Angular),
+            "vue" => Ok(Template::Vue),
+            "vue-ts" => Ok(Template::VueTs),
+            "svelte" => Ok(Template::Svelte),
+            "svelte-ts" => Ok(Template::SvelteTs),
+            "react" => Ok(Template::React),
+            "react-ts" => Ok(Template::ReactTs),
+            "solid" => Ok(Template::Solid),
+            "solid-ts" => Ok(Template::SolidTs),
+            "yew" => Ok(Template::Yew),
+            "next" => Ok(Template::Next),
+            "next-ts" => Ok(Template::NextTs),
+            "preact" => Ok(Template::Preact),
+            "preact-ts" => Ok(Template::PreactTs),
+            "vanilla-ts" => Ok(Template::VanillaTs),
+            "clojurescript" => Ok(Template::ClojureScript),
+            "svelte-kit" => Ok(Template::SvelteKit),
+            "svelte-kit-ts" => Ok(Template::SvelteKitTs),
+            _ => Err("Invalid template".to_string()),
+        }
+    }
+}
+
 impl<'a> Template {
     pub const ALL: &'a [Template] = &[
         Template::Vanilla,
@@ -241,60 +295,6 @@ impl<'a> Template {
         }
 
         Ok(())
-    }
-}
-
-impl Display for Template {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Template::Vanilla => write!(f, "vanilla"),
-            Template::VanillaTs => write!(f, "vanilla-ts"),
-            Template::Angular => write!(f, "angular"),
-            Template::Vue => write!(f, "vue"),
-            Template::VueTs => write!(f, "vue-ts"),
-            Template::Svelte => write!(f, "svelte"),
-            Template::SvelteTs => write!(f, "svelte-ts"),
-            Template::React => write!(f, "react"),
-            Template::ReactTs => write!(f, "react-ts"),
-            Template::Solid => write!(f, "solid"),
-            Template::SolidTs => write!(f, "solid-ts"),
-            Template::Yew => write!(f, "yew"),
-            Template::Next => write!(f, "next"),
-            Template::NextTs => write!(f, "next-ts"),
-            Template::Preact => write!(f, "preact"),
-            Template::PreactTs => write!(f, "preact-ts"),
-            Template::ClojureScript => write!(f, "clojurescript"),
-            Template::SvelteKit => write!(f, "svelte-kit"),
-            Template::SvelteKitTs => write!(f, "svelte-kit-ts"),
-        }
-    }
-}
-
-impl FromStr for Template {
-    type Err = String;
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "vanilla" => Ok(Template::Vanilla),
-            "angular" => Ok(Template::Angular),
-            "vue" => Ok(Template::Vue),
-            "vue-ts" => Ok(Template::VueTs),
-            "svelte" => Ok(Template::Svelte),
-            "svelte-ts" => Ok(Template::SvelteTs),
-            "react" => Ok(Template::React),
-            "react-ts" => Ok(Template::ReactTs),
-            "solid" => Ok(Template::Solid),
-            "solid-ts" => Ok(Template::SolidTs),
-            "yew" => Ok(Template::Yew),
-            "next" => Ok(Template::Next),
-            "next-ts" => Ok(Template::NextTs),
-            "preact" => Ok(Template::Preact),
-            "preact-ts" => Ok(Template::PreactTs),
-            "vanilla-ts" => Ok(Template::VanillaTs),
-            "clojurescript" => Ok(Template::ClojureScript),
-            "svelte-kit" => Ok(Template::Svelte),
-            "svelte-kit-ts" => Ok(Template::SvelteTs),
-            _ => Err("Invalid template".to_string()),
-        }
     }
 }
 
