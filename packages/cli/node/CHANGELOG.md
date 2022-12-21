@@ -1,5 +1,11 @@
 # Changelog
 
+## \[2.7.4]
+
+- Fix paring `svelte-kit` and `svelte-kit-ts` from command line.
+  - Bumped due to a bump in create-tauri-app.
+  - [11c26e1](https://www.github.com/tauri-apps/create-tauri-app/commit/11c26e1fc331aa3cf5fa9ba94617bd5be5686ec5) fix(cli): parse svelte-kit templates correctly, closes [#270](https://www.github.com/tauri-apps/create-tauri-app/pull/270) ([#271](https://www.github.com/tauri-apps/create-tauri-app/pull/271)) on 2022-12-21
+
 ## \[2.7.3]
 
 - Add `shell-open` cargo feature to match the allowlist in the generated project.
