@@ -52,6 +52,8 @@ impl PackageManager {
                 Template::ClojureScript,
                 Template::SvelteKit,
                 Template::SvelteKitTs,
+                Template::SolidStart,
+                Template::SolidStartTs,
             ],
         }
     }

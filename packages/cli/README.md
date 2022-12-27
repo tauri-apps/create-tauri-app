@@ -45,6 +45,10 @@ Currently supported template presets include:
 - `preact-ts`
 - `angular`
 - `clojurescript`
+- `svelte-kit`
+- `svelte-kit-ts`
+- `solid-start`
+- `solid-start-ts`
 
 You can use `.` for the project name to scaffold in the current directory.
 

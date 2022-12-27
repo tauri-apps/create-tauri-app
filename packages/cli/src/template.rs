@@ -35,6 +35,8 @@ pub enum Template {
     ClojureScript,
     SvelteKit,
     SvelteKitTs,
+    SolidStart,
+    SolidStartTs,
 }
 
 impl Default for Template {
@@ -65,6 +67,8 @@ impl Display for Template {
             Template::ClojureScript => write!(f, "clojurescript"),
             Template::SvelteKit => write!(f, "svelte-kit"),
             Template::SvelteKitTs => write!(f, "svelte-kit-ts"),
+            Template::SolidStart => write!(f, "solid-start"),
+            Template::SolidStartTs => write!(f, "solid-start-ts"),
         }
     }
 }
@@ -92,6 +96,8 @@ impl FromStr for Template {
             "clojurescript" => Ok(Template::ClojureScript),
             "svelte-kit" => Ok(Template::SvelteKit),
             "svelte-kit-ts" => Ok(Template::SvelteKitTs),
+            "solid-start" => Ok(Template::SolidStart),
+            "solid-start-ts" => Ok(Template::SolidStartTs),
             _ => Err("Invalid template".to_string()),
         }
     }
@@ -118,6 +124,8 @@ impl<'a> Template {
         Template::ClojureScript,
         Template::SvelteKit,
         Template::SvelteKitTs,
+        Template::SolidStart,
+        Template::SolidStartTs,
     ];
 
     pub fn post_init_info(&self, pkg_manager: PackageManager) -> Option<String> {
