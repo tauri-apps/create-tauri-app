@@ -1,5 +1,11 @@
 # Changelog
 
+## \[2.7.5]
+
+- Add `svelte-process` preprocessor to `svelte-ts` and `svelte-kit-ts` templates by default so typescript can work correctly inside `.svelte` files.
+  - Bumped due to a bump in create-tauri-app.
+  - [b9034ec](https://www.github.com/tauri-apps/create-tauri-app/commit/b9034eca8f8ed6041fe92f476fee3e5c77553e79) fix: add typescript support in .svelte files ([#277](https://www.github.com/tauri-apps/create-tauri-app/pull/277)) on 2022-12-30
+
 ## \[2.7.4]
 
 - Fix paring `svelte-kit` and `svelte-kit-ts` from command line.
