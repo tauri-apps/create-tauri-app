@@ -18,7 +18,7 @@
     "@sveltejs/kit": "next",
     "@sveltejs/adapter-static": "next",
     "svelte": "^3.54.0",
-    "svelte-check": "^2.9.2",
+    "svelte-check": "^3.0.0",
     "@tauri-apps/cli": "^1.2.2",
     "tslib": "^2.4.1",
     "typescript": "^4.8.4",
