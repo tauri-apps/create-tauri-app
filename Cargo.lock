@@ -87,7 +87,7 @@ dependencies = [
 
 [[package]]
 name = "create-tauri-app"
-version = "2.7.5"
+version = "2.7.6"
 dependencies = [
  "anyhow",
  "dialoguer",
