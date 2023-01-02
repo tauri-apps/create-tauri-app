@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.7.6]
+
+- Update `vite.conf.json` target option to match the latest tauri docs.
+  - [3ea6acf](https://www.github.com/tauri-apps/create-tauri-app/commit/3ea6acf54b1f9517043121b0ce0bacf8910f175c) feat(templates): update vite conf to match latest tauri docs on 2023-01-02
+
 ## \[2.7.5]
 
 - Add `svelte-process` preprocessor to `svelte-ts` and `svelte-kit-ts` templates by default so typescript can work correctly inside `.svelte` files.
