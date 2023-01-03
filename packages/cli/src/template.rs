@@ -87,6 +87,34 @@ impl<'a> Template {
         Template::Yew,
     ];
 
+    pub fn flavors<'b>(&self, pkg_manager: PackageManager) -> Option<&'b [&'b str]> {
+        match self {
+            Template::Vanilla => {
+                if pkg_manager == PackageManager::Cargo {
+                    None
+                } else {
+                    Some(&["JavaScript, TypeScript"])
+                }
+            }
+            Template::Vue => Some(&["JavaScript", "TypeScript"]),
+            Template::Svelte => Some(&["JavaScript", "TypeScript"]),
+            Template::React => Some(&["JavaScript", "TypeScript"]),
+            Template::Solid => Some(&["JavaScript", "TypeScript"]),
+            _ => None,
+        }
+    }
+
+    pub fn from_flavor(&self, flavor: &str) -> Self {
+        match (self, flavor) {
+            (Template::Vanilla, "TypeScript") => Template::VanillaTs,
+            (Template::Vue, "TypeScript") => Template::VueTs,
+            (Template::Svelte, "TypeScript") => Template::SvelteTs,
+            (Template::React, "TypeScript") => Template::ReactTs,
+            (Template::Solid, "TypeScript") => Template::SolidTs,
+            _ => *self,
+        }
+    }
+
     pub fn post_init_info(&self, pkg_manager: PackageManager) -> Option<String> {
         match self {
             Template::Yew => Some(
@@ -217,7 +245,7 @@ impl<'a> Template {
                 .next()
                 .unwrap()
                 .as_os_str()
-                == "base"
+                == "_base_"
         }) {
             write_file(&file)?;
         }
@@ -266,8 +294,11 @@ struct Manifest<'a> {
 impl<'a> Manifest<'a> {
     fn parse(s: &'a str) -> Result<Self, anyhow::Error> {
         let mut manifest = Manifest::default();
-        let mut is_files_section = false;
+        let mut in_files_section = false;
         for (i, line) in s.split('\n').enumerate() {
+            let line_number = i + 1;
+
+            // ignore the comment portion of the line
             let line = line.split('#').next().unwrap().trim();
 
             if line.is_empty() {
@@ -275,7 +306,7 @@ impl<'a> Manifest<'a> {
             }
 
             if line == "[files]" {
-                is_files_section = true;
+                in_files_section = true;
                 continue;
             }
 
@@ -284,22 +315,25 @@ impl<'a> Manifest<'a> {
                 let (k, v) = (
                     s.next()
                         .with_context(|| {
-                            format!("parsing manifest: key is not found in line {}", i + 1)
+                            format!("parsing manifest: key is not found in line {}", line_number)
                         })?
                         .trim(),
                     s.next()
                         .with_context(|| {
-                            format!("parsing manifest: value is not found in line {}", i + 1)
+                            format!(
+                                "parsing manifest: value is not found in line {}",
+                                line_number
+                            )
                         })?
                         .trim(),
                 );
 
                 if k.is_empty() {
-                    bail!("parsing manifest: key is empty in line {}", i + 1);
+                    bail!("parsing manifest: key is empty in line {}", line_number);
                 }
 
                 if v.is_empty() {
-                    bail!("parsing manifest: value is empty in line {}", i + 1);
+                    bail!("parsing manifest: value is empty in line {}", line_number);
                 }
 
                 match k {
@@ -308,7 +342,7 @@ impl<'a> Manifest<'a> {
                     "devPath" => manifest.dev_path = Some(v),
                     "distDir" => manifest.dist_dir = Some(v),
                     "withGlobalTauri" => manifest.with_global_tauri = v.parse()?,
-                    _ if is_files_section => {
+                    _ if in_files_section => {
                         manifest.files.insert(k, v);
                     }
                     _ => {}

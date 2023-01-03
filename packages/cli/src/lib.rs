@@ -56,8 +56,7 @@ where
     let cwd = std::env::current_dir()?;
 
     // when invoked from pnpm, it seems like pnpm forgets to end its output with a new line
-    // and it obscures the first question
-    // this ensures we are on a new line before presenting our prompts
+    // and it obscures the first question, this ensures we are on a new line before presenting our prompts
     println!();
 
     let project_name = args.project_name.unwrap_or_else(|| {
@@ -167,7 +166,20 @@ where
                 .default(0)
                 .interact()
                 .unwrap();
-            templates[index]
+            let template = templates[index];
+
+            let flavors = template.flavors(pkg_manager);
+            if let Some(flavors) = flavors {
+                let index = Select::with_theme(&ColorfulTheme::default())
+                    .with_prompt("Choose your UI flavor")
+                    .items(flavors)
+                    .default(0)
+                    .interact()
+                    .unwrap();
+                template.from_flavor(flavors[index])
+            } else {
+                template
+            }
         }
     });
 
