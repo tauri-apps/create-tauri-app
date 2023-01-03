@@ -44,14 +44,6 @@ impl PackageManager {
                 Template::ReactTs,
                 Template::Solid,
                 Template::SolidTs,
-                Template::Next,
-                Template::NextTs,
-                Template::Preact,
-                Template::PreactTs,
-                Template::Angular,
-                Template::ClojureScript,
-                Template::SvelteKit,
-                Template::SvelteKitTs,
             ],
         }
     }

@@ -27,14 +27,6 @@ pub enum Template {
     Solid,
     SolidTs,
     Yew,
-    Next,
-    NextTs,
-    Preact,
-    PreactTs,
-    Angular,
-    ClojureScript,
-    SvelteKit,
-    SvelteKitTs,
 }
 
 impl Default for Template {
@@ -48,7 +40,6 @@ impl Display for Template {
         match self {
             Template::Vanilla => write!(f, "vanilla"),
             Template::VanillaTs => write!(f, "vanilla-ts"),
-            Template::Angular => write!(f, "angular"),
             Template::Vue => write!(f, "vue"),
             Template::VueTs => write!(f, "vue-ts"),
             Template::Svelte => write!(f, "svelte"),
@@ -58,13 +49,6 @@ impl Display for Template {
             Template::Solid => write!(f, "solid"),
             Template::SolidTs => write!(f, "solid-ts"),
             Template::Yew => write!(f, "yew"),
-            Template::Next => write!(f, "next"),
-            Template::NextTs => write!(f, "next-ts"),
-            Template::Preact => write!(f, "preact"),
-            Template::PreactTs => write!(f, "preact-ts"),
-            Template::ClojureScript => write!(f, "clojurescript"),
-            Template::SvelteKit => write!(f, "svelte-kit"),
-            Template::SvelteKitTs => write!(f, "svelte-kit-ts"),
         }
     }
 }
@@ -74,7 +58,6 @@ impl FromStr for Template {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "vanilla" => Ok(Template::Vanilla),
-            "angular" => Ok(Template::Angular),
             "vue" => Ok(Template::Vue),
             "vue-ts" => Ok(Template::VueTs),
             "svelte" => Ok(Template::Svelte),
@@ -84,14 +67,6 @@ impl FromStr for Template {
             "solid" => Ok(Template::Solid),
             "solid-ts" => Ok(Template::SolidTs),
             "yew" => Ok(Template::Yew),
-            "next" => Ok(Template::Next),
-            "next-ts" => Ok(Template::NextTs),
-            "preact" => Ok(Template::Preact),
-            "preact-ts" => Ok(Template::PreactTs),
-            "vanilla-ts" => Ok(Template::VanillaTs),
-            "clojurescript" => Ok(Template::ClojureScript),
-            "svelte-kit" => Ok(Template::SvelteKit),
-            "svelte-kit-ts" => Ok(Template::SvelteKitTs),
             _ => Err("Invalid template".to_string()),
         }
     }
@@ -110,14 +85,6 @@ impl<'a> Template {
         Template::Solid,
         Template::SolidTs,
         Template::Yew,
-        Template::Next,
-        Template::NextTs,
-        Template::Preact,
-        Template::PreactTs,
-        Template::Angular,
-        Template::ClojureScript,
-        Template::SvelteKit,
-        Template::SvelteKitTs,
     ];
 
     pub fn post_init_info(&self, pkg_manager: PackageManager) -> Option<String> {
@@ -145,18 +112,6 @@ impl<'a> Template {
                         BLUE = BLUE,
                     ),
                 ),
-          Template::ClojureScript => Some(
-            format!(
-              "{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}java{WHITE} {DIM}(e.g. {DIMRESET}{BLUE}https://adoptium.net{WHITE}{DIM}) and{DIMRESET} {YELLOW}clojure{WHITE} {DIM}({DIMRESET}{BLUE}https://clojure.org/guides/install_clojure{WHITE}{DIM}){DIMRESET}{RESET}",
-              ITALIC = ITALIC,
-              DIM = DIM,
-              DIMRESET = DIMRESET,
-              YELLOW = YELLOW,
-              WHITE = WHITE,
-              BLUE = BLUE,
-              RESET = RESET
-            ),
-          ),
             _ => None,
         }
     }
