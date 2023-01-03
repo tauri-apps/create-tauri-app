@@ -42,6 +42,25 @@ impl PackageManager {
             ],
         }
     }
+
+    pub const fn templates_all(&self) -> &[Template] {
+        match self {
+            PackageManager::Cargo => &[Template::Vanilla, Template::Yew],
+            PackageManager::Pnpm | PackageManager::Yarn | PackageManager::Npm => &[
+                Template::Vanilla,
+                Template::VanillaTs,
+                Template::Vue,
+                Template::VueTs,
+                Template::Svelte,
+                Template::SvelteTs,
+                Template::React,
+                Template::ReactTs,
+                Template::Solid,
+                Template::SolidTs,
+            ],
+        }
+    }
+
     pub const fn install_cmd(&self) -> Option<&str> {
         match self {
             PackageManager::Pnpm => Some("pnpm install"),

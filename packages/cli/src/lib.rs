@@ -183,7 +183,7 @@ where
         }
     });
 
-    if !templates.contains(&template) {
+    if !pkg_manager.templates_all().contains(&template) {
         eprintln!(
             "{BOLD}{RED}error{RESET}: the {GREEN}{}{RESET} template is not suppported for the {GREEN}{pkg_manager}{RESET} package manager\n       possible templates for {GREEN}{pkg_manager}{RESET} are: [{}]",
             template,
