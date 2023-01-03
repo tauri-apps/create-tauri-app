@@ -1,0 +1,75 @@
+<svg
+   viewBox="0 0 44 360"
+   width="110"
+   height="90"
+   xmlns="http://www.w3.org/2000/svg">
+  <g
+     id="g441"
+     transform="translate(-4.8187526,2.6929197)">
+    <g
+       transform="translate(-1412.999,-72.603918)"
+       id="g8">
+      <rect
+         x="807.38098"
+         y="175"
+         width="6"
+         height="150"
+         style="fill:#fc2020"
+         transform="rotate(26.218338,1101.0241,1338.7158)"
+         id="rect2" />
+      <circle
+         style="fill:none;stroke:#fc2020;stroke-width:6px"
+         cx="1353.5"
+         cy="362.58899"
+         r="37.5"
+         transform="rotate(26.218338,1371.8337,175.82476)"
+         id="circle4" />
+      <rect
+         x="1300"
+         y="100"
+         width="343.75699"
+         height="74.973999"
+         style="fill:#ffffff;stroke:#fc2020;stroke-width:7px"
+         id="rect6" />
+    </g>
+    <rect
+       x="16"
+       y="102.39608"
+       width="6"
+       height="150"
+       style="fill:#fc2020"
+       id="rect10" />
+    <circle
+       style="fill:none;stroke:#fc2020;stroke-width:6px"
+       cx="19.062012"
+       cy="290.21808"
+       r="37.5"
+       id="circle12" />
+    <rect
+       x="96.980957"
+       y="102.07407"
+       width="6"
+       height="150"
+       style="fill:#fc2020"
+       id="rect14" />
+    <rect
+       x="176.98096"
+       y="102.07407"
+       width="6"
+       height="150"
+       style="fill:#fc2020"
+       id="rect16" />
+    <circle
+       style="fill:none;stroke:#fc2020;stroke-width:6px"
+       cx="99.481934"
+       cy="289.66309"
+       r="37.5"
+       id="circle18" />
+    <circle
+       style="fill:none;stroke:#fc2020;stroke-width:6px"
+       cx="180.04297"
+       cy="289.89612"
+       r="37.5"
+       id="circle20" />
+  </g>
+</svg>

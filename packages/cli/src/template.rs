@@ -28,6 +28,7 @@ pub enum Template {
     Solid,
     SolidTs,
     Yew,
+    Leptos,
 }
 
 impl Default for Template {
@@ -50,6 +51,7 @@ impl Display for Template {
             Template::Solid => write!(f, "solid"),
             Template::SolidTs => write!(f, "solid-ts"),
             Template::Yew => write!(f, "yew"),
+            Template::Leptos => write!(f, "leptos"),
         }
     }
 }
@@ -68,6 +70,7 @@ impl FromStr for Template {
             "solid" => Ok(Template::Solid),
             "solid-ts" => Ok(Template::SolidTs),
             "yew" => Ok(Template::Yew),
+            "leptos" => Ok(Template::Leptos),
             _ => Err("Invalid template".to_string()),
         }
     }
@@ -86,6 +89,7 @@ impl<'a> Template {
         Template::Solid,
         Template::SolidTs,
         Template::Yew,
+        Template::Leptos,
     ];
 
     pub fn flavors<'b>(&self, pkg_manager: PackageManager) -> Option<&'b [Flavor]> {
@@ -118,7 +122,7 @@ impl<'a> Template {
 
     pub fn post_init_info(&self, pkg_manager: PackageManager) -> Option<String> {
         match self {
-            Template::Yew => Some(
+            Template::Yew | Template::Leptos => Some(
                 format!(
                     "{ITALIC}{DIM}You also need to install {DIMRESET}{YELLOW}tauri-cli{WHITE}{DIM} ({DIMRESET}{BLUE}cargo install tauri-cli{WHITE}{DIM}), {DIMRESET}{YELLOW}trunk{WHITE}{DIM} ({DIMRESET}{BLUE}https://trunkrs.dev/#install{WHITE}{DIM}) and {DIMRESET}{YELLOW}wasm32{WHITE}{DIM} rust target ({DIMRESET}{BLUE}rustup target add wasm32-unknown-unknown{WHITE}{DIM}){DIMRESET}{RESET}",
                     ITALIC = ITALIC,
