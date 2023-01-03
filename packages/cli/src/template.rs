@@ -61,6 +61,7 @@ impl FromStr for Template {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "vanilla" => Ok(Template::Vanilla),
+            "vanilla-ts" => Ok(Template::VanillaTs),
             "vue" => Ok(Template::Vue),
             "vue-ts" => Ok(Template::VueTs),
             "svelte" => Ok(Template::Svelte),
