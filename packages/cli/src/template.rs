@@ -11,7 +11,8 @@ use crate::{colors::*, package_manager::PackageManager};
 
 #[derive(RustEmbed)]
 #[folder = "$CARGO_MANIFEST_DIR/fragments"]
-struct Fragments;
+#[allow(clippy::upper_case_acronyms)]
+struct FRAGMENTS;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
@@ -87,30 +88,30 @@ impl<'a> Template {
         Template::Yew,
     ];
 
-    pub fn flavors<'b>(&self, pkg_manager: PackageManager) -> Option<&'b [&'b str]> {
+    pub fn flavors<'b>(&self, pkg_manager: PackageManager) -> Option<&'b [Flavor]> {
         match self {
             Template::Vanilla => {
                 if pkg_manager == PackageManager::Cargo {
                     None
                 } else {
-                    Some(&["JavaScript, TypeScript"])
+                    Some(&[Flavor::JavaScript, Flavor::TypeScript])
                 }
             }
-            Template::Vue => Some(&["JavaScript", "TypeScript"]),
-            Template::Svelte => Some(&["JavaScript", "TypeScript"]),
-            Template::React => Some(&["JavaScript", "TypeScript"]),
-            Template::Solid => Some(&["JavaScript", "TypeScript"]),
+            Template::Vue => Some(&[Flavor::JavaScript, Flavor::TypeScript]),
+            Template::Svelte => Some(&[Flavor::JavaScript, Flavor::TypeScript]),
+            Template::React => Some(&[Flavor::JavaScript, Flavor::TypeScript]),
+            Template::Solid => Some(&[Flavor::JavaScript, Flavor::TypeScript]),
             _ => None,
         }
     }
 
-    pub fn from_flavor(&self, flavor: &str) -> Self {
+    pub fn from_flavor(&self, flavor: Flavor) -> Self {
         match (self, flavor) {
-            (Template::Vanilla, "TypeScript") => Template::VanillaTs,
-            (Template::Vue, "TypeScript") => Template::VueTs,
-            (Template::Svelte, "TypeScript") => Template::SvelteTs,
-            (Template::React, "TypeScript") => Template::ReactTs,
-            (Template::Solid, "TypeScript") => Template::SolidTs,
+            (Template::Vanilla, Flavor::TypeScript) => Template::VanillaTs,
+            (Template::Vue, Flavor::TypeScript) => Template::VueTs,
+            (Template::Svelte, Flavor::TypeScript) => Template::SvelteTs,
+            (Template::React, Flavor::TypeScript) => Template::ReactTs,
+            (Template::Solid, Flavor::TypeScript) => Template::SolidTs,
             _ => *self,
         }
     }
@@ -150,7 +151,7 @@ impl<'a> Template {
         pkg_manager: PackageManager,
         package_name: &str,
     ) -> anyhow::Result<()> {
-        let manifest_bytes = Fragments::get(&format!("fragment-{}/_cta_manifest_", self))
+        let manifest_bytes = FRAGMENTS::get(&format!("fragment-{}/_cta_manifest_", self))
             .with_context(|| "Failed to get manifest bytes")?
             .data;
         let manifest_str = String::from_utf8(manifest_bytes.to_vec())?;
@@ -191,7 +192,7 @@ impl<'a> Template {
                 _ => &file_name,
             };
 
-            let mut data = Fragments::get(file).unwrap().data.to_vec();
+            let mut data = FRAGMENTS::get(file).unwrap().data.to_vec();
 
             // Only modify specific set of files
             if [
@@ -239,7 +240,7 @@ impl<'a> Template {
         };
 
         // write base files first
-        for file in Fragments::iter().filter(|e| {
+        for file in FRAGMENTS::iter().filter(|e| {
             path::PathBuf::from(e.to_string())
                 .components()
                 .next()
@@ -251,7 +252,7 @@ impl<'a> Template {
         }
 
         // then write template files which can override files from base
-        for file in Fragments::iter().filter(|e| {
+        for file in FRAGMENTS::iter().filter(|e| {
             path::PathBuf::from(e.to_string())
                 .components()
                 .next()
@@ -264,7 +265,7 @@ impl<'a> Template {
 
         // then write extra files specified in the fragment manifest
         for (src, dest) in manifest.files {
-            let data = Fragments::get(&format!("_assets_/{}", src))
+            let data = FRAGMENTS::get(&format!("_assets_/{}", src))
                 .with_context(|| format!("Failed to get asset file bytes: {}", src))?
                 .data;
             let dest = target_dir.join(dest);
@@ -278,6 +279,22 @@ impl<'a> Template {
         }
 
         Ok(())
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum Flavor {
+    JavaScript,
+    TypeScript,
+}
+
+impl Display for Flavor {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Flavor::JavaScript => write!(f, "JavaScript"),
+            Flavor::TypeScript => write!(f, "TypeScript"),
+        }
     }
 }
 

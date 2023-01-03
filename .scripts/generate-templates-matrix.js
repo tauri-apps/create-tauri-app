@@ -1,7 +1,6 @@
 const changedFiles = process.argv.slice(2);
 
 const nodeJsTemplates = [
-  "angular",
   "svelte",
   "svelte-ts",
   "vue",
@@ -12,13 +11,6 @@ const nodeJsTemplates = [
   "react-ts",
   "vanilla",
   "vanilla-ts",
-  "next",
-  "next-ts",
-  "preact",
-  "preact-ts",
-  "clojurescript",
-  "svelte-kit",
-  "svelte-kit-ts",
 ];
 
 const matrixConfig = [
