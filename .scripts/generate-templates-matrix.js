@@ -58,6 +58,7 @@ matrixConfig
       ) {
         outMatrix.push({
           template: t,
+          install_trunk: ["yew", "leptos"].includes(t),
           ...managerInfo,
         });
       }
