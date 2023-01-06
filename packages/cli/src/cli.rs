@@ -13,7 +13,9 @@ pub struct Args {
     pub project_name: Option<String>,
     pub manager: Option<PackageManager>,
     pub template: Option<Template>,
-    pub skip_prompts: bool,
+    pub skip: bool,
+    pub mobile: bool,
+    pub alpha: bool,
 }
 
 impl Default for Args {
@@ -22,7 +24,9 @@ impl Default for Args {
             project_name: Some("tauri-app".to_string()),
             manager: Some(PackageManager::Npm),
             template: Some(Template::Vanilla),
-            skip_prompts: false,
+            skip: false,
+            alpha: false,
+            mobile: false,
         }
     }
 }
@@ -47,6 +51,8 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
   {GREEN}-m{RESET}, {GREEN}--manager <MANAGER>{RESET}       Specify preferred package manager [{managers}]
   {GREEN}-t{RESET}, {GREEN}--template <TEMPLATE>{RESET}     Specify the UI template to use [{fragments}]
   {GREEN}-y{RESET}, {GREEN}--yes{RESET}                     Skip prompts and use defaults where applicable
+                    {GREEN}--alpha{RESET}                   Bootstraps a project using tauri@2.0-alpha
+                    {GREEN}--mobile{RESET}                  Bootstraps a mobile project too. Only availabe with `--alpha` option.
   {GREEN}-h{RESET}, {GREEN}--help{RESET}                    Prints help information
   {GREEN}-v{RESET}, {GREEN}--version{RESET}                 Prints version information
 "#,
@@ -64,9 +70,6 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
                 .map(|e| format!("{}{}{}", GREEN, e, RESET))
                 .collect::<Vec<_>>()
                 .join(", "),
-            GREEN = GREEN,
-            RESET = RESET,
-            YELLOW = YELLOW,
         );
 
         println!("{}", help);
@@ -80,7 +83,9 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
     let args = Args {
         manager: pargs.opt_value_from_str(["-m", "--manager"])?,
         template: pargs.opt_value_from_str(["-t", "--template"])?,
-        skip_prompts: pargs.contains(["-y", "--yes"]),
+        skip: pargs.contains(["-y", "--yes"]),
+        alpha: pargs.contains("--alpha"),
+        mobile: pargs.contains("--mobile"),
         project_name: pargs.opt_free_from_str()?,
     };
 

@@ -8,15 +8,19 @@ repository = ""
 edition = "2021"
 rust-version = "1.57"
 
+[lib]
+name = "{{lib_name}}"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "1.2", features = [] }
+tauri-build = { version = "2.0.0-alpha.2", features = [] }
 
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.2", features = ["shell-open"] }
+tauri = { version = "2.0.0-alpha.0", features = ["shell-open"] }
 
 [features]
 default = []

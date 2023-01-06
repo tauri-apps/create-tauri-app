@@ -155,12 +155,16 @@ impl<'a> Template {
         target_dir: &path::Path,
         pkg_manager: PackageManager,
         package_name: &str,
+        alpha: bool,
+        mobile: bool,
     ) -> anyhow::Result<()> {
         let manifest_bytes = FRAGMENTS::get(&format!("fragment-{}/_cta_manifest_", self))
             .with_context(|| "Failed to get manifest bytes")?
             .data;
         let manifest_str = String::from_utf8(manifest_bytes.to_vec())?;
         let manifest = Manifest::parse(&manifest_str)?;
+
+        let lib_name = format!("{}_lib", package_name.replace("-", "_"));
 
         let write_file = |file: &str| -> anyhow::Result<()> {
             let manifest = manifest.clone();
@@ -204,13 +208,14 @@ impl<'a> Template {
                 "Cargo.toml",
                 "package.json",
                 "tauri.conf.json",
-                "angular.json",
+                "main.rs",
             ]
             .contains(&target_file_name)
             {
                 if let Ok(str_) = String::from_utf8(data.to_vec()) {
-                    data = str_
+                    let str_ = str_
                         .replace("{{package_name}}", package_name)
+                        .replace("{{lib_name}}", &lib_name)
                         .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
                         .replace(
                             "{{fragment_before_dev_command}}",
@@ -232,7 +237,17 @@ impl<'a> Template {
                             r#""withGlobalTauri": "{{fragment_with_global_tauri}}""#,
                             &format!(r#""withGlobalTauri": {}"#, manifest.with_global_tauri),
                         )
-                        .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
+                        .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd());
+
+                    data = str_
+                        .replace(
+                            r#"@tauri-apps/api": "^1.2.0"#,
+                            r#"@tauri-apps/api": "^2.0.0-alpha.0"#,
+                        )
+                        .replace(
+                            r#"@tauri-apps/cli": "^1.2.2"#,
+                            r#"@tauri-apps/cli": "^2.0.0-alpha.1"#,
+                        )
                         .as_bytes()
                         .to_vec();
                 }
@@ -245,13 +260,18 @@ impl<'a> Template {
         };
 
         // write base files first
+        let base = match (alpha, mobile) {
+            (true, true) => "_base_alpha_mobile_",
+            (true, false) => "_base_alpha_",
+            _ => "_base_",
+        };
         for file in FRAGMENTS::iter().filter(|e| {
             path::PathBuf::from(e.to_string())
                 .components()
                 .next()
                 .unwrap()
                 .as_os_str()
-                == "_base_"
+                == base
         }) {
             write_file(&file)?;
         }

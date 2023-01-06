@@ -34,13 +34,7 @@ where
     A: Into<OsString> + Clone,
 {
     if let Err(e) = try_run(args, bin_name) {
-        eprintln!(
-            "{BOLD}{RED}error{RESET}: {:#}",
-            e,
-            BOLD = BOLD,
-            RED = RED,
-            RESET = RESET
-        );
+        eprintln!("{BOLD}{RED}error{RESET}: {e:#}");
         exit(1);
     }
 }
@@ -52,8 +46,20 @@ where
 {
     let args = cli::parse(args.into_iter().map(Into::into).collect(), bin_name)?;
     let defaults = cli::Args::default();
-    let skip = args.skip_prompts;
+    let cli::Args {
+        skip,
+        mobile,
+        alpha,
+        ..
+    } = args;
     let cwd = std::env::current_dir()?;
+
+    if mobile && !alpha {
+        eprintln!(
+            "{BOLD}{RED}error{RESET}: `{GREEN}--mobile{RESET}` option is only available if `{GREEN}--alpha{RESET}` option is also used"
+        );
+        exit(1);
+    }
 
     // when invoked from pnpm, it seems like pnpm forgets to end its output with a new line
     // and it obscures the first question, this ensures we are on a new line before presenting our prompts
@@ -116,12 +122,7 @@ where
                 .interact()?
         };
         if !overrwite {
-            eprintln!(
-                "{BOLD}{RED}✘{RESET} Operation Cancelled",
-                BOLD = BOLD,
-                RED = RED,
-                RESET = RESET
-            );
+            eprintln!("{BOLD}{RED}✘{RESET} Operation Cancelled");
             exit(1);
         }
     };
@@ -187,12 +188,7 @@ where
         eprintln!(
             "{BOLD}{RED}error{RESET}: the {GREEN}{}{RESET} template is not suppported for the {GREEN}{pkg_manager}{RESET} package manager\n       possible templates for {GREEN}{pkg_manager}{RESET} are: [{}]",
             template,
-            templates.iter().map(|e|format!("{GREEN}{}{RESET}", e, GREEN = GREEN, RESET = RESET)).collect::<Vec<_>>().join(", "),
-            pkg_manager = pkg_manager,
-            BOLD = BOLD,
-            RED = RED,
-            RESET = RESET,
-            GREEN = GREEN,
+            templates.iter().map(|e|format!("{GREEN}{}{RESET}", e, GREEN = GREEN, RESET = RESET)).collect::<Vec<_>>().join(", ")
         );
         exit(1);
     }
@@ -203,17 +199,11 @@ where
     };
     fs::create_dir_all(&target_dir)?;
 
-    template.render(&target_dir, pkg_manager, &package_name)?;
+    template.render(&target_dir, pkg_manager, &package_name, alpha, mobile)?;
 
     println!();
     println!(
         "{ITALIC}{DIM}Please follow{DIMRESET} {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites{WHITE} {DIM}to install the needed prerequisites, if you haven't already.{DIMRESET}{RESET}",
-        ITALIC = ITALIC,
-        DIM = DIM,
-        DIMRESET = DIMRESET,
-        WHITE = WHITE,
-        BLUE = BLUE,
-        RESET=RESET
     );
     if let Some(info) = template.post_init_info(pkg_manager) {
         println!("{}", info);
