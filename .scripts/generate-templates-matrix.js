@@ -36,7 +36,7 @@ const matrixConfig = [
     manager: "cargo",
     install_cmd: "",
     run_cmd: "cargo",
-    templates: ["vanilla", "yew"],
+    templates: ["vanilla", "yew", "leptos"],
   },
 ];
 
