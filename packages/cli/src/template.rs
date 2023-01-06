@@ -204,13 +204,8 @@ impl<'a> Template {
             let mut data = FRAGMENTS::get(file).unwrap().data.to_vec();
 
             // Only modify specific set of files
-            if [
-                "Cargo.toml",
-                "package.json",
-                "tauri.conf.json",
-                "main.rs",
-            ]
-            .contains(&target_file_name)
+            if ["Cargo.toml", "package.json", "tauri.conf.json", "main.rs"]
+                .contains(&target_file_name)
             {
                 if let Ok(str_) = String::from_utf8(data.to_vec()) {
                     let str_ = str_
