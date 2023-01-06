@@ -164,7 +164,7 @@ impl<'a> Template {
         let manifest_str = String::from_utf8(manifest_bytes.to_vec())?;
         let manifest = Manifest::parse(&manifest_str)?;
 
-        let lib_name = format!("{}_lib", package_name.replace("-", "_"));
+        let lib_name = format!("{}_lib", package_name.replace('-', "_"));
 
         let write_file = |file: &str| -> anyhow::Result<()> {
             let manifest = manifest.clone();
@@ -204,11 +204,19 @@ impl<'a> Template {
             let mut data = FRAGMENTS::get(file).unwrap().data.to_vec();
 
             // Only modify specific set of files
-            if ["Cargo.toml", "package.json", "tauri.conf.json", "main.rs"]
-                .contains(&target_file_name)
+            if [
+                "Cargo.toml",
+                "package.json",
+                "tauri.conf.json",
+                "main.rs",
+                "vite.config.ts",
+                "vite.config.js",
+                "Trunk.toml",
+            ]
+            .contains(&target_file_name)
             {
-                if let Ok(str_) = String::from_utf8(data.to_vec()) {
-                    let str_ = str_
+                if let Ok(content) = String::from_utf8(data.to_vec()) {
+                    let mut content = content
                         .replace("{{package_name}}", package_name)
                         .replace("{{lib_name}}", &lib_name)
                         .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
@@ -234,17 +242,25 @@ impl<'a> Template {
                         )
                         .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd());
 
-                    data = str_
-                        .replace(
-                            r#"@tauri-apps/api": "^1.2.0"#,
-                            r#"@tauri-apps/api": "^2.0.0-alpha.0"#,
-                        )
-                        .replace(
-                            r#"@tauri-apps/cli": "^1.2.2"#,
-                            r#"@tauri-apps/cli": "^2.0.0-alpha.1"#,
-                        )
-                        .as_bytes()
-                        .to_vec();
+                    if alpha {
+                        content = content
+                            .replace(
+                                r#""@tauri-apps/api": "^1.2.0""#,
+                                r#""@tauri-apps/api": "^2.0.0-alpha.0""#,
+                            )
+                            .replace(
+                                r#""@tauri-apps/cli": "^1.2.2""#,
+                                r#""@tauri-apps/cli": "^2.0.0-alpha.1""#,
+                            );
+
+                        if mobile {
+                            content = content
+                                .replace(r#"address = "127.0.0.1""#, r#"address = "0.0.0.0""#)
+                                .replace("host = false,", "host = true,");
+                        }
+                    }
+
+                    data = content.as_bytes().to_vec();
                 }
             }
 
