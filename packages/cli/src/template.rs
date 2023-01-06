@@ -256,7 +256,7 @@ impl<'a> Template {
                         if mobile {
                             content = content
                                 .replace(r#"address = "127.0.0.1""#, r#"address = "0.0.0.0""#)
-                                .replace("host = false,", "host = true,");
+                                .replace("host: false,", "host: true,");
                         }
                     }
 
