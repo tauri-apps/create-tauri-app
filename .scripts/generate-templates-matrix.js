@@ -1,5 +1,5 @@
 const changedFilesStr = process.argv[2];
-const changedFiles = changedFilesStr.split(" ");
+const changedFiles = changedFilesStr.split(",");
 
 const nodeJsTemplates = [
   "svelte",
