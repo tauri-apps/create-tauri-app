@@ -47,10 +47,6 @@ jobs:
           path: create-tauri-app.tar
           if-no-files-found: error
 
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v29.0.1
-
   generate-matrix:
     runs-on: ubuntu-latest
     outputs:
@@ -58,12 +54,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v29.0.1
+
       - name: set matrix
         id: set-matrix
         shell: bash
         run: |
           OUT="$(node .scripts/generate-templates-matrix.js '${{ steps.changed-files.outputs.all_changed_files }}')"
-          echo "::set-output name=matrix::$OUT"
+          echo name=matrix::$OUT >> $GITHUB_OUTPUT
 
   test:
     needs: [build-cli, generate-matrix]
