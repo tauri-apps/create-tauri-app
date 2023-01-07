@@ -55,7 +55,7 @@ jobs:
         id: set-matrix
         shell: bash
         run: |
-          OUT="$(node .scripts/generate-templates-matrix.js ${{ steps.changed-files.outputs.all_changed_files }})"
+          OUT="$(node .scripts/generate-templates-matrix.js '${{ steps.changed-files.outputs.all_changed_files }})'"
           echo "::set-output name=matrix::$OUT"
 
   test:
