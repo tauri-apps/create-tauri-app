@@ -189,7 +189,7 @@ impl<'a> Template {
                 //          "%(<list of flags separated by `-`>%)<file_name>"
                 // flags are supported package managers, stable, alpha and mobile.
                 // example: "%(pnpm-npm-yarn-stable-alpha)%package.json"
-                name if name.starts_with("%(") && name[1..].find(")%").is_some() => {
+                name if name.starts_with("%(") && name[1..].contains(")%") => {
                     let mut s = name.strip_prefix("%(").unwrap().split(")%");
                     let (mut flags, name) = (
                         s.next().unwrap().split('-').collect::<Vec<_>>(),
