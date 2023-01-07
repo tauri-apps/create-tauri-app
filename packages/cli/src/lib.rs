@@ -248,7 +248,11 @@ fn to_valid_pkg_name(project_name: &str) -> String {
         .skip_while(|ch| ch.is_ascii_digit() || *ch == '-')
         .collect::<String>();
 
-    ret
+    if ret.is_empty() {
+        "tauri-app".to_string()
+    } else {
+        ret
+    }
 }
 
 #[cfg(test)]

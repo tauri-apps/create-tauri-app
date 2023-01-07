@@ -186,12 +186,29 @@ impl<'a> Template {
                 "_cta_manifest_" => return Ok(()),
                 // conditional files:
                 // are files that start with a special syntax
-                //          "_[<list of package managers separated by `-`>]_<file_name>"
-                // example: "_[pnpm-npm-yarn]_package.json"
-                name if name.starts_with("_[") => {
-                    let mut s = name.strip_prefix("_[").unwrap().split("]_");
-                    let (mut managers, name) = (s.next().unwrap().split('-'), s.next().unwrap());
-                    if managers.any(|x| x == pkg_manager.to_string()) {
+                //          "%(<list of flags separated by `-`>%)<file_name>"
+                // flags are supported package managers, stable, alpha and mobile.
+                // example: "%(pnpm-npm-yarn-stable-alpha)%package.json"
+                name if name.starts_with("%(") && name[1..].find(")%").is_some() => {
+                    let mut s = name.strip_prefix("%(").unwrap().split(")%");
+                    let (mut flags, name) = (
+                        s.next().unwrap().split('-').collect::<Vec<_>>(),
+                        s.next().unwrap(),
+                    );
+
+                    let for_stable = flags.contains(&"stable");
+                    let for_alpha = flags.contains(&"alpha");
+                    let for_mobile = flags.contains(&"mobile");
+
+                    // remove these flags to only keep package managers flags
+                    flags.retain(|e| !["stable", "alpha", "mobile"].contains(e));
+
+                    if ((for_stable && !alpha)
+                        || (for_alpha && alpha)
+                        || (for_mobile && alpha && mobile)
+                        || (!for_stable && !for_alpha && !for_mobile))
+                        && (flags.contains(&pkg_manager.to_string().as_str()) || flags.is_empty())
+                    {
                         name
                     } else {
                         // skip writing this file
@@ -216,7 +233,7 @@ impl<'a> Template {
             .contains(&target_file_name)
             {
                 if let Ok(content) = String::from_utf8(data.to_vec()) {
-                    let mut content = content
+                    data = content
                         .replace("{{package_name}}", package_name)
                         .replace("{{lib_name}}", &lib_name)
                         .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
@@ -240,27 +257,9 @@ impl<'a> Template {
                             r#""withGlobalTauri": "{{fragment_with_global_tauri}}""#,
                             &format!(r#""withGlobalTauri": {}"#, manifest.with_global_tauri),
                         )
-                        .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd());
-
-                    if alpha {
-                        content = content
-                            .replace(
-                                r#""@tauri-apps/api": "^1.2.0""#,
-                                r#""@tauri-apps/api": "^2.0.0-alpha.0""#,
-                            )
-                            .replace(
-                                r#""@tauri-apps/cli": "^1.2.2""#,
-                                r#""@tauri-apps/cli": "^2.0.0-alpha.1""#,
-                            );
-
-                        if mobile {
-                            content = content
-                                .replace(r#"address = "127.0.0.1""#, r#"address = "0.0.0.0""#)
-                                .replace("host: false,", "host: true,");
-                        }
-                    }
-
-                    data = content.as_bytes().to_vec();
+                        .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
+                        .as_bytes()
+                        .to_vec();
                 }
             }
 
@@ -270,19 +269,13 @@ impl<'a> Template {
             Ok(())
         };
 
-        // write base files first
-        let base = match (alpha, mobile) {
-            (true, true) => "_base_alpha_mobile_",
-            (true, false) => "_base_alpha_",
-            _ => "_base_",
-        };
         for file in FRAGMENTS::iter().filter(|e| {
             path::PathBuf::from(e.to_string())
                 .components()
                 .next()
                 .unwrap()
                 .as_os_str()
-                == base
+                == "_base_"
         }) {
             write_file(&file)?;
         }
