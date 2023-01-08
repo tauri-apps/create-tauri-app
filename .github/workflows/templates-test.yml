@@ -66,7 +66,7 @@ jobs:
         shell: bash
         run: |
           OUT="$(node .scripts/generate-templates-matrix.js '${{ steps.changed-files.outputs.all_changed_files }}')"
-          echo name=matrix::$OUT >> $GITHUB_OUTPUT
+          echo matrix=$OUT >> $GITHUB_OUTPUT
 
   test:
     needs: [build-cli, generate-matrix]
