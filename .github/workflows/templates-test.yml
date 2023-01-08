@@ -66,13 +66,12 @@ jobs:
         shell: bash
         run: |
           OUT="$(node .scripts/generate-templates-matrix.js '${{ steps.changed-files.outputs.all_changed_files }}')"
-          echo "matrix='$OUT'" >> $GITHUB_OUTPUT
-          cat $GITHUB_OUTPUT
+          echo "matrix=$OUT" >> $GITHUB_OUTPUT
 
   test:
     needs: [build-cli, generate-matrix]
     runs-on: ubuntu-latest
-    if: ${{ needs.build-cli.outputs.matrix != '[]' && needs.build-cli.outputs.matrix != '' }}
+    if: ${{ needs.generate-matrix.outputs.matrix != '[]' && needs.build-cli.outputs.matrix != '' }}
     strategy:
       fail-fast: false
       matrix:
