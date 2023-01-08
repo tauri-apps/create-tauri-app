@@ -71,11 +71,11 @@ jobs:
   test:
     needs: [build-cli, generate-matrix]
     runs-on: ubuntu-latest
-    if: ${{ needs.generate-matrix.outputs.matrix != '[]' && needs.build-cli.outputs.matrix != '' }}
+    if: ${{ needs.generate-matrix.outputs.matrix != '[]' && needs.generate-matrix.outputs.matrix != '' }}
     strategy:
       fail-fast: false
       matrix:
-        settings: ${{ fromJson(needs.build-cli.outputs.matrix) }}
+        settings: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
 
     name: ${{ matrix.settings.manager }} - ${{ matrix.settings.template }}
     steps:
