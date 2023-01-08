@@ -66,8 +66,7 @@ jobs:
         shell: bash
         run: |
           OUT="$(node .scripts/generate-templates-matrix.js '${{ steps.changed-files.outputs.all_changed_files }}')"
-          cat $GITHUB_OUTPUT
-          echo "matrix=$OUT" >> $GITHUB_OUTPUT
+          echo "matrix='$OUT'" >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT
 
   test:
