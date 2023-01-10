@@ -37,7 +37,7 @@
   },
   "license": "Apache-2.0 OR MIT",
   "devDependencies": {
-    "@napi-rs/cli": "2.14.1"
+    "@napi-rs/cli": "2.14.2"
   },
   "engines": {
     "node": ">= 10"
