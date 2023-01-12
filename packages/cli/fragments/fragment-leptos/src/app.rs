@@ -1,8 +1,8 @@
+use leptos::web_sys::{Event, MouseEvent};
 use leptos::*;
 use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::to_value;
 use wasm_bindgen::prelude::*;
-use web_sys::MouseEvent;
 
 #[wasm_bindgen]
 extern "C" {
@@ -19,6 +19,11 @@ struct GreetArgs<'a> {
 pub fn App(cx: Scope) -> impl IntoView {
     let (name, set_name) = create_signal(cx, String::new());
     let (greet_msg, set_greet_msg) = create_signal(cx, String::new());
+
+    let update_name = move |ev: Event| {
+        let v = event_target_value(&ev);
+        set_name.set(v);
+    };
 
     let greet = move |_ev: MouseEvent| {
         spawn_local(async move {
@@ -59,10 +64,7 @@ pub fn App(cx: Scope) -> impl IntoView {
                 <input
                     id="greet-input"
                     placeholder="Enter a name..."
-                    on:input={ move |ev| {
-                        let v = event_target_value(&ev);
-                        set_name.set(v);
-                    }}
+                    on:input=update_name
                 />
                 <button type="button" on:click=greet>"Greet"</button>
             </div>
