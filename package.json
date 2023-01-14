@@ -4,7 +4,7 @@
     "format:check": "prettier --check --end-of-line=auto \"./**/*.{js,jsx,ts,tsx,html,css,json,vue}\""
   },
   "dependencies": {
-    "prettier": "2.8.2"
+    "prettier": "2.8.3"
   },
   "devDependencies": {
     "covector": "0.7.3"
