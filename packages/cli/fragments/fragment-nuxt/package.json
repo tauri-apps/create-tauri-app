@@ -1,0 +1,20 @@
+{
+  "name": "{{package_name}}",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "nuxt": "^3.0.0",
+    "@tauri-apps/cli": "1.2.2"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^1.2.0"
+  }
+}

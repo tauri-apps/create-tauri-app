@@ -46,6 +46,7 @@ impl PackageManager {
                 Template::SolidTs,
                 Template::Next,
                 Template::NextTs,
+                Template::Nuxt,
                 Template::Preact,
                 Template::PreactTs,
                 Template::Angular,

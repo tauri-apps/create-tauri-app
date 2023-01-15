@@ -14,6 +14,7 @@ const nodeJsTemplates = [
   "vanilla-ts",
   "next",
   "next-ts",
+  "nuxt",
   "preact",
   "preact-ts",
   "clojurescript",
