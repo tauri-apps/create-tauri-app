@@ -8,7 +8,7 @@ devPath = http://localhost:3000
 distDir = ../dist
 
 [files]
-tauri.svg = assets/tauri.svg
-nuxt.svg = assets/nuxt.svg
-vue.svg = assets/vue.svg
-style.css = assets/css/style.css
+tauri.svg = src/assets/tauri.svg
+nuxt.svg = src/assets/nuxt.svg
+vue.svg = src/assets/vue.svg
+style.css = src/assets/css/style.css
