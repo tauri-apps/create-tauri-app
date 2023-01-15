@@ -88,6 +88,7 @@ impl FromStr for Template {
             "yew" => Ok(Template::Yew),
             "next" => Ok(Template::Next),
             "next-ts" => Ok(Template::NextTs),
+            "nuxt" => Ok(Template::Nuxt),
             "preact" => Ok(Template::Preact),
             "preact-ts" => Ok(Template::PreactTs),
             "vanilla-ts" => Ok(Template::VanillaTs),
