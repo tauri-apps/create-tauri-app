@@ -1,0 +1,9 @@
+image:
+  file: .gitpod.Dockerfile
+ports:
+  - port: 6080
+tasks:
+  - init: |
+      {{pkg_manager}} install
+      {{pkg_manager}} tauri build --debug
+    command: {{pkg_manager}} tauri dev

@@ -72,6 +72,18 @@ where
         }
     });
 
+    let add_gitpod = args.add_gitpod.unwrap_or_else(|| {
+        if skip {
+            defaults.add_gitpod.unwrap()
+        } else {
+            Input::<bool>::with_theme(&ColorfulTheme::default())
+                .with_prompt("Add Gitpod configuration")
+                .default(false)
+                .interact_text()
+                .unwrap()
+        }
+    });
+
     let target_dir = cwd.join(&project_name);
 
     let package_name = if is_valid_pkg_name(&project_name) {
@@ -191,7 +203,7 @@ where
     };
     fs::create_dir_all(&target_dir)?;
 
-    template.render(&target_dir, pkg_manager, &package_name)?;
+    template.render(&target_dir, pkg_manager, &package_name, &add_gitpod)?;
 
     println!();
     println!(

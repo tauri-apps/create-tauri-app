@@ -169,6 +169,7 @@ impl<'a> Template {
         target_dir: &path::Path,
         pkg_manager: PackageManager,
         package_name: &str,
+        add_gitpod: &bool,
     ) -> anyhow::Result<()> {
         let manifest_bytes = Fragments::get(&format!("fragment-{}/_cta_manifest_", self))
             .with_context(|| "Failed to get manifest bytes")?
@@ -295,6 +296,29 @@ impl<'a> Template {
                 .create(true)
                 .open(dest)?;
             file.write_all(&data)?;
+        }
+
+        if *add_gitpod {
+            let gitpod_files = [".gitpod.Dockerfile", ".gitpod.yml"];
+            for file in gitpod_files {
+                let data = String::from_utf8(
+                    Fragments::get(&format!("_assets_/{}", file))
+                        .with_context(|| format!("Failed to get asset file bytes: {}", file))?
+                        .data
+                        .to_vec(),
+                )?
+                .replace("{{pkg_manager}}", pkg_manager.run_cmd())
+                .as_bytes()
+                .to_vec();
+                let dest = target_dir.join(file);
+                let parent = dest.parent().unwrap();
+                fs::create_dir_all(parent)?;
+                let mut file = fs::OpenOptions::new()
+                    .append(true)
+                    .create(true)
+                    .open(dest)?;
+                file.write_all(&data)?;
+            }
         }
 
         Ok(())

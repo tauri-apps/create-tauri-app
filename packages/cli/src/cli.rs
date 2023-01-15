@@ -14,6 +14,7 @@ pub struct Args {
     pub manager: Option<PackageManager>,
     pub template: Option<Template>,
     pub skip_prompts: bool,
+    pub add_gitpod: Option<bool>,
 }
 
 impl Default for Args {
@@ -23,6 +24,7 @@ impl Default for Args {
             manager: Some(PackageManager::Npm),
             template: Some(Template::Vanilla),
             skip_prompts: false,
+            add_gitpod: Some(false),
         }
     }
 }
@@ -82,6 +84,7 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
         template: pargs.opt_value_from_str(["-t", "--template"])?,
         skip_prompts: pargs.contains(["-y", "--yes"]),
         project_name: pargs.opt_free_from_str()?,
+        add_gitpod: pargs.opt_value_from_str(["-g", "--gitpod"])?,
     };
 
     Ok(args)
