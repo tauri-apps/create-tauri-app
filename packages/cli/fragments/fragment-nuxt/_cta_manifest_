@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 beforeDevCommand = {{pkg_manager_run_command}} dev
-beforeBuildCommand = {{pkg_manager_run_command}} build
+beforeBuildCommand = {{pkg_manager_run_command}} generate
 devPath = http://localhost:3000
 distDir = ../dist
 
