@@ -7,7 +7,7 @@
     "prettier": "2.8.3"
   },
   "devDependencies": {
-    "covector": "0.7.3"
+    "covector": "0.8.0"
   },
   "resolutions": {
     "undici": ">=5.8.2"
