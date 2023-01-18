@@ -296,9 +296,9 @@ checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
 
 [[package]]
 name = "napi"
-version = "2.10.7"
+version = "2.10.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bb76ccc19efa57f1d3b847a8cd451ce5a5a3f8ab655faf13f743591031cf31fa"
+checksum = "562f120c9cb0828791508b7a2baed409490b60e380ba46f825978be212b25ae1"
 dependencies = [
  "bitflags",
  "ctor",
