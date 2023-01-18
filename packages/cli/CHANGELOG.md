@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.7.7]
+
+- Wrap the `cd <dir>` instruction in quotes if the project name containts spaces.
+  - [a5c6dd9](https://www.github.com/tauri-apps/create-tauri-app/commit/a5c6dd945fc4bdcd12aeb200bde2c35732060c0d) fix: wrap the `cd <dir>` instruction in quotes ([#305](https://www.github.com/tauri-apps/create-tauri-app/pull/305)) on 2023-01-18
+
 ## \[2.7.6]
 
 - Update `vite.conf.json` target option to match the latest tauri docs.
