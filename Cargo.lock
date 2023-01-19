@@ -296,9 +296,9 @@ checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
 
 [[package]]
 name = "napi"
-version = "2.10.8"
+version = "2.10.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "562f120c9cb0828791508b7a2baed409490b60e380ba46f825978be212b25ae1"
+checksum = "b60e2bc632f89dad5d47da61591bd468f87f5dbfc85af27aa876772c89d8c4e4"
 dependencies = [
  "bitflags",
  "ctor",
@@ -342,9 +342,9 @@ dependencies = [
 
 [[package]]
 name = "napi-sys"
-version = "2.2.2"
+version = "2.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "529671ebfae679f2ce9630b62dd53c72c56b3eb8b2c852e7e2fa91704ff93d67"
+checksum = "166b5ef52a3ab5575047a9fe8d4a030cdd0f63c96f071cd6907674453b07bae3"
 dependencies = [
  "libloading",
 ]
