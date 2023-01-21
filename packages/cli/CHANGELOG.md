@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.7.8]
+
+- Fix crashed caused by whitespace in "Project name" by trimming it.
+  - [2f5cf5c](https://www.github.com/tauri-apps/create-tauri-app/commit/2f5cf5c99385baae766c266f82dd5c6aa31ab32e) fix(cli): trim project_name whitespace, closes [#308](https://www.github.com/tauri-apps/create-tauri-app/pull/308) on 2023-01-21
+
 ## \[2.7.7]
 
 - Wrap the `cd <dir>` instruction in quotes if the project name containts spaces.
