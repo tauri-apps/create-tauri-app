@@ -69,6 +69,8 @@ where
                 .default("tauri-app".into())
                 .interact_text()
                 .unwrap()
+                .trim()
+                .to_string()
         }
     });
 
@@ -93,6 +95,7 @@ where
                 }
             })
             .interact_text()?
+            .trim().to_string()
         }
     };
 
