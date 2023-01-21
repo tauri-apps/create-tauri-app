@@ -87,7 +87,7 @@ dependencies = [
 
 [[package]]
 name = "create-tauri-app"
-version = "2.7.6"
+version = "2.7.7"
 dependencies = [
  "anyhow",
  "dialoguer",
@@ -127,11 +127,12 @@ dependencies = [
 
 [[package]]
 name = "dialoguer"
-version = "0.10.2"
+version = "0.10.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a92e7e37ecef6857fdc0c0c5d42fd5b0938e46590c2183cc92dd310a6d078eb1"
+checksum = "af3c796f3b0b408d9fd581611b47fa850821fcb84aa640b83a3c1a5be2d691f2"
 dependencies = [
  "console",
+ "shell-words",
  "tempfile",
  "zeroize",
 ]
@@ -295,9 +296,9 @@ checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
 
 [[package]]
 name = "napi"
-version = "2.10.4"
+version = "2.10.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "838b5b414a008e75b97edb3c3e6f189034af789a0608686299b149d3b0e66c39"
+checksum = "b60e2bc632f89dad5d47da61591bd468f87f5dbfc85af27aa876772c89d8c4e4"
 dependencies = [
  "bitflags",
  "ctor",
@@ -314,9 +315,9 @@ checksum = "882a73d9ef23e8dc2ebbffb6a6ae2ef467c0f18ac10711e4cc59c5485d41df0e"
 
 [[package]]
 name = "napi-derive"
-version = "2.9.3"
+version = "2.9.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "af4e44e34e70aa61be9036ae652e27c20db5bca80e006be0f482419f6601352a"
+checksum = "47bff5a8ed70117bce55053a74ff8f423f90c48c704030609272e6e3bde1c5a4"
 dependencies = [
  "convert_case",
  "napi-derive-backend",
@@ -327,9 +328,9 @@ dependencies = [
 
 [[package]]
 name = "napi-derive-backend"
-version = "1.0.40"
+version = "1.0.41"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "17925fff04b6fa636f8e4b4608cc1a4f1360b64ac8ecbfdb7da1be1dc74f6843"
+checksum = "e13b412301aeebee17724fff6d73536e9ecb8387f10bbbf317a9f7a006cc1c5b"
 dependencies = [
  "convert_case",
  "once_cell",
@@ -341,9 +342,9 @@ dependencies = [
 
 [[package]]
 name = "napi-sys"
-version = "2.2.2"
+version = "2.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "529671ebfae679f2ce9630b62dd53c72c56b3eb8b2c852e7e2fa91704ff93d67"
+checksum = "166b5ef52a3ab5575047a9fe8d4a030cdd0f63c96f071cd6907674453b07bae3"
 dependencies = [
  "libloading",
 ]
@@ -491,6 +492,12 @@ dependencies = [
  "cpufeatures",
  "digest",
 ]
+
+[[package]]
+name = "shell-words"
+version = "1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "24188a676b6ae68c3b2cb3a01be17fbf7240ce009799bb56d5b1409051e78fde"
 
 [[package]]
 name = "shellexpand"

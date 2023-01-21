@@ -74,6 +74,8 @@ where
                 .default("tauri-app".into())
                 .interact_text()
                 .unwrap()
+                .trim()
+                .to_string()
         }
     });
 
@@ -98,6 +100,7 @@ where
                 }
             })
             .interact_text()?
+            .trim().to_string()
         }
     };
 
@@ -210,7 +213,14 @@ where
     }
     println!();
     println!("Done, Now run:");
-    println!("  cd {}", project_name);
+    println!(
+        "  cd {}",
+        if project_name.contains(' ') {
+            format!("\"{}\"", project_name)
+        } else {
+            project_name
+        }
+    );
     if let Some(cmd) = pkg_manager.install_cmd() {
         println!("  {}", cmd);
     }
