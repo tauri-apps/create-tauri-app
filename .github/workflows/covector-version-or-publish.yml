@@ -11,6 +11,8 @@ on:
 
 jobs:
   version-or-publish:
+    # prevents this action from running on forks
+    if: github.repository_owner == 'tauri-apps'
     runs-on: ubuntu-latest
     timeout-minutes: 65
     outputs:
