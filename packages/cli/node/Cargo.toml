@@ -10,7 +10,7 @@ crate-type = ["cdylib"]
 [dependencies]
 # Default enable napi4 feature, see https://nodejs.org/api/n-api.html#node-api-version-matrix
 napi = { version = "2.10.9", default-features = false, features = ["napi4"] }
-napi-derive = "2.9.5"
+napi-derive = "2.10.0"
 create-tauri-app = { path = ".." }
 
 [build-dependencies]
