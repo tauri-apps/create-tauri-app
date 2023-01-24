@@ -16,7 +16,7 @@ importers:
 
   packages/cli/node:
     specifiers:
-      '@napi-rs/cli': 2.14.4
+      '@napi-rs/cli': '2.14'
     devDependencies:
       '@napi-rs/cli': 2.14.4
 
