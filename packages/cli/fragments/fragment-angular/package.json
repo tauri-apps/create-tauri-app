@@ -27,8 +27,8 @@
   "devDependencies": {
     "@tauri-apps/cli": "^1.2.2",
     "@angular-devkit/build-angular": "^15.0.0",
-    "@angular/cli": "~15.0.0",
+    "@angular/cli": "~15.1.0",
     "@angular/compiler-cli": "^15.0.0",
-    "typescript": "~4.8.0"
+    "typescript": "~4.9.0"
   }
 }
