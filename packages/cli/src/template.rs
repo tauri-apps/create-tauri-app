@@ -35,7 +35,7 @@ pub enum Template {
     ClojureScript,
     SvelteKit,
     SvelteKitTs,
-    Sycamore
+    Sycamore,
 }
 
 impl Default for Template {
@@ -121,7 +121,7 @@ impl<'a> Template {
         Template::ClojureScript,
         Template::SvelteKit,
         Template::SvelteKitTs,
-        Template::Sycamore
+        Template::Sycamore,
     ];
 
     pub fn post_init_info(&self, pkg_manager: PackageManager) -> Option<String> {
