@@ -1,5 +1,10 @@
 # Changelog
 
+## \[2.7.9]
+
+- Fix incorrect allowlist in `react-ts` template by deleting the leftover `tauri.conf.json` file.
+  - [f25b374](https://www.github.com/tauri-apps/create-tauri-app/commit/f25b374d822a3e65ad47b821f7af2745f1b6af9e) fix: delete leftover `tauri.conf.json` file in `react-ts` template, fixes [#318](https://www.github.com/tauri-apps/create-tauri-app/pull/318) ([#319](https://www.github.com/tauri-apps/create-tauri-app/pull/319)) on 2023-02-02
+
 ## \[2.7.8]
 
 - Fix crashed caused by whitespace in "Project name" by trimming it.
