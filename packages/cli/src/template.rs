@@ -35,6 +35,7 @@ pub enum Template {
     ClojureScript,
     SvelteKit,
     SvelteKitTs,
+    Sycamore
 }
 
 impl Default for Template {
@@ -65,6 +66,7 @@ impl Display for Template {
             Template::ClojureScript => write!(f, "clojurescript"),
             Template::SvelteKit => write!(f, "svelte-kit"),
             Template::SvelteKitTs => write!(f, "svelte-kit-ts"),
+            Template::Sycamore => write!(f, "sycamore"),
         }
     }
 }
@@ -92,6 +94,7 @@ impl FromStr for Template {
             "clojurescript" => Ok(Template::ClojureScript),
             "svelte-kit" => Ok(Template::SvelteKit),
             "svelte-kit-ts" => Ok(Template::SvelteKitTs),
+            "sycamore" => Ok(Template::Sycamore),
             _ => Err("Invalid template".to_string()),
         }
     }
@@ -118,11 +121,12 @@ impl<'a> Template {
         Template::ClojureScript,
         Template::SvelteKit,
         Template::SvelteKitTs,
+        Template::Sycamore
     ];
 
     pub fn post_init_info(&self, pkg_manager: PackageManager) -> Option<String> {
         match self {
-            Template::Yew => Some(
+            Template::Yew | Template::Sycamore => Some(
                 format!(
                     "{ITALIC}{DIM}You also need to install {DIMRESET}{YELLOW}tauri-cli{WHITE}{DIM} ({DIMRESET}{BLUE}cargo install tauri-cli{WHITE}{DIM}), {DIMRESET}{YELLOW}trunk{WHITE}{DIM} ({DIMRESET}{BLUE}https://trunkrs.dev/#install{WHITE}{DIM}) and {DIMRESET}{YELLOW}wasm32{WHITE}{DIM} rust target ({DIMRESET}{BLUE}rustup target add wasm32-unknown-unknown{WHITE}{DIM}){DIMRESET}{RESET}",
                     ITALIC = ITALIC,
