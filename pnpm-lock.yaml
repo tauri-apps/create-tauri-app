@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 overrides:
-  undici: '>=5.8.2'
+  http-cache-semantics: '>=4.1.1'
 
 importers:
 
@@ -186,7 +186,7 @@ packages:
     dependencies:
       '@miniflare/core': 2.11.0
       '@miniflare/shared': 2.11.0
-      http-cache-semantics: 4.1.0
+      http-cache-semantics: 4.1.1
       undici: 5.9.1
     dev: true
 
@@ -1030,8 +1030,8 @@ packages:
     resolution: {integrity: sha512-lNovG8CMCCmcVB1Q7xggMSf7tqPCijZXaH4gL6iE8BFghdQCbaY5Met9i1x2Ex8m/cZHDUtXK9H6/znKamRP8Q==}
     dev: true
 
-  /http-cache-semantics/4.1.0:
-    resolution: {integrity: sha512-carPklcUh7ROWRK7Cv27RPtdhYhUsela/ue5/jKzjegVvXDqM2ILE9Q2BGn9JZJh1g87cp56su/FgQSzcWS8cQ==}
+  /http-cache-semantics/4.1.1:
+    resolution: {integrity: sha512-er295DKPVsV82j5kw1Gjt+ADA/XYHsajl82cGNQG2eyoPkvgUhX+nDIyelzhIWbbsXP39EHcI6l5tYs2FYqYXQ==}
     dev: true
 
   /human-signals/3.0.1:
