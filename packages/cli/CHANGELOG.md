@@ -1,5 +1,20 @@
 # Changelog
 
+## \[2.7.10]
+
+- Update `@svelte/kit` to new major version `1.x` and update related dependencies. Also, fixed the `check` and `check:watch` scripts in `svelte-kit-ts` template.
+  - [afe0b5e](https://www.github.com/tauri-apps/create-tauri-app/commit/afe0b5edfe08e0113f171676ed4b92474537e18a) Update svelte kit ([#323](https://www.github.com/tauri-apps/create-tauri-app/pull/323)) on 2023-02-06
+
+## \[2.7.9]
+
+- Fix incorrect allowlist in `react-ts` template by deleting the leftover `tauri.conf.json` file.
+  - [f25b374](https://www.github.com/tauri-apps/create-tauri-app/commit/f25b374d822a3e65ad47b821f7af2745f1b6af9e) fix: delete leftover `tauri.conf.json` file in `react-ts` template, fixes [#318](https://www.github.com/tauri-apps/create-tauri-app/pull/318) ([#319](https://www.github.com/tauri-apps/create-tauri-app/pull/319)) on 2023-02-02
+
+## \[2.7.8]
+
+- Fix crashed caused by whitespace in "Project name" by trimming it.
+  - [2f5cf5c](https://www.github.com/tauri-apps/create-tauri-app/commit/2f5cf5c99385baae766c266f82dd5c6aa31ab32e) fix(cli): trim project_name whitespace, closes [#308](https://www.github.com/tauri-apps/create-tauri-app/pull/308) on 2023-01-21
+
 ## \[2.7.7]
 
 - Wrap the `cd <dir>` instruction in quotes if the project name containts spaces.
