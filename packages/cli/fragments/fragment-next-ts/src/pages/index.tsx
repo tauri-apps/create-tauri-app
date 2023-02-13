@@ -57,16 +57,19 @@ function App() {
       <p>Click on the Tauri, Next, and React logos to learn more.</p>
 
       <div className="row">
-        <div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            greet();
+          }}
+        >
           <input
             id="greet-input"
             onChange={(e) => setName(e.currentTarget.value)}
             placeholder="Enter a name..."
           />
-          <button type="button" onClick={() => greet()}>
-            Greet
-          </button>
-        </div>
+          <button type="submit">Greet</button>
+        </form>
       </div>
 
       <p>{greetMsg}</p>

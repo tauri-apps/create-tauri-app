@@ -30,16 +30,19 @@ export function App() {
       <p>Click on the Tauri, Vite, and Preact logos to learn more.</p>
 
       <div class="row">
-        <div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            greet();
+          }}
+        >
           <input
             id="greet-input"
             onChange={(e) => setName(e.currentTarget.value)}
             placeholder="Enter a name..."
           />
-          <button type="button" onClick={() => greet()}>
-            Greet
-          </button>
-        </div>
+          <button type="submit">Greet</button>
+        </form>
       </div>
       <p>{greetMsg}</p>
     </div>
