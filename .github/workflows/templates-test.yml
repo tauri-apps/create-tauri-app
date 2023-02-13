@@ -25,17 +25,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: install rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
-
-      - uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo build --release --package create-tauri-app
 
       - name: add cli to .tar archive
         run: tar -rf create-tauri-app.tar target/release/cargo-create-tauri-app
@@ -80,11 +71,7 @@ jobs:
         with:
           node-version: 16
 
-      - name: Install rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          override: true
+      - uses: dtolnay/rust-toolchain@stable
 
       - run: cargo install tauri-cli
         if: matrix.settings.manager == 'cargo'

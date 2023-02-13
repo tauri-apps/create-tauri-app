@@ -17,6 +17,10 @@ on:
   repository_dispatch:
     types: [publish-binaries]
 
+concurrency:
+   group: ${{ github.workflow }}-${{ github.ref }}
+   cancel-in-progress: true
+
 jobs:
   build:
     strategy:
@@ -39,42 +43,48 @@ jobs:
             target: x86_64-unknown-linux-musl
           - host: ubuntu-18.04
             target: aarch64-unknown-linux-gnu
+            setup: |
+                  sudo apt-get update
+                  sudo apt-get install gcc-aarch64-linux-gnu -y
           - host: ubuntu-18.04
             target: armv7-unknown-linux-gnueabihf
             setup: |
                   sudo apt-get update
                   sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf -y
-          - host: ubuntu-18.04
+          - host: ubuntu-latest
             target: aarch64-unknown-linux-musl
+            setup: |
+                  wget https://musl.cc/aarch64-linux-musl-cross.tgz
+                  echo '::group::extracting'
+                  tar -xvzf aarch64-linux-musl-cross.tgz
 
     name: ${{ matrix.settings.target }}
     runs-on: ${{ matrix.settings.host }}
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@stable
         with:
-          profile: minimal
-          override: true
-          toolchain: stable
-          target: ${{ matrix.settings.target }}
+          targets: ${{ matrix.settings.target }}
 
       - name: setup system dependencies
         run: ${{ matrix.settings.setup }}
         if: ${{ matrix.settings.setup }}
         shell: bash
 
-      - name: build
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release
+      - run: cargo build --release --package create-tauri-app --target ${{ matrix.settings.target }}
+        if: ${{ matrix.settings.target != 'aarch64-unknown-linux-musl' }}
+
+      - run: |
+          export PATH="$PWD/aarch64-linux-musl-cross/bin:$PATH"
+          cargo build --release --package create-tauri-app --target ${{ matrix.settings.target }}
+        if: ${{ matrix.settings.target == 'aarch64-unknown-linux-musl' }}
 
       - name: upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: "${{ matrix.settings.target }}"
-          path: "target/release/cargo-create-tauri-app${{ matrix.settings.ext }}"
+          path: target/${{ matrix.settings.target }}/release/cargo-create-tauri-app${{ matrix.settings.ext }}
           if-no-files-found: error
 
   publish:
