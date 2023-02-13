@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::to_value;
 use sycamore::futures::spawn_local_scoped;
 use sycamore::prelude::*;
+use sycamore::rt::Event;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
@@ -23,7 +24,8 @@ pub fn App<G: Html>(cx: Scope) -> View<G> {
     let name = create_signal(cx, String::new());
     let greet_msg = create_signal(cx, String::new());
 
-    let greet = move |_| {
+    let greet = move |e: Event| {
+        e.prevent_default();
         spawn_local_scoped(cx, async move {
             // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
             let new_msg =
@@ -62,9 +64,9 @@ pub fn App<G: Html>(cx: Scope) -> View<G> {
                     "rust-analyzer"
                 }
             }
-            div(class="row") {
+            form(class="row",on:submit=greet) {
                 input(id="greet-input",bind:value=name,placeholder="Enter a name...")
-                button(type="button",on:click=greet) {
+                button(type="submit") {
                     "Greet"
                 }
             }
