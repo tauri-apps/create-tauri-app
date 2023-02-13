@@ -74,14 +74,15 @@ jobs:
         shell: bash
 
       - run: cargo build --release --package create-tauri-app --target ${{ matrix.settings.target }}
-        if: matrix.settings.target == 'aarch64-unknown-linux-musl'
+        if: ${{ matrix.settings.target == 'aarch64-unknown-linux-musl' }}
+
       - run: |
           export PATH="$PWD/aarch64-linux-musl-cross/bin:$PATH"
           cargo build --release --package create-tauri-app --target ${{ matrix.settings.target }}
-        if: matrix.settings.target == 'aarch64-unknown-linux-musl'
+        if: ${{ matrix.settings.target == 'aarch64-unknown-linux-musl' }}
 
       - name: upload artifact
-        if: matrix.settings.target.startsWith('aarch64')
+        if: ${{ matrix.settings.target.startsWith('aarch64') }}
         uses: actions/upload-artifact@v3
         with:
           name: "${{ matrix.settings.target }}"
@@ -89,7 +90,7 @@ jobs:
           if-no-files-found: error
 
       - name: upload artifact
-        if: !matrix.settings.target.startsWith('aarch64')
+        if: ${{ !matrix.settings.target.startsWith('aarch64') }}
         uses: actions/upload-artifact@v3
         with:
           name: "${{ matrix.settings.target }}"
