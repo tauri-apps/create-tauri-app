@@ -82,7 +82,7 @@ jobs:
         if: ${{ matrix.settings.target == 'aarch64-unknown-linux-musl' }}
 
       - name: upload artifact
-        if: ${{ matrix.settings.target.startsWith('aarch64') }}
+        if: ${{ startsWith(matrix.settings.target, 'aarch64') }}
         uses: actions/upload-artifact@v3
         with:
           name: "${{ matrix.settings.target }}"
@@ -90,7 +90,7 @@ jobs:
           if-no-files-found: error
 
       - name: upload artifact
-        if: ${{ !matrix.settings.target.startsWith('aarch64') }}
+        if: ${{ !startsWith(matrix.settings.target, 'aarch64') }}
         uses: actions/upload-artifact@v3
         with:
           name: "${{ matrix.settings.target }}"
