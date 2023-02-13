@@ -88,42 +88,42 @@ jobs:
           path: target/${{ matrix.settings.target }}/release/cargo-create-tauri-app${{ matrix.settings.ext }}
           if-no-files-found: error
 
-  # publish:
-  #   needs:
-  #     - build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
+  publish:
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
 
-  #     - name: download all artifacts
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         path: binaries
+      - name: download all artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: binaries
 
-  #     - run: ls -R
-  #       working-directory: binaries
+      - run: ls -R
+        working-directory: binaries
 
-  #     - name: rename files
-  #       working-directory: binaries
-  #       shell: bash
-  #       run: |
-  #         find . -name 'cargo-create-tauri-app*' -print0 | while read -d '' file
-  #         do
-  #           parent="$(basename $(dirname ${file}))"
-  #           target="${file#./}"
-  #           target="${target/cargo-create-tauri-app/create-tauri-app-${parent}}"
-  #           target="${target/${parent}\//}"
-  #           mv $file $target
-  #         done
-  #         find . -type d -empty -delete
+      - name: rename files
+        working-directory: binaries
+        shell: bash
+        run: |
+          find . -name 'cargo-create-tauri-app*' -print0 | while read -d '' file
+          do
+            parent="$(basename $(dirname ${file}))"
+            target="${file#./}"
+            target="${target/cargo-create-tauri-app/create-tauri-app-${parent}}"
+            target="${target/${parent}\//}"
+            mv $file $target
+          done
+          find . -type d -empty -delete
 
-  #     - run: ls -R
-  #       working-directory: binaries
+      - run: ls -R
+        working-directory: binaries
 
-  #     - uses: xresloader/upload-to-github-release@v1
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       with:
-  #         release_id: "${{ github.event.client_payload.releaseId || inputs.releaseId }}"
-  #         file: "binaries/*;create-tauri-app.sh;create-tauri-app.ps1"
-  #         draft: false
+      # - uses: xresloader/upload-to-github-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     release_id: "${{ github.event.client_payload.releaseId || inputs.releaseId }}"
+      #     file: "binaries/*;create-tauri-app.sh;create-tauri-app.ps1"
+      #     draft: false
