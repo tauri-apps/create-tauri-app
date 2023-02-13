@@ -73,8 +73,8 @@ jobs:
         with:
           name: "${{ matrix.settings.target }}"
           path: |
-            target/${{ matrix.settings.target }}/release/cargo-create-tauri-app*
-            target/release/cargo-create-tauri-app*
+            target/${{ matrix.settings.target }}/release/cargo-create-tauri-app${{ matrix.settings.ext }}
+            target/release/cargo-create-tauri-app${{ matrix.settings.ext }}
           if-no-files-found: error
 
   # publish:
