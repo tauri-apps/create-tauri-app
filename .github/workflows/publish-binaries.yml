@@ -62,7 +62,7 @@ jobs:
         if: ${{ matrix.settings.setup }}
         shell: bash
 
-      - run: cargo build --release --target ${{ matrix.settings.target }}
+      - run: cargo build --release --package create-tauri-app --target ${{ matrix.settings.target }}
 
       - name: upload artifact
         uses: actions/upload-artifact@v3
