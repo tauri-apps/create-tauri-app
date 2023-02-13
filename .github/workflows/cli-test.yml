@@ -36,13 +36,5 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: install rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: ${{ matrix.toolchain }}
-          override: true
-
-      - uses: actions-rs/cargo@v1
-        with:
-          command: test
+      - uses: dtolnay/rust-toolchain@${{ matrix.toolchain }}
+      - run: cargo test
