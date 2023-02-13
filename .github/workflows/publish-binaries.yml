@@ -81,12 +81,19 @@ jobs:
         if: matrix.settings.target == 'aarch64-unknown-linux-musl'
 
       - name: upload artifact
+        if: matrix.settings.target.startsWith('aarch64')
         uses: actions/upload-artifact@v3
         with:
           name: "${{ matrix.settings.target }}"
-          path: |
-            target/${{ matrix.settings.target }}/release/cargo-create-tauri-app${{ matrix.settings.ext }}
-            target/release/cargo-create-tauri-app${{ matrix.settings.ext }}
+          path: target/${{ matrix.settings.target }}/release/cargo-create-tauri-app${{ matrix.settings.ext }}
+          if-no-files-found: error
+
+      - name: upload artifact
+        if: !matrix.settings.target.startsWith('aarch64')
+        uses: actions/upload-artifact@v3
+        with:
+          name: "${{ matrix.settings.target }}"
+          path: target/release/cargo-create-tauri-app${{ matrix.settings.ext }}
           if-no-files-found: error
 
   # publish:
