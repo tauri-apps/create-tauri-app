@@ -57,7 +57,7 @@ jobs:
             setup: |
                   wget https://musl.cc/aarch64-linux-musl-cross.tgz
                   tar -xvzf aarch64-linux-musl-cross.tgz
-                  export PATH="$PWD:PATH"
+                  export PATH="$PWD/aarch64-linux-musl-cross/bin:PATH"
 
     name: ${{ matrix.settings.target }}
     runs-on: ${{ matrix.settings.host }}
