@@ -81,6 +81,8 @@ jobs:
           cargo build --release --package create-tauri-app --target ${{ matrix.settings.target }}
         if: ${{ matrix.settings.target == 'aarch64-unknown-linux-musl' }}
 
+      - run: ls -laR target
+
       - name: upload artifact
         if: ${{ startsWith(matrix.settings.target, 'aarch64') }}
         uses: actions/upload-artifact@v3
