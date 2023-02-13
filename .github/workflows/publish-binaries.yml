@@ -52,11 +52,13 @@ jobs:
             setup: |
                   sudo apt-get update
                   sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf -y
-          - host: ubuntu-18.04
+          - host: ubuntu-latest
             target: aarch64-unknown-linux-musl
             setup: |
                   wget https://musl.cc/aarch64-linux-musl-cross.tgz
+                  echo '::group::extracting'
                   tar -xvzf aarch64-linux-musl-cross.tgz
+                  echo '::endgroup::'
                   export PATH="$PWD/aarch64-linux-musl-cross/bin:PATH"
                   ls "$PWD/aarch64-linux-musl-cross/bin"
                   echo $PATH
