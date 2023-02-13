@@ -1,5 +1,12 @@
 # Changelog
 
+## \[2.8.0]
+
+- Fix generated output to use HTML forms properly.
+  - [4beabe2](https://www.github.com/tauri-apps/create-tauri-app/commit/4beabe2e15b41b18535d9a56cdba1f9e509e459c) feat: use forms in templates ([#331](https://www.github.com/tauri-apps/create-tauri-app/pull/331)) on 2023-02-13
+- Add `sycamore` template for `cargo` package manager.
+  - [fbe297d](https://www.github.com/tauri-apps/create-tauri-app/commit/fbe297dcd3bd3a131eaebf21293979dfad38a008) chore: change file for sycamore on 2023-02-13
+
 ## \[2.7.10]
 
 - Update `@svelte/kit` to new major version `1.x` and update related dependencies. Also, fixed the `check` and `check:watch` scripts in `svelte-kit-ts` template.
