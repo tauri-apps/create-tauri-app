@@ -46,7 +46,7 @@ jobs:
             target: aarch64-unknown-linux-gnu
             setup: |
                   sudo apt-get update
-                  sudo apt-get install gcc-arm-linux-gnu g++-arm-linux-gnu -y
+                  sudo apt-get install gcc-aarch64-linux-gnu -y
           - host: ubuntu-18.04
             target: armv7-unknown-linux-gnueabihf
             setup: |
@@ -56,7 +56,7 @@ jobs:
             target: aarch64-unknown-linux-musl
             setup: |
                   sudo apt-get update
-                  sudo apt-get install gcc-arm-linux-musl g++-arm-linux-musl -y
+                  sudo apt-get install gcc-aarch64-linux-gnu -y
 
     name: ${{ matrix.settings.target }}
     runs-on: ${{ matrix.settings.host }}
