@@ -52,7 +52,7 @@ pub fn app() -> Html {
     let greet = {
         let name = name.clone();
         let greet_input_ref = greet_input_ref.clone();
-        Callback::from(move |e: Event| {
+        Callback::from(move |e: SubmitEvent| {
             e.prevent_default();
             name.set(
                 greet_input_ref
