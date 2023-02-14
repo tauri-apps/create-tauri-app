@@ -48,7 +48,8 @@ pub fn app() -> Html {
     let greet = {
         let name = name.clone();
         let greet_input_ref = greet_input_ref.clone();
-        Callback::from(move |_| {
+        Callback::from(move |e: SubmitEvent| {
+            e.prevent_default();
             name.set(
                 greet_input_ref
                     .cast::<web_sys::HtmlInputElement>()
@@ -80,10 +81,10 @@ pub fn app() -> Html {
                 <a href="https://github.com/rust-lang/rust-analyzer" target="_blank">{"rust-analyzer"}</a>
             </p>
 
-            <div class="row">
+            <form class="row" onsubmit={greet}>
                 <input id="greet-input" ref={greet_input_ref} placeholder="Enter a name..." />
-                <button type="button" onclick={greet}>{"Greet"}</button>
-            </div>
+                <button type="submit">{"Greet"}</button>
+            </form>
 
             <p><b>{ &*greet_msg }</b></p>
         </main>

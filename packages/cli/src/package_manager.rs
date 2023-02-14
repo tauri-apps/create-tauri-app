@@ -32,7 +32,12 @@ impl<'a> PackageManager {
 impl PackageManager {
     pub const fn templates(&self) -> &[Template] {
         match self {
-            PackageManager::Cargo => &[Template::Vanilla, Template::Yew, Template::Leptos],
+            PackageManager::Cargo => &[
+                Template::Vanilla,
+                Template::Yew,
+                Template::Leptos,
+                Template::Sycamore,
+            ],
             PackageManager::Pnpm | PackageManager::Yarn | PackageManager::Npm => &[
                 Template::Vanilla,
                 Template::Vue,
@@ -45,7 +50,12 @@ impl PackageManager {
 
     pub const fn templates_all(&self) -> &[Template] {
         match self {
-            PackageManager::Cargo => &[Template::Vanilla, Template::Yew, Template::Leptos],
+            PackageManager::Cargo => &[
+                Template::Vanilla,
+                Template::Yew,
+                Template::Leptos,
+                Template::Sycamore,
+            ],
             PackageManager::Pnpm | PackageManager::Yarn | PackageManager::Npm => &[
                 Template::Vanilla,
                 Template::VanillaTs,

@@ -110,14 +110,10 @@ jobs:
           cache-dependency-path: '**/pnpm-lock.yaml'
           architecture: ${{ matrix.settings.architecture }}
 
-      - name: Install
-        uses: actions-rs/toolchain@v1
+      - uses: dtolnay/rust-toolchain@stable
         if: ${{ !matrix.settings.docker }}
         with:
-          profile: minimal
-          override: true
-          toolchain: stable
-          target: ${{ matrix.settings.target }}
+          targets: ${{ matrix.settings.target }}
 
       - uses: Swatinem/rust-cache@v1
         if: ${{ matrix.settings.docker }}
