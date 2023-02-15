@@ -1,7 +1,7 @@
-const changedFiles = process.argv.slice(2);
+const changedFilesStr = process.argv[2];
+const changedFiles = changedFilesStr.split(",");
 
 const nodeJsTemplates = [
-  "angular",
   "svelte",
   "svelte-ts",
   "vue",
@@ -12,13 +12,6 @@ const nodeJsTemplates = [
   "react-ts",
   "vanilla",
   "vanilla-ts",
-  "next",
-  "next-ts",
-  "preact",
-  "preact-ts",
-  "clojurescript",
-  "svelte-kit",
-  "svelte-kit-ts",
 ];
 
 const matrixConfig = [
@@ -44,7 +37,7 @@ const matrixConfig = [
     manager: "cargo",
     install_cmd: "",
     run_cmd: "cargo",
-    templates: ["vanilla", "yew"],
+    templates: ["vanilla", "yew", "leptos"],
   },
 ];
 
@@ -66,6 +59,7 @@ matrixConfig
       ) {
         outMatrix.push({
           template: t,
+          install_trunk: ["yew", "leptos"].includes(t),
           ...managerInfo,
         });
       }

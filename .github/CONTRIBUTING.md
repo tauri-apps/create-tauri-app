@@ -58,9 +58,11 @@ cargo run -- <cli arguments>
 
 ### Templates
 
-A template is a just combination of two fragments, [`fragment-base`](../packages/cli/fragments/base) (which is shared between all templates) and another fragment that is specific to the template.
+A template is a just combination of two fragments, [`_base_`](../packages/cli/fragments/_base_) (which is shared between all templates) and another fragment that is specific to the template.
 
 #### Adding a new template
+
+> You should open a new issue first to discuss the addition of a certain template.
 
 - Add a directory in `<repo-root>/packages/cli/fragments` and name `fragment-template` where `template` is the name of the template and add all the files you need there as they should appear after the template is created.
 - A template also must have a `_cta_manifest_` file which contains info about the template:
@@ -80,7 +82,7 @@ A template is a just combination of two fragments, [`fragment-base`](../packages
   # the second part is the path that the file will be copied to under the final template directory
   tauri.svg = public/tauri.svg
   ```
-- In `<repo-root>/packages/cli/src/template.rs`, add an entry in the `Template` enum, modify `post_init_info` if needed and modify `FromStr` and `Display` implementation
+- In `<repo-root>/packages/cli/src/template.rs`, add an entry in the `Template` enum, modify `post_init_info`, `flavors` and `from_flavor` if needed and modify `FromStr` and `Display` implementation
 - In `<repo-root>/packages/cli/src/package_manager.rs` add your new template to the appropraite package manager in the `templates` method
 - Modify `<repo-root>/.scripts/generate-templates-matrix.js` and append the template name inside the template list for the appropriate package manager so the CI would run tests for it.
 - If the template requires system dependencies, add a post init note in `<repo-root>/packages/cli/src/template.rs` in `post_init_info` method.

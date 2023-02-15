@@ -32,7 +32,30 @@ impl<'a> PackageManager {
 impl PackageManager {
     pub const fn templates(&self) -> &[Template] {
         match self {
-            PackageManager::Cargo => &[Template::Vanilla, Template::Yew, Template::Sycamore],
+            PackageManager::Cargo => &[
+                Template::Vanilla,
+                Template::Yew,
+                Template::Leptos,
+                Template::Sycamore,
+            ],
+            PackageManager::Pnpm | PackageManager::Yarn | PackageManager::Npm => &[
+                Template::Vanilla,
+                Template::Vue,
+                Template::Svelte,
+                Template::React,
+                Template::Solid,
+            ],
+        }
+    }
+
+    pub const fn templates_all(&self) -> &[Template] {
+        match self {
+            PackageManager::Cargo => &[
+                Template::Vanilla,
+                Template::Yew,
+                Template::Leptos,
+                Template::Sycamore,
+            ],
             PackageManager::Pnpm | PackageManager::Yarn | PackageManager::Npm => &[
                 Template::Vanilla,
                 Template::VanillaTs,
@@ -44,17 +67,10 @@ impl PackageManager {
                 Template::ReactTs,
                 Template::Solid,
                 Template::SolidTs,
-                Template::Next,
-                Template::NextTs,
-                Template::Preact,
-                Template::PreactTs,
-                Template::Angular,
-                Template::ClojureScript,
-                Template::SvelteKit,
-                Template::SvelteKitTs,
             ],
         }
     }
+
     pub const fn install_cmd(&self) -> Option<&str> {
         match self {
             PackageManager::Pnpm => Some("pnpm install"),

@@ -11,7 +11,8 @@ use crate::{colors::*, package_manager::PackageManager};
 
 #[derive(RustEmbed)]
 #[folder = "$CARGO_MANIFEST_DIR/fragments"]
-struct Fragments;
+#[allow(clippy::upper_case_acronyms)]
+struct FRAGMENTS;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
@@ -27,14 +28,7 @@ pub enum Template {
     Solid,
     SolidTs,
     Yew,
-    Next,
-    NextTs,
-    Preact,
-    PreactTs,
-    Angular,
-    ClojureScript,
-    SvelteKit,
-    SvelteKitTs,
+    Leptos,
     Sycamore,
 }
 
@@ -49,7 +43,6 @@ impl Display for Template {
         match self {
             Template::Vanilla => write!(f, "vanilla"),
             Template::VanillaTs => write!(f, "vanilla-ts"),
-            Template::Angular => write!(f, "angular"),
             Template::Vue => write!(f, "vue"),
             Template::VueTs => write!(f, "vue-ts"),
             Template::Svelte => write!(f, "svelte"),
@@ -59,13 +52,7 @@ impl Display for Template {
             Template::Solid => write!(f, "solid"),
             Template::SolidTs => write!(f, "solid-ts"),
             Template::Yew => write!(f, "yew"),
-            Template::Next => write!(f, "next"),
-            Template::NextTs => write!(f, "next-ts"),
-            Template::Preact => write!(f, "preact"),
-            Template::PreactTs => write!(f, "preact-ts"),
-            Template::ClojureScript => write!(f, "clojurescript"),
-            Template::SvelteKit => write!(f, "svelte-kit"),
-            Template::SvelteKitTs => write!(f, "svelte-kit-ts"),
+            Template::Leptos => write!(f, "leptos"),
             Template::Sycamore => write!(f, "sycamore"),
         }
     }
@@ -76,7 +63,7 @@ impl FromStr for Template {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "vanilla" => Ok(Template::Vanilla),
-            "angular" => Ok(Template::Angular),
+            "vanilla-ts" => Ok(Template::VanillaTs),
             "vue" => Ok(Template::Vue),
             "vue-ts" => Ok(Template::VueTs),
             "svelte" => Ok(Template::Svelte),
@@ -86,14 +73,7 @@ impl FromStr for Template {
             "solid" => Ok(Template::Solid),
             "solid-ts" => Ok(Template::SolidTs),
             "yew" => Ok(Template::Yew),
-            "next" => Ok(Template::Next),
-            "next-ts" => Ok(Template::NextTs),
-            "preact" => Ok(Template::Preact),
-            "preact-ts" => Ok(Template::PreactTs),
-            "vanilla-ts" => Ok(Template::VanillaTs),
-            "clojurescript" => Ok(Template::ClojureScript),
-            "svelte-kit" => Ok(Template::SvelteKit),
-            "svelte-kit-ts" => Ok(Template::SvelteKitTs),
+            "leptos" => Ok(Template::Leptos),
             "sycamore" => Ok(Template::Sycamore),
             _ => Err("Invalid template".to_string()),
         }
@@ -113,54 +93,71 @@ impl<'a> Template {
         Template::Solid,
         Template::SolidTs,
         Template::Yew,
-        Template::Next,
-        Template::NextTs,
-        Template::Preact,
-        Template::PreactTs,
-        Template::Angular,
-        Template::ClojureScript,
-        Template::SvelteKit,
-        Template::SvelteKitTs,
+        Template::Leptos,
         Template::Sycamore,
     ];
 
-    pub fn post_init_info(&self, pkg_manager: PackageManager) -> Option<String> {
+    pub fn flavors<'b>(&self, pkg_manager: PackageManager) -> Option<&'b [Flavor]> {
         match self {
-            Template::Yew | Template::Sycamore => Some(
+            Template::Vanilla => {
+                if pkg_manager == PackageManager::Cargo {
+                    None
+                } else {
+                    Some(&[Flavor::JavaScript, Flavor::TypeScript])
+                }
+            }
+            Template::Vue => Some(&[Flavor::JavaScript, Flavor::TypeScript]),
+            Template::Svelte => Some(&[Flavor::JavaScript, Flavor::TypeScript]),
+            Template::React => Some(&[Flavor::JavaScript, Flavor::TypeScript]),
+            Template::Solid => Some(&[Flavor::JavaScript, Flavor::TypeScript]),
+            _ => None,
+        }
+    }
+
+    pub fn from_flavor(&self, flavor: Flavor) -> Self {
+        match (self, flavor) {
+            (Template::Vanilla, Flavor::TypeScript) => Template::VanillaTs,
+            (Template::Vue, Flavor::TypeScript) => Template::VueTs,
+            (Template::Svelte, Flavor::TypeScript) => Template::SvelteTs,
+            (Template::React, Flavor::TypeScript) => Template::ReactTs,
+            (Template::Solid, Flavor::TypeScript) => Template::SolidTs,
+            _ => *self,
+        }
+    }
+
+    pub fn post_init_info(&self, pkg_manager: PackageManager, alpha: bool) -> Option<String> {
+        let tauri_cli_cmd = if alpha {
+            "cargo install tauri-cli --version 2.0.0-alpha.2"
+        } else {
+            "cargo install tauri-cli"
+        };
+
+        match self {
+            Template::Yew | Template::Leptos| Template::Sycamore => Some(
                 format!(
-                    "{ITALIC}{DIM}You also need to install {DIMRESET}{YELLOW}tauri-cli{WHITE}{DIM} ({DIMRESET}{BLUE}cargo install tauri-cli{WHITE}{DIM}), {DIMRESET}{YELLOW}trunk{WHITE}{DIM} ({DIMRESET}{BLUE}https://trunkrs.dev/#install{WHITE}{DIM}) and {DIMRESET}{YELLOW}wasm32{WHITE}{DIM} rust target ({DIMRESET}{BLUE}rustup target add wasm32-unknown-unknown{WHITE}{DIM}){DIMRESET}{RESET}",
+                    "{ITALIC}{DIM}You also need to install:\n    1. {DIMRESET}{YELLOW}tauri-cli{WHITE}{DIM} ({DIMRESET}{BLUE}{tauri_cli_cmd}{WHITE}{DIM})\n    2. {DIMRESET}{YELLOW}trunk{WHITE}{DIM} ({DIMRESET}{BLUE}https://trunkrs.dev/#install{WHITE}{DIM})\n    3. {DIMRESET}{YELLOW}wasm32{WHITE}{DIM} rust target ({DIMRESET}{BLUE}rustup target add wasm32-unknown-unknown{WHITE}{DIM}){DIMRESET}{RESET}",
                     ITALIC = ITALIC,
                     DIM = DIM,
                     DIMRESET = DIMRESET,
                     YELLOW = YELLOW,
                     WHITE = WHITE,
                     BLUE = BLUE,
-                    RESET = RESET
+                    RESET = RESET,
+                    tauri_cli_cmd = tauri_cli_cmd,
                 ),
             ),
             Template::Vanilla if pkg_manager == PackageManager::Cargo => Some(
                     format!(
-                        "{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}tauri-cli{WHITE} {DIM}({DIMRESET}{BLUE}cargo install tauri-cli{WHITE}{DIM})",
+                        "{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}tauri-cli{WHITE} {DIM}({DIMRESET}{BLUE}{tauri_cli_cmd}{WHITE}{DIM})",
                         ITALIC = ITALIC,
                         DIM = DIM,
                         DIMRESET = DIMRESET,
                         YELLOW = YELLOW,
                         WHITE = WHITE,
                         BLUE = BLUE,
+                        tauri_cli_cmd = tauri_cli_cmd,
                     ),
                 ),
-          Template::ClojureScript => Some(
-            format!(
-              "{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}java{WHITE} {DIM}(e.g. {DIMRESET}{BLUE}https://adoptium.net{WHITE}{DIM}) and{DIMRESET} {YELLOW}clojure{WHITE} {DIM}({DIMRESET}{BLUE}https://clojure.org/guides/install_clojure{WHITE}{DIM}){DIMRESET}{RESET}",
-              ITALIC = ITALIC,
-              DIM = DIM,
-              DIMRESET = DIMRESET,
-              YELLOW = YELLOW,
-              WHITE = WHITE,
-              BLUE = BLUE,
-              RESET = RESET
-            ),
-          ),
             _ => None,
         }
     }
@@ -170,12 +167,16 @@ impl<'a> Template {
         target_dir: &path::Path,
         pkg_manager: PackageManager,
         package_name: &str,
+        alpha: bool,
+        mobile: bool,
     ) -> anyhow::Result<()> {
-        let manifest_bytes = Fragments::get(&format!("fragment-{}/_cta_manifest_", self))
+        let manifest_bytes = FRAGMENTS::get(&format!("fragment-{}/_cta_manifest_", self))
             .with_context(|| "Failed to get manifest bytes")?
             .data;
         let manifest_str = String::from_utf8(manifest_bytes.to_vec())?;
         let manifest = Manifest::parse(&manifest_str)?;
+
+        let lib_name = format!("{}_lib", package_name.replace('-', "_"));
 
         let write_file = |file: &str| -> anyhow::Result<()> {
             let manifest = manifest.clone();
@@ -197,12 +198,29 @@ impl<'a> Template {
                 "_cta_manifest_" => return Ok(()),
                 // conditional files:
                 // are files that start with a special syntax
-                //          "_[<list of package managers separated by `-`>]_<file_name>"
-                // example: "_[pnpm-npm-yarn]_package.json"
-                name if name.starts_with("_[") => {
-                    let mut s = name.strip_prefix("_[").unwrap().split("]_");
-                    let (mut managers, name) = (s.next().unwrap().split('-'), s.next().unwrap());
-                    if managers.any(|x| x == pkg_manager.to_string()) {
+                //          "%(<list of flags separated by `-`>%)<file_name>"
+                // flags are supported package managers, stable, alpha and mobile.
+                // example: "%(pnpm-npm-yarn-stable-alpha)%package.json"
+                name if name.starts_with("%(") && name[1..].contains(")%") => {
+                    let mut s = name.strip_prefix("%(").unwrap().split(")%");
+                    let (mut flags, name) = (
+                        s.next().unwrap().split('-').collect::<Vec<_>>(),
+                        s.next().unwrap(),
+                    );
+
+                    let for_stable = flags.contains(&"stable");
+                    let for_alpha = flags.contains(&"alpha");
+                    let for_mobile = flags.contains(&"mobile");
+
+                    // remove these flags to only keep package managers flags
+                    flags.retain(|e| !["stable", "alpha", "mobile"].contains(e));
+
+                    if ((for_stable && !alpha)
+                        || (for_alpha && alpha && !mobile)
+                        || (for_mobile && alpha && mobile)
+                        || (!for_stable && !for_alpha && !for_mobile))
+                        && (flags.contains(&pkg_manager.to_string().as_str()) || flags.is_empty())
+                    {
                         name
                     } else {
                         // skip writing this file
@@ -212,20 +230,24 @@ impl<'a> Template {
                 _ => &file_name,
             };
 
-            let mut data = Fragments::get(file).unwrap().data.to_vec();
+            let mut data = FRAGMENTS::get(file).unwrap().data.to_vec();
 
             // Only modify specific set of files
             if [
                 "Cargo.toml",
                 "package.json",
                 "tauri.conf.json",
-                "angular.json",
+                "main.rs",
+                "vite.config.ts",
+                "vite.config.js",
+                "Trunk.toml",
             ]
             .contains(&target_file_name)
             {
-                if let Ok(str_) = String::from_utf8(data.to_vec()) {
-                    data = str_
+                if let Ok(content) = String::from_utf8(data.to_vec()) {
+                    data = content
                         .replace("{{package_name}}", package_name)
+                        .replace("{{lib_name}}", &lib_name)
                         .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
                         .replace(
                             "{{fragment_before_dev_command}}",
@@ -259,20 +281,19 @@ impl<'a> Template {
             Ok(())
         };
 
-        // write base files first
-        for file in Fragments::iter().filter(|e| {
+        for file in FRAGMENTS::iter().filter(|e| {
             path::PathBuf::from(e.to_string())
                 .components()
                 .next()
                 .unwrap()
                 .as_os_str()
-                == "base"
+                == "_base_"
         }) {
             write_file(&file)?;
         }
 
         // then write template files which can override files from base
-        for file in Fragments::iter().filter(|e| {
+        for file in FRAGMENTS::iter().filter(|e| {
             path::PathBuf::from(e.to_string())
                 .components()
                 .next()
@@ -285,7 +306,7 @@ impl<'a> Template {
 
         // then write extra files specified in the fragment manifest
         for (src, dest) in manifest.files {
-            let data = Fragments::get(&format!("_assets_/{}", src))
+            let data = FRAGMENTS::get(&format!("_assets_/{}", src))
                 .with_context(|| format!("Failed to get asset file bytes: {}", src))?
                 .data;
             let dest = target_dir.join(dest);
@@ -302,6 +323,22 @@ impl<'a> Template {
     }
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum Flavor {
+    JavaScript,
+    TypeScript,
+}
+
+impl Display for Flavor {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Flavor::JavaScript => write!(f, "JavaScript"),
+            Flavor::TypeScript => write!(f, "TypeScript"),
+        }
+    }
+}
+
 #[derive(Default, Clone)]
 struct Manifest<'a> {
     before_dev_command: Option<&'a str>,
@@ -315,8 +352,11 @@ struct Manifest<'a> {
 impl<'a> Manifest<'a> {
     fn parse(s: &'a str) -> Result<Self, anyhow::Error> {
         let mut manifest = Manifest::default();
-        let mut is_files_section = false;
+        let mut in_files_section = false;
         for (i, line) in s.split('\n').enumerate() {
+            let line_number = i + 1;
+
+            // ignore the comment portion of the line
             let line = line.split('#').next().unwrap().trim();
 
             if line.is_empty() {
@@ -324,7 +364,7 @@ impl<'a> Manifest<'a> {
             }
 
             if line == "[files]" {
-                is_files_section = true;
+                in_files_section = true;
                 continue;
             }
 
@@ -333,22 +373,25 @@ impl<'a> Manifest<'a> {
                 let (k, v) = (
                     s.next()
                         .with_context(|| {
-                            format!("parsing manifest: key is not found in line {}", i + 1)
+                            format!("parsing manifest: key is not found in line {}", line_number)
                         })?
                         .trim(),
                     s.next()
                         .with_context(|| {
-                            format!("parsing manifest: value is not found in line {}", i + 1)
+                            format!(
+                                "parsing manifest: value is not found in line {}",
+                                line_number
+                            )
                         })?
                         .trim(),
                 );
 
                 if k.is_empty() {
-                    bail!("parsing manifest: key is empty in line {}", i + 1);
+                    bail!("parsing manifest: key is empty in line {}", line_number);
                 }
 
                 if v.is_empty() {
-                    bail!("parsing manifest: value is empty in line {}", i + 1);
+                    bail!("parsing manifest: value is empty in line {}", line_number);
                 }
 
                 match k {
@@ -357,7 +400,7 @@ impl<'a> Manifest<'a> {
                     "devPath" => manifest.dev_path = Some(v),
                     "distDir" => manifest.dist_dir = Some(v),
                     "withGlobalTauri" => manifest.with_global_tauri = v.parse()?,
-                    _ if is_files_section => {
+                    _ if in_files_section => {
                         manifest.files.insert(k, v);
                     }
                     _ => {}

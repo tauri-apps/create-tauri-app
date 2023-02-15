@@ -40,25 +40,35 @@ jobs:
           path: create-tauri-app.tar
           if-no-files-found: error
 
+  generate-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+    steps:
+      - uses: actions/checkout@v2
+
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v29.0.1
+        uses: tj-actions/changed-files@v35
+        with:
+          separator: ","
 
       - name: set matrix
         id: set-matrix
         shell: bash
         run: |
-          OUT="$(node .scripts/generate-templates-matrix.js ${{ steps.changed-files.outputs.all_changed_files }})"
-          echo "::set-output name=matrix::$OUT"
+          OUT="$(node .scripts/generate-templates-matrix.js '${{ steps.changed-files.outputs.all_changed_files }}')"
+          echo "matrix=$OUT" >> $GITHUB_OUTPUT
 
   test:
-    needs: build-cli
+    needs: [build-cli, generate-matrix]
     runs-on: ubuntu-latest
-    if: ${{ needs.build-cli.outputs.matrix != '[]' && needs.build-cli.outputs.matrix != '' }}
+    if: ${{ needs.generate-matrix.outputs.matrix != '[]' && needs.generate-matrix.outputs.matrix != '' }}
     strategy:
       fail-fast: false
       matrix:
-        settings: ${{ fromJson(needs.build-cli.outputs.matrix) }}
+        settings: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
 
     name: ${{ matrix.settings.manager }} - ${{ matrix.settings.template }}
     steps:
@@ -81,7 +91,7 @@ jobs:
       - run: |
           rustup target add wasm32-unknown-unknown
           cargo install --locked trunk
-        if: matrix.settings.template == 'yew'
+        if: matrix.settings.install_trunk
 
       - name: download cli artifact
         uses: actions/download-artifact@v3

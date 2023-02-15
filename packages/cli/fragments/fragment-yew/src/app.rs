@@ -8,9 +8,6 @@ use yew::prelude::*;
 extern "C" {
     #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "tauri"])]
     async fn invoke(cmd: &str, args: JsValue) -> JsValue;
-
-    #[wasm_bindgen(js_namespace = console)]
-    fn log(s: &str);
 }
 
 #[derive(Serialize, Deserialize)]
@@ -36,11 +33,10 @@ pub fn app() -> Html {
                         return;
                     }
 
+                    let args = to_value(&GreetArgs { name: &*name }).unwrap();
                     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-                    let new_msg =
-                        invoke("greet", to_value(&GreetArgs { name: &*name }).unwrap()).await;
-                    log(&new_msg.as_string().unwrap());
-                    greet_msg.set(new_msg.as_string().unwrap());
+                    let new_msg = invoke("greet", args).await.as_string().unwrap();
+                    greet_msg.set(new_msg);
                 });
 
                 || {}
