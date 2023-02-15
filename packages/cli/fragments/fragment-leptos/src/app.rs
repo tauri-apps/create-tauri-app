@@ -1,4 +1,4 @@
-use leptos::web_sys::{Event, MouseEvent};
+use leptos::web_sys::{Event, SubmitEvent};
 use leptos::*;
 use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::to_value;
@@ -25,7 +25,7 @@ pub fn App(cx: Scope) -> impl IntoView {
         set_name.set(v);
     };
 
-    let greet = move |_ev: MouseEvent| {
+    let greet = move |_ev: SubmitEvent| {
         spawn_local(async move {
             if name.get().is_empty() {
                 return;
@@ -60,14 +60,14 @@ pub fn App(cx: Scope) -> impl IntoView {
                 <a href="https://github.com/rust-lang/rust-analyzer" target="_blank">"rust-analyzer"</a>
             </p>
 
-            <div class="row">
+            <form class="row" on:submit=greet>
                 <input
                     id="greet-input"
                     placeholder="Enter a name..."
                     on:input=update_name
                 />
-                <button type="button" on:click=greet>"Greet"</button>
-            </div>
+                <button type="submit">"Greet"</button>
+            </form>
 
             <p><b>{ move || greet_msg.get() }</b></p>
         </main>

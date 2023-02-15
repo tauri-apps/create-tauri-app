@@ -7,13 +7,17 @@ license = ""
 repository = ""
 edition = "2021"
 
+[lib]
+name = "{{lib_name}}"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-tauri-build = { version = "2.0.0-alpha.0", features = [] }
+tauri-build = { version = "2.0.0-alpha.1", features = [] }
 
 [dependencies]
-tauri = { version = "2.0.0-alpha.2", features = ["shell-open"] }
+tauri = { version = "2.0.0-alpha.3", features = ["shell-open"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 

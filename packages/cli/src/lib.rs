@@ -54,11 +54,13 @@ where
     } = args;
     let cwd = std::env::current_dir()?;
 
-    if mobile && !alpha {
-        eprintln!(
-            "{BOLD}{RED}error{RESET}: `{GREEN}--mobile{RESET}` option is only available if `{GREEN}--alpha{RESET}` option is also used"
-        );
-        exit(1);
+    if let Some(mobile) = mobile {
+        if mobile && !alpha {
+            eprintln!(
+                "{BOLD}{RED}error{RESET}: `{GREEN}--mobile{RESET}` option is only available if `{GREEN}--alpha{RESET}` option is also used"
+            );
+            exit(1);
+        }
     }
 
     // when invoked from pnpm, it seems like pnpm forgets to end its output with a new line
@@ -187,6 +189,18 @@ where
         }
     });
 
+    let mobile = mobile.unwrap_or_else(|| {
+        if skip {
+            defaults.mobile.unwrap()
+        } else {
+            Confirm::with_theme(&ColorfulTheme::default())
+                .with_prompt("Would you look to setup the project for mobile as well?")
+                .default(false)
+                .interact()
+                .unwrap()
+        }
+    });
+
     if !pkg_manager.templates_all().contains(&template) {
         eprintln!(
             "{BOLD}{RED}error{RESET}: the {GREEN}{}{RESET} template is not suppported for the {GREEN}{pkg_manager}{RESET} package manager\n       possible templates for {GREEN}{pkg_manager}{RESET} are: [{}]",
@@ -208,7 +222,7 @@ where
     println!(
         "{ITALIC}{DIM}Please follow{DIMRESET} {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites{WHITE} {DIM}to install the needed prerequisites, if you haven't already.{DIMRESET}{RESET}",
     );
-    if let Some(info) = template.post_init_info(pkg_manager) {
+    if let Some(info) = template.post_init_info(pkg_manager, alpha) {
         println!("{}", info);
     }
     println!();

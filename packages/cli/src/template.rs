@@ -125,29 +125,37 @@ impl<'a> Template {
         }
     }
 
-    pub fn post_init_info(&self, pkg_manager: PackageManager) -> Option<String> {
+    pub fn post_init_info(&self, pkg_manager: PackageManager, alpha: bool) -> Option<String> {
+        let tauri_cli_cmd = if alpha {
+            "cargo install tauri-cli --version 2.0.0-alpha.2"
+        } else {
+            "cargo install tauri-cli"
+        };
+
         match self {
             Template::Yew | Template::Leptos| Template::Sycamore => Some(
                 format!(
-                    "{ITALIC}{DIM}You also need to install {DIMRESET}{YELLOW}tauri-cli{WHITE}{DIM} ({DIMRESET}{BLUE}cargo install tauri-cli{WHITE}{DIM}), {DIMRESET}{YELLOW}trunk{WHITE}{DIM} ({DIMRESET}{BLUE}https://trunkrs.dev/#install{WHITE}{DIM}) and {DIMRESET}{YELLOW}wasm32{WHITE}{DIM} rust target ({DIMRESET}{BLUE}rustup target add wasm32-unknown-unknown{WHITE}{DIM}){DIMRESET}{RESET}",
+                    "{ITALIC}{DIM}You also need to install:\n    1. {DIMRESET}{YELLOW}tauri-cli{WHITE}{DIM} ({DIMRESET}{BLUE}{tauri_cli_cmd}{WHITE}{DIM})\n    2. {DIMRESET}{YELLOW}trunk{WHITE}{DIM} ({DIMRESET}{BLUE}https://trunkrs.dev/#install{WHITE}{DIM})\n    3. {DIMRESET}{YELLOW}wasm32{WHITE}{DIM} rust target ({DIMRESET}{BLUE}rustup target add wasm32-unknown-unknown{WHITE}{DIM}){DIMRESET}{RESET}",
                     ITALIC = ITALIC,
                     DIM = DIM,
                     DIMRESET = DIMRESET,
                     YELLOW = YELLOW,
                     WHITE = WHITE,
                     BLUE = BLUE,
-                    RESET = RESET
+                    RESET = RESET,
+                    tauri_cli_cmd = tauri_cli_cmd,
                 ),
             ),
             Template::Vanilla if pkg_manager == PackageManager::Cargo => Some(
                     format!(
-                        "{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}tauri-cli{WHITE} {DIM}({DIMRESET}{BLUE}cargo install tauri-cli{WHITE}{DIM})",
+                        "{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}tauri-cli{WHITE} {DIM}({DIMRESET}{BLUE}{tauri_cli_cmd}{WHITE}{DIM})",
                         ITALIC = ITALIC,
                         DIM = DIM,
                         DIMRESET = DIMRESET,
                         YELLOW = YELLOW,
                         WHITE = WHITE,
                         BLUE = BLUE,
+                        tauri_cli_cmd = tauri_cli_cmd,
                     ),
                 ),
             _ => None,
@@ -208,7 +216,7 @@ impl<'a> Template {
                     flags.retain(|e| !["stable", "alpha", "mobile"].contains(e));
 
                     if ((for_stable && !alpha)
-                        || (for_alpha && alpha)
+                        || (for_alpha && alpha && !mobile)
                         || (for_mobile && alpha && mobile)
                         || (!for_stable && !for_alpha && !for_mobile))
                         && (flags.contains(&pkg_manager.to_string().as_str()) || flags.is_empty())

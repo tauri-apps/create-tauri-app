@@ -14,8 +14,8 @@ pub struct Args {
     pub manager: Option<PackageManager>,
     pub template: Option<Template>,
     pub skip: bool,
-    pub mobile: bool,
     pub alpha: bool,
+    pub mobile: Option<bool>,
 }
 
 impl Default for Args {
@@ -26,7 +26,7 @@ impl Default for Args {
             template: Some(Template::Vanilla),
             skip: false,
             alpha: false,
-            mobile: false,
+            mobile: Some(false),
         }
     }
 }
@@ -85,7 +85,11 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
         template: pargs.opt_value_from_str(["-t", "--template"])?,
         skip: pargs.contains(["-y", "--yes"]),
         alpha: pargs.contains("--alpha"),
-        mobile: pargs.contains("--mobile"),
+        mobile: if pargs.contains("--mobile") {
+            Some(true)
+        } else {
+            None
+        },
         project_name: pargs.opt_free_from_str()?,
     };
 
