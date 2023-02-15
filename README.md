@@ -6,8 +6,8 @@
 [![Chat Server](https://img.shields.io/badge/chat-discord-7289da.svg)](https://discord.gg/SpmNs4S)
 [![website](https://img.shields.io/badge/website-tauri.app-purple.svg)](https://tauri.app)
 [![https://good-labs.github.io/greater-good-affirmation/assets/images/badge.svg](https://good-labs.github.io/greater-good-affirmation/assets/images/badge.svg)](https://good-labs.github.io/greater-good-affirmation)
-[![support](https://img.shields.io/badge/sponsor-Open%20Collective-blue.svg)](https://opencollective.com/tauri)
-<a href="https://github.com/tauri-apps/create-tauri-app#espa%C3%B1ol"> Also read in Spanish</a>
+[![support](https://img.shields.io/badge/sponsor-Open%20Collective-blue.svg)](https://opencollective.com/tauri)  <br>
+<a href="https://github.com/tauri-apps/create-tauri-app#espa%C3%B1ol"> Also read in Spanish</a> <br>
 
 # Usage
 
