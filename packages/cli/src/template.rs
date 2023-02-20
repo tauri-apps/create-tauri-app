@@ -119,13 +119,13 @@ impl<'a> Template {
                 if pkg_manager == PackageManager::Cargo {
                     None
                 } else {
-                    Some(&[Flavor::JavaScript, Flavor::TypeScript])
+                    Some(&[Flavor::TypeScript, Flavor::JavaScript])
                 }
             }
-            Template::Vue => Some(&[Flavor::JavaScript, Flavor::TypeScript]),
-            Template::Svelte => Some(&[Flavor::JavaScript, Flavor::TypeScript]),
-            Template::React => Some(&[Flavor::JavaScript, Flavor::TypeScript]),
-            Template::Solid => Some(&[Flavor::JavaScript, Flavor::TypeScript]),
+            Template::Vue => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
+            Template::Svelte => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
+            Template::React => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
+            Template::Solid => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
             _ => None,
         }
     }
