@@ -2,15 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-use dialoguer::{theme::ColorfulTheme, Confirm, Input, Select};
+use dialoguer::{Confirm, Input, Select};
 use std::{ffi::OsString, fs, process::exit};
 
-use crate::{colors::*, package_manager::PackageManager};
+use crate::{category::Category, colors::*, package_manager::PackageManager, theme::ColorfulTheme};
 
+mod category;
 mod cli;
 mod colors;
 mod package_manager;
 mod template;
+mod theme;
 
 pub mod internal {
     //! Re-export of create-tauri-app internals
@@ -62,10 +64,6 @@ where
             exit(1);
         }
     }
-
-    // when invoked from pnpm, it seems like pnpm forgets to end its output with a new line
-    // and it obscures the first question, this ensures we are on a new line before presenting our prompts
-    println!();
 
     let project_name = args.project_name.unwrap_or_else(|| {
         if skip {
@@ -132,27 +130,52 @@ where
         }
     };
 
+    let category = if args.manager.is_none() && !skip {
+        let managers = PackageManager::ALL.to_vec();
+        let managers = args
+            .template
+            .map(|t| {
+                managers
+                    .iter()
+                    .copied()
+                    .filter(|p| p.templates().contains(&t))
+                    .collect::<Vec<_>>()
+            })
+            .unwrap_or(managers);
+
+        let categories = Category::ALL.to_vec();
+        let categories = categories
+            .into_iter()
+            .filter(|c| c.package_managers().iter().any(|p| managers.contains(p)))
+            .collect::<Vec<_>>();
+
+        if categories.len() == 1 {
+            Some(categories[0])
+        } else {
+            let index = Select::with_theme(&ColorfulTheme::default())
+                .with_prompt("Choose which language to use for your frontend")
+                .items(&categories)
+                .default(0)
+                .interact()
+                .unwrap();
+            Some(categories[index])
+        }
+    } else {
+        None
+    };
+
     let pkg_manager = args.manager.unwrap_or_else(|| {
         if skip {
             defaults.manager.unwrap()
         } else {
-            let managers = PackageManager::ALL.to_vec();
-            let managers = args
-                .template
-                .map(|t| {
-                    managers
-                        .iter()
-                        .copied()
-                        .filter(|p| p.templates().contains(&t))
-                        .collect::<Vec<_>>()
-                })
-                .unwrap_or(managers);
+            let category = category.unwrap();
+            let managers = category.package_managers();
             if managers.len() == 1 {
                 managers[0]
             } else {
                 let index = Select::with_theme(&ColorfulTheme::default())
                     .with_prompt("Choose your package manager")
-                    .items(&managers)
+                    .items(managers)
                     .default(0)
                     .interact()
                     .unwrap();
@@ -168,7 +191,12 @@ where
         } else {
             let index = Select::with_theme(&ColorfulTheme::default())
                 .with_prompt("Choose your UI template")
-                .items(templates)
+                .items(
+                    &templates
+                        .iter()
+                        .map(|t| t.select_text())
+                        .collect::<Vec<_>>(),
+                )
                 .default(0)
                 .interact()
                 .unwrap();
@@ -190,11 +218,11 @@ where
     });
 
     let mobile = mobile.unwrap_or_else(|| {
-        if skip {
+        if skip || !alpha {
             defaults.mobile.unwrap()
         } else {
             Confirm::with_theme(&ColorfulTheme::default())
-                .with_prompt("Would you look to setup the project for mobile as well?")
+                .with_prompt("Would you like to setup the project for mobile as well?")
                 .default(false)
                 .interact()
                 .unwrap()

@@ -38,6 +38,22 @@ impl Default for Template {
     }
 }
 
+impl Template {
+    pub const fn select_text<'a>(&self) -> &'a str {
+        match self {
+            Template::Vanilla => "Vanilla",
+            Template::Vue => "Vue - (https://vuejs.org)",
+            Template::Svelte => "Svelte - (https://svelte.dev/)",
+            Template::React => "React - (https://reactjs.org/)",
+            Template::Solid => "Solid - (https://www.solidjs.com/)",
+            Template::Yew => "Yew - (https://yew.rs/)",
+            Template::Leptos => "Leptos - (https://github.com/leptos-rs/leptos)",
+            Template::Sycamore => "Sycamore - (https://sycamore-rs.netlify.app/)",
+            _ => unreachable!(),
+        }
+    }
+}
+
 impl Display for Template {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
@@ -103,13 +119,13 @@ impl<'a> Template {
                 if pkg_manager == PackageManager::Cargo {
                     None
                 } else {
-                    Some(&[Flavor::JavaScript, Flavor::TypeScript])
+                    Some(&[Flavor::TypeScript, Flavor::JavaScript])
                 }
             }
-            Template::Vue => Some(&[Flavor::JavaScript, Flavor::TypeScript]),
-            Template::Svelte => Some(&[Flavor::JavaScript, Flavor::TypeScript]),
-            Template::React => Some(&[Flavor::JavaScript, Flavor::TypeScript]),
-            Template::Solid => Some(&[Flavor::JavaScript, Flavor::TypeScript]),
+            Template::Vue => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
+            Template::Svelte => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
+            Template::React => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
+            Template::Solid => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
             _ => None,
         }
     }
