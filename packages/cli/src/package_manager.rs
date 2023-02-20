@@ -30,6 +30,7 @@ impl<'a> PackageManager {
     ];
 }
 impl PackageManager {
+    /// Returns templates without flavors
     pub const fn templates(&self) -> &[Template] {
         match self {
             PackageManager::Cargo => &[

@@ -56,6 +56,8 @@ where
     } = args;
     let cwd = std::env::current_dir()?;
 
+    // Allow `--mobile` to only be used with `--alpha` for now
+    // TODO: remove this limitation once tauri@v2 is stable
     if let Some(mobile) = mobile {
         if mobile && !alpha {
             eprintln!(
@@ -65,6 +67,8 @@ where
         }
     }
 
+    // Project name used for the project directory name
+    // and if valid, it will also be used in Cargo.toml, Package.json ...etc
     let project_name = args.project_name.unwrap_or_else(|| {
         if skip {
             defaults.project_name.unwrap()
@@ -81,6 +85,7 @@ where
 
     let target_dir = cwd.join(&project_name);
 
+    // Package name used in Cargo.toml, Package.json ...etc
     let package_name = if is_valid_pkg_name(&project_name) {
         project_name.clone()
     } else {
@@ -104,6 +109,7 @@ where
         }
     };
 
+    // Confirm deleting the target project directory if not empty
     if target_dir.exists() && target_dir.read_dir()?.next().is_some() {
         let overrwite = if skip {
             false
@@ -130,7 +136,9 @@ where
         }
     };
 
+    // Prompt for category if a package manger is not passed on the command line
     let category = if args.manager.is_none() && !skip {
+        // Filter managers if a template is passed on the command line
         let managers = PackageManager::ALL.to_vec();
         let managers = args
             .template
@@ -143,12 +151,14 @@ where
             })
             .unwrap_or(managers);
 
+        // Filter categories based on the detected package mangers
         let categories = Category::ALL.to_vec();
         let categories = categories
             .into_iter()
             .filter(|c| c.package_managers().iter().any(|p| managers.contains(p)))
             .collect::<Vec<_>>();
 
+        // If only one category is detected, skip prompt
         if categories.len() == 1 {
             Some(categories[0])
         } else {
@@ -164,12 +174,16 @@ where
         None
     };
 
+    // Package manager which will be used for rendering the template
+    // and the after-render instructions
     let pkg_manager = args.manager.unwrap_or_else(|| {
         if skip {
             defaults.manager.unwrap()
         } else {
             let category = category.unwrap();
             let managers = category.package_managers();
+
+            // If only one package manager is detected, skip prompt
             if managers.len() == 1 {
                 managers[0]
             } else {
@@ -185,6 +199,8 @@ where
     });
 
     let templates = pkg_manager.templates();
+
+    // Template to render
     let template = args.template.unwrap_or_else(|| {
         if skip {
             defaults.template.unwrap()
@@ -202,6 +218,7 @@ where
                 .unwrap();
             let template = templates[index];
 
+            // Prompt for flavors if the template has more than one flavor
             let flavors = template.flavors(pkg_manager);
             if let Some(flavors) = flavors {
                 let index = Select::with_theme(&ColorfulTheme::default())
@@ -217,6 +234,9 @@ where
         }
     });
 
+    // Prompt for wether to bootstrap a mobile-friendly tauri project
+    // This should only be prompted if `--alpha` is used on the command line and `--mobile` wasn't.
+    // TODO: remove this limitation once tauri@v2 is stable
     let mobile = mobile.unwrap_or_else(|| {
         if skip || !alpha {
             defaults.mobile.unwrap()
@@ -229,6 +249,9 @@ where
         }
     });
 
+    // If the package manager and the template are specified on the command line
+    // then almost all prompts are skipped so we need to make sure that the combination
+    // is valid, otherwise, we error and exit
     if !pkg_manager.templates_all().contains(&template) {
         eprintln!(
             "{BOLD}{RED}error{RESET}: the {GREEN}{}{RESET} template is not suppported for the {GREEN}{pkg_manager}{RESET} package manager\n       possible templates for {GREEN}{pkg_manager}{RESET} are: [{}]",
