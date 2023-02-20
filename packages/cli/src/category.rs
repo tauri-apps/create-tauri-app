@@ -31,16 +31,25 @@ impl<'a> Category {
 
 impl Display for Category {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let managers = self
+            .package_managers()
+            .to_vec()
+            .iter()
+            .map(|p| p.to_string())
+            .collect::<Vec<_>>()
+            .join(", ");
         match self {
             Category::Rust => write!(
                 f,
-                "Rust {DIM}(cargo){DIMRESET}",
+                "Rust {DIM}({managers}){DIMRESET}",
+                managers = managers,
                 DIM = DIM,
                 DIMRESET = DIMRESET,
             ),
             Category::JsTs => write!(
                 f,
-                "JavaScript / TypeScript {DIM}(npm, yarn, pnpm){DIMRESET}",
+                "JavaScript / TypeScript {DIM}({managers}){DIMRESET}",
+                managers = managers,
                 DIM = DIM,
                 DIMRESET = DIMRESET
             ),
