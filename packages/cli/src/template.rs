@@ -39,16 +39,16 @@ impl Default for Template {
 }
 
 impl Template {
-    pub const fn capitalized_str<'a>(&self) -> &'a str {
+    pub const fn select_text<'a>(&self) -> &'a str {
         match self {
             Template::Vanilla => "Vanilla",
-            Template::Vue => "Vue",
-            Template::Svelte => "Svelte",
-            Template::React => "React",
-            Template::Solid => "Solid",
-            Template::Yew => "Yew",
-            Template::Leptos => "Leptos",
-            Template::Sycamore => "Sycamore",
+            Template::Vue => "Vue - (https://vuejs.org)",
+            Template::Svelte => "Svelte - (https://svelte.dev/)",
+            Template::React => "React - (https://reactjs.org/)",
+            Template::Solid => "Solid - (https://www.solidjs.com/)",
+            Template::Yew => "Yew - (https://yew.rs/)",
+            Template::Leptos => "Leptos - (https://github.com/leptos-rs/leptos)",
+            Template::Sycamore => "Sycamore - (https://sycamore-rs.netlify.app/)",
             _ => unreachable!(),
         }
     }

@@ -194,7 +194,7 @@ where
                 .items(
                     &templates
                         .iter()
-                        .map(|t| t.capitalized_str())
+                        .map(|t| t.select_text())
                         .collect::<Vec<_>>(),
                 )
                 .default(0)
