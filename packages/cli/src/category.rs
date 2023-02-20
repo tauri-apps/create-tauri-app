@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-use crate::{colors::*, internal::package_manager::PackageManager};
+use crate::package_manager::PackageManager;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
@@ -39,20 +39,8 @@ impl Display for Category {
             .collect::<Vec<_>>()
             .join(", ");
         match self {
-            Category::Rust => write!(
-                f,
-                "Rust {DIM}({managers}){DIMRESET}",
-                managers = managers,
-                DIM = DIM,
-                DIMRESET = DIMRESET,
-            ),
-            Category::JsTs => write!(
-                f,
-                "JavaScript / TypeScript {DIM}({managers}){DIMRESET}",
-                managers = managers,
-                DIM = DIM,
-                DIMRESET = DIMRESET
-            ),
+            Category::Rust => write!(f, "Rust - ({})", managers,),
+            Category::JsTs => write!(f, "TypeScript / JavaScript - ({})", managers,),
         }
     }
 }

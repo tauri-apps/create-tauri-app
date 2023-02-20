@@ -2,16 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-use dialoguer::{theme::ColorfulTheme, Confirm, Input, Select};
+use dialoguer::{Confirm, Input, Select};
 use std::{ffi::OsString, fs, process::exit};
 
-use crate::{category::Category, colors::*, package_manager::PackageManager};
+use crate::{category::Category, colors::*, package_manager::PackageManager, theme::ColorfulTheme};
 
 mod category;
 mod cli;
 mod colors;
 mod package_manager;
 mod template;
+mod theme;
 
 pub mod internal {
     //! Re-export of create-tauri-app internals
