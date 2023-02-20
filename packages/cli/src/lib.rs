@@ -175,7 +175,7 @@ where
             } else {
                 let index = Select::with_theme(&ColorfulTheme::default())
                     .with_prompt("Choose your package manager")
-                    .items(&managers)
+                    .items(managers)
                     .default(0)
                     .interact()
                     .unwrap();
