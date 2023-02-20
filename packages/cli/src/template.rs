@@ -38,6 +38,22 @@ impl Default for Template {
     }
 }
 
+impl Template {
+    pub const fn capitalized_str<'a>(&self) -> &'a str {
+        match self {
+            Template::Vanilla => "Vanilla",
+            Template::Vue => "Vue",
+            Template::Svelte => "Svelte",
+            Template::React => "React",
+            Template::Solid => "Solid",
+            Template::Yew => "Yew",
+            Template::Leptos => "Leptos",
+            Template::Sycamore => "Sycamore",
+            _ => unreachable!(),
+        }
+    }
+}
+
 impl Display for Template {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {

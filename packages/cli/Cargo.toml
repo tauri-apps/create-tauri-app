@@ -17,7 +17,7 @@ name = "cargo-create-tauri-app"
 path = "src/main.rs"
 
 [dependencies]
-anyhow = "1.0"
-dialoguer = "0.10.3"
-pico-args = "0.5.0"
+anyhow = "1"
+dialoguer = "0.10"
+pico-args = "0.5"
 rust-embed = { version = "6.4", features = [ "compression", "interpolate-folder-path" ] }

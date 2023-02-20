@@ -64,10 +64,6 @@ where
         }
     }
 
-    // when invoked from pnpm, it seems like pnpm forgets to end its output with a new line
-    // and it obscures the first question, this ensures we are on a new line before presenting our prompts
-    println!();
-
     let project_name = args.project_name.unwrap_or_else(|| {
         if skip {
             defaults.project_name.unwrap()
@@ -194,7 +190,12 @@ where
         } else {
             let index = Select::with_theme(&ColorfulTheme::default())
                 .with_prompt("Choose your UI template")
-                .items(templates)
+                .items(
+                    &templates
+                        .iter()
+                        .map(|t| t.capitalized_str())
+                        .collect::<Vec<_>>(),
+                )
                 .default(0)
                 .interact()
                 .unwrap();
