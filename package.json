@@ -10,6 +10,7 @@
     "covector": "0.8.0"
   },
   "resolutions": {
-    "http-cache-semantics": ">=4.1.1"
+    "http-cache-semantics": ">=4.1.1",
+    "undici": ">=5.19.1"
   }
 }

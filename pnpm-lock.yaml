@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 overrides:
   http-cache-semantics: '>=4.1.1'
+  undici: '>=5.19.1'
 
 importers:
 
@@ -40,7 +41,7 @@ packages:
       '@covector/files': 0.6.0
       effection: 2.0.6
       lodash: 4.17.21
-      semver: 7.3.7
+      semver: 7.3.8
     transitivePeerDependencies:
       - encoding
     dev: true
@@ -93,7 +94,7 @@ packages:
       '@tauri-apps/toml': 2.2.4
       globby: 11.1.0
       js-yaml: 4.1.0
-      semver: 7.3.7
+      semver: 7.3.8
     dev: true
 
   /@effection/channel/2.0.4:
@@ -385,7 +386,7 @@ packages:
       '@miniflare/core': 2.12.0
       '@miniflare/shared': 2.12.0
       http-cache-semantics: 4.1.1
-      undici: 5.11.0
+      undici: 5.20.0
     dev: true
 
   /@miniflare/cli-parser/2.12.0:
@@ -408,7 +409,7 @@ packages:
       dotenv: 10.0.0
       kleur: 4.1.5
       set-cookie-parser: 2.5.1
-      undici: 5.11.0
+      undici: 5.20.0
       urlpattern-polyfill: 4.0.3
     dev: true
 
@@ -427,7 +428,7 @@ packages:
       '@miniflare/core': 2.12.0
       '@miniflare/shared': 2.12.0
       '@miniflare/storage-memory': 2.12.0
-      undici: 5.11.0
+      undici: 5.20.0
     dev: true
 
   /@miniflare/html-rewriter/2.12.0:
@@ -437,7 +438,7 @@ packages:
       '@miniflare/core': 2.12.0
       '@miniflare/shared': 2.12.0
       html-rewriter-wasm: 0.4.1
-      undici: 5.11.0
+      undici: 5.20.0
     dev: true
 
   /@miniflare/http-server/2.12.0:
@@ -449,7 +450,7 @@ packages:
       '@miniflare/web-sockets': 2.12.0
       kleur: 4.1.5
       selfsigned: 2.0.1
-      undici: 5.11.0
+      undici: 5.20.0
       ws: 8.8.1
       youch: 2.2.2
     transitivePeerDependencies:
@@ -476,7 +477,7 @@ packages:
     engines: {node: '>=16.13'}
     dependencies:
       '@miniflare/shared': 2.12.0
-      undici: 5.11.0
+      undici: 5.20.0
     dev: true
 
   /@miniflare/runner-vm/2.12.0:
@@ -542,7 +543,7 @@ packages:
     dependencies:
       '@miniflare/core': 2.12.0
       '@miniflare/shared': 2.12.0
-      undici: 5.11.0
+      undici: 5.20.0
       ws: 8.8.1
     transitivePeerDependencies:
       - bufferutil
@@ -573,7 +574,7 @@ packages:
     engines: {node: '>= 8'}
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
-      fastq: 1.13.0
+      fastq: 1.15.0
     dev: true
 
   /@tauri-apps/toml/2.2.4:
@@ -801,7 +802,7 @@ packages:
       effection: 2.0.6
       globby: 11.1.0
       inquirer: 8.2.5
-      yargs: 17.6.2
+      yargs: 17.7.0
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -962,8 +963,8 @@ packages:
       tmp: 0.0.33
     dev: true
 
-  /fast-glob/3.2.11:
-    resolution: {integrity: sha512-xrO3+1bxSo3ZVHAnqzyuewYT6aMFHRAd4Kcs92MAonjwQZLsK9d0SF1IyQ3k5PoirxTW0Oe/RqFgMQ6TcNE5Ew==}
+  /fast-glob/3.2.12:
+    resolution: {integrity: sha512-DVj4CQIYYow0BlaelwK1pHl5n5cRSJfM60UA0zK891sVInoPri2Ekj7+e1CT3/3qxXenpI+nBBmQAcJPJgaj4w==}
     engines: {node: '>=8.6.0'}
     dependencies:
       '@nodelib/fs.stat': 2.0.5
@@ -973,8 +974,8 @@ packages:
       micromatch: 4.0.5
     dev: true
 
-  /fastq/1.13.0:
-    resolution: {integrity: sha512-YpkpUnK8od0o1hmeSc7UUs/eB/vIPWJYjKck2QKIzAf71Vm1AAQ3EbuZB3g2JIy+pg+ERD0vqI79KyZiB2e2Nw==}
+  /fastq/1.15.0:
+    resolution: {integrity: sha512-wBrocU2LCXXa+lWBt8RoIRD89Fi8OdABODa/kEnyeyjS5aZO5/GNvI5sEINADqP/h8M29UHTHUb53sUu5Ihqdw==}
     dependencies:
       reusify: 1.0.4
     dev: true
@@ -1035,8 +1036,8 @@ packages:
     dependencies:
       array-union: 2.1.0
       dir-glob: 3.0.1
-      fast-glob: 3.2.11
-      ignore: 5.2.0
+      fast-glob: 3.2.12
+      ignore: 5.2.4
       merge2: 1.4.1
       slash: 3.0.0
     dev: true
@@ -1070,8 +1071,8 @@ packages:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
     dev: true
 
-  /ignore/5.2.0:
-    resolution: {integrity: sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==}
+  /ignore/5.2.4:
+    resolution: {integrity: sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==}
     engines: {node: '>= 4'}
     dev: true
 
@@ -1335,7 +1336,7 @@ packages:
       kleur: 4.1.5
       semiver: 1.1.0
       source-map-support: 0.5.21
-      undici: 5.11.0
+      undici: 5.20.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -1576,7 +1577,7 @@ packages:
   /rxjs/7.8.0:
     resolution: {integrity: sha512-F2+gxDshqmIub1KdvZkaEfGDwLNpPvk9Fs6LD/MyQxNgMds/WH9OdDDXOmxUZpME+iSK3rQCctkL0DYyytUqMg==}
     dependencies:
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: true
 
   /safe-buffer/5.2.1:
@@ -1601,6 +1602,14 @@ packages:
 
   /semver/7.3.7:
     resolution: {integrity: sha512-QlYTucUYOews+WeEujDoEGziz4K6c47V/Bd+LjSSYcA94p+DmINdf7ncaUinThfvZyu13lN9OY1XDxt8C0Tw0g==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      lru-cache: 6.0.0
+    dev: true
+
+  /semver/7.3.8:
+    resolution: {integrity: sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
@@ -1734,8 +1743,8 @@ packages:
     resolution: {integrity: sha512-rvuRbTarPXmMb79SmzEp8aqXNKcK+y0XaB298IXueQ8I2PsrATcPBCSPyK/dDNa2iWOhKlfNnOjdAOTBU/nkFA==}
     dev: true
 
-  /tslib/2.4.1:
-    resolution: {integrity: sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==}
+  /tslib/2.5.0:
+    resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
     dev: true
 
   /type-fest/0.21.3:
@@ -1748,8 +1757,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /undici/5.11.0:
-    resolution: {integrity: sha512-oWjWJHzFet0Ow4YZBkyiJwiK5vWqEYoH7BINzJAJOLedZ++JpAlCbUktW2GQ2DS2FpKmxD/JMtWUUWl1BtghGw==}
+  /undici/5.20.0:
+    resolution: {integrity: sha512-J3j60dYzuo6Eevbawwp1sdg16k5Tf768bxYK4TUJRH7cBM4kFCbf3mOnM/0E3vQYXvpxITbbWmBafaDbxLDz3g==}
     engines: {node: '>=12.18'}
     dependencies:
       busboy: 1.6.0
@@ -1899,8 +1908,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /yargs/17.6.2:
-    resolution: {integrity: sha512-1/9UrdHjDZc0eOU0HxOHoS78C69UD3JRMvzlJ7S79S2nTaWRA/whGCTV8o9e/N/1Va9YIV7Q4sOxD8VV4pCWOw==}
+  /yargs/17.7.0:
+    resolution: {integrity: sha512-dwqOPg5trmrre9+v8SUo2q/hAwyKoVfu8OC1xPHKJGNdxAvPl4sKxL4vBnh3bQz/ZvvGAFeA5H3ou2kcOY8sQQ==}
     engines: {node: '>=12'}
     dependencies:
       cliui: 8.0.1
