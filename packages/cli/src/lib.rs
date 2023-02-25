@@ -264,10 +264,8 @@ where
     // Remove the target dir contents before rendering the template
     // SAFETY: Upon reaching this line, the user already accepted to overwrite
     if target_dir.exists() {
-        for file in fs::read_dir(&target_dir)? {
-            if let Ok(file) = file {
-                let _ = fs::remove_file(file.path());
-            }
+        for file in fs::read_dir(&target_dir)?.flatten() {
+            let _ = fs::remove_file(file.path());
         }
     } else {
         let _ = fs::create_dir_all(&target_dir);
