@@ -261,14 +261,20 @@ where
         exit(1);
     }
 
+    // Remove the target dir contents before rendering the template
+    // SAFETY: Upon reaching this line, the user already accepted to overwrite
     if target_dir.exists() {
-        // safe to remove, because upon reaching this line, the user accepted to overwrite
-        fs::remove_dir_all(&target_dir)?
-    };
-    fs::create_dir_all(&target_dir)?;
+        for file in fs::read_dir(&target_dir)?.flatten() {
+            let _ = fs::remove_file(file.path());
+        }
+    } else {
+        let _ = fs::create_dir_all(&target_dir);
+    }
 
+    // Render the template
     template.render(&target_dir, pkg_manager, &package_name, alpha, mobile)?;
 
+    // Print post-render instructions
     println!();
     println!(
         "{ITALIC}{DIM}Please follow{DIMRESET} {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites{WHITE} {DIM}to install the needed prerequisites, if you haven't already.{DIMRESET}{RESET}",
@@ -278,14 +284,16 @@ where
     }
     println!();
     println!("Done, Now run:");
-    println!(
-        "  cd {}",
-        if project_name.contains(' ') {
-            format!("\"{}\"", project_name)
-        } else {
-            project_name
-        }
-    );
+    if target_dir != cwd {
+        println!(
+            "  cd {}",
+            if project_name.contains(' ') {
+                format!("\"{}\"", project_name)
+            } else {
+                project_name
+            }
+        );
+    }
     if let Some(cmd) = pkg_manager.install_cmd() {
         println!("  {}", cmd);
     }
@@ -303,6 +311,7 @@ fn is_valid_pkg_name(project_name: &str) -> bool {
         && !project_name
             .chars()
             .any(|ch| !(ch.is_alphanumeric() || ch == '-' || ch == '_'))
+        && !project_name.is_empty()
 }
 
 fn to_valid_pkg_name(project_name: &str) -> String {
