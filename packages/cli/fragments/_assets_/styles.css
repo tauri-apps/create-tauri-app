@@ -103,7 +103,7 @@ button {
     color: #ffffff;
     background-color: #0f0f0f98;
   }
-  button {
+  button:active {
     background-color: #0f0f0f69;
   }
 }
