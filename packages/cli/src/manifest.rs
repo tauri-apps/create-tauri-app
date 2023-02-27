@@ -65,6 +65,7 @@ impl<'a> Manifest<'a> {
                     bail!("parsing manifest: value is empty in line {}", line_number);
                 }
 
+                #[allow(clippy::nonminimal_bool)]
                 let replace =
                     !in_files_section && (!in_mobile_section || (in_mobile_section && mobile));
 
