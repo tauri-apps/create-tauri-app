@@ -1,5 +1,15 @@
 # Changelog
 
+## \[3.0.0]
+
+- Fix panic when creating a template in the current directory.
+  - [e4d11e3](https://www.github.com/tauri-apps/create-tauri-app/commit/e4d11e3c6db45b41bb76d27f5b4990d3a7dc5b05) fix: clean current dir by removing its files, closes [#339](https://www.github.com/tauri-apps/create-tauri-app/pull/339) ([#342](https://www.github.com/tauri-apps/create-tauri-app/pull/342)) on 2023-02-25
+- **Breaking Change** Removed `next`, `next-ts`, `preact`, `preact-ts`, `clojurescript`, `svelte-kit`, `svelte-kit-ts` templates.
+  - [cea09e2](https://www.github.com/tauri-apps/create-tauri-app/commit/cea09e2dbee7b8bdbf4228253503a2ff9e6d0b40) feat: create-tauri-app@3 ([#284](https://www.github.com/tauri-apps/create-tauri-app/pull/284)) on 2023-02-15
+  - [902527b](https://www.github.com/tauri-apps/create-tauri-app/commit/902527bf4210acd49376f929d625ae74b8149f7c) chore: update changelog file on 2023-02-27
+- Add `leptos` rust template.
+  - [cea09e2](https://www.github.com/tauri-apps/create-tauri-app/commit/cea09e2dbee7b8bdbf4228253503a2ff9e6d0b40) feat: create-tauri-app@3 ([#284](https://www.github.com/tauri-apps/create-tauri-app/pull/284)) on 2023-02-15
+
 ## \[2.8.0]
 
 - Fix generated output to use HTML forms properly.
