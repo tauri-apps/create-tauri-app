@@ -10,6 +10,7 @@ use crate::{category::Category, colors::*, package_manager::PackageManager, them
 mod category;
 mod cli;
 mod colors;
+mod manifest;
 mod package_manager;
 mod template;
 mod theme;

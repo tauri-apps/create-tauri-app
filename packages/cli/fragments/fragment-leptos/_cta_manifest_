@@ -10,4 +10,4 @@ withGlobalTauri = true
 
 [files]
 tauri.svg = public/tauri.svg
-style.css = style.css
+styles.css = styles.css

@@ -1,0 +1,29 @@
+{
+  "name": "{{package_name}}",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.0.0-alpha.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.10",
+    "@sveltejs/vite-plugin-svelte": "^2.0.0",
+    "@tsconfig/svelte": "^3.0.0",
+    "svelte": "^3.54.0",
+    "svelte-check": "^3.0.0",
+    "svelte-preprocess": "^5.0.0",
+    "tslib": "^2.4.1",
+    "typescript": "^4.6.4",
+    "vite": "^4.0.0",
+    "@tauri-apps/cli": "^2.0.0-alpha.2",
+    "internal-ip": "^7.0.0"
+  }
+}
