@@ -45,6 +45,7 @@ impl PackageManager {
                 Template::Svelte,
                 Template::React,
                 Template::Solid,
+                Template::Angular,
             ],
         }
     }
@@ -68,6 +69,7 @@ impl PackageManager {
                 Template::ReactTs,
                 Template::Solid,
                 Template::SolidTs,
+                Template::Angular,
             ],
         }
     }

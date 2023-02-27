@@ -2,13 +2,14 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-License-Identifier: MIT
 
-beforeDevCommand = {{pkg_manager_run_command}} dev
+beforeDevCommand = {{pkg_manager_run_command}} start --port 1420
 beforeBuildCommand = {{pkg_manager_run_command}} build
 devPath = http://localhost:1420
-distDir = ../dist
+distDir = ../dist/{{package_name}}
+
+[mobile]
+beforeDevCommand = {{pkg_manager_run_command}} start --port 1420 --host $HOST --public-host $HOST
 
 [files]
-vite.svg = public/vite.svg
-tauri.svg = public/tauri.svg
-svelte.svg = public/svelte.svg
+tauri.svg = src/assets/tauri.svg
 styles.css = src/styles.css

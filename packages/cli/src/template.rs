@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-use std::{collections::HashMap, fmt::Display, fs, io::Write, path, str::FromStr};
+use std::{fmt::Display, fs, io::Write, path, str::FromStr};
 
-use anyhow::{bail, Context};
+use anyhow::Context;
 use rust_embed::RustEmbed;
 
-use crate::{colors::*, package_manager::PackageManager};
+use crate::{colors::*, manifest::Manifest, package_manager::PackageManager};
 
 #[derive(RustEmbed)]
 #[folder = "$CARGO_MANIFEST_DIR/fragments"]
@@ -30,6 +30,7 @@ pub enum Template {
     Yew,
     Leptos,
     Sycamore,
+    Angular,
 }
 
 impl Default for Template {
@@ -49,6 +50,7 @@ impl Template {
             Template::Yew => "Yew - (https://yew.rs/)",
             Template::Leptos => "Leptos - (https://github.com/leptos-rs/leptos)",
             Template::Sycamore => "Sycamore - (https://sycamore-rs.netlify.app/)",
+            Template::Angular => "Angular - (https://angular.io/)",
             _ => unreachable!(),
         }
     }
@@ -70,6 +72,7 @@ impl Display for Template {
             Template::Yew => write!(f, "yew"),
             Template::Leptos => write!(f, "leptos"),
             Template::Sycamore => write!(f, "sycamore"),
+            Template::Angular => write!(f, "angular"),
         }
     }
 }
@@ -91,6 +94,7 @@ impl FromStr for Template {
             "yew" => Ok(Template::Yew),
             "leptos" => Ok(Template::Leptos),
             "sycamore" => Ok(Template::Sycamore),
+            "angular" => Ok(Template::Angular),
             _ => Err("Invalid template".to_string()),
         }
     }
@@ -111,6 +115,7 @@ impl<'a> Template {
         Template::Yew,
         Template::Leptos,
         Template::Sycamore,
+        Template::Angular,
     ];
 
     pub fn flavors<'b>(&self, pkg_manager: PackageManager) -> Option<&'b [Flavor]> {
@@ -190,7 +195,7 @@ impl<'a> Template {
             .with_context(|| "Failed to get manifest bytes")?
             .data;
         let manifest_str = String::from_utf8(manifest_bytes.to_vec())?;
-        let manifest = Manifest::parse(&manifest_str)?;
+        let manifest = Manifest::parse(&manifest_str, mobile)?;
 
         let lib_name = format!("{}_lib", package_name.replace('-', "_"));
 
@@ -257,12 +262,13 @@ impl<'a> Template {
                 "vite.config.ts",
                 "vite.config.js",
                 "Trunk.toml",
+                "angular.json",
             ]
             .contains(&target_file_name)
             {
                 if let Ok(content) = String::from_utf8(data.to_vec()) {
+                    // Replacement order is important
                     data = content
-                        .replace("{{package_name}}", package_name)
                         .replace("{{lib_name}}", &lib_name)
                         .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
                         .replace(
@@ -281,6 +287,7 @@ impl<'a> Template {
                             "{{fragment_dist_dir}}",
                             manifest.dist_dir.unwrap_or_default(),
                         )
+                        .replace("{{package_name}}", package_name)
                         .replace(
                             r#""withGlobalTauri": "{{fragment_with_global_tauri}}""#,
                             &format!(r#""withGlobalTauri": {}"#, manifest.with_global_tauri),
@@ -352,77 +359,5 @@ impl Display for Flavor {
             Flavor::JavaScript => write!(f, "JavaScript"),
             Flavor::TypeScript => write!(f, "TypeScript"),
         }
-    }
-}
-
-#[derive(Default, Clone)]
-struct Manifest<'a> {
-    before_dev_command: Option<&'a str>,
-    before_build_command: Option<&'a str>,
-    dev_path: Option<&'a str>,
-    dist_dir: Option<&'a str>,
-    with_global_tauri: bool,
-    files: HashMap<&'a str, &'a str>,
-}
-
-impl<'a> Manifest<'a> {
-    fn parse(s: &'a str) -> Result<Self, anyhow::Error> {
-        let mut manifest = Manifest::default();
-        let mut in_files_section = false;
-        for (i, line) in s.split('\n').enumerate() {
-            let line_number = i + 1;
-
-            // ignore the comment portion of the line
-            let line = line.split('#').next().unwrap().trim();
-
-            if line.is_empty() {
-                continue;
-            }
-
-            if line == "[files]" {
-                in_files_section = true;
-                continue;
-            }
-
-            if line.contains('=') {
-                let mut s = line.split('=');
-                let (k, v) = (
-                    s.next()
-                        .with_context(|| {
-                            format!("parsing manifest: key is not found in line {}", line_number)
-                        })?
-                        .trim(),
-                    s.next()
-                        .with_context(|| {
-                            format!(
-                                "parsing manifest: value is not found in line {}",
-                                line_number
-                            )
-                        })?
-                        .trim(),
-                );
-
-                if k.is_empty() {
-                    bail!("parsing manifest: key is empty in line {}", line_number);
-                }
-
-                if v.is_empty() {
-                    bail!("parsing manifest: value is empty in line {}", line_number);
-                }
-
-                match k {
-                    "beforeDevCommand" => manifest.before_dev_command = Some(v),
-                    "beforeBuildCommand" => manifest.before_build_command = Some(v),
-                    "devPath" => manifest.dev_path = Some(v),
-                    "distDir" => manifest.dist_dir = Some(v),
-                    "withGlobalTauri" => manifest.with_global_tauri = v.parse()?,
-                    _ if in_files_section => {
-                        manifest.files.insert(k, v);
-                    }
-                    _ => {}
-                }
-            }
-        }
-        Ok(manifest)
     }
 }

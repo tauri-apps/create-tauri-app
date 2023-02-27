@@ -12,12 +12,11 @@
   "license": "MIT",
   "dependencies": {
     "solid-js": "^1.4.7",
-    "@tauri-apps/api": "^2.0.0-alpha.0"
+    "@tauri-apps/api": "^1.2.0"
   },
   "devDependencies": {
     "vite": "^4.0.0",
     "vite-plugin-solid": "^2.3.0",
-    "@tauri-apps/cli": "^2.0.0-alpha.2",
-    "internal-ip": "^7.0.0"
+    "@tauri-apps/cli": "^1.2.2"
   }
 }
