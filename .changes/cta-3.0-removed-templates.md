@@ -3,4 +3,4 @@
 "create-tauri-app-js": "major"
 ---
 
-**Breaking Change** Removed `next`, `next-ts`, `preact`, `preact-ts`, `angular`, `clojurescript`, `svelte-kit`, `svelte-kit-ts` templates.
+**Breaking Change** Removed `next`, `next-ts`, `preact`, `preact-ts`, `clojurescript`, `svelte-kit`, `svelte-kit-ts` templates.
