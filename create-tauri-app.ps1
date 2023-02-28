@@ -15,4 +15,4 @@ $ProgressPreference = 'SilentlyContinue'
 Invoke-WebRequest -Uri $url -OutFile $outFile
 $ProgressPreference = $oldProgressPreference
 
-Start-Process -FilePath $outFile -Wait -NoNewWindow
+Start-Process -FilePath $outFile -Wait -NoNewWindow -ArgumentList "$Env:CTA_ARGS"
