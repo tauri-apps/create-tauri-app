@@ -1,5 +1,10 @@
 # Changelog
 
+## \[3.0.1]
+
+- Allow passing arguments though `CTA_ARGS` for powershell script `$env:CTA_ARGS="--template svelte --manager pnpm";iwr -useb https://create.tauri.app/ps | iex`
+  - [e950d08](https://www.github.com/tauri-apps/create-tauri-app/commit/e950d088d2a4fa20594926f60550eb2236f8ac67) feat: allow passing args to powershell scripts ([#345](https://www.github.com/tauri-apps/create-tauri-app/pull/345)) on 2023-02-28
+
 ## \[3.0.0]
 
 - Fix panic when creating a template in the current directory.
