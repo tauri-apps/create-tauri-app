@@ -284,7 +284,7 @@ where
         println!("{}", info);
     }
     println!();
-    println!("Done, Now run:");
+    println!("Done, now run:");
     if target_dir != cwd {
         println!(
             "  cd {}",
@@ -298,7 +298,26 @@ where
     if let Some(cmd) = pkg_manager.install_cmd() {
         println!("  {}", cmd);
     }
-    println!("  {} tauri dev", pkg_manager.run_cmd());
+    if !mobile {
+        println!("  {} tauri dev", pkg_manager.run_cmd());
+    } else {
+        println!("  {} tauri android init", pkg_manager.run_cmd());
+        #[cfg(target_os = "macos")]
+        println!("  {} tauri ios init", pkg_manager.run_cmd());
+
+        println!();
+        println!("For Desktop development, run:");
+        println!("  {} tauri dev", pkg_manager.run_cmd());
+        println!();
+        println!("For Android development, run:");
+        println!("  {} tauri android dev", pkg_manager.run_cmd());
+        #[cfg(target_os = "macos")]
+        {
+            println!();
+            println!("For iOS development, run:");
+            println!("  {} tauri ios dev", pkg_manager.run_cmd());
+        }
+    }
     println!();
     Ok(())
 }
