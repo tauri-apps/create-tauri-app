@@ -46,6 +46,7 @@
     "create-tauri-app": "create-tauri-app.js"
   },
   "scripts": {
+    "create-tauri-app": "node ./create-tauri-app.js",
     "artifacts": "napi artifacts",
     "build": "napi build --platform --release",
     "build:debug": "napi build --platform",

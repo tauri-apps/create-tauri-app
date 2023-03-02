@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 use dialoguer::{Confirm, Input, Select};
-use std::{ffi::OsString, fs, process::exit};
+use std::{ffi::OsString, fs, io::Write, process::exit};
 
 use crate::{category::Category, colors::*, package_manager::PackageManager, theme::ColorfulTheme};
 
@@ -66,6 +66,12 @@ where
             );
             exit(1);
         }
+    }
+
+    if !skip {
+        // when using `pnpm create tauri-app` the first prompt is obscured by pnpm logs
+        // so try to clear current line and hope it works?
+        print!("{}[2J", 27 as char);
     }
 
     // Project name used for the project directory name
