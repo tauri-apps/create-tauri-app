@@ -1,5 +1,10 @@
 # Changelog
 
+## \[3.0.2]
+
+- Fix missing Javascript import in `vanilla` template
+  - [918e933](https://www.github.com/tauri-apps/create-tauri-app/commit/918e93356a534b89c33b01403036c37720d7aff4) fix(fragment/vanilla): fix missing js import ([#347](https://www.github.com/tauri-apps/create-tauri-app/pull/347)) on 2023-03-02
+
 ## \[3.0.1]
 
 - Allow passing arguments though `CTA_ARGS` for powershell script `$env:CTA_ARGS="--template svelte --manager pnpm";iwr -useb https://create.tauri.app/ps | iex`
