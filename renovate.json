@@ -6,8 +6,11 @@
       "groupName": "templates dependencies",
       "groupSlug": "templatesDeps",
       "commitMessagePrefix": "chore(deps)",
-      "paths": ["packages/cli/fragments/**"],
-      "schedule": ["before 3am on the first day of the month"]
+      "paths": [
+        "packages/cli/fragments/**/*package.json",
+        "packages/cli/fragments/**/*Cargo.toml"
+      ],
+      "schedule": ["after 3am on Wednesday"]
     }
   ]
 }
