@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 use dialoguer::{Confirm, Input, Select};
-use std::{ffi::OsString, fs, io::Write, process::exit};
+use std::{ffi::OsString, fs, process::exit};
 
 use crate::{category::Category, colors::*, package_manager::PackageManager, theme::ColorfulTheme};
 
