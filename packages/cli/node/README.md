@@ -6,7 +6,7 @@
 [![Chat Server](https://img.shields.io/badge/chat-discord-7289da.svg)](https://discord.gg/SpmNs4S)
 [![website](https://img.shields.io/badge/website-tauri.app-purple.svg)](https://tauri.app)
 [![https://good-labs.github.io/greater-good-affirmation/assets/images/badge.svg](https://good-labs.github.io/greater-good-affirmation/assets/images/badge.svg)](https://good-labs.github.io/greater-good-affirmation)
-[![support](https://img.shields.io/badge/sponsor-Open%20Collective-blue.svg)](https://opencollective.com/tauri)
+[![support](https://img.shields.io/badge/sponsor-Open%20Collective-blue.svg)](https://opencollective.com/tauri) [![changelog](./CHANGELOG.md)](https://img.shields.io/badge/CHANGELOG-yellowgreen)
 
 
 # Usage
@@ -58,14 +58,8 @@ Currently supported template presets include:
 - `solid`
 - `solid-ts`
 - `yew`
-- `next`
-- `next-ts`
-- `preact`
-- `preact-ts`
-- `angular`
-- `clojurescript`
-- `svelte-kit`
-- `svelte-kit-ts`
+- `leptos`
+- `sycamore`
 
 You can use `.` for the project name to scaffold in the current directory.
 
