@@ -1,5 +1,10 @@
 # Changelog
 
+## \[3.0.3]
+
+- Fix wrong `package.json` in `solid-ts` template.
+  - [709ba83](https://www.github.com/tauri-apps/create-tauri-app/commit/709ba8398f253b6f490c56e1b9e2d41269870db1) Fix the template fragment of solid-ts ([#351](https://www.github.com/tauri-apps/create-tauri-app/pull/351)) on 2023-03-04
+
 ## \[3.0.2]
 
 - Fix missing Javascript import in `vanilla` template
