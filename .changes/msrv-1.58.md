@@ -1,5 +1,5 @@
 ---
-"create-tauri-app": "patch"
+"create-tauri-app": "minor"
 ---
 
-bump MSRV to `1.58`
+Bump MSRV to `1.58`
