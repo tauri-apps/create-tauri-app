@@ -44,25 +44,22 @@ impl<'a> Manifest<'a> {
                 let (k, v) = (
                     s.next()
                         .with_context(|| {
-                            format!("parsing manifest: key is not found in line {}", line_number)
+                            format!("parsing manifest: key is not found in line {line_number}")
                         })?
                         .trim(),
                     s.next()
                         .with_context(|| {
-                            format!(
-                                "parsing manifest: value is not found in line {}",
-                                line_number
-                            )
+                            format!("parsing manifest: value is not found in line {line_number}")
                         })?
                         .trim(),
                 );
 
                 if k.is_empty() {
-                    bail!("parsing manifest: key is empty in line {}", line_number);
+                    bail!("parsing manifest: key is empty in line {line_number}");
                 }
 
                 if v.is_empty() {
-                    bail!("parsing manifest: value is empty in line {}", line_number);
+                    bail!("parsing manifest: value is empty in line {line_number}");
                 }
 
                 #[allow(clippy::nonminimal_bool)]

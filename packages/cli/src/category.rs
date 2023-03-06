@@ -39,8 +39,8 @@ impl Display for Category {
             .collect::<Vec<_>>()
             .join(", ");
         match self {
-            Category::Rust => write!(f, "Rust - ({})", managers,),
-            Category::JsTs => write!(f, "TypeScript / JavaScript - ({})", managers,),
+            Category::Rust => write!(f, "Rust - ({managers})"),
+            Category::JsTs => write!(f, "TypeScript / JavaScript - ({managers})"),
         }
     }
 }
