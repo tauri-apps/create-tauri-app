@@ -157,25 +157,12 @@ impl<'a> Template {
             Template::Yew | Template::Leptos| Template::Sycamore => Some(
                 format!(
                     "{ITALIC}{DIM}You also need to install:\n    1. {DIMRESET}{YELLOW}tauri-cli{WHITE}{DIM} ({DIMRESET}{BLUE}{tauri_cli_cmd}{WHITE}{DIM})\n    2. {DIMRESET}{YELLOW}trunk{WHITE}{DIM} ({DIMRESET}{BLUE}https://trunkrs.dev/#install{WHITE}{DIM})\n    3. {DIMRESET}{YELLOW}wasm32{WHITE}{DIM} rust target ({DIMRESET}{BLUE}rustup target add wasm32-unknown-unknown{WHITE}{DIM}){DIMRESET}{RESET}",
-                    ITALIC = ITALIC,
-                    DIM = DIM,
-                    DIMRESET = DIMRESET,
-                    YELLOW = YELLOW,
-                    WHITE = WHITE,
-                    BLUE = BLUE,
-                    RESET = RESET,
                     tauri_cli_cmd = tauri_cli_cmd,
                 ),
             ),
             Template::Vanilla if pkg_manager == PackageManager::Cargo => Some(
                     format!(
                         "{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}tauri-cli{WHITE} {DIM}({DIMRESET}{BLUE}{tauri_cli_cmd}{WHITE}{DIM})",
-                        ITALIC = ITALIC,
-                        DIM = DIM,
-                        DIMRESET = DIMRESET,
-                        YELLOW = YELLOW,
-                        WHITE = WHITE,
-                        BLUE = BLUE,
                         tauri_cli_cmd = tauri_cli_cmd,
                     ),
                 ),
@@ -191,7 +178,7 @@ impl<'a> Template {
         alpha: bool,
         mobile: bool,
     ) -> anyhow::Result<()> {
-        let manifest_bytes = FRAGMENTS::get(&format!("fragment-{}/_cta_manifest_", self))
+        let manifest_bytes = FRAGMENTS::get(&format!("fragment-{self}/_cta_manifest_"))
             .with_context(|| "Failed to get manifest bytes")?
             .data;
         let manifest_str = String::from_utf8(manifest_bytes.to_vec())?;
@@ -322,15 +309,15 @@ impl<'a> Template {
                 .next()
                 .unwrap()
                 .as_os_str()
-                == path::PathBuf::from(format!("fragment-{}", self))
+                == path::PathBuf::from(format!("fragment-{self}"))
         }) {
             write_file(&file)?;
         }
 
         // then write extra files specified in the fragment manifest
         for (src, dest) in manifest.files {
-            let data = FRAGMENTS::get(&format!("_assets_/{}", src))
-                .with_context(|| format!("Failed to get asset file bytes: {}", src))?
+            let data = FRAGMENTS::get(&format!("_assets_/{src}"))
+                .with_context(|| format!("Failed to get asset file bytes: {src}"))?
                 .data;
             let dest = target_dir.join(dest);
             let parent = dest.parent().unwrap();
