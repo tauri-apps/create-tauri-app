@@ -68,12 +68,6 @@ where
         }
     }
 
-    if !skip {
-        // when using `pnpm create tauri-app` the first prompt is obscured by pnpm logs
-        // so try to clear current line and hope it works?
-        print!("{}[2J", 27 as char);
-    }
-
     // Project name used for the project directory name
     // and if valid, it will also be used in Cargo.toml, Package.json ...etc
     let project_name = args.project_name.unwrap_or_else(|| {
