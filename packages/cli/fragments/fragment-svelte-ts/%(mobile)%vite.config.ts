@@ -3,8 +3,12 @@ import { svelte } from "@sveltejs/vite-plugin-svelte";
 import sveltePreprocess from "svelte-preprocess";
 import { internalIpV4 } from "internal-ip";
 
+const mobile =
+  process.env.TAURI_PLATFORM === "android" ||
+  process.env.TAURI_PLATFORM === "ios";
+
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(async () => ({
   plugins: [
     svelte({
       preprocess: [
@@ -20,21 +24,15 @@ export default defineConfig({
   clearScreen: false,
   // tauri expects a fixed port, fail if that port is not available
   server: {
-    host:
-      process.env.TAURI_PLATFORM === "android" ||
-      process.env.TAURI_PLATFORM === "ios"
-        ? "0.0.0.0"
-        : false,
+    host: mobile ? "0.0.0.0" : false,
     port: 1420,
-    hmr:
-      process.env.TAURI_PLATFORM === "android" ||
-      process.env.TAURI_PLATFORM === "ios"
-        ? {
-            protocol: "ws",
-            host: await internalIpV4(),
-            port: 1421,
-          }
-        : undefined,
+    hmr: mobile
+      ? {
+          protocol: "ws",
+          host: await internalIpV4(),
+          port: 1421,
+        }
+      : undefined,
     strictPort: true,
   },
   // to make use of `TAURI_DEBUG` and other env variables
@@ -48,4 +46,4 @@ export default defineConfig({
     // produce sourcemaps for debug builds
     sourcemap: !!process.env.TAURI_DEBUG,
   },
-});
+}));
