@@ -1,5 +1,13 @@
 # Changelog
 
+## \[3.1.0]
+
+- Bump MSRV to `1.58`
+  - [3d571e7](https://www.github.com/tauri-apps/create-tauri-app/commit/3d571e7790e56f2fc4f9a03afad2065bebacae32) feat: bump MSRV to 1.58 ([#356](https://www.github.com/tauri-apps/create-tauri-app/pull/356)) on 2023-03-06
+  - [0eee8dc](https://www.github.com/tauri-apps/create-tauri-app/commit/0eee8dc9b70f4067f1364f03ea69491aa720c6d3) fix(fragments/vanilla): use correct styles import on 2023-03-07
+- Fix styles import in `vanilla` template
+  - [0eee8dc](https://www.github.com/tauri-apps/create-tauri-app/commit/0eee8dc9b70f4067f1364f03ea69491aa720c6d3) fix(fragments/vanilla): use correct styles import on 2023-03-07
+
 ## \[3.0.3]
 
 - Fix wrong `package.json` in `solid-ts` template.
