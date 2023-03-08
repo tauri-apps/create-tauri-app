@@ -1,5 +1,10 @@
 # Changelog
 
+## \[3.1.1]
+
+- Add missing `"type": "module"` to `package.json` in SolidJs templates.
+  - [578b90e](https://www.github.com/tauri-apps/create-tauri-app/commit/578b90e0e7939085652f82b60699f9f685e59b2d) fix(framgents/solid): add missing `"type": "module"`, closes [#358](https://www.github.com/tauri-apps/create-tauri-app/pull/358) ([#360](https://www.github.com/tauri-apps/create-tauri-app/pull/360)) on 2023-03-08
+
 ## \[3.1.0]
 
 - Bump MSRV to `1.58`
