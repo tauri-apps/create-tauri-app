@@ -1,5 +1,12 @@
 # Changelog
 
+## \[3.1.2]
+
+- Fix unwanted refresh when clicking on the greet button in `leptos` template
+  - [c60e21e](https://www.github.com/tauri-apps/create-tauri-app/commit/c60e21e5fd9d14a5d915c58b19dbe6058baa1ddd) 🔧 Fix(Fragments/Leptos): Fix unwanted refresh and update to Leptos v0.2 ([#362](https://www.github.com/tauri-apps/create-tauri-app/pull/362)) on 2023-03-08
+- Update Leptos to v0.2
+  - [c60e21e](https://www.github.com/tauri-apps/create-tauri-app/commit/c60e21e5fd9d14a5d915c58b19dbe6058baa1ddd) 🔧 Fix(Fragments/Leptos): Fix unwanted refresh and update to Leptos v0.2 ([#362](https://www.github.com/tauri-apps/create-tauri-app/pull/362)) on 2023-03-08
+
 ## \[3.1.1]
 
 - Add missing `"type": "module"` to `package.json` in SolidJs templates.
