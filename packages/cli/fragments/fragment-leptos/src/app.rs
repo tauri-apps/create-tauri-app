@@ -25,7 +25,8 @@ pub fn App(cx: Scope) -> impl IntoView {
         set_name.set(v);
     };
 
-    let greet = move || {
+    let greet = move |ev: SubmitEvent| {
+        ev.prevent_default();
         spawn_local(async move {
             if name.get().is_empty() {
                 return;
@@ -60,10 +61,7 @@ pub fn App(cx: Scope) -> impl IntoView {
                 <a href="https://github.com/rust-lang/rust-analyzer" target="_blank">"rust-analyzer"</a>
             </p>
 
-            <form class="row" on:submit=move |ev: SubmitEvent| {
-                ev.prevent_default()
-                greet()
-            }>
+            <form class="row" on:submit=greet>
                 <input
                     id="greet-input"
                     placeholder="Enter a name..."
