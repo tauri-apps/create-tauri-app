@@ -62,17 +62,17 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
             desc = env!("CARGO_PKG_DESCRIPTION"),
             managers = PackageManager::ALL
                 .iter()
-                .map(|e| format!("{}{}{}", GREEN, e, RESET))
+                .map(|e| format!("{GREEN}{e}{RESET}"))
                 .collect::<Vec<_>>()
                 .join(", "),
             fragments = Template::ALL
                 .iter()
-                .map(|e| format!("{}{}{}", GREEN, e, RESET))
+                .map(|e| format!("{GREEN}{e}{RESET}"))
                 .collect::<Vec<_>>()
                 .join(", "),
         );
 
-        println!("{}", help);
+        println!("{help}");
         std::process::exit(0);
     }
     if pargs.contains(["-v", "--version"]) {

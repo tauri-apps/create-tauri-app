@@ -261,7 +261,7 @@ where
         eprintln!(
             "{BOLD}{RED}error{RESET}: the {GREEN}{}{RESET} template is not suppported for the {GREEN}{pkg_manager}{RESET} package manager\n       possible templates for {GREEN}{pkg_manager}{RESET} are: [{}]",
             template,
-            templates.iter().map(|e|format!("{GREEN}{}{RESET}", e, GREEN = GREEN, RESET = RESET)).collect::<Vec<_>>().join(", ")
+            templates.iter().map(|e|format!("{GREEN}{e}{RESET}")).collect::<Vec<_>>().join(", ")
         );
         exit(1);
     }
@@ -288,14 +288,14 @@ where
         println!(
             "  cd {}",
             if project_name.contains(' ') {
-                format!("\"{}\"", project_name)
+                format!("\"{project_name}\"")
             } else {
                 project_name
             }
         );
     }
     if let Some(cmd) = pkg_manager.install_cmd() {
-        println!("  {}", cmd);
+        println!("  {cmd}");
     }
     if !mobile {
         println!("  {} tauri dev", pkg_manager.run_cmd());

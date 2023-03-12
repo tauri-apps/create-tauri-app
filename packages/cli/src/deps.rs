@@ -87,7 +87,7 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
             } else {
                 format!("Run `{BLUE}cargo install tauri-cli{RESET}`")
             },
-            &|| is_tauri_cli_installed(),
+            &is_tauri_cli_installed,
             pkg_manager.is_node() || !template.needs_tauri_cli(),
         ),
         (
@@ -97,19 +97,19 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
             } else {
                 format!("Visit {BLUE}https://trunkrs.dev/#install{RESET}")
             },
-            &|| is_trunk_installed(),
+            &is_trunk_installed,
             pkg_manager.is_node() || !template.needs_trunk(),
         ),
         (
             "wasm32 target",
             format!("Run `{BLUE}rustup target add wasm32-unknown-unknown{RESET}`"),
-            &|| is_wasm32_installed(),
+            &is_wasm32_installed,
             pkg_manager.is_node() || !template.needs_wasm32_target(),
         ),
         (
             "Node.js",
             format!("Visit {BLUE}https://nodejs.org/en/{RESET}"),
-            &|| is_node_installed(),
+            &is_node_installed,
             !pkg_manager.is_node(),
         ),
         // (
@@ -133,7 +133,7 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
     ];
 
     let missing_deps: Vec<(String, String)> = deps
-        .into_iter()
+        .iter()
         .filter(|(_, _, exists, skip)| !skip && !exists())
         .map(|(s, d, _, _)| (s.to_string(), d.clone()))
         .collect();
