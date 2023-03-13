@@ -184,7 +184,7 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
             "─".repeat(largest_first_cell + 2),
             "─".repeat(largest_second_cell + 2),
         );
-        println!("or follow {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites{RESET} to install all prerequisites");
+        println!("Follow {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites{RESET} to learn more about Tauri prerequisites");
         println!("then run:")
     } else {
         println!(" now run:")
