@@ -282,7 +282,7 @@ where
     // Print post-render instructions
 
     println!();
-    println!("Template created!");
+    print!("Template created!");
     print_missing_deps(pkg_manager, template, alpha);
     if target_dir != cwd {
         println!(
