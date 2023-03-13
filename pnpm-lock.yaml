@@ -23,9 +23,9 @@ importers:
 
   packages/worker:
     specifiers:
-      wrangler: 2.12.2
+      wrangler: 2.12.3
     devDependencies:
-      wrangler: 2.12.2
+      wrangler: 2.12.3
 
 packages:
 
@@ -1830,8 +1830,8 @@ packages:
       isexe: 2.0.0
     dev: true
 
-  /wrangler/2.12.2:
-    resolution: {integrity: sha512-pjdZvcjiFD6mI3Nncsw3hBv3rxjMx0n4Mtp+Tsql/hvr0LpOmHKlW/aMeYx/fVUmjEKfWBSULc1vgM02O2UTWQ==}
+  /wrangler/2.12.3:
+    resolution: {integrity: sha512-0skqT9qBbchiVY57YwQKFCFnuUo2Lg7e0vCChJ9FWcWZ/CXsPXeBMeVA8N/p72LuhrtZlqTFN7TsNOd8jm8KcQ==}
     engines: {node: '>=16.13.0'}
     hasBin: true
     dependencies:
