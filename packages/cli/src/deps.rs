@@ -46,28 +46,28 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
     let deps: &[(&str, String, &dyn Fn() -> bool, bool)] = &[
         (
             "Rust",
-            format!("Visit {BLUE}https://www.rust-lang.org/learn/get-started#installing-rust{RESET}"),
+            format!("Visit {BLUE}{BOLD}https://www.rust-lang.org/learn/get-started#installing-rust{RESET}"),
             &|| rustc_installed && cargo_installed,
             rustc_installed || cargo_installed,
         ),
         (
             "rustc",
-            format!("Visit {BLUE}https://www.rust-lang.org/learn/get-started#installing-rust{RESET} to install Rust"),
+            format!("Visit {BLUE}{BOLD}https://www.rust-lang.org/learn/get-started#installing-rust{RESET} to install Rust"),
             &|| rustc_installed,
             !rustc_installed && !cargo_installed,
         ),
         (
             "Cargo",
-            format!("Visit {BLUE}https://www.rust-lang.org/learn/get-started#installing-rust{RESET} to install Rust"),
+            format!("Visit {BLUE}{BOLD}https://www.rust-lang.org/learn/get-started#installing-rust{RESET} to install Rust"),
             &|| cargo_installed,
             !rustc_installed && !cargo_installed,
         ),
         (
             "Tauri CLI",
             if alpha {
-                format!("Run `{BLUE}cargo install tauri-cli --version 2.0.0-alpha.2{RESET}`")
+                format!("Run `{BLUE}{BOLD}cargo install tauri-cli --version 2.0.0-alpha.2{RESET}`")
             } else {
-                format!("Run `{BLUE}cargo install tauri-cli{RESET}`")
+                format!("Run `{BLUE}{BOLD}cargo install tauri-cli{RESET}`")
             },
             &is_tauri_cli_installed,
             pkg_manager.is_node() || !template.needs_tauri_cli(),
@@ -75,22 +75,22 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
         (
             "Trunk",
             if alpha {
-                format!("Run `{BLUE}cargo install trunk --git https://github.com/amrbashir/trunk{RESET}`")
+                format!("Run `{BLUE}{BOLD}cargo install trunk --git https://github.com/amrbashir/trunk{RESET}`")
             } else {
-                format!("Visit {BLUE}https://trunkrs.dev/#install{RESET}")
+                format!("Visit {BLUE}{BOLD}https://trunkrs.dev/#install{RESET}")
             },
             &is_trunk_installed,
             pkg_manager.is_node() || !template.needs_trunk(),
         ),
         (
             "wasm32 target",
-            format!("Run `{BLUE}rustup target add wasm32-unknown-unknown{RESET}`"),
+            format!("Run `{BLUE}{BOLD}rustup target add wasm32-unknown-unknown{RESET}`"),
             &is_wasm32_installed,
             pkg_manager.is_node() || !template.needs_wasm32_target(),
         ),
         (
             "Node.js",
-            format!("Visit {BLUE}https://nodejs.org/en/{RESET}"),
+            format!("Visit {BLUE}{BOLD}https://nodejs.org/en/{RESET}"),
             &is_node_installed,
             !pkg_manager.is_node(),
         ),
@@ -120,9 +120,7 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
             });
 
     if !missing_deps.is_empty() {
-        println!(
-            "\nYour system is {YELLOW}{BOLD}missing dependencies{RESET} or they do not exist in {YELLOW}{BOLD}PATH{RESET}:"
-        );
+        println!("\n\nYour system is {YELLOW}missing dependencies{RESET} (or they do not exist in {YELLOW}$PATH{RESET})");
         for (index, (name, instruction)) in missing_deps.iter().enumerate() {
             if index == 0 {
                 println!(
@@ -148,7 +146,8 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
             "─".repeat(largest_first_cell + 2),
             "─".repeat(largest_second_cell + 2),
         );
-        println!("Follow {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites{RESET} to learn more about Tauri prerequisites, then run:");
+        println!();
+        println!("Make sure you have installed the prerequisites for your OS: {BLUE}{BOLD}https://tauri.app/v1/guides/getting-started/prerequisites{RESET}, then run:");
     } else {
         println!(" To get started run:")
     }
