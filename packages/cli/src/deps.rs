@@ -121,7 +121,7 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
 
     if !missing_deps.is_empty() {
         println!(
-            "\nYour system is {YELLOW}missing dependencies{RESET} or they do not exist in {YELLOW}PATH{RESET}:"
+            "\nYour system is {YELLOW}{BOLD}missing dependencies{RESET} or they do not exist in {YELLOW}{BOLD}PATH{RESET}:"
         );
         for (index, (name, instruction)) in missing_deps.iter().enumerate() {
             if index == 0 {
@@ -138,7 +138,7 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
                 );
             }
             println!(
-                "│ {YELLOW}{BOLD}{name}{RESET}{} │ {instruction}{} │",
+                "│ {YELLOW}{name}{RESET}{} │ {instruction}{} │",
                 " ".repeat(largest_first_cell - name.len()),
                 " ".repeat(largest_second_cell - remove_colors(instruction).len()),
             );
