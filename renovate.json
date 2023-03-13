@@ -3,10 +3,8 @@
   "extends": ["config:base", ":disableDependencyDashboard"],
   "packageRules": [
     {
-      "groupName": "templates dependencies",
-      "groupSlug": "templatesDeps",
-      "commitMessagePrefix": "chore(deps)",
-      "paths": [
+      "groupName": "fragments dependencies",
+      "matchPaths": [
         "packages/cli/fragments/**/*package.json",
         "packages/cli/fragments/**/*Cargo.toml"
       ],
