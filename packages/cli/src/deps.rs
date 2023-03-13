@@ -39,24 +39,6 @@ fn is_wasm32_installed() -> bool {
         })
         .unwrap_or(false)
 }
-// fn is_pnpm_installed() -> bool {
-//     Command::new("pnpm").arg("-v").output().is_ok()
-// }
-// fn is_yarn_installed() -> bool {
-//     Command::new("yarn").arg("-v").output().is_ok()
-// }
-// fn is_npm_installed() -> bool {
-//     Command::new("npm").arg("-v").output().is_ok()
-// }
-// fn is_fnm_installed() -> bool {
-//     Command::new("fnm").arg("-V").output().is_ok()
-// }
-// fn is_nvm_installed() -> bool {
-//     #[cfg(windows)]
-//     return Command::new("nvm").arg("version").output().is_ok();
-//     #[cfg(not(windows))]
-//     Command::new("nvm").arg("-v").output().is_ok()
-// }
 
 pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha: bool) {
     let rustc_installed = is_rustc_installed();
@@ -112,24 +94,6 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
             &is_node_installed,
             !pkg_manager.is_node(),
         ),
-        // (
-        //     "pnpm",
-        //     format!("Visit {BLUE}https://pnpm.io/{RESET}"),
-        //     &|| is_pnpm_installed(),
-        //      !pkg_manager.is_node() || pkg_manager != PackageManager::Pnpm || is_fnm_installed() || is_nvm_installed(),
-        // ),
-        // (
-        //     "yarn",
-        //     format!("Visit {BLUE}https://yarnpkg.com/getting-started/install{RESET}."),
-        //     &|| is_yarn_installed(),
-        //      !pkg_manager.is_node() || pkg_manager != PackageManager::Yarn || is_fnm_installed() || is_nvm_installed(),
-        // ),
-        // (
-        //     "npm",
-        //     format!("Visit {BLUE}https://nodejs.org/en/{RESET} to install Node.js"),
-        //     &|| is_npm_installed(),
-        //      !pkg_manager.is_node() || pkg_manager != PackageManager::Npm || is_fnm_installed() || is_nvm_installed(),
-        // ),
     ];
 
     let missing_deps: Vec<(String, String)> = deps
