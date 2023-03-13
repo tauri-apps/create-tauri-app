@@ -157,7 +157,7 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
 
     if !missing_deps.is_empty() {
         println!(
-            " but your system is missing \nsome dependencies or they do not exist in {YELLOW}PATH{RESET}"
+            "\nYour system is {YELLOW}missing dependencies{RESET} or they do not exist in {YELLOW}PATH{RESET}:"
         );
         for (index, (name, instruction)) in missing_deps.iter().enumerate() {
             if index == 0 {
@@ -184,8 +184,7 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
             "─".repeat(largest_first_cell + 2),
             "─".repeat(largest_second_cell + 2),
         );
-        println!("Follow {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites{RESET} to learn more about Tauri prerequisites");
-        println!("then run:")
+        println!("Follow {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites{RESET} to learn more about Tauri prerequisites, then run:");
     } else {
         println!(" To get started run:")
     }
