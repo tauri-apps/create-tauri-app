@@ -13,10 +13,12 @@ const binStem = path.parse(bin).name.toLowerCase();
 // We want to make a helpful binary name for the underlying CLI helper, if we
 // can successfully detect what command likely started the execution.
 let binName;
-
+if (bin === "@tauri-apps/cli") {
+  binName = "@tauri-apps/cli";
+}
 // Even if started by a package manager, the binary will be NodeJS.
 // Some distribution still use "nodejs" as the binary name.
-if (binStem.match(/(nodejs|node)([1-9]*)*$/g)) {
+if (binStem.match(/(nodejs|node)-*([1-9]*)*$/g)) {
   const managerStem = process.env.npm_execpath
     ? path.parse(process.env.npm_execpath).name.toLowerCase()
     : null;

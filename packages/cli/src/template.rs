@@ -7,7 +7,7 @@ use std::{fmt::Display, fs, io::Write, path, str::FromStr};
 use anyhow::Context;
 use rust_embed::RustEmbed;
 
-use crate::{colors::*, manifest::Manifest, package_manager::PackageManager};
+use crate::{manifest::Manifest, package_manager::PackageManager};
 
 #[derive(RustEmbed)]
 #[folder = "$CARGO_MANIFEST_DIR/fragments"]
@@ -146,28 +146,17 @@ impl<'a> Template {
         }
     }
 
-    pub fn post_init_info(&self, pkg_manager: PackageManager, alpha: bool) -> Option<String> {
-        let tauri_cli_cmd = if alpha {
-            "cargo install tauri-cli --version 2.0.0-alpha.2"
-        } else {
-            "cargo install tauri-cli"
-        };
-
-        match self {
-            Template::Yew | Template::Leptos| Template::Sycamore => Some(
-                format!(
-                    "{ITALIC}{DIM}You also need to install:\n    1. {DIMRESET}{YELLOW}tauri-cli{WHITE}{DIM} ({DIMRESET}{BLUE}{tauri_cli_cmd}{WHITE}{DIM})\n    2. {DIMRESET}{YELLOW}trunk{WHITE}{DIM} ({DIMRESET}{BLUE}https://trunkrs.dev/#install{WHITE}{DIM})\n    3. {DIMRESET}{YELLOW}wasm32{WHITE}{DIM} rust target ({DIMRESET}{BLUE}rustup target add wasm32-unknown-unknown{WHITE}{DIM}){DIMRESET}{RESET}",
-                    tauri_cli_cmd = tauri_cli_cmd,
-                ),
-            ),
-            Template::Vanilla if pkg_manager == PackageManager::Cargo => Some(
-                    format!(
-                        "{ITALIC}{DIM}You also need to install{DIMRESET} {YELLOW}tauri-cli{WHITE} {DIM}({DIMRESET}{BLUE}{tauri_cli_cmd}{WHITE}{DIM})",
-                        tauri_cli_cmd = tauri_cli_cmd,
-                    ),
-                ),
-            _ => None,
-        }
+    pub const fn needs_trunk(&self) -> bool {
+        matches!(self, Template::Sycamore | Template::Yew | Template::Leptos)
+    }
+    pub const fn needs_tauri_cli(&self) -> bool {
+        matches!(
+            self,
+            Template::Sycamore | Template::Yew | Template::Leptos | Template::Vanilla
+        )
+    }
+    pub const fn needs_wasm32_target(&self) -> bool {
+        matches!(self, Template::Sycamore | Template::Yew | Template::Leptos)
     }
 
     pub fn render(

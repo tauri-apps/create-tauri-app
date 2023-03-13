@@ -91,6 +91,13 @@ impl PackageManager {
             PackageManager::Npm => "npm run",
         }
     }
+
+    pub const fn is_node(&self) -> bool {
+        matches!(
+            self,
+            PackageManager::Pnpm | PackageManager::Yarn | PackageManager::Npm,
+        )
+    }
 }
 
 impl Display for PackageManager {

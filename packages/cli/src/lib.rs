@@ -5,11 +5,15 @@
 use dialoguer::{Confirm, Input, Select};
 use std::{ffi::OsString, fs, process::exit};
 
-use crate::{category::Category, colors::*, package_manager::PackageManager, theme::ColorfulTheme};
+use crate::{
+    category::Category, colors::*, deps::print_missing_deps, package_manager::PackageManager,
+    theme::ColorfulTheme,
+};
 
 mod category;
 mod cli;
 mod colors;
+mod deps;
 mod manifest;
 mod package_manager;
 mod template;
@@ -257,7 +261,7 @@ where
         eprintln!(
             "{BOLD}{RED}error{RESET}: the {GREEN}{}{RESET} template is not suppported for the {GREEN}{pkg_manager}{RESET} package manager\n       possible templates for {GREEN}{pkg_manager}{RESET} are: [{}]",
             template,
-            templates.iter().map(|e|format!("{GREEN}{}{RESET}", e, GREEN = GREEN, RESET = RESET)).collect::<Vec<_>>().join(", ")
+            templates.iter().map(|e|format!("{GREEN}{e}{RESET}")).collect::<Vec<_>>().join(", ")
         );
         exit(1);
     }
@@ -276,27 +280,22 @@ where
     template.render(&target_dir, pkg_manager, &package_name, alpha, mobile)?;
 
     // Print post-render instructions
+
     println!();
-    println!(
-        "{ITALIC}{DIM}Please follow{DIMRESET} {BLUE}https://tauri.app/v1/guides/getting-started/prerequisites{WHITE} {DIM}to install the needed prerequisites, if you haven't already.{DIMRESET}{RESET}",
-    );
-    if let Some(info) = template.post_init_info(pkg_manager, alpha) {
-        println!("{}", info);
-    }
-    println!();
-    println!("Done, now run:");
+    print!("Template created!");
+    print_missing_deps(pkg_manager, template, alpha);
     if target_dir != cwd {
         println!(
             "  cd {}",
             if project_name.contains(' ') {
-                format!("\"{}\"", project_name)
+                format!("\"{project_name}\"")
             } else {
                 project_name
             }
         );
     }
     if let Some(cmd) = pkg_manager.install_cmd() {
-        println!("  {}", cmd);
+        println!("  {cmd}");
     }
     if !mobile {
         println!("  {} tauri dev", pkg_manager.run_cmd());
