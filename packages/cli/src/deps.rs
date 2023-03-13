@@ -120,7 +120,7 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
             });
 
     if !missing_deps.is_empty() {
-        println!("\n\nYour system is {YELLOW}missing dependencies{RESET} (or they do not exist in {YELLOW}$PATH{RESET})");
+        println!("\n\nYour system is {YELLOW}missing dependencies{RESET} (or they do not exist in {YELLOW}$PATH{RESET}):");
         for (index, (name, instruction)) in missing_deps.iter().enumerate() {
             if index == 0 {
                 println!(
