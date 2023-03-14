@@ -39,6 +39,45 @@ fn is_wasm32_installed() -> bool {
         })
         .unwrap_or(false)
 }
+#[cfg(windows)]
+fn is_webview2_installed() -> bool {
+    let powershell_path = std::env::var("SYSTEMROOT").map_or_else(
+        |_| "powershell.exe".to_string(),
+        |p| format!("{p}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe"),
+    );
+    // check 64bit per-system installation
+    let output = Command::new(&powershell_path)
+          .args(["-NoProfile", "-Command"])
+          .arg("Get-ItemProperty -Path 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\EdgeUpdate\\Clients\\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}' | ForEach-Object {$_.pv}")
+          .output().map(|o|o.status.success());
+    if let Ok(o) = output {
+        if o == true {
+            return true;
+        }
+    }
+    // check 32bit per-system installation
+    let output = Command::new(&powershell_path)
+            .args(["-NoProfile", "-Command"])
+            .arg("Get-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\EdgeUpdate\\Clients\\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}' | ForEach-Object {$_.pv}")
+            .output().map(|o|o.status.success());
+    if let Ok(o) = output {
+        if o == true {
+            return true;
+        }
+    }
+    // check per-user installation
+    let output = Command::new(&powershell_path)
+          .args(["-NoProfile", "-Command"])
+          .arg("Get-ItemProperty -Path 'HKCU:\\SOFTWARE\\Microsoft\\EdgeUpdate\\Clients\\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}' | ForEach-Object {$_.pv}")
+          .output().map(|o|o.status.success());
+    if let Ok(o) = output {
+        if o == true {
+            return true;
+        }
+    }
+
+    false
+}
 #[cfg(any(
     target_os = "linux",
     target_os = "dragonfly",
@@ -136,6 +175,13 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
             format!("Visit {BLUE}{BOLD}https://nodejs.org/en/{RESET}"),
             &is_node_installed,
             !pkg_manager.is_node(),
+        ),
+        #[cfg(windows)]
+        (
+            "Webview2",
+            format!("Visit {BLUE}{BOLD}https://go.microsoft.com/fwlink/p/?LinkId=2124703{RESET}"),
+            &is_webview2_installed,
+            false,
         ),
         #[cfg(any(
             target_os = "linux",
