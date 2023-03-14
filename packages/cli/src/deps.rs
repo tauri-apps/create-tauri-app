@@ -111,6 +111,15 @@ fn is_rsvg2_installed() -> bool {
         .unwrap_or(false)
 }
 
+#[cfg(target_os = "macos")]
+fn is_command_line_tools_installed() -> bool {
+    Command::new("xcode-select")
+        .arg("-p")
+        .output()
+        .map(|o| o.status.success())
+        .unwrap_or(false)
+}
+
 pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha: bool) {
     let rustc_installed = is_rustc_installed();
     let cargo_installed = is_cargo_installed();
@@ -233,6 +242,13 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
             }),
             &|| rsvg2_installed,
             !rsvg2_installed && !webkit2gtk_installed,
+        ),
+        #[cfg(target_os = "macos")]
+        (
+            "Xcode Command Line Tools",
+            format!("Run `{BLUE}{BOLD}xcode-select --install{RESET}`"),
+            &is_command_line_tools_installed,
+            false,
         ),
     ];
 
