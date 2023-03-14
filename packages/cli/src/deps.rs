@@ -50,7 +50,7 @@ fn is_webkit2gtk_installed(alpha: bool) -> bool {
     pkg_config::Config::default()
         .env_metadata(false)
         .probe(if alpha {
-            "webkit22gtk-4.1"
+            "webkit2gtk-4.1"
         } else {
             "webkit2gtk-4.0"
         })
