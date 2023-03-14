@@ -149,8 +149,8 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
             } else {
                 "https://tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux"
             }),
-            &|| gtk3_installed && rsvg2_installed,
-            gtk3_installed || rsvg2_installed,
+            &|| webkit2gtk_installed && rsvg2_installed,
+            webkit2gtk_installed || rsvg2_installed,
         ),
         #[cfg(any(
             target_os = "linux",
@@ -167,7 +167,7 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
                 "https://tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux"
             }),
             &|| webkit2gtk_installed,
-            !gtk3_installed && !webkit2gtk_installed,
+            !rsvg2_installed && !webkit2gtk_installed,
         ),
         #[cfg(any(
             target_os = "linux",
