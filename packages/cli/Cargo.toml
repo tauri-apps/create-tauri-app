@@ -21,6 +21,3 @@ anyhow = "1"
 dialoguer = "0.10"
 pico-args = "0.5"
 rust-embed = { version = "6.6", features = [ "compression", "interpolate-folder-path" ] }
-
-[target."cfg(any(target_os = \"linux\", target_os = \"dragonfly\", target_os = \"freebsd\", target_os = \"openbsd\", target_os = \"netbsd\"))".dependencies]
-pkg-config = "0.3"

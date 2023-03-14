@@ -47,14 +47,15 @@ fn is_wasm32_installed() -> bool {
     target_os = "netbsd"
 ))]
 fn is_webkit2gtk_installed(alpha: bool) -> bool {
-    pkg_config::Config::default()
-        .env_metadata(false)
-        .probe(if alpha {
+    Command::new("pkg-config")
+        .arg(if alpha {
             "webkit2gtk-4.1"
         } else {
             "webkit2gtk-4.0"
         })
-        .is_ok()
+        .output()
+        .map(|o| o.status.success())
+        .unwrap_or(false)
 }
 #[cfg(any(
     target_os = "linux",
@@ -64,10 +65,11 @@ fn is_webkit2gtk_installed(alpha: bool) -> bool {
     target_os = "netbsd"
 ))]
 fn is_rsvg2_installed() -> bool {
-    pkg_config::Config::default()
-        .env_metadata(false)
-        .probe("librsvg-2.0")
-        .is_ok()
+    Command::new("pkg-config")
+        .arg("librsvg-2.0")
+        .output()
+        .map(|o| o.status.success())
+        .unwrap_or(false)
 }
 
 pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha: bool) {
