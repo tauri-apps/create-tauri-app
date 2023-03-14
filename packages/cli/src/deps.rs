@@ -39,10 +39,51 @@ fn is_wasm32_installed() -> bool {
         })
         .unwrap_or(false)
 }
+#[cfg(any(
+    target_os = "linux",
+    target_os = "dragonfly",
+    target_os = "freebsd",
+    target_os = "openbsd",
+    target_os = "netbsd"
+))]
+fn is_webkit2gtk_installed(alpha: bool) -> bool {
+    pkg_config::Config::default()
+        .env_metadata(false)
+        .probe(if alpha {
+            "webkit22gtk-4.1"
+        } else {
+            "webkit2gtk-4.0"
+        })
+        .is_ok()
+}
+#[cfg(any(
+    target_os = "linux",
+    target_os = "dragonfly",
+    target_os = "freebsd",
+    target_os = "openbsd",
+    target_os = "netbsd"
+))]
+fn is_rsvg2_installed() -> bool {
+    pkg_config::Config::default()
+        .env_metadata(false)
+        .probe("librsvg-2.0")
+        .is_ok()
+}
 
 pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha: bool) {
     let rustc_installed = is_rustc_installed();
     let cargo_installed = is_cargo_installed();
+
+    #[cfg(any(
+        target_os = "linux",
+        target_os = "dragonfly",
+        target_os = "freebsd",
+        target_os = "openbsd",
+        target_os = "netbsd"
+    ))]
+    let (webkit2gtk_installed, rsvg2_installed) =
+        (is_webkit2gtk_installed(alpha), is_rsvg2_installed());
+
     let deps: &[(&str, String, &dyn Fn() -> bool, bool)] = &[
         (
             "Rust",
@@ -93,6 +134,57 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
             format!("Visit {BLUE}{BOLD}https://nodejs.org/en/{RESET}"),
             &is_node_installed,
             !pkg_manager.is_node(),
+        ),
+        #[cfg(any(
+            target_os = "linux",
+            target_os = "dragonfly",
+            target_os = "freebsd",
+            target_os = "openbsd",
+            target_os = "netbsd"
+        ))]
+        (
+            "webkit2gtk & rsvg2",
+            format!("Visit {BLUE}{BOLD}{}{RESET}", if alpha {
+                "https://next--tauri.netlify.app/next/guides/getting-started/prerequisites/linux#1-system-dependencies"
+            } else {
+                "https://tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux"
+            }),
+            &|| gtk3_installed && rsvg2_installed,
+            gtk3_installed || rsvg2_installed,
+        ),
+        #[cfg(any(
+            target_os = "linux",
+            target_os = "dragonfly",
+            target_os = "freebsd",
+            target_os = "openbsd",
+            target_os = "netbsd"
+        ))]
+        (
+            "webkit2gtk",
+            format!("Visit {BLUE}{BOLD}{}{RESET}", if alpha {
+                "https://next--tauri.netlify.app/next/guides/getting-started/prerequisites/linux#1-system-dependencies"
+            } else {
+                "https://tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux"
+            }),
+            &|| webkit2gtk_installed,
+            !gtk3_installed && !webkit2gtk_installed,
+        ),
+        #[cfg(any(
+            target_os = "linux",
+            target_os = "dragonfly",
+            target_os = "freebsd",
+            target_os = "openbsd",
+            target_os = "netbsd"
+        ))]
+        (
+            "rsvg2",
+            format!("Visit {BLUE}{BOLD}{}{RESET}", if alpha {
+                "https://next--tauri.netlify.app/next/guides/getting-started/prerequisites/linux#1-system-dependencies"
+            } else {
+                "https://tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux"
+            }),
+            &|| rsvg2_installed,
+            !rsvg2_installed && !webkit2gtk_installed,
         ),
     ];
 
