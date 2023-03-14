@@ -112,7 +112,7 @@ fn is_rsvg2_installed() -> bool {
 }
 
 #[cfg(target_os = "macos")]
-fn is_command_line_tools_installed() -> bool {
+fn is_xcode_command_line_tools_installed() -> bool {
     Command::new("xcode-select")
         .arg("-p")
         .output()
