@@ -247,7 +247,7 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
         (
             "Xcode Command Line Tools",
             format!("Run `{BLUE}{BOLD}xcode-select --install{RESET}`"),
-            &is_command_line_tools_installed,
+            &is_xcode_command_line_tools_installed,
             false,
         ),
     ];
