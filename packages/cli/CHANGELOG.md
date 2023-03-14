@@ -1,5 +1,16 @@
 # Changelog
 
+## \[3.2.0]
+
+- Fix `--alpha` templates that are generated without mobile support.
+  - [d2c5f1d](https://www.github.com/tauri-apps/create-tauri-app/commit/d2c5f1d12cb0cbedb2247765b053048cb90da60d) fix: remove `[lib]` section in 2.0-alpha tempaltes ([#374](https://www.github.com/tauri-apps/create-tauri-app/pull/374)) on 2023-03-14
+- Show a table of missing dependencies with installation instructions.
+  - [7b992e5](https://www.github.com/tauri-apps/create-tauri-app/commit/7b992e544c6824dbf29d0fab38488e3b516142b1) feat: show missing deps after template bootstrap ([#367](https://www.github.com/tauri-apps/create-tauri-app/pull/367)) on 2023-03-13
+- Bump MSRV to 1.59
+  - [7c3231c](https://www.github.com/tauri-apps/create-tauri-app/commit/7c3231c08505dfaf139f498b6ca2241c40006c8f) feat: strip debug symbols from binaries ([#370](https://www.github.com/tauri-apps/create-tauri-app/pull/370)) on 2023-03-14
+- Strip debug symobls from binaries.
+  - [7c3231c](https://www.github.com/tauri-apps/create-tauri-app/commit/7c3231c08505dfaf139f498b6ca2241c40006c8f) feat: strip debug symbols from binaries ([#370](https://www.github.com/tauri-apps/create-tauri-app/pull/370)) on 2023-03-14
+
 ## \[3.1.2]
 
 - Fix unwanted refresh when clicking on the greet button in `leptos` template
