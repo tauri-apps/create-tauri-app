@@ -6,17 +6,33 @@ use crate::package_manager::PackageManager;
 use std::process::Command;
 
 fn is_rustc_installed() -> bool {
-    Command::new("rustc").arg("-V").output().is_ok()
+    Command::new("rustc")
+        .arg("-V")
+        .output()
+        .map(|o| o.status.success())
+        .unwrap_or(false)
 }
 fn is_cargo_installed() -> bool {
-    Command::new("cargo").arg("-V").output().is_ok()
+    Command::new("cargo")
+        .arg("-V")
+        .output()
+        .map(|o| o.status.success())
+        .unwrap_or(false)
 }
 fn is_node_installed() -> bool {
-    Command::new("node").arg("-v").output().is_ok()
+    Command::new("node")
+        .arg("-v")
+        .output()
+        .map(|o| o.status.success())
+        .unwrap_or(false)
 }
 
 fn is_trunk_installed() -> bool {
-    Command::new("trunk").arg("-V").output().is_ok()
+    Command::new("trunk")
+        .arg("-V")
+        .output()
+        .map(|o| o.status.success())
+        .unwrap_or(false)
 }
 fn is_tauri_cli_installed() -> bool {
     Command::new("cargo")
