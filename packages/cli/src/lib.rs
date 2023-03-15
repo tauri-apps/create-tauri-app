@@ -280,7 +280,6 @@ where
     template.render(&target_dir, pkg_manager, &package_name, alpha, mobile)?;
 
     // Print post-render instructions
-
     println!();
     print!("Template created!");
     print_missing_deps(pkg_manager, template, alpha);
