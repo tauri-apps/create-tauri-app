@@ -1,5 +1,12 @@
 # Changelog
 
+## \[3.2.1]
+
+- Fix missing hover styles for sycamore logo.
+  - [763ef80](https://www.github.com/tauri-apps/create-tauri-app/commit/763ef8081a6760ed011b54a88eacd79d8ff6b142) style.css -> styles.css ([#376](https://www.github.com/tauri-apps/create-tauri-app/pull/376)) on 2023-03-19
+- Update tauri dependencies for all `--alpha` templates.
+  - [3d783aa](https://www.github.com/tauri-apps/create-tauri-app/commit/3d783aabcf4f93222634e5f0fbc9f0a3a8c613af) feat: update tauri deps for alpha templates ([#379](https://www.github.com/tauri-apps/create-tauri-app/pull/379)) on 2023-03-20
+
 ## \[3.2.0]
 
 - Fix `--alpha` templates that are generated without mobile support.
