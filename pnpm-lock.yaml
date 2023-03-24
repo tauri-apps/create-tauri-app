@@ -9,9 +9,9 @@ importers:
   .:
     specifiers:
       covector: 0.8.0
-      prettier: 2.8.6
+      prettier: 2.8.7
     dependencies:
-      prettier: 2.8.6
+      prettier: 2.8.7
     devDependencies:
       covector: 0.8.0
 
@@ -1472,8 +1472,8 @@ packages:
     engines: {node: '>=8.6'}
     dev: true
 
-  /prettier/2.8.6:
-    resolution: {integrity: sha512-mtuzdiBbHwPEgl7NxWlqOkithPyp4VN93V7VeHVWBF+ad3I5avc0RVDT4oImXQy9H/AqxA2NSQH8pSxHW6FYbQ==}
+  /prettier/2.8.7:
+    resolution: {integrity: sha512-yPngTo3aXUUmyuTjeTUT75txrf+aMh9FiD7q9ZE/i6r0bPb22g4FsE6Y338PQX1bmfy08i9QQCB7/rcUAVntfw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: false
