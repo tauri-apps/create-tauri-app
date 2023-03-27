@@ -1,5 +1,12 @@
 # Changelog
 
+## \[3.3.0]
+
+- Release `aarch64` binaries and node modules.
+  - [a5e4694](https://www.github.com/tauri-apps/create-tauri-app/commit/a5e4694e94b3f51e07805c94414eb86c5e95ba87) feat: build cli for windows aarch64 ([#386](https://www.github.com/tauri-apps/create-tauri-app/pull/386)) on 2023-03-27
+- Update `@tauri-apps/cli` verstion for `--alpha` templates.
+  - [e51b085](https://www.github.com/tauri-apps/create-tauri-app/commit/e51b085a0ac213e4445981fc25835b006766087f) chore: update `@tauri-apps/cli` on 2023-03-26
+
 ## \[3.2.1]
 
 - Fix missing hover styles for sycamore logo.
