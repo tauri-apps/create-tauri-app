@@ -2,12 +2,16 @@ use std::fmt::Display;
 
 use crate::package_manager::PackageManager;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
 pub enum Category {
     Rust,
-    #[default]
     JsTs,
+}
+impl Default for Category {
+    fn default() -> Self {
+        Category::JsTs
+    }
 }
 
 impl<'a> Category {
