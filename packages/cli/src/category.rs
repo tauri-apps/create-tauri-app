@@ -2,20 +2,16 @@ use std::fmt::Display;
 
 use crate::package_manager::PackageManager;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 #[non_exhaustive]
 pub enum Category {
     Rust,
+    #[default]
     JsTs,
-}
-impl Default for Category {
-    fn default() -> Self {
-        Category::Rust
-    }
 }
 
 impl<'a> Category {
-    pub const ALL: &'a [Self] = &[Category::Rust, Category::JsTs];
+    pub const ALL: &'a [Self] = &[Category::JsTs, Category::Rust];
 
     pub const fn package_managers(&self) -> &[PackageManager] {
         match self {
