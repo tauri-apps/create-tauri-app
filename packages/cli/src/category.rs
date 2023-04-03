@@ -10,12 +10,12 @@ pub enum Category {
 }
 impl Default for Category {
     fn default() -> Self {
-        Category::Rust
+        Category::JsTs
     }
 }
 
 impl<'a> Category {
-    pub const ALL: &'a [Self] = &[Category::Rust, Category::JsTs];
+    pub const ALL: &'a [Self] = &[Category::JsTs, Category::Rust];
 
     pub const fn package_managers(&self) -> &[PackageManager] {
         match self {
