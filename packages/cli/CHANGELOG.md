@@ -1,5 +1,12 @@
 # Changelog
 
+## \[3.3.1]
+
+- Update `solid-js`, `vite` and `tauri` dependencies.
+  - [7b992e5](https://www.github.com/tauri-apps/create-tauri-app/commit/7b992e544c6824dbf29d0fab38488e3b516142b1) feat: show missing deps after template bootstrap ([#367](https://www.github.com/tauri-apps/create-tauri-app/pull/367)) on 2023-03-13
+  - [093a0d9](https://www.github.com/tauri-apps/create-tauri-app/commit/093a0d9a9cb25b5cd33b0a6c7b5ecfd961699db7) apply version updates ([#369](https://www.github.com/tauri-apps/create-tauri-app/pull/369)) on 2023-03-15
+  - [9f0b36e](https://www.github.com/tauri-apps/create-tauri-app/commit/9f0b36e7eaf39d7bcafd79e4901eae2702c9f6db) chore(deps): update solid, vite and tauri deps ([#391](https://www.github.com/tauri-apps/create-tauri-app/pull/391)) on 2023-04-04
+
 ## \[3.3.0]
 
 - Release `aarch64` binaries and node modules.
