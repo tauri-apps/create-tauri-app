@@ -21,9 +21,9 @@
     "svelte-check": "^3.0.0",
     "svelte-preprocess": "^5.0.0",
     "tslib": "^2.4.1",
-    "typescript": "^4.6.4",
-    "vite": "^4.0.0",
-    "@tauri-apps/cli": "^2.0.0-alpha.4",
+    "typescript": "^4.9.5",
+    "vite": "^4.2.1",
+    "@tauri-apps/cli": "^2.0.0-alpha.6",
     "internal-ip": "^7.0.0"
   }
 }

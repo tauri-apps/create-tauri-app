@@ -1,10 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
-const mobile =
-  process.env.TAURI_PLATFORM === "android" ||
-  process.env.TAURI_PLATFORM === "ios";
-
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
   plugins: [react()],
