@@ -1,5 +1,11 @@
 # Changelog
 
+## \[3.3.3]
+
+- Fix publishing standalone binaries to GitHub releases.
+  - [c248817](https://www.github.com/tauri-apps/create-tauri-app/commit/c248817f21c8259447a695dc8b8432c747e9c2b4) ci: update to ubuntu-latest ([#395](https://www.github.com/tauri-apps/create-tauri-app/pull/395)) on 2023-04-04
+  - [ce35f27](https://www.github.com/tauri-apps/create-tauri-app/commit/ce35f271a66442532912367a2e3c0e8fbfe7b173) chore: update chang file (dummy commit to run CI) on 2023-04-04
+
 ## \[3.3.2]
 
 - Fix publishing arm64 modules to npm
