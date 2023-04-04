@@ -31,7 +31,7 @@ jobs:
   audit-rust:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo install cargo-audit
       - run: cargo audit
@@ -39,10 +39,10 @@ jobs:
   audit-js:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: pnpm/action-setup@v2.2.2
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.2.4
         with:
-          version: 7
+          version: 8
       - name: Setup node
         uses: actions/setup-node@v3
         with:

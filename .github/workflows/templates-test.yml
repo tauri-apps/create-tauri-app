@@ -26,7 +26,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo build --release --package create-tauri-app
 
@@ -46,7 +46,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Get changed files
         id: changed-files
@@ -72,10 +72,10 @@ jobs:
 
     name: ${{ matrix.settings.manager }} - ${{ matrix.settings.template }}
     steps:
-      - uses: pnpm/action-setup@v2.2.2
+      - uses: pnpm/action-setup@v2.2.4
         if: matrix.settings.manager == 'pnpm'
         with:
-          version: 7
+          version: 8
 
       - name: Install Node.js@16
         if: matrix.settings.manager != 'cargo'

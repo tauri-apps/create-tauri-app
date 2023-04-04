@@ -102,9 +102,9 @@ jobs:
     runs-on: ${{ matrix.settings.host }}
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2.2.2
+      - uses: pnpm/action-setup@v2.2.4
         with:
-          version: 7
+          version: 8
 
       - name: Setup node
         uses: actions/setup-node@v3
@@ -124,17 +124,6 @@ jobs:
         if: ${{ matrix.settings.docker }}
         with:
           key: ${{ matrix.settings.target }}
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
-
-      - name: Cache pnpm dependencies
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: pnpm-cache-build-${{ matrix.settings.target }}-node@16
 
       - name: Setup toolchain
         run: ${{ matrix.settings.setup }}
@@ -174,9 +163,9 @@ jobs:
       - build
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2.2.2
+      - uses: pnpm/action-setup@v2.2.4
         with:
-          version: 7
+          version: 8
       - name: Setup node
         uses: actions/setup-node@v3
         with:
@@ -184,17 +173,6 @@ jobs:
           check-latest: true
           cache: pnpm
           cache-dependency-path: '**/pnpm-lock.yaml'
-
-      - name: Get pnpm store directory
-        id: pnpm-cache
-        run: |
-          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
-
-      - name: Cache pnpm dependencies
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
-          key: pnpm-cache-build-${{ matrix.settings.target }}-node@16
 
       - name: Install dependencies
         run: pnpm install -w --filter .
