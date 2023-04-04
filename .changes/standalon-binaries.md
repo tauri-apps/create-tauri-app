@@ -3,5 +3,5 @@
 "create-tauri-app-js": "patch"
 ---
 
-Fix publishing standalone binaries to github releases.
+Fix publishing standalone binaries to GitHub releases.
 
