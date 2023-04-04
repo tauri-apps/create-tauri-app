@@ -1,5 +1,10 @@
 # Changelog
 
+## \[3.3.2]
+
+- Fix publishing arm64 modules to npm
+  - [b8a6cda](https://www.github.com/tauri-apps/create-tauri-app/commit/b8a6cda8b86e089913c7041c72a77f82b2583e83) fix(napi): add missing windows arm64 files on 2023-04-04
+
 ## \[3.3.1]
 
 - Update `solid-js`, `vite` and `tauri` dependencies.
