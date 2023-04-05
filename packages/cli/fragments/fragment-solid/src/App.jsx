@@ -46,7 +46,7 @@ function App() {
         </form>
       </div>
 
-      <p>{greetMsg}</p>
+      <p>{greetMsg()}</p>
     </div>
   );
 }
