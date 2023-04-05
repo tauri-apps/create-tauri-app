@@ -1,5 +1,10 @@
 # Changelog
 
+## \[3.3.4]
+
+- Correct the usage of signal getter in Solid template
+  - [8c2e92b](https://www.github.com/tauri-apps/create-tauri-app/commit/8c2e92ba232d5307052c6b6a8d6ba8112f9e0f4d) fix(solid.js): update greetMsg signal getter ([#397](https://www.github.com/tauri-apps/create-tauri-app/pull/397)) on 2023-04-05
+
 ## \[3.3.3]
 
 - Fix publishing standalone binaries to GitHub releases.
