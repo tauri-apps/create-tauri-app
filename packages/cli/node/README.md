@@ -32,7 +32,7 @@ pnpm create tauri-app
 
 <br>
 
-You can also directly specify the project name, package manager and the template you want to use via additional command line options. For example, to scaffold a Vue project in a `my-tauri-app` directory, using `pnpm`, run:
+You can also directly specify the project name, package manager and the template you want to use via additional command line options. For example, to scaffold a Svelte project in a `my-tauri-app` directory, run:
 
 
 ```bash
