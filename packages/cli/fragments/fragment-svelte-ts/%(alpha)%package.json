@@ -11,7 +11,7 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@tauri-apps/api": "^2.0.0-alpha.1"
+    "@tauri-apps/api": "^2.0.0-alpha.3"
   },
   "devDependencies": {
     "@types/node": "^18.7.10",
@@ -23,7 +23,7 @@
     "tslib": "^2.4.1",
     "typescript": "^4.9.5",
     "vite": "^4.2.1",
-    "@tauri-apps/cli": "^2.0.0-alpha.6",
+    "@tauri-apps/cli": "^2.0.0-alpha.7",
     "internal-ip": "^7.0.0"
   }
 }
