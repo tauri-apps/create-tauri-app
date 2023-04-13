@@ -1,5 +1,12 @@
 # Changelog
 
+## \[3.3.5]
+
+- Update `tauri` deps for all templates
+  - [2da95ed](https://www.github.com/tauri-apps/create-tauri-app/commit/2da95ed48fc2c44d6b73d67206ceaa1963217648) chore(deps): update tauri to latest version, closes [#229](https://www.github.com/tauri-apps/create-tauri-app/pull/229) on 2022-11-18
+  - [2c0f09f](https://www.github.com/tauri-apps/create-tauri-app/commit/2c0f09ff1c99d4300bdc6fbdbb1cb7605dbaff7a) Apply Version Updates From Current Changes ([#230](https://www.github.com/tauri-apps/create-tauri-app/pull/230)) on 2022-11-18
+  - [6cdeebd](https://www.github.com/tauri-apps/create-tauri-app/commit/6cdeebde405052261d3baa755f04c35a3c1cfcea) chore: add change file on 2023-04-13
+
 ## \[3.3.4]
 
 - Correct the usage of signal getter in Solid template
