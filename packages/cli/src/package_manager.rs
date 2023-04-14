@@ -38,6 +38,7 @@ impl PackageManager {
                 Template::Yew,
                 Template::Leptos,
                 Template::Sycamore,
+                Template::Dioxus,
             ],
             PackageManager::Pnpm | PackageManager::Yarn | PackageManager::Npm => &[
                 Template::Vanilla,
@@ -57,6 +58,7 @@ impl PackageManager {
                 Template::Yew,
                 Template::Leptos,
                 Template::Sycamore,
+                Template::Dioxus,
             ],
             PackageManager::Pnpm | PackageManager::Yarn | PackageManager::Npm => &[
                 Template::Vanilla,
