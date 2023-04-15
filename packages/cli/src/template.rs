@@ -242,6 +242,7 @@ impl<'a> Template {
                 "vite.config.js",
                 "Trunk.toml",
                 "angular.json",
+                "Dioxus.toml"
             ]
             .contains(&target_file_name)
             {
