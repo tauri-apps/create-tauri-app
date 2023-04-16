@@ -1,5 +1,12 @@
 # Changelog
 
+## \[3.3.6]
+
+- Add missing `tauri` script in package.json for Angular template.
+  - [b81a89c](https://www.github.com/tauri-apps/create-tauri-app/commit/b81a89c30c7f73e8adaa21c0ffff22c2c25d87b6) fix: add missing tauri script for angular template, closes [#404](https://www.github.com/tauri-apps/create-tauri-app/pull/404) on 2023-04-14
+- Update tauri dependencies for all templates.
+  - [61aee5a](https://www.github.com/tauri-apps/create-tauri-app/commit/61aee5a052a41092c96d837b14197e7b1a84050f) chore(deps): update tchore(deps): update tauri deps in all templatesauri deps in all templates on 2023-04-16
+
 ## \[3.3.5]
 
 - Update `tauri` deps for all templates
