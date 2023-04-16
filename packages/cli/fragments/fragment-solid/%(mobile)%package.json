@@ -18,7 +18,7 @@
   "devDependencies": {
     "vite": "^4.2.1",
     "vite-plugin-solid": "^2.5.0",
-    "@tauri-apps/cli": "^2.0.0-alpha.7",
+    "@tauri-apps/cli": "^2.0.0-alpha.8",
     "internal-ip": "^7.0.0"
   }
 }
