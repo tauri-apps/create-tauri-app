@@ -19,13 +19,13 @@ pub fn app(cx: Scope) -> Element {
 
     let onsubmit = move |e: FormEvent| {
         to_owned![greet_msg];
-        cx.spawn(async move {
+        async move {
             let name = e.values.get("name").unwrap();
             let args = to_value(&GreetArgs { name }).unwrap();
             // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
             let new_msg = invoke("greet", args).await.as_string().unwrap();
             greet_msg.set(new_msg);
-        });
+        }
     };
 
     render! (
