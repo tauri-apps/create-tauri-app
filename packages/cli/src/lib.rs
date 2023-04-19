@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: MIT
 
 use dialoguer::{Confirm, Input, Select};
-use std::{ffi::OsString, fs, process::exit};
+use std::{ffi::OsString, fs, process::{exit, Command}, fmt::format};
 
 use crate::{
     category::Category, colors::*, deps::print_missing_deps, package_manager::PackageManager,
@@ -239,6 +239,13 @@ where
         }
     });
 
+    // Install dependencies via package manager
+    let install_deps = Confirm::with_theme(&ColorfulTheme::default())
+        .with_prompt("Would you like to install dependencies?")
+        .default(true)
+        .interact()
+        .unwrap();
+
     // Prompt for wether to bootstrap a mobile-friendly tauri project
     // This should only be prompted if `--alpha` is used on the command line and `--mobile` wasn't.
     // TODO: remove this limitation once tauri@v2 is stable
@@ -279,6 +286,41 @@ where
     // Render the template
     template.render(&target_dir, pkg_manager, &package_name, alpha, mobile)?;
 
+    
+    if install_deps {
+        if cfg!(target_os = "windows") {
+            let install_cmd_output = Command::new("cmd")
+                .args(&["/C", pkg_manager.install_cmd().unwrap()])
+                .spawn()
+                .unwrap()
+                .wait_with_output()
+                .unwrap();
+
+            if !install_cmd_output.status.success() {
+                eprintln!(
+                    "{BOLD}{RED}✘{RESET} Failed to install dependencies via `{}`",
+                    pkg_manager.install_cmd().unwrap()
+                );
+                exit(1);
+            }
+        } else {
+            let install_cmd_output = Command::new("sh")
+                .args(&["-c", pkg_manager.install_cmd().unwrap()])
+                .spawn()
+                .unwrap()
+                .wait_with_output()
+                .unwrap();
+
+            if !install_cmd_output.status.success() {
+                eprintln!(
+                    "{BOLD}{RED}✘{RESET} Failed to install dependencies via `{}`",
+                    pkg_manager.install_cmd().unwrap()
+                );
+                exit(1);
+            }
+        }
+    }
+
     // Print post-render instructions
     println!();
     print!("Template created!");
@@ -293,8 +335,10 @@ where
             }
         );
     }
-    if let Some(cmd) = pkg_manager.install_cmd() {
-        println!("  {cmd}");
+    if !install_deps {
+        if let Some(cmd) = pkg_manager.install_cmd() {
+            println!("  {cmd}");
+        }
     }
     if !mobile {
         println!("  {} tauri dev", pkg_manager.run_cmd());
