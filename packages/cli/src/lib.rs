@@ -240,11 +240,15 @@ where
     });
 
     // Install dependencies via package manager
-    let install_deps = Confirm::with_theme(&ColorfulTheme::default())
-        .with_prompt("Would you like to install dependencies?")
-        .default(true)
-        .interact()
-        .unwrap();
+    let install_deps = if skip || !pkg_manager.is_node() {
+        false
+    } else {
+        Confirm::with_theme(&ColorfulTheme::default())
+            .with_prompt("Would you like to install dependencies?")
+            .default(true)
+            .interact()
+            .unwrap()
+    };
 
     // Prompt for wether to bootstrap a mobile-friendly tauri project
     // This should only be prompted if `--alpha` is used on the command line and `--mobile` wasn't.
