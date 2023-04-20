@@ -16,6 +16,7 @@ pub struct Args {
     pub skip: bool,
     pub alpha: bool,
     pub mobile: Option<bool>,
+    pub install: bool,
 }
 
 impl Default for Args {
@@ -27,6 +28,7 @@ impl Default for Args {
             skip: false,
             alpha: false,
             mobile: Some(false),
+            install: false,
         }
     }
 }
@@ -55,6 +57,7 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
                     {GREEN}--mobile{RESET}                  Bootstraps a mobile project too. Only availabe with `--alpha` option.
   {GREEN}-h{RESET}, {GREEN}--help{RESET}                    Prints help information
   {GREEN}-v{RESET}, {GREEN}--version{RESET}                 Prints version information
+                    {GREEN}--install{RESET}                 Install dependencies after creating the project
 "#,
             name = bin_name.unwrap_or_else(|| env!("CARGO_PKG_NAME").to_string()),
             version = env!("CARGO_PKG_VERSION"),
@@ -91,6 +94,7 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
             None
         },
         project_name: pargs.opt_free_from_str()?,
+        install: pargs.contains("--install"),
     };
 
     Ok(args)
