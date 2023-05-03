@@ -244,33 +244,15 @@ impl<'a> Template {
             {
                 if let Ok(content) = String::from_utf8(data.to_vec()) {
                     // Replacement order is important
-                    data = content
-                        .replace("{{lib_name}}", &lib_name)
-                        .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
-                        .replace(
-                            "{{fragment_before_dev_command}}",
-                            manifest.before_dev_command.unwrap_or_default(),
-                        )
-                        .replace(
-                            "{{fragment_before_build_command}}",
-                            manifest.before_build_command.unwrap_or_default(),
-                        )
-                        .replace(
-                            "{{fragment_dev_path}}",
-                            manifest.dev_path.unwrap_or_default(),
-                        )
-                        .replace(
-                            "{{fragment_dist_dir}}",
-                            manifest.dist_dir.unwrap_or_default(),
-                        )
-                        .replace("{{package_name}}", package_name)
-                        .replace(
-                            r#""withGlobalTauri": "{{fragment_with_global_tauri}}""#,
-                            &format!(r#""withGlobalTauri": {}"#, manifest.with_global_tauri),
-                        )
-                        .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
-                        .as_bytes()
-                        .to_vec();
+                    data = Self::replace_vars(
+                        &content,
+                        &lib_name,
+                        package_name,
+                        pkg_manager,
+                        manifest,
+                    )
+                    .as_bytes()
+                    .to_vec();
                 }
             }
 
@@ -320,6 +302,26 @@ impl<'a> Template {
 
         Ok(())
     }
+
+    fn replace_vars(
+        content: &str,
+        lib_name: &str,
+        package_name: &str,
+        pkg_manager: PackageManager,
+        manifest: Manifest,
+    ) -> String {
+        manifest
+            .replace_vars(&content)
+            .replace("{{lib_name}}", lib_name)
+            .replace("{{package_name}}", package_name)
+            .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
+            .replace(
+                "{{double-dash}}",
+                (pkg_manager == PackageManager::Npm)
+                    .then_some(" --")
+                    .unwrap_or_default(),
+            )
+    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -336,4 +338,16 @@ impl Display for Flavor {
             Flavor::TypeScript => write!(f, "TypeScript"),
         }
     }
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn it_works() {}
+
+    #[test]
+    #[should_panic]
+    fn it_panics() {}
 }
