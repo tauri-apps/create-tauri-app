@@ -317,9 +317,11 @@ impl<'a> Template {
             .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
             .replace(
                 "{{double-dash}}",
-                (pkg_manager == PackageManager::Npm)
-                    .then_some(" --")
-                    .unwrap_or_default(),
+                if pkg_manager == PackageManager::Npm {
+                    " --"
+                } else {
+                    ""
+                },
             )
     }
 }
