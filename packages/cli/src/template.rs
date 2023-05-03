@@ -345,9 +345,64 @@ mod test {
     use super::*;
 
     #[test]
-    fn it_works() {}
+    fn it_works() {
+        let manifest_file = r#"
+        # Copyright 2019-2022 Tauri Programme within The Commons Conservancy
+        # SPDX-License-Identifier: Apache-2.0
+        # SPDX-License-Identifier: MIT
 
-    #[test]
-    #[should_panic]
-    fn it_panics() {}
+        beforeDevCommand = {{pkg_manager_run_command}} start{{double-dash}} --port 1420
+        beforeBuildCommand = {{pkg_manager_run_command}} build # this comment should be stripped
+        devPath = http://localhost:1420
+
+        [files]
+        tauri.svg = src/assets/tauri.svg
+        styles.css = src/styles.css
+    "#;
+
+        let content = r#"{
+    "build": {
+        "beforeDevCommand": "{{fragment_before_dev_command}}",
+        "beforeBuildCommand": "{{fragment_before_build_command}}",
+        "devPath": "{{fragment_dev_path}}",
+        "distDir": "{{fragment_dist_dir}}"
+    },
+}"#;
+
+        let manifest = Manifest::parse(manifest_file, false).unwrap();
+        assert_eq!(
+            Template::replace_vars(content, "cta_lib", "cta-app", PackageManager::Npm, manifest)
+                .as_str(),
+            r#"{
+    "build": {
+        "beforeDevCommand": "npm run start -- --port 1420",
+        "beforeBuildCommand": "npm run build",
+        "devPath": "http://localhost:1420",
+        "distDir": ""
+    },
+}"#
+            .to_string()
+        );
+
+        let manifest = Manifest::parse(manifest_file, false).unwrap();
+        assert_eq!(
+            Template::replace_vars(
+                content,
+                "cta_lib",
+                "cta-app",
+                PackageManager::Pnpm,
+                manifest
+            )
+            .as_str(),
+            r#"{
+    "build": {
+        "beforeDevCommand": "pnpm start --port 1420",
+        "beforeBuildCommand": "pnpm build",
+        "devPath": "http://localhost:1420",
+        "distDir": ""
+    },
+}"#
+            .to_string()
+        );
+    }
 }
