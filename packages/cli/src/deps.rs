@@ -67,7 +67,7 @@ fn is_webview2_installed() -> bool {
           .arg("Get-ItemProperty -Path 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\EdgeUpdate\\Clients\\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}' | ForEach-Object {$_.pv}")
           .output().map(|o|o.status.success());
     if let Ok(o) = output {
-        if o == true {
+        if o {
             return true;
         }
     }
@@ -77,7 +77,7 @@ fn is_webview2_installed() -> bool {
             .arg("Get-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\EdgeUpdate\\Clients\\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}' | ForEach-Object {$_.pv}")
             .output().map(|o|o.status.success());
     if let Ok(o) = output {
-        if o == true {
+        if o {
             return true;
         }
     }
@@ -87,7 +87,7 @@ fn is_webview2_installed() -> bool {
           .arg("Get-ItemProperty -Path 'HKCU:\\SOFTWARE\\Microsoft\\EdgeUpdate\\Clients\\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}' | ForEach-Object {$_.pv}")
           .output().map(|o|o.status.success());
     if let Ok(o) = output {
-        if o == true {
+        if o {
             return true;
         }
     }
