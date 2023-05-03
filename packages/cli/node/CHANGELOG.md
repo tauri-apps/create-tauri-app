@@ -1,5 +1,18 @@
 # Changelog
 
+## \[3.4.0]
+
+- Disable analytics for Angular template
+  - [3949533](https://www.github.com/tauri-apps/create-tauri-app/commit/3949533d8091752a96b3b9b9f67dd44894c3c45e) fix(templates/angular): add missing `--` for npm, closes [#411](https://www.github.com/tauri-apps/create-tauri-app/pull/411) ([#412](https://www.github.com/tauri-apps/create-tauri-app/pull/412)) on 2023-05-03
+- Fix `beforeDevCommand` missing `--` for npm + Angular template
+  - [3949533](https://www.github.com/tauri-apps/create-tauri-app/commit/3949533d8091752a96b3b9b9f67dd44894c3c45e) fix(templates/angular): add missing `--` for npm, closes [#411](https://www.github.com/tauri-apps/create-tauri-app/pull/411) ([#412](https://www.github.com/tauri-apps/create-tauri-app/pull/412)) on 2023-05-03
+- Update tauri dependencies for all templates
+  - [7b992e5](https://www.github.com/tauri-apps/create-tauri-app/commit/7b992e544c6824dbf29d0fab38488e3b516142b1) feat: show missing deps after template bootstrap ([#367](https://www.github.com/tauri-apps/create-tauri-app/pull/367)) on 2023-03-13
+  - [093a0d9](https://www.github.com/tauri-apps/create-tauri-app/commit/093a0d9a9cb25b5cd33b0a6c7b5ecfd961699db7) apply version updates ([#369](https://www.github.com/tauri-apps/create-tauri-app/pull/369)) on 2023-03-15
+  - [9f0b36e](https://www.github.com/tauri-apps/create-tauri-app/commit/9f0b36e7eaf39d7bcafd79e4901eae2702c9f6db) chore(deps): update solid, vite and tauri deps ([#391](https://www.github.com/tauri-apps/create-tauri-app/pull/391)) on 2023-04-04
+  - [9e6a5b0](https://www.github.com/tauri-apps/create-tauri-app/commit/9e6a5b0522c85e561740791a6b3b4fdfb68ea8d4) Apply Version Updates From Current Changes ([#392](https://www.github.com/tauri-apps/create-tauri-app/pull/392)) on 2023-04-04
+  - [ecc0676](https://www.github.com/tauri-apps/create-tauri-app/commit/ecc06767d2319c1dc20b3d0aa4791fbefc959b36) chore(deps): update tauri deps for templates ([#414](https://www.github.com/tauri-apps/create-tauri-app/pull/414)) on 2023-05-03
+
 ## \[3.3.6]
 
 - Add missing `tauri` script in package.json for Angular template.
