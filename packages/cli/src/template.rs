@@ -311,7 +311,7 @@ impl<'a> Template {
         manifest: Manifest,
     ) -> String {
         manifest
-            .replace_vars(&content)
+            .replace_vars(content)
             .replace("{{lib_name}}", lib_name)
             .replace("{{package_name}}", package_name)
             .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
