@@ -243,7 +243,7 @@ mod test {
     },
 }"#;
         assert_eq!(
-            manifest.replace_vars(&content).as_str(),
+            manifest.replace_vars(content).as_str(),
             r#"{
     "build": {
         "beforeDevCommand": "npm start -- --port 1420",
