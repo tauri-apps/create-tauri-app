@@ -26,7 +26,7 @@ sh <(wget https://create.tauri.app/sh)
 ## Powershell:
 
 ```powershell
-iwr -useb https://create.tauri.app/ps | iex
+irm https://create.tauri.app/ps | iex
 ```
 
 ## Cargo:
@@ -64,7 +64,7 @@ sh <(curl https://create.tauri.app/sh) my-tauri-app --template svelte --manager 
 # wget
 sh <(wget https://create.tauri.app/sh) my-tauri-app --template svelte --manager pnpm
 # powershell
-$env:CTA_ARGS="--template svelte --manager pnpm";iwr -useb https://create.tauri.app/ps | iex
+$env:CTA_ARGS="--template svelte --manager pnpm";irm https://create.tauri.app/ps | iex
 # cargo
 cargo create-tauri-app my-tauri-app --template svelte --manager pnpm
 # npm 6.x
