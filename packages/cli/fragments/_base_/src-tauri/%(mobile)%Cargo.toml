@@ -1,5 +1,5 @@
 [package]
-name = "{{package_name}}"
+name = "~package_name~"
 version = "0.0.0"
 description = "A Tauri App"
 authors = ["you"]
@@ -8,7 +8,7 @@ repository = ""
 edition = "2021"
 
 [lib]
-name = "{{lib_name}}"
+name = "~lib_name~"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

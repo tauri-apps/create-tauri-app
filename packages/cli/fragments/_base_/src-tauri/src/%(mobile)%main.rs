@@ -3,5 +3,5 @@
 
 fn main() {
     #[cfg(desktop)]
-    {{lib_name}}::run();
+    ~lib_name~::run();
 }

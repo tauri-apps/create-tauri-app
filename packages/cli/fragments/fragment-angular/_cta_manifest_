@@ -2,13 +2,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-License-Identifier: MIT
 
-beforeDevCommand = {{pkg_manager_run_command}} start{{double-dash}} --port 1420
-beforeBuildCommand = {{pkg_manager_run_command}} build
+beforeDevCommand = ~pkg_manager_run_command~ start~double-dash~ --port 1420
+beforeBuildCommand = ~pkg_manager_run_command~ build
 devPath = http://localhost:1420
-distDir = ../dist/{{package_name}}
+distDir = ../dist/~package_name~
 
 [mobile]
-beforeDevCommand = {{pkg_manager_run_command}} start{{double-dash}} --port 1420 --host $HOST --public-host $HOST
+beforeDevCommand = ~pkg_manager_run_command~ start~double-dash~ --port 1420 --host $HOST --public-host $HOST
 
 [files]
 tauri.svg = src/assets/tauri.svg

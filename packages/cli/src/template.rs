@@ -312,11 +312,11 @@ impl<'a> Template {
     ) -> String {
         manifest
             .replace_vars(content)
-            .replace("{{lib_name}}", lib_name)
-            .replace("{{package_name}}", package_name)
-            .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
+            .replace("~lib_name~", lib_name)
+            .replace("~package_name~", package_name)
+            .replace("~pkg_manager_run_command~", pkg_manager.run_cmd())
             .replace(
-                "{{double-dash}}",
+                "~double-dash~",
                 if pkg_manager == PackageManager::Npm {
                     " --"
                 } else {
@@ -353,8 +353,8 @@ mod test {
         # SPDX-License-Identifier: Apache-2.0
         # SPDX-License-Identifier: MIT
 
-        beforeDevCommand = {{pkg_manager_run_command}} start{{double-dash}} --port 1420
-        beforeBuildCommand = {{pkg_manager_run_command}} build # this comment should be stripped
+        beforeDevCommand = ~pkg_manager_run_command~ start~double-dash~ --port 1420
+        beforeBuildCommand = ~pkg_manager_run_command~ build # this comment should be stripped
         devPath = http://localhost:1420
 
         [files]
@@ -364,10 +364,10 @@ mod test {
 
         let content = r#"{
     "build": {
-        "beforeDevCommand": "{{fragment_before_dev_command}}",
-        "beforeBuildCommand": "{{fragment_before_build_command}}",
-        "devPath": "{{fragment_dev_path}}",
-        "distDir": "{{fragment_dist_dir}}"
+        "beforeDevCommand": "~fragment_before_dev_command~",
+        "beforeBuildCommand": "~fragment_before_build_command~",
+        "devPath": "~fragment_dev_path~",
+        "distDir": "~fragment_dist_dir~"
     },
 }"#;
 
