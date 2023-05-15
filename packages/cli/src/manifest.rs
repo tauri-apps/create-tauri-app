@@ -87,17 +87,17 @@ impl<'a> Manifest<'a> {
     pub fn replace_vars(&self, content: &str) -> String {
         content
             .replace(
-                "{{fragment_before_dev_command}}",
+                "~fragment_before_dev_command~",
                 self.before_dev_command.unwrap_or_default(),
             )
             .replace(
-                "{{fragment_before_build_command}}",
+                "~fragment_before_build_command~",
                 self.before_build_command.unwrap_or_default(),
             )
-            .replace("{{fragment_dev_path}}", self.dev_path.unwrap_or_default())
-            .replace("{{fragment_dist_dir}}", self.dist_dir.unwrap_or_default())
+            .replace("~fragment_dev_path~", self.dev_path.unwrap_or_default())
+            .replace("~fragment_dist_dir~", self.dist_dir.unwrap_or_default())
             .replace(
-                r#""withGlobalTauri": "{{fragment_with_global_tauri}}""#,
+                r#""withGlobalTauri": "~fragment_with_global_tauri~""#,
                 &format!(
                     r#""withGlobalTauri": {}"#,
                     self.with_global_tauri.unwrap_or(false)
@@ -118,11 +118,11 @@ mod test {
             # SPDX-License-Identifier: MIT
 
             beforeDevCommand = npm start -- --port 1420
-            beforeBuildCommand = {{pkg_manager_run_command}} build # this comment should be stripped
+            beforeBuildCommand = ~pkg_manager_run_command~ build # this comment should be stripped
             devPath = http://localhost:1420
 
             [mobile]
-            beforeBuildCommand = {{pkg_manager_run_command}} build mobile
+            beforeBuildCommand = ~pkg_manager_run_command~ build mobile
 
             [files]
             tauri.svg = src/assets/tauri.svg
@@ -136,7 +136,7 @@ mod test {
 
             Manifest {
                 before_dev_command: Some("npm start -- --port 1420"),
-                before_build_command: Some("{{pkg_manager_run_command}} build"),
+                before_build_command: Some("~pkg_manager_run_command~ build"),
                 dev_path: Some("http://localhost:1420"),
                 dist_dir: None,
                 with_global_tauri: None,
@@ -151,7 +151,7 @@ mod test {
 
             Manifest {
                 before_dev_command: Some("npm start -- --port 1420"),
-                before_build_command: Some("{{pkg_manager_run_command}} build mobile"),
+                before_build_command: Some("~pkg_manager_run_command~ build mobile"),
                 dev_path: Some("http://localhost:1420"),
                 dist_dir: None,
                 with_global_tauri: None,
@@ -173,7 +173,7 @@ mod test {
             devPath = http://localhost:1420
 
             [mobile]
-            beforeBuildCommand = {{pkg_manager_run_command}} build mobile
+            beforeBuildCommand = ~pkg_manager_run_command~ build mobile
 
             [files]
             tauri.svg = src/assets/tauri.svg
@@ -191,9 +191,9 @@ mod test {
         # SPDX-License-Identifier: MIT
 
         beforeDevCommand = npm start -- --port 1420
-        beforeBuildCommand = {{pkg_manager_run_command}} build # this comment should be stripped
+        beforeBuildCommand = ~pkg_manager_run_command~ build # this comment should be stripped
         devPath = http://localhost:1420
-        beforeBuildCommand = {{pkg_manager_run_command}} build mobile
+        beforeBuildCommand = ~pkg_manager_run_command~ build mobile
 
         [files]
         tauri.svg = src/assets/tauri.svg
@@ -207,7 +207,7 @@ mod test {
 
             Manifest {
                 before_dev_command: Some("npm start -- --port 1420"),
-                before_build_command: Some("{{pkg_manager_run_command}} build mobile"),
+                before_build_command: Some("~pkg_manager_run_command~ build mobile"),
                 dev_path: Some("http://localhost:1420"),
                 dist_dir: None,
                 with_global_tauri: None,
@@ -224,7 +224,7 @@ mod test {
         # SPDX-License-Identifier: MIT
 
         beforeDevCommand = npm start -- --port 1420
-        beforeBuildCommand = {{pkg_manager_run_command}} build # this comment should be stripped
+        beforeBuildCommand = ~pkg_manager_run_command~ build # this comment should be stripped
         devPath = http://localhost:1420
 
         [files]
@@ -236,10 +236,10 @@ mod test {
 
         let content = r#"{
     "build": {
-        "beforeDevCommand": "{{fragment_before_dev_command}}",
-        "beforeBuildCommand": "{{fragment_before_build_command}}",
-        "devPath": "{{fragment_dev_path}}",
-        "distDir": "{{fragment_dist_dir}}"
+        "beforeDevCommand": "~fragment_before_dev_command~",
+        "beforeBuildCommand": "~fragment_before_build_command~",
+        "devPath": "~fragment_dev_path~",
+        "distDir": "~fragment_dist_dir~"
     },
 }"#;
         assert_eq!(
@@ -247,7 +247,7 @@ mod test {
             r#"{
     "build": {
         "beforeDevCommand": "npm start -- --port 1420",
-        "beforeBuildCommand": "{{pkg_manager_run_command}} build",
+        "beforeBuildCommand": "~pkg_manager_run_command~ build",
         "devPath": "http://localhost:1420",
         "distDir": ""
     },
