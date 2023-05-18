@@ -9,11 +9,10 @@
     </a>
   </div>
   <p>Click on the logos to learn more about the frameworks</p>
-  <div class="row">
-    <form (submit)="greet($event, greetInput.value)">
-      <input #greetInput id="greet-input" placeholder="Enter a name..." />
-      <button type="submit">Greet</button>
-    </form>
-  </div>
+
+  <form class="row" (submit)="greet($event, greetInput.value)">
+    <input #greetInput id="greet-input" placeholder="Enter a name..." />
+    <button type="submit">Greet</button>
+  </form>
   <p>{{ greetingMessage }}</p>
 </div>

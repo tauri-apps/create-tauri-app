@@ -193,6 +193,9 @@ jobs:
         run: |
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
           npm publish
+          jq '.name = "create-tauri" | .bin = { "create-tauri": .bin["create-tauri-app"] } |  del(.scripts.prepublishOnly)' package.json > package.tmp
+          mv -f package.tmp package.json
+          npm publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.ORG_NPM_TOKEN }}
