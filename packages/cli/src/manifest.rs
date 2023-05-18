@@ -2,21 +2,23 @@ use std::collections::HashMap;
 
 use anyhow::{bail, Context};
 
-#[derive(Default, Clone)]
+#[derive(Default, Clone, PartialEq, Eq, Debug)]
 pub struct Manifest<'a> {
     pub before_dev_command: Option<&'a str>,
     pub before_build_command: Option<&'a str>,
     pub dev_path: Option<&'a str>,
     pub dist_dir: Option<&'a str>,
-    pub with_global_tauri: bool,
+    pub with_global_tauri: Option<bool>,
     pub files: HashMap<&'a str, &'a str>,
 }
 
 impl<'a> Manifest<'a> {
     pub fn parse(s: &'a str, mobile: bool) -> Result<Self, anyhow::Error> {
-        let mut manifest = Manifest::default();
+        let mut manifest = Self::default();
+
         let mut in_files_section = false;
         let mut in_mobile_section = false;
+
         for (i, line) in s.split('\n').enumerate() {
             let line_number = i + 1;
 
@@ -71,7 +73,7 @@ impl<'a> Manifest<'a> {
                     "beforeBuildCommand" if replace => manifest.before_build_command = Some(v),
                     "devPath" if replace => manifest.dev_path = Some(v),
                     "distDir" if replace => manifest.dist_dir = Some(v),
-                    "withGlobalTauri" if replace => manifest.with_global_tauri = v.parse()?,
+                    "withGlobalTauri" if replace => manifest.with_global_tauri = Some(v.parse()?),
                     _ if in_files_section => {
                         manifest.files.insert(k, v);
                     }
@@ -80,5 +82,177 @@ impl<'a> Manifest<'a> {
             }
         }
         Ok(manifest)
+    }
+
+    pub fn replace_vars(&self, content: &str) -> String {
+        content
+            .replace(
+                "~fragment_before_dev_command~",
+                self.before_dev_command.unwrap_or_default(),
+            )
+            .replace(
+                "~fragment_before_build_command~",
+                self.before_build_command.unwrap_or_default(),
+            )
+            .replace("~fragment_dev_path~", self.dev_path.unwrap_or_default())
+            .replace("~fragment_dist_dir~", self.dist_dir.unwrap_or_default())
+            .replace(
+                r#""withGlobalTauri": "~fragment_with_global_tauri~""#,
+                &format!(
+                    r#""withGlobalTauri": {}"#,
+                    self.with_global_tauri.unwrap_or(false)
+                ),
+            )
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn it_parses() {
+        let manifest_file = r#"
+            # Copyright 2019-2022 Tauri Programme within The Commons Conservancy
+            # SPDX-License-Identifier: Apache-2.0
+            # SPDX-License-Identifier: MIT
+
+            beforeDevCommand = npm start -- --port 1420
+            beforeBuildCommand = ~pkg_manager_run_command~ build # this comment should be stripped
+            devPath = http://localhost:1420
+
+            [mobile]
+            beforeBuildCommand = ~pkg_manager_run_command~ build mobile
+
+            [files]
+            tauri.svg = src/assets/tauri.svg
+            styles.css = src/styles.css
+        "#;
+
+        assert_eq!(Manifest::parse(manifest_file, false).unwrap(), {
+            let mut files = HashMap::new();
+            files.insert("tauri.svg", "src/assets/tauri.svg");
+            files.insert("styles.css", "src/styles.css");
+
+            Manifest {
+                before_dev_command: Some("npm start -- --port 1420"),
+                before_build_command: Some("~pkg_manager_run_command~ build"),
+                dev_path: Some("http://localhost:1420"),
+                dist_dir: None,
+                with_global_tauri: None,
+                files,
+            }
+        });
+
+        assert_eq!(Manifest::parse(manifest_file, true).unwrap(), {
+            let mut files = HashMap::new();
+            files.insert("tauri.svg", "src/assets/tauri.svg");
+            files.insert("styles.css", "src/styles.css");
+
+            Manifest {
+                before_dev_command: Some("npm start -- --port 1420"),
+                before_build_command: Some("~pkg_manager_run_command~ build mobile"),
+                dev_path: Some("http://localhost:1420"),
+                dist_dir: None,
+                with_global_tauri: None,
+                files,
+            }
+        });
+    }
+
+    #[test]
+    #[should_panic]
+    fn it_panics_while_parsing() {
+        let manifest_file = r#"
+            # Copyright 2019-2022 Tauri Programme within The Commons Conservancy
+            # SPDX-License-Identifier: Apache-2.0
+            # SPDX-License-Identifier: MIT
+
+            beforeDevCommand = npm start -- --port 1420
+            beforeBuildCommand =
+            devPath = http://localhost:1420
+
+            [mobile]
+            beforeBuildCommand = ~pkg_manager_run_command~ build mobile
+
+            [files]
+            tauri.svg = src/assets/tauri.svg
+            styles.css = src/styles.css
+        "#;
+
+        Manifest::parse(manifest_file, false).unwrap();
+    }
+
+    #[test]
+    fn later_should_override_former() {
+        let manifest_file = r#"
+        # Copyright 2019-2022 Tauri Programme within The Commons Conservancy
+        # SPDX-License-Identifier: Apache-2.0
+        # SPDX-License-Identifier: MIT
+
+        beforeDevCommand = npm start -- --port 1420
+        beforeBuildCommand = ~pkg_manager_run_command~ build # this comment should be stripped
+        devPath = http://localhost:1420
+        beforeBuildCommand = ~pkg_manager_run_command~ build mobile
+
+        [files]
+        tauri.svg = src/assets/tauri.svg
+        styles.css = src/styles.css
+    "#;
+
+        assert_eq!(Manifest::parse(manifest_file, false).unwrap(), {
+            let mut files = HashMap::new();
+            files.insert("tauri.svg", "src/assets/tauri.svg");
+            files.insert("styles.css", "src/styles.css");
+
+            Manifest {
+                before_dev_command: Some("npm start -- --port 1420"),
+                before_build_command: Some("~pkg_manager_run_command~ build mobile"),
+                dev_path: Some("http://localhost:1420"),
+                dist_dir: None,
+                with_global_tauri: None,
+                files,
+            }
+        });
+    }
+
+    #[test]
+    fn it_replaces_vars() {
+        let manifest_file = r#"
+        # Copyright 2019-2022 Tauri Programme within The Commons Conservancy
+        # SPDX-License-Identifier: Apache-2.0
+        # SPDX-License-Identifier: MIT
+
+        beforeDevCommand = npm start -- --port 1420
+        beforeBuildCommand = ~pkg_manager_run_command~ build # this comment should be stripped
+        devPath = http://localhost:1420
+
+        [files]
+        tauri.svg = src/assets/tauri.svg
+        styles.css = src/styles.css
+    "#;
+
+        let manifest = Manifest::parse(manifest_file, false).unwrap();
+
+        let content = r#"{
+    "build": {
+        "beforeDevCommand": "~fragment_before_dev_command~",
+        "beforeBuildCommand": "~fragment_before_build_command~",
+        "devPath": "~fragment_dev_path~",
+        "distDir": "~fragment_dist_dir~"
+    },
+}"#;
+        assert_eq!(
+            manifest.replace_vars(content).as_str(),
+            r#"{
+    "build": {
+        "beforeDevCommand": "npm start -- --port 1420",
+        "beforeBuildCommand": "~pkg_manager_run_command~ build",
+        "devPath": "http://localhost:1420",
+        "distDir": ""
+    },
+}"#
+            .to_string()
+        )
     }
 }

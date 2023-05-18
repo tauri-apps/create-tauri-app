@@ -3,7 +3,7 @@ use template::Template;
 use crate::colors::*;
 use crate::internal::template;
 use crate::package_manager::PackageManager;
-use std::process::Command;
+use std::process::{Command, Output};
 
 fn is_rustc_installed() -> bool {
     Command::new("rustc")
@@ -34,15 +34,19 @@ fn is_trunk_installed() -> bool {
         .map(|o| o.status.success())
         .unwrap_or(false)
 }
-fn is_tauri_cli_installed() -> bool {
+fn is_appropriate_tauri_cli_installed(alpha: bool) -> bool {
+    let check = |o: Output| match o.status.success() {
+        true if alpha => String::from_utf8_lossy(&o.stderr)
+            .split_once(' ')
+            .map(|(_, v)| v.starts_with('2'))
+            .unwrap_or(false),
+        s => s,
+    };
     Command::new("cargo")
-        .arg("tauri")
-        .arg("-V")
+        .args(["tauri", "-V"])
         .output()
-        .map(|o| {
-            let s = String::from_utf8_lossy(&o.stderr);
-            !s.starts_with("error:")
-        })
+        .map(check)
+        .or_else(|_| Command::new("tauri").arg("-V").output().map(check))
         .unwrap_or(false)
 }
 fn is_wasm32_installed() -> bool {
@@ -67,7 +71,7 @@ fn is_webview2_installed() -> bool {
           .arg("Get-ItemProperty -Path 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\EdgeUpdate\\Clients\\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}' | ForEach-Object {$_.pv}")
           .output().map(|o|o.status.success());
     if let Ok(o) = output {
-        if o == true {
+        if o {
             return true;
         }
     }
@@ -77,7 +81,7 @@ fn is_webview2_installed() -> bool {
             .arg("Get-ItemProperty -Path 'HKLM:\\SOFTWARE\\Microsoft\\EdgeUpdate\\Clients\\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}' | ForEach-Object {$_.pv}")
             .output().map(|o|o.status.success());
     if let Ok(o) = output {
-        if o == true {
+        if o {
             return true;
         }
     }
@@ -87,7 +91,7 @@ fn is_webview2_installed() -> bool {
           .arg("Get-ItemProperty -Path 'HKCU:\\SOFTWARE\\Microsoft\\EdgeUpdate\\Clients\\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}' | ForEach-Object {$_.pv}")
           .output().map(|o|o.status.success());
     if let Ok(o) = output {
-        if o == true {
+        if o {
             return true;
         }
     }
@@ -172,11 +176,11 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
         (
             "Tauri CLI",
             if alpha {
-                format!("Run `{BLUE}{BOLD}cargo install tauri-cli --version ^2.0.0-alpha{RESET}`")
+                format!("Run `{BLUE}{BOLD}cargo install tauri-cli --version '^2.0.0-alpha'{RESET}`")
             } else {
                 format!("Run `{BLUE}{BOLD}cargo install tauri-cli{RESET}`")
             },
-            &is_tauri_cli_installed,
+            &|| is_appropriate_tauri_cli_installed(alpha),
             pkg_manager.is_node() || !template.needs_tauri_cli(),
         ),
         (

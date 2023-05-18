@@ -248,33 +248,15 @@ impl<'a> Template {
             {
                 if let Ok(content) = String::from_utf8(data.to_vec()) {
                     // Replacement order is important
-                    data = content
-                        .replace("{{lib_name}}", &lib_name)
-                        .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
-                        .replace(
-                            "{{fragment_before_dev_command}}",
-                            manifest.before_dev_command.unwrap_or_default(),
-                        )
-                        .replace(
-                            "{{fragment_before_build_command}}",
-                            manifest.before_build_command.unwrap_or_default(),
-                        )
-                        .replace(
-                            "{{fragment_dev_path}}",
-                            manifest.dev_path.unwrap_or_default(),
-                        )
-                        .replace(
-                            "{{fragment_dist_dir}}",
-                            manifest.dist_dir.unwrap_or_default(),
-                        )
-                        .replace("{{package_name}}", package_name)
-                        .replace(
-                            r#""withGlobalTauri": "{{fragment_with_global_tauri}}""#,
-                            &format!(r#""withGlobalTauri": {}"#, manifest.with_global_tauri),
-                        )
-                        .replace("{{pkg_manager_run_command}}", pkg_manager.run_cmd())
-                        .as_bytes()
-                        .to_vec();
+                    data = Self::replace_vars(
+                        &content,
+                        &lib_name,
+                        package_name,
+                        pkg_manager,
+                        manifest,
+                    )
+                    .as_bytes()
+                    .to_vec();
                 }
             }
 
@@ -324,6 +306,28 @@ impl<'a> Template {
 
         Ok(())
     }
+
+    fn replace_vars(
+        content: &str,
+        lib_name: &str,
+        package_name: &str,
+        pkg_manager: PackageManager,
+        manifest: Manifest,
+    ) -> String {
+        manifest
+            .replace_vars(content)
+            .replace("~lib_name~", lib_name)
+            .replace("~package_name~", package_name)
+            .replace("~pkg_manager_run_command~", pkg_manager.run_cmd())
+            .replace(
+                "~double-dash~",
+                if pkg_manager == PackageManager::Npm {
+                    " --"
+                } else {
+                    ""
+                },
+            )
+    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -339,5 +343,72 @@ impl Display for Flavor {
             Flavor::JavaScript => write!(f, "JavaScript"),
             Flavor::TypeScript => write!(f, "TypeScript"),
         }
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn it_works() {
+        let manifest_file = r#"
+        # Copyright 2019-2022 Tauri Programme within The Commons Conservancy
+        # SPDX-License-Identifier: Apache-2.0
+        # SPDX-License-Identifier: MIT
+
+        beforeDevCommand = ~pkg_manager_run_command~ start~double-dash~ --port 1420
+        beforeBuildCommand = ~pkg_manager_run_command~ build # this comment should be stripped
+        devPath = http://localhost:1420
+
+        [files]
+        tauri.svg = src/assets/tauri.svg
+        styles.css = src/styles.css
+    "#;
+
+        let content = r#"{
+    "build": {
+        "beforeDevCommand": "~fragment_before_dev_command~",
+        "beforeBuildCommand": "~fragment_before_build_command~",
+        "devPath": "~fragment_dev_path~",
+        "distDir": "~fragment_dist_dir~"
+    },
+}"#;
+
+        let manifest = Manifest::parse(manifest_file, false).unwrap();
+        assert_eq!(
+            Template::replace_vars(content, "cta_lib", "cta-app", PackageManager::Npm, manifest)
+                .as_str(),
+            r#"{
+    "build": {
+        "beforeDevCommand": "npm run start -- --port 1420",
+        "beforeBuildCommand": "npm run build",
+        "devPath": "http://localhost:1420",
+        "distDir": ""
+    },
+}"#
+            .to_string()
+        );
+
+        let manifest = Manifest::parse(manifest_file, false).unwrap();
+        assert_eq!(
+            Template::replace_vars(
+                content,
+                "cta_lib",
+                "cta-app",
+                PackageManager::Pnpm,
+                manifest
+            )
+            .as_str(),
+            r#"{
+    "build": {
+        "beforeDevCommand": "pnpm start --port 1420",
+        "beforeBuildCommand": "pnpm build",
+        "devPath": "http://localhost:1420",
+        "distDir": ""
+    },
+}"#
+            .to_string()
+        );
     }
 }

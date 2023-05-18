@@ -1,5 +1,5 @@
 {
-  "name": "{{package_name}}",
+  "name": "~package_name~",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -19,7 +19,7 @@
     "typescript": "^4.9.5",
     "vite": "^4.2.1",
     "vue-tsc": "^1.0.11",
-    "@tauri-apps/cli": "^2.0.0-alpha.7",
+    "@tauri-apps/cli": "^2.0.0-alpha.8",
     "internal-ip": "^7.0.0"
   }
 }
