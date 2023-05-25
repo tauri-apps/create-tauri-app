@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@tauri-apps/api": "^2.0.0-alpha.4",
-    "@tauri-apps/plugin-window": "^2.0.0-alpha.1",
-    "@tauri-apps/plugin-shell": "^2.0.0-alpha.1"
+    "@tauri-apps/plugin-window": "^2.0.0-alpha.0",
+    "@tauri-apps/plugin-shell": "^2.0.0-alpha.0"
   },
   "devDependencies": {
     "@types/node": "^18.7.10",

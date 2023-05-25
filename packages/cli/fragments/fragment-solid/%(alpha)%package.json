@@ -14,8 +14,8 @@
   "dependencies": {
     "solid-js": "^1.7.0",
     "@tauri-apps/api": "^2.0.0-alpha.4",
-    "@tauri-apps/plugin-window": "^2.0.0-alpha.1",
-    "@tauri-apps/plugin-shell": "^2.0.0-alpha.1"
+    "@tauri-apps/plugin-window": "^2.0.0-alpha.0",
+    "@tauri-apps/plugin-shell": "^2.0.0-alpha.0"
   },
   "devDependencies": {
     "vite": "^4.2.1",
