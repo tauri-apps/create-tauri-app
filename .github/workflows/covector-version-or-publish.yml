@@ -70,7 +70,7 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.ORG_TAURI_BOT_PAT }}
-          repo: tauri-apps/create-tauri-app
+          repository: tauri-apps/create-tauri-app
           event-type: publish-binaries
           client-payload: '{"releaseId": "${{ steps.covector.outputs.create-tauri-app-releaseId }}" }'
 
@@ -81,6 +81,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.ORG_TAURI_BOT_PAT }}
-          repo: tauri-apps/create-tauri-app
+          repository: tauri-apps/create-tauri-app
           event-type: publish-napi
           client-payload: '{"releaseId": "${{ steps.covector.outputs.create-tauri-app-js-releaseId }}" }'
