@@ -1,5 +1,12 @@
 # Changelog
 
+## \[3.5.0]
+
+- [`88944c8`](https://www.github.com/tauri-apps/create-tauri-app/commit/88944c8883d97812f1136ba9905a49b075ba4050)([#430](https://www.github.com/tauri-apps/create-tauri-app/pull/430)) Recursively clean the target directory if bootstrapping a template into a non-empty directory.
+- [`7d04484`](https://www.github.com/tauri-apps/create-tauri-app/commit/7d044845293e86c56103b068d32c2baa88bcaf64)([#421](https://www.github.com/tauri-apps/create-tauri-app/pull/421)) Print info to install `tauri-cli@2.0.0-alpha` if it wasn't detected and `--alpha` flag was passed.
+- [`9aeaca7`](https://www.github.com/tauri-apps/create-tauri-app/commit/9aeaca7aaf39f0b090ae09905f2890f54a8caff9)([#424](https://www.github.com/tauri-apps/create-tauri-app/pull/424)) Update `--alpha` templates for `tauri@2.0.0-alpha.9`
+- [`9aeaca7`](https://www.github.com/tauri-apps/create-tauri-app/commit/9aeaca7aaf39f0b090ae09905f2890f54a8caff9)([#424](https://www.github.com/tauri-apps/create-tauri-app/pull/424)) Update `vue`, `vue-ts`, `vanilla`, `vanilla-ts`, `solid`, `solid-ts`, `svelte`, and `svelte-ts` to use `<form>`
+
 ## \[3.4.0]
 
 - Disable analytics for Angular template
