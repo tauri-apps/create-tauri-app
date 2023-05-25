@@ -30,18 +30,20 @@ function App() {
 
       <p>Click on the Tauri, Vite, and Solid logos to learn more.</p>
 
-      <div class="row">
-        <div>
-          <input
-            id="greet-input"
-            onChange={(e) => setName(e.currentTarget.value)}
-            placeholder="Enter a name..."
-          />
-          <button type="button" onClick={() => greet()}>
-            Greet
-          </button>
-        </div>
-      </div>
+      <form
+        class="row"
+        onSubmit={(e) => {
+          e.preventDefault();
+          greet();
+        }}
+      >
+        <input
+          id="greet-input"
+          onChange={(e) => setName(e.currentTarget.value)}
+          placeholder="Enter a name..."
+        />
+        <button type="submit">Greet</button>
+      </form>
 
       <p>{greetMsg()}</p>
     </div>
