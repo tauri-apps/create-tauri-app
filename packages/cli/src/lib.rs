@@ -269,9 +269,19 @@ where
     // Remove the target dir contents before rendering the template
     // SAFETY: Upon reaching this line, the user already accepted to overwrite
     if target_dir.exists() {
-        for file in fs::read_dir(&target_dir)?.flatten() {
-            let _ = fs::remove_file(file.path());
+        fn clean_dir(dir: &std::path::PathBuf) -> anyhow::Result<()> {
+            for entry in fs::read_dir(dir)?.flatten() {
+                let path = entry.path();
+                if entry.file_type()?.is_dir() {
+                    clean_dir(&path)?;
+                    std::fs::remove_dir(path)?;
+                } else {
+                    fs::remove_file(path)?;
+                }
+            }
+            Ok(())
         }
+        clean_dir(&target_dir)?;
     } else {
         let _ = fs::create_dir_all(&target_dir);
     }
