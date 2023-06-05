@@ -9,31 +9,29 @@
 [![support](https://img.shields.io/badge/sponsor-Open%20Collective-blue.svg)](https://opencollective.com/tauri)
 [![changelog](https://img.shields.io/badge/CHANGELOG-yellowgreen)](./CHANGELOG.md)
 
-
 # Usage
 
 ## NPM:
 
-``` bash
+```bash
 npm create tauri-app@latest
 ```
 
 ## Yarn:
 
-``` bash
+```bash
 yarn create tauri-app
 ```
 
 ## PNPM:
 
-``` bash
+```bash
 pnpm create tauri-app
 ```
 
 <br>
 
 You can also directly specify the project name, package manager and the template you want to use via additional command line options. For example, to scaffold a Svelte project in a `my-tauri-app` directory, run:
-
 
 ```bash
 # npm 6.x
@@ -58,6 +56,7 @@ Currently supported template presets include:
 - `react-ts`
 - `solid`
 - `solid-ts`
+- `angular`
 - `yew`
 - `leptos`
 - `sycamore`
@@ -65,12 +64,15 @@ Currently supported template presets include:
 You can use `.` for the project name to scaffold in the current directory.
 
 ## Semver
+
 **create-tauri-app** is following [Semantic Versioning 2.0](https://semver.org/).
 
 ## Licenses
+
 Code: (c) 2022 - The Tauri Programme within The Commons Conservancy.
 
 MIT or MIT/Apache 2.0 where applicable.
 
 Logo: CC-BY-NC-ND
+
 - Original Tauri Logo Designs by [Daniel Thompson-Yvetot](https://github.com/nothingismagick) and [Guillaume Chau](https://github.com/akryum)

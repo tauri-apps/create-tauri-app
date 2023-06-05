@@ -89,10 +89,10 @@ Currently supported template presets include:
 - `react-ts`
 - `solid`
 - `solid-ts`
+- `angular`
 - `yew`
 - `leptos`
 - `sycamore`
-
 
 You can use `.` for the project name to scaffold in the current directory.
 

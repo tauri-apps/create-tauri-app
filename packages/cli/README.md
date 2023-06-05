@@ -13,7 +13,7 @@
 
 ## Cargo:
 
-``` bash
+```bash
 cargo install create-tauri-app
 cargo create-tauri-app
 ```
@@ -38,6 +38,7 @@ Currently supported template presets include:
 - `react-ts`
 - `solid`
 - `solid-ts`
+- `angular`
 - `yew`
 - `leptos`
 - `sycamore`
@@ -45,12 +46,15 @@ Currently supported template presets include:
 You can use `.` for the project name to scaffold in the current directory.
 
 ## Semver
+
 **create-tauri-app** is following [Semantic Versioning 2.0](https://semver.org/).
 
 ## Licenses
+
 Code: (c) 2022 - The Tauri Programme within The Commons Conservancy.
 
 MIT or MIT/Apache 2.0 where applicable.
 
 Logo: CC-BY-NC-ND
+
 - Original Tauri Logo Designs by [Daniel Thompson-Yvetot](https://github.com/nothingismagick) and [Guillaume Chau](https://github.com/akryum)
