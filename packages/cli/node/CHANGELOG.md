@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.6.0]
+
+- [`6579f38`](https://www.github.com/tauri-apps/create-tauri-app/commit/6579f38438fb4f1f4d5743dfe1ded55e45a5cbb6)([#437](https://www.github.com/tauri-apps/create-tauri-app/pull/437)) Update tauri to `1.4`
+
 ## \[3.5.0]
 
 - [`88944c8`](https://www.github.com/tauri-apps/create-tauri-app/commit/88944c8883d97812f1136ba9905a49b075ba4050)([#430](https://www.github.com/tauri-apps/create-tauri-app/pull/430)) Recursively clean the target directory if bootstrapping a template into a non-empty directory.
