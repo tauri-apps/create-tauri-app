@@ -279,9 +279,7 @@ impl Theme for ColorfulTheme {
         text: &str,
         active: bool,
     ) -> fmt::Result {
-        let mut s = text.split('-');
-        let text = s.next().unwrap();
-        let desc = s.collect::<String>();
+        let (text, desc) = text.split_once('-').unwrap_or((text, ""));
 
         if active {
             write!(
