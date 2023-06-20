@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -29,8 +29,8 @@ importers:
   packages/worker:
     devDependencies:
       wrangler:
-        specifier: 3.1.0
-        version: 3.1.0
+        specifier: 3.1.1
+        version: 3.1.1
 
 packages:
 
@@ -1220,8 +1220,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /miniflare@3.0.0:
-    resolution: {integrity: sha512-CW8yS00pQCbq2o4K8drePzJBkE0heL9cCY/O8DcYJOHd4M0RVutjrp+LqUP4hfzweZ+LqrLo8+Rzy4cORisQoQ==}
+  /miniflare@3.0.1:
+    resolution: {integrity: sha512-aLOB8d26lOTn493GOv1LmpGHVLSxmeT4MixPG/k3Ze10j0wDKnMj8wsFgbZ6Q4cr1N4faf8O3IbNRJuQ+rLoJA==}
     engines: {node: '>=16.13'}
     dependencies:
       acorn: 8.8.2
@@ -1805,8 +1805,8 @@ packages:
       '@cloudflare/workerd-windows-64': 1.20230512.0
     dev: true
 
-  /wrangler@3.1.0:
-    resolution: {integrity: sha512-oqVBJZoOQqSKxhgaPt4LcmtBf0FssIz/4F1VgjWOomeGQ3kN9pg3swPO0Zkf0aAphDodG9rekjrtccvKW7bSsA==}
+  /wrangler@3.1.1:
+    resolution: {integrity: sha512-iG6QGOt+qgSm7UroJ8IJ+JdXEcDcW7yp9ilP0V7alCGhKm8shqa/M1iyMOpukZSCSZo8Vmn5nH2C9OY1PR3dQQ==}
     engines: {node: '>=16.13.0'}
     hasBin: true
     dependencies:
@@ -1816,7 +1816,7 @@ packages:
       blake3-wasm: 2.1.5
       chokidar: 3.5.3
       esbuild: 0.16.3
-      miniflare: 3.0.0
+      miniflare: 3.0.1
       nanoid: 3.3.4
       path-to-regexp: 6.2.1
       selfsigned: 2.0.1
