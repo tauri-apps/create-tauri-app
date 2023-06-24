@@ -28,6 +28,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  if: github.repository_owner == 'tauri-apps'
   audit-rust:
     runs-on: ubuntu-latest
     steps:
