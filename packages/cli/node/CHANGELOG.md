@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.6.1]
+
+- [`ae9e141`](https://www.github.com/tauri-apps/create-tauri-app/commit/ae9e141c524fd749c57144a75b0ba161779d8222)([#441](https://www.github.com/tauri-apps/create-tauri-app/pull/441)) Fix crash when passing a flavored template like `vue-ts` to the CLI.
+
 ## \[3.6.0]
 
 - [`6579f38`](https://www.github.com/tauri-apps/create-tauri-app/commit/6579f38438fb4f1f4d5743dfe1ded55e45a5cbb6)([#437](https://www.github.com/tauri-apps/create-tauri-app/pull/437)) Update tauri to `1.4`
