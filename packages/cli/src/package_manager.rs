@@ -31,7 +31,7 @@ impl<'a> PackageManager {
 }
 impl PackageManager {
     /// Returns templates without flavors
-    pub const fn templates(&self) -> &[Template] {
+    pub const fn templates_no_flavors(&self) -> &[Template] {
         match self {
             PackageManager::Cargo => &[
                 Template::Vanilla,
@@ -50,7 +50,7 @@ impl PackageManager {
         }
     }
 
-    pub const fn templates_all(&self) -> &[Template] {
+    pub const fn templates(&self) -> &[Template] {
         match self {
             PackageManager::Cargo => &[
                 Template::Vanilla,

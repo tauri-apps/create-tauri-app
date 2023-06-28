@@ -151,7 +151,7 @@ where
                 managers
                     .iter()
                     .copied()
-                    .filter(|p| p.templates().contains(&t))
+                    .filter(|p| p.templates_no_flavors().contains(&t.without_flavor()))
                     .collect::<Vec<_>>()
             })
             .unwrap_or(managers);
@@ -203,7 +203,7 @@ where
         }
     });
 
-    let templates = pkg_manager.templates();
+    let templates_no_flavors = pkg_manager.templates_no_flavors();
 
     // Template to render
     let template = args.template.unwrap_or_else(|| {
@@ -213,7 +213,7 @@ where
             let index = Select::with_theme(&ColorfulTheme::default())
                 .with_prompt("Choose your UI template")
                 .items(
-                    &templates
+                    &templates_no_flavors
                         .iter()
                         .map(|t| t.select_text())
                         .collect::<Vec<_>>(),
@@ -221,7 +221,7 @@ where
                 .default(0)
                 .interact()
                 .unwrap();
-            let template = templates[index];
+            let template = templates_no_flavors[index];
 
             // Prompt for flavors if the template has more than one flavor
             let flavors = template.flavors(pkg_manager);
@@ -257,11 +257,11 @@ where
     // If the package manager and the template are specified on the command line
     // then almost all prompts are skipped so we need to make sure that the combination
     // is valid, otherwise, we error and exit
-    if !pkg_manager.templates_all().contains(&template) {
+    if !pkg_manager.templates().contains(&template) {
         eprintln!(
             "{BOLD}{RED}error{RESET}: the {GREEN}{}{RESET} template is not suppported for the {GREEN}{pkg_manager}{RESET} package manager\n       possible templates for {GREEN}{pkg_manager}{RESET} are: [{}]",
             template,
-            templates.iter().map(|e|format!("{GREEN}{e}{RESET}")).collect::<Vec<_>>().join(", ")
+            templates_no_flavors.iter().map(|e|format!("{GREEN}{e}{RESET}")).collect::<Vec<_>>().join(", ")
         );
         exit(1);
     }
