@@ -146,6 +146,17 @@ impl<'a> Template {
         }
     }
 
+    pub fn without_flavor(&self) -> Self {
+        match self {
+            Template::VanillaTs => Template::Vanilla,
+            Template::VueTs => Template::Vue,
+            Template::SvelteTs => Template::Svelte,
+            Template::ReactTs => Template::React,
+            Template::SolidTs => Template::Solid,
+            _ => *self,
+        }
+    }
+
     pub const fn needs_trunk(&self) -> bool {
         matches!(self, Template::Sycamore | Template::Yew | Template::Leptos)
     }
