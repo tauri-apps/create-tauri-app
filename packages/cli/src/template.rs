@@ -10,7 +10,7 @@ use rust_embed::RustEmbed;
 use crate::{manifest::Manifest, package_manager::PackageManager};
 
 #[derive(RustEmbed)]
-#[folder = "$CARGO_MANIFEST_DIR/fragments"]
+#[folder = "fragments"]
 #[allow(clippy::upper_case_acronyms)]
 struct FRAGMENTS;
 
