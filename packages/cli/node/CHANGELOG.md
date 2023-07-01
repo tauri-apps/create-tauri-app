@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.6.2]
+
+- [`701ab3b`](https://www.github.com/tauri-apps/create-tauri-app/commit/701ab3b5ec1dd62e246d96b33ff20527712612d4)([#447](https://www.github.com/tauri-apps/create-tauri-app/pull/447)) Fix build panic with newer minor versions of `rust-embed`.
+
 ## \[3.6.1]
 
 - [`ae9e141`](https://www.github.com/tauri-apps/create-tauri-app/commit/ae9e141c524fd749c57144a75b0ba161779d8222)([#441](https://www.github.com/tauri-apps/create-tauri-app/pull/441)) Fix crash when passing a flavored template like `vue-ts` to the CLI.
