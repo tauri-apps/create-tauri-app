@@ -9,5 +9,5 @@
 
 export function run(
   args: Array<string>,
-  binName?: string | undefined | null
+  binName?: string | undefined | null,
 ): void;
