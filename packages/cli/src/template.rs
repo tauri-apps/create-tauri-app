@@ -31,6 +31,7 @@ pub enum Template {
     Leptos,
     Sycamore,
     Angular,
+    Dioxus,
 }
 
 impl Default for Template {
@@ -51,6 +52,7 @@ impl Template {
             Template::Leptos => "Leptos - (https://github.com/leptos-rs/leptos)",
             Template::Sycamore => "Sycamore - (https://sycamore-rs.netlify.app/)",
             Template::Angular => "Angular - (https://angular.io/)",
+            Template::Dioxus => "Dioxus - (https://dioxuslabs.com/)",
             _ => unreachable!(),
         }
     }
@@ -73,6 +75,7 @@ impl Display for Template {
             Template::Leptos => write!(f, "leptos"),
             Template::Sycamore => write!(f, "sycamore"),
             Template::Angular => write!(f, "angular"),
+            Template::Dioxus => write!(f, "dioxus"),
         }
     }
 }
@@ -250,6 +253,7 @@ impl<'a> Template {
                 "vite.config.js",
                 "Trunk.toml",
                 "angular.json",
+                "Dioxus.toml",
             ]
             .contains(&target_file_name)
             {
