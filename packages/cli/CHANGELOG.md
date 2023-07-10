@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.7.0]
+
+- [`a092565`](https://www.github.com/tauri-apps/create-tauri-app/commit/a09256550479e1d555b14d8fb0137454f974c6f2)([#455](https://www.github.com/tauri-apps/create-tauri-app/pull/455)) Adds `preact` and `preact-ts` templates.
+
 ## \[3.6.2]
 
 - [`701ab3b`](https://www.github.com/tauri-apps/create-tauri-app/commit/701ab3b5ec1dd62e246d96b33ff20527712612d4)([#447](https://www.github.com/tauri-apps/create-tauri-app/pull/447)) Fix build panic with newer minor versions of `rust-embed`.
