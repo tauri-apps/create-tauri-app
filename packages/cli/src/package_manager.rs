@@ -46,6 +46,7 @@ impl PackageManager {
                 Template::React,
                 Template::Solid,
                 Template::Angular,
+                Template::Preact,
             ],
         }
     }
@@ -70,6 +71,8 @@ impl PackageManager {
                 Template::Solid,
                 Template::SolidTs,
                 Template::Angular,
+                Template::Preact,
+                Template::PreactTs,
             ],
         }
     }

@@ -31,6 +31,8 @@ pub enum Template {
     Leptos,
     Sycamore,
     Angular,
+    Preact,
+    PreactTs,
 }
 
 impl Default for Template {
@@ -51,6 +53,7 @@ impl Template {
             Template::Leptos => "Leptos - (https://github.com/leptos-rs/leptos)",
             Template::Sycamore => "Sycamore - (https://sycamore-rs.netlify.app/)",
             Template::Angular => "Angular - (https://angular.io/)",
+            Template::Preact => "Preact - (https://preactjs.com/)",
             _ => unreachable!(),
         }
     }
@@ -73,6 +76,8 @@ impl Display for Template {
             Template::Leptos => write!(f, "leptos"),
             Template::Sycamore => write!(f, "sycamore"),
             Template::Angular => write!(f, "angular"),
+            Template::Preact => write!(f, "preact"),
+            Template::PreactTs => write!(f, "preact-ts"),
         }
     }
 }
@@ -95,6 +100,8 @@ impl FromStr for Template {
             "leptos" => Ok(Template::Leptos),
             "sycamore" => Ok(Template::Sycamore),
             "angular" => Ok(Template::Angular),
+            "preact" => Ok(Template::Preact),
+            "preact-ts" => Ok(Template::PreactTs),
             _ => Err("Invalid template".to_string()),
         }
     }
@@ -116,6 +123,8 @@ impl<'a> Template {
         Template::Leptos,
         Template::Sycamore,
         Template::Angular,
+        Template::Preact,
+        Template::PreactTs,
     ];
 
     pub fn flavors<'b>(&self, pkg_manager: PackageManager) -> Option<&'b [Flavor]> {
@@ -131,6 +140,7 @@ impl<'a> Template {
             Template::Svelte => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
             Template::React => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
             Template::Solid => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
+            Template::Preact => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
             _ => None,
         }
     }
@@ -142,6 +152,7 @@ impl<'a> Template {
             (Template::Svelte, Flavor::TypeScript) => Template::SvelteTs,
             (Template::React, Flavor::TypeScript) => Template::ReactTs,
             (Template::Solid, Flavor::TypeScript) => Template::SolidTs,
+            (Template::Preact, Flavor::TypeScript) => Template::PreactTs,
             _ => *self,
         }
     }
@@ -153,6 +164,7 @@ impl<'a> Template {
             Template::SvelteTs => Template::Svelte,
             Template::ReactTs => Template::React,
             Template::SolidTs => Template::Solid,
+            Template::PreactTs => Template::Preact,
             _ => *self,
         }
     }
