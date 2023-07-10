@@ -1,5 +1,6 @@
 ---
 "create-tauri-app": minor
+"create-tauri-app-js": minor
 ---
 
-Adds (previously removed) Preact & Preact-TypeScript templates to the list of frameworks to initialize a new Tauri app with.
+Adds `preact` and `preact-ts` templates.
