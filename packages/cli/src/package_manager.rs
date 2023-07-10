@@ -70,9 +70,9 @@ impl PackageManager {
                 Template::ReactTs,
                 Template::Solid,
                 Template::SolidTs,
+                Template::Angular,
                 Template::Preact,
                 Template::PreactTs,
-                Template::Angular,
             ],
         }
     }

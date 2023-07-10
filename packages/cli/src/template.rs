@@ -27,12 +27,12 @@ pub enum Template {
     ReactTs,
     Solid,
     SolidTs,
-    Preact,
-    PreactTs,
     Yew,
     Leptos,
     Sycamore,
     Angular,
+    Preact,
+    PreactTs,
 }
 
 impl Default for Template {
@@ -49,11 +49,11 @@ impl Template {
             Template::Svelte => "Svelte - (https://svelte.dev/)",
             Template::React => "React - (https://reactjs.org/)",
             Template::Solid => "Solid - (https://www.solidjs.com/)",
-            Template::Preact => "Preact - (https://preactjs.com/)",
             Template::Yew => "Yew - (https://yew.rs/)",
             Template::Leptos => "Leptos - (https://github.com/leptos-rs/leptos)",
             Template::Sycamore => "Sycamore - (https://sycamore-rs.netlify.app/)",
             Template::Angular => "Angular - (https://angular.io/)",
+            Template::Preact => "Preact - (https://preactjs.com/)",
             _ => unreachable!(),
         }
     }
@@ -72,12 +72,12 @@ impl Display for Template {
             Template::ReactTs => write!(f, "react-ts"),
             Template::Solid => write!(f, "solid"),
             Template::SolidTs => write!(f, "solid-ts"),
-            Template::Preact => write!(f, "preact"),
-            Template::PreactTs => write!(f, "preact-ts"),
             Template::Yew => write!(f, "yew"),
             Template::Leptos => write!(f, "leptos"),
             Template::Sycamore => write!(f, "sycamore"),
             Template::Angular => write!(f, "angular"),
+            Template::Preact => write!(f, "preact"),
+            Template::PreactTs => write!(f, "preact-ts"),
         }
     }
 }
@@ -96,12 +96,12 @@ impl FromStr for Template {
             "react-ts" => Ok(Template::ReactTs),
             "solid" => Ok(Template::Solid),
             "solid-ts" => Ok(Template::SolidTs),
-            "preact" => Ok(Template::Preact),
-            "preact-ts" => Ok(Template::PreactTs),
             "yew" => Ok(Template::Yew),
             "leptos" => Ok(Template::Leptos),
             "sycamore" => Ok(Template::Sycamore),
             "angular" => Ok(Template::Angular),
+            "preact" => Ok(Template::Preact),
+            "preact-ts" => Ok(Template::PreactTs),
             _ => Err("Invalid template".to_string()),
         }
     }
@@ -119,12 +119,12 @@ impl<'a> Template {
         Template::ReactTs,
         Template::Solid,
         Template::SolidTs,
-        Template::Preact,
-        Template::PreactTs,
         Template::Yew,
         Template::Leptos,
         Template::Sycamore,
         Template::Angular,
+        Template::Preact,
+        Template::PreactTs,
     ];
 
     pub fn flavors<'b>(&self, pkg_manager: PackageManager) -> Option<&'b [Flavor]> {
