@@ -1,0 +1,26 @@
+{
+  "name": "~package_name~",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "preact": "^10.16.0",
+    "@tauri-apps/api": "^2.0.0-alpha.4",
+    "@tauri-apps/plugin-window": "^2.0.0-alpha.0",
+    "@tauri-apps/plugin-shell": "^2.0.0-alpha.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.10",
+    "@preact/preset-vite": "^2.5.0",
+    "typescript": "^4.9.5",
+    "vite": "^4.2.1",
+    "@tauri-apps/cli": "^2.0.0-alpha.9",
+    "internal-ip": "^7.0.0"
+  }
+}
