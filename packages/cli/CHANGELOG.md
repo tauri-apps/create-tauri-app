@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.7.1]
+
+- [`7b992e5`](https://www.github.com/tauri-apps/create-tauri-app/commit/7b992e544c6824dbf29d0fab38488e3b516142b1)([#367](https://www.github.com/tauri-apps/create-tauri-app/pull/367)) Update the dependencies for almost all templates.
+
 ## \[3.7.0]
 
 - [`a092565`](https://www.github.com/tauri-apps/create-tauri-app/commit/a09256550479e1d555b14d8fb0137454f974c6f2)([#455](https://www.github.com/tauri-apps/create-tauri-app/pull/455)) Adds `preact` and `preact-ts` templates.
