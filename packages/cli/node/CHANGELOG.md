@@ -1,5 +1,13 @@
 # Changelog
 
+## \[3.7.2]
+
+- [`3ea6acf`](https://www.github.com/tauri-apps/create-tauri-app/commit/3ea6acf54b1f9517043121b0ce0bacf8910f175c) Cleanup the vite config file for all templates.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.7.2`
+
 ## \[3.7.1]
 
 ### Dependencies
