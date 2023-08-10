@@ -7,7 +7,7 @@ use std::{fmt::Display, fs, io::Write, path, str::FromStr};
 use anyhow::Context;
 use rust_embed::RustEmbed;
 
-use crate::{manifest::Manifest, package_manager::PackageManager};
+use crate::{colors::*, manifest::Manifest, package_manager::PackageManager};
 
 #[derive(RustEmbed)]
 #[folder = "fragments"]
@@ -102,7 +102,14 @@ impl FromStr for Template {
             "angular" => Ok(Template::Angular),
             "preact" => Ok(Template::Preact),
             "preact-ts" => Ok(Template::PreactTs),
-            _ => Err("Invalid template".to_string()),
+            _ => Err(format!(
+                "{YELLOW}{s}{RESET} is not a valid template. Valid templates are [{}]",
+                Template::ALL
+                    .iter()
+                    .map(|e| format!("{GREEN}{e}{RESET}"))
+                    .collect::<Vec<_>>()
+                    .join(", ")
+            )),
         }
     }
 }
@@ -169,15 +176,43 @@ impl<'a> Template {
         }
     }
 
+    pub const fn possible_package_managers(&self) -> &[PackageManager] {
+        match self {
+            Template::Vanilla => &[
+                PackageManager::Cargo,
+                PackageManager::Pnpm,
+                PackageManager::Yarn,
+                PackageManager::Npm,
+            ],
+            Template::VanillaTs => PackageManager::NODE,
+            Template::Vue => PackageManager::NODE,
+            Template::VueTs => PackageManager::NODE,
+            Template::Svelte => PackageManager::NODE,
+            Template::SvelteTs => PackageManager::NODE,
+            Template::React => PackageManager::NODE,
+            Template::ReactTs => PackageManager::NODE,
+            Template::Solid => PackageManager::NODE,
+            Template::SolidTs => PackageManager::NODE,
+            Template::Yew => &[PackageManager::Cargo],
+            Template::Leptos => &[PackageManager::Cargo],
+            Template::Sycamore => &[PackageManager::Cargo],
+            Template::Angular => PackageManager::NODE,
+            Template::Preact => PackageManager::NODE,
+            Template::PreactTs => PackageManager::NODE,
+        }
+    }
+
     pub const fn needs_trunk(&self) -> bool {
         matches!(self, Template::Sycamore | Template::Yew | Template::Leptos)
     }
+
     pub const fn needs_tauri_cli(&self) -> bool {
         matches!(
             self,
             Template::Sycamore | Template::Yew | Template::Leptos | Template::Vanilla
         )
     }
+
     pub const fn needs_wasm32_target(&self) -> bool {
         matches!(self, Template::Sycamore | Template::Yew | Template::Leptos)
     }
