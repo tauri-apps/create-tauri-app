@@ -4,7 +4,7 @@
 
 use std::{fmt::Display, str::FromStr};
 
-use crate::template::Template;
+use crate::{colors::*, template::Template};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
@@ -24,6 +24,13 @@ impl Default for PackageManager {
 impl<'a> PackageManager {
     pub const ALL: &'a [PackageManager] = &[
         PackageManager::Cargo,
+        PackageManager::Pnpm,
+        PackageManager::Yarn,
+        PackageManager::Npm,
+    ];
+
+    /// Node.js managers
+    pub const NODE: &'a [PackageManager] = &[
         PackageManager::Pnpm,
         PackageManager::Yarn,
         PackageManager::Npm,
@@ -122,7 +129,14 @@ impl FromStr for PackageManager {
             "pnpm" => Ok(PackageManager::Pnpm),
             "yarn" => Ok(PackageManager::Yarn),
             "npm" => Ok(PackageManager::Npm),
-            _ => Err("Invalid package manager".to_string()),
+            _ => Err(format!(
+                "{YELLOW}{s}{RESET} is not a valid package manager. Valid package mangers are [{}]",
+                PackageManager::ALL
+                    .iter()
+                    .map(|e| format!("{GREEN}{e}{RESET}"))
+                    .collect::<Vec<_>>()
+                    .join(", ")
+            )),
         }
     }
 }
