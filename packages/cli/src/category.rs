@@ -24,6 +24,7 @@ impl<'a> Category {
                 PackageManager::Pnpm,
                 PackageManager::Yarn,
                 PackageManager::Npm,
+                PackageManager::Bun,
             ],
         }
     }

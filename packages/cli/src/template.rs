@@ -183,6 +183,7 @@ impl<'a> Template {
                 PackageManager::Pnpm,
                 PackageManager::Yarn,
                 PackageManager::Npm,
+                PackageManager::Bun,
             ],
             Template::VanillaTs => PackageManager::NODE,
             Template::Vue => PackageManager::NODE,

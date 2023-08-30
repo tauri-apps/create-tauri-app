@@ -16,9 +16,9 @@ let binName;
 if (bin === "@tauri-apps/cli") {
   binName = "@tauri-apps/cli";
 }
-// Even if started by a package manager, the binary will be NodeJS.
+// Even if started by a package manager, the binary will be NodeJS or Bun.
 // Some distribution still use "nodejs" as the binary name.
-if (binStem.match(/(nodejs|node)-*([1-9]*)*$/g)) {
+if (binStem.match(/(nodejs|node|bun)-*([1-9]*)*$/g)) {
   const managerStem = process.env.npm_execpath
     ? path.parse(process.env.npm_execpath).name.toLowerCase()
     : null;
@@ -30,7 +30,7 @@ if (binStem.match(/(nodejs|node)-*([1-9]*)*$/g)) {
         manager = "npm";
         break;
 
-      // Yarn and pnpm have the same stem name as their bin.
+      // Yarn, pnpm, and Bun have the same stem name as their bin.
       // We assume all unknown package managers do as well.
       default:
         manager = managerStem;

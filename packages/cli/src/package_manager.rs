@@ -13,6 +13,7 @@ pub enum PackageManager {
     Pnpm,
     Yarn,
     Npm,
+    Bun,
 }
 
 impl Default for PackageManager {
@@ -27,6 +28,7 @@ impl<'a> PackageManager {
         PackageManager::Pnpm,
         PackageManager::Yarn,
         PackageManager::Npm,
+        PackageManager::Bun,
     ];
 
     /// Node.js managers
@@ -34,6 +36,7 @@ impl<'a> PackageManager {
         PackageManager::Pnpm,
         PackageManager::Yarn,
         PackageManager::Npm,
+        PackageManager::Bun,
     ];
 }
 impl PackageManager {
@@ -46,7 +49,10 @@ impl PackageManager {
                 Template::Leptos,
                 Template::Sycamore,
             ],
-            PackageManager::Pnpm | PackageManager::Yarn | PackageManager::Npm => &[
+            PackageManager::Pnpm
+            | PackageManager::Yarn
+            | PackageManager::Npm
+            | PackageManager::Bun => &[
                 Template::Vanilla,
                 Template::Vue,
                 Template::Svelte,
@@ -66,7 +72,10 @@ impl PackageManager {
                 Template::Leptos,
                 Template::Sycamore,
             ],
-            PackageManager::Pnpm | PackageManager::Yarn | PackageManager::Npm => &[
+            PackageManager::Pnpm
+            | PackageManager::Yarn
+            | PackageManager::Npm
+            | PackageManager::Bun => &[
                 Template::Vanilla,
                 Template::VanillaTs,
                 Template::Vue,
@@ -89,6 +98,7 @@ impl PackageManager {
             PackageManager::Pnpm => Some("pnpm install"),
             PackageManager::Yarn => Some("yarn"),
             PackageManager::Npm => Some("npm install"),
+            PackageManager::Bun => Some("bun install"),
             _ => None,
         }
     }
@@ -99,13 +109,14 @@ impl PackageManager {
             PackageManager::Pnpm => "pnpm",
             PackageManager::Yarn => "yarn",
             PackageManager::Npm => "npm run",
+            PackageManager::Bun => "bun run",
         }
     }
 
     pub const fn is_node(&self) -> bool {
         matches!(
             self,
-            PackageManager::Pnpm | PackageManager::Yarn | PackageManager::Npm,
+            PackageManager::Pnpm | PackageManager::Yarn | PackageManager::Npm | PackageManager::Bun,
         )
     }
 }
@@ -117,6 +128,7 @@ impl Display for PackageManager {
             PackageManager::Pnpm => write!(f, "pnpm"),
             PackageManager::Yarn => write!(f, "yarn"),
             PackageManager::Npm => write!(f, "npm"),
+            PackageManager::Bun => write!(f, "bun"),
         }
     }
 }
@@ -129,6 +141,7 @@ impl FromStr for PackageManager {
             "pnpm" => Ok(PackageManager::Pnpm),
             "yarn" => Ok(PackageManager::Yarn),
             "npm" => Ok(PackageManager::Npm),
+            "bun" => Ok(PackageManager::Bun),
             _ => Err(format!(
                 "{YELLOW}{s}{RESET} is not a valid package manager. Valid package mangers are [{}]",
                 PackageManager::ALL
