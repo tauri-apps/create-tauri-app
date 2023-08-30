@@ -29,6 +29,12 @@ yarn create tauri-app
 pnpm create tauri-app
 ```
 
+## Bun:
+
+```bash
+bunx create-tauri-app
+```
+
 <br>
 
 You can also directly specify the project name, package manager and the template you want to use via additional command line options. For example, to scaffold a Svelte project in a `my-tauri-app` directory, run:
@@ -42,6 +48,8 @@ npm create tauri-app@latest my-tauri-app -- --template svelte --manager pnpm
 yarn create tauri-app my-tauri-app --template svelte --manager pnpm
 # pnpm
 pnpm create tauri-app my-tauri-app --template svelte --manager pnpm
+# Bun
+bunx create-tauri-app my-tauri-app --template svelte --manager bun
 ```
 
 Currently supported template presets include:

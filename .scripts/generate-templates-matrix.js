@@ -41,6 +41,12 @@ const matrixConfig = [
     run_cmd: "cargo",
     templates: ["vanilla", "yew", "leptos"],
   },
+  {
+    manager: "bun",
+    install_cmd: "bun install",
+    run_cmd: "bun run",
+    templates: nodeJsTemplates,
+  },
 ];
 
 const outMatrix = [];
