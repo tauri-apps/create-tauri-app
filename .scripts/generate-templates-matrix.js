@@ -44,7 +44,7 @@ const matrixConfig = [
   {
     manager: "bun",
     install_cmd: "bun install",
-    run_cmd: "bun run",
+    run_cmd: "bunx",
     templates: nodeJsTemplates,
   },
 ];

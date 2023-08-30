@@ -83,7 +83,7 @@ A template is a just combination of two fragments, [`_base_`](../packages/cli/fr
   tauri.svg = public/tauri.svg
   ```
 - In `<repo-root>/packages/cli/src/template.rs`, add an entry in the `Template` enum, modify `post_init_info`, `flavors` and `from_flavor` if needed and modify `FromStr` and `Display` implementation
-- In `<repo-root>/packages/cli/src/package_manager.rs` add your new template to the appropraite package manager in the `templates` method
+- In `<repo-root>/packages/cli/src/package_manager.rs` add your new template to the appropriate package manager in the `templates` method
 - Modify `<repo-root>/.scripts/generate-templates-matrix.js` and append the template name inside the template list for the appropriate package manager so the CI would run tests for it.
 - If the template requires system dependencies, add a post init note in `<repo-root>/packages/cli/src/template.rs` in `post_init_info` method.
 - Before making a commit, make sure to run `cargo fmt --all` and `pnpm format` in the repo root.
