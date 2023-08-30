@@ -109,7 +109,7 @@ impl PackageManager {
             PackageManager::Pnpm => "pnpm",
             PackageManager::Yarn => "yarn",
             PackageManager::Npm => "npm run",
-            PackageManager::Bun => "bunx",
+            PackageManager::Bun => "bun run",
         }
     }
 

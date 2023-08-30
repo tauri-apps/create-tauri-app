@@ -105,11 +105,6 @@ jobs:
       - run: sed -i 's/com.tauri.dev/com.create-tauri-app.dev/g' **/tauri.conf.json
         working-directory: tauri-app
 
-      # `bunx` is not available in CI yet, see https://github.com/oven-sh/setup-bun/issues/9
-      - run: sed -i 's/bunx/bun x/g' **/tauri.conf.json
-        if: matrix.settings.manager == 'bun'
-        working-directory: tauri-app
-
       - run: ${{ matrix.settings.install_cmd }}
         if: matrix.settings.install_cmd  != ''
         working-directory: tauri-app
