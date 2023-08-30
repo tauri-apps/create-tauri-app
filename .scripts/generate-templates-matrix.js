@@ -44,7 +44,8 @@ const matrixConfig = [
   {
     manager: "bun",
     install_cmd: "bun install",
-    run_cmd: "bunx",
+	// `bunx` is not available in CI yet, see https://github.com/oven-sh/setup-bun/issues/9
+    run_cmd: "bun x",
     templates: nodeJsTemplates,
   },
 ];
