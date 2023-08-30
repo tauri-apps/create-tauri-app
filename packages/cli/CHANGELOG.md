@@ -1,5 +1,11 @@
 # Changelog
 
+## \[3.7.3]
+
+- [`194d569`](https://www.github.com/tauri-apps/create-tauri-app/commit/194d569f6c192e0665cb0e5c5a6f66b7fb9ac8a3)([#478](https://www.github.com/tauri-apps/create-tauri-app/pull/478)) Fix running `create-tauri-app` in JS environments in strict mode.
+- [`3449afc`](https://www.github.com/tauri-apps/create-tauri-app/commit/3449afcc9c872d0d20a7751c25b47b9c602f2804)([#476](https://www.github.com/tauri-apps/create-tauri-app/pull/476)) Fix typescript error in `solid-ts` template when importing some non-standard files.
+- [`f7256ee`](https://www.github.com/tauri-apps/create-tauri-app/commit/f7256eecfedb3e786a342b574a0737b4ceb110e7)([#471](https://www.github.com/tauri-apps/create-tauri-app/pull/471)) Improve the error messages for  unsupported package manager, unsupported template or when a supported template is used with a package manager that is not intended to be used with.
+
 ## \[3.7.2]
 
 - [`3ea6acf`](https://www.github.com/tauri-apps/create-tauri-app/commit/3ea6acf54b1f9517043121b0ce0bacf8910f175c) Cleanup the vite config file for all templates.

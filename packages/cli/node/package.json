@@ -1,6 +1,6 @@
 {
   "name": "create-tauri-app",
-  "version": "3.7.2",
+  "version": "3.7.3",
   "description": "Rapidly scaffold out a new tauri app project.",
   "funding": {
     "type": "opencollective",
