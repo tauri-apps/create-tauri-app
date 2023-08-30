@@ -44,7 +44,7 @@ const matrixConfig = [
   {
     manager: "bun",
     install_cmd: "bun install",
-	// `bunx` is not available in CI yet, see https://github.com/oven-sh/setup-bun/issues/9
+    // `bunx` is not available in CI yet, see https://github.com/oven-sh/setup-bun/issues/9
     run_cmd: "bun x",
     templates: nodeJsTemplates,
   },
@@ -63,7 +63,7 @@ matrixConfig
             e.includes(`packages/cli/fragments/fragment-${t}`) ||
             e.includes("packages/cli/src") ||
             e.includes("packages/cli/Cargo.toml") ||
-            e.includes(".github/workflows/templates-test.yml"),
+            e.includes(".github/workflows/templates-test.yml")
         )
       ) {
         outMatrix.push({
