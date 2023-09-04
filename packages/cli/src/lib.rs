@@ -35,29 +35,36 @@ pub mod internal {
     }
 }
 
-pub fn run<I, A>(args: I, bin_name: Option<String>)
+pub fn run<I, A>(args: I, bin_name: Option<String>, detected_manager: Option<String>)
 where
     I: IntoIterator<Item = A>,
     A: Into<OsString> + Clone,
 {
-    if let Err(e) = try_run(args, bin_name) {
+    if let Err(e) = try_run(args, bin_name, detected_manager) {
         eprintln!("{BOLD}{RED}error{RESET}: {e:#}");
         exit(1);
     }
 }
 
-fn try_run<I, A>(args: I, bin_name: Option<String>) -> anyhow::Result<()>
+fn try_run<I, A>(
+    args: I,
+    bin_name: Option<String>,
+    detected_manager: Option<String>,
+) -> anyhow::Result<()>
 where
     I: IntoIterator<Item = A>,
     A: Into<OsString> + Clone,
 {
+    let detected_manager = detected_manager.and_then(|p| p.parse::<PackageManager>().ok());
     let args = cli::parse(args.into_iter().map(Into::into).collect(), bin_name)?;
     let defaults = cli::Args::default();
     let cli::Args {
         skip,
         mobile,
         alpha,
-        ..
+        manager,
+        project_name,
+        template,
     } = args;
     let cwd = std::env::current_dir()?;
 
@@ -74,7 +81,7 @@ where
 
     // Project name used for the project directory name
     // and if valid, it will also be used in Cargo.toml, Package.json ...etc
-    let project_name = args.project_name.unwrap_or_else(|| {
+    let project_name = project_name.unwrap_or_else(|| {
         if skip {
             defaults.project_name.unwrap()
         } else {
@@ -142,7 +149,7 @@ where
     };
 
     // Prompt for category if a package manger is not passed on the command line
-    let category = if args.manager.is_none() && !skip {
+    let category = if manager.is_none() && !skip {
         // Filter managers if a template is passed on the command line
         let managers = PackageManager::ALL.to_vec();
         let managers = args
@@ -158,10 +165,23 @@ where
 
         // Filter categories based on the detected package mangers
         let categories = Category::ALL.to_vec();
-        let categories = categories
+        let mut categories = categories
             .into_iter()
             .filter(|c| c.package_managers().iter().any(|p| managers.contains(p)))
             .collect::<Vec<_>>();
+
+        // sort categories so the most relevant category
+        // based on the auto-detected package manager is selected first
+        categories.sort_by(|a, b| {
+            detected_manager
+                .map(|p| b.package_managers().contains(&p))
+                .unwrap_or(false)
+                .cmp(
+                    &detected_manager
+                        .map(|p| a.package_managers().contains(&p))
+                        .unwrap_or(false),
+                )
+        });
 
         // If only one category is detected, skip prompt
         if categories.len() == 1 {
@@ -181,12 +201,20 @@ where
 
     // Package manager which will be used for rendering the template
     // and the after-render instructions
-    let pkg_manager = args.manager.unwrap_or_else(|| {
+    let pkg_manager = manager.unwrap_or_else(|| {
         if skip {
             defaults.manager.unwrap()
         } else {
             let category = category.unwrap();
-            let managers = category.package_managers();
+
+            let mut managers = category.package_managers().to_owned();
+            // sort managers so the auto-detected package manager is selected first
+            managers.sort_by(|a, b| {
+                detected_manager
+                    .map(|p| p == *b)
+                    .unwrap_or(false)
+                    .cmp(&detected_manager.map(|p| p == *a).unwrap_or(false))
+            });
 
             // If only one package manager is detected, skip prompt
             if managers.len() == 1 {
@@ -194,7 +222,7 @@ where
             } else {
                 let index = Select::with_theme(&ColorfulTheme::default())
                     .with_prompt("Choose your package manager")
-                    .items(managers)
+                    .items(&managers)
                     .default(0)
                     .interact()
                     .unwrap();
@@ -206,7 +234,7 @@ where
     let templates_no_flavors = pkg_manager.templates_no_flavors();
 
     // Template to render
-    let template = args.template.unwrap_or_else(|| {
+    let template = template.unwrap_or_else(|| {
         if skip {
             defaults.template.unwrap()
         } else {

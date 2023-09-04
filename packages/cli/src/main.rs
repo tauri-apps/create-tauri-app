@@ -2,10 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-use std::{env::args_os, ffi::OsStr, path::Path, process::exit};
+use std::{env::args_os, ffi::OsStr, path::Path};
 
 fn main() {
     let mut args = args_os().peekable();
+    let mut is_cargo = false;
     let bin_name = match args
         .next()
         .as_deref()
@@ -14,6 +15,7 @@ fn main() {
         .and_then(OsStr::to_str)
     {
         Some("cargo-create-tauri-app") => {
+            is_cargo = true;
             if args.peek().and_then(|s| s.to_str()) == Some("create-tauri-app") {
                 // remove the extra cargo subcommand
                 args.next();
@@ -23,11 +25,12 @@ fn main() {
             }
         }
         Some(stem) => Some(stem.to_string()),
-        None => {
-            eprintln!("cargo-tauri wrapper unable to read first argument");
-            exit(1);
-        }
+        None => None,
     };
 
-    create_tauri_app::run(args, bin_name);
+    create_tauri_app::run(
+        args,
+        bin_name,
+        if is_cargo { Some("cargo".into()) } else { None },
+    );
 }
