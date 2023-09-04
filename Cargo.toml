@@ -1,4 +1,5 @@
 [workspace]
+resolver = "2"
 members = ["packages/cli", "packages/cli/node"]
 
 [profile.release]
