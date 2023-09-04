@@ -10,5 +10,5 @@
 export function run(
   args: Array<string>,
   binName?: string | undefined | null,
-  pkgManager?: string | undefined | null
+  pkgManager?: string | undefined | null,
 ): void;
