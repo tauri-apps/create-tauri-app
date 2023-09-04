@@ -49,4 +49,10 @@ if (binStem.match(/(nodejs|node|bun)-*([1-9]*)*$/g)) {
   args.unshift(bin);
 }
 
-cli.run(args, binName);
+// adapted from https://github.com/vitejs/vite/blob/34826aae015ed16dc9b9096c0f778154ca6981a6/packages/create-vite/src/index.ts#L513
+function pkgManagerFromUserAgent(userAgent) {
+  if (!userAgent) return undefined;
+  return userAgent.split(" ")[0]?.split("/")[0];
+}
+const pkgManager = pkgManagerFromUserAgent(process.env.npm_config_user_agent);
+cli.run(args, binName, pkgManager);

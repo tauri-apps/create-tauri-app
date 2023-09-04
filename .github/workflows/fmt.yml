@@ -25,7 +25,7 @@ jobs:
 
       - run: cargo fmt --all -- --check
 
-  prttier-fmt-check:
+  prettier-fmt-check:
     runs-on: ubuntu-latest
 
     steps:
