@@ -269,12 +269,15 @@ where
     // Remove the target dir contents before rendering the template
     // SAFETY: Upon reaching this line, the user already accepted to overwrite
     if target_dir.exists() {
+        #[inline(always)]
         fn clean_dir(dir: &std::path::PathBuf) -> anyhow::Result<()> {
             for entry in fs::read_dir(dir)?.flatten() {
                 let path = entry.path();
                 if entry.file_type()?.is_dir() {
-                    clean_dir(&path)?;
-                    std::fs::remove_dir(path)?;
+                    if entry.file_name() != ".git" {
+                        clean_dir(&path)?;
+                        std::fs::remove_dir(path)?;
+                    }
                 } else {
                     fs::remove_file(path)?;
                 }
