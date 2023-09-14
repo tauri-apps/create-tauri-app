@@ -16,8 +16,8 @@ importers:
         version: 3.0.3
     devDependencies:
       covector:
-        specifier: 0.10.0
-        version: 0.10.0
+        specifier: 0.10.2
+        version: 0.10.2
 
   packages/cli/node:
     devDependencies:
@@ -84,21 +84,21 @@ packages:
     dev: true
     optional: true
 
-  /@covector/apply@0.9.0:
-    resolution: {integrity: sha512-a844qKgZ7a8Gy4ls4awMXoF8q+jxcI5DoldoPBOO0nDddteBNO7Y5fOJJkCeZyvuoZRl23GOVdn+sluX/UpLKQ==}
+  /@covector/apply@0.9.2:
+    resolution: {integrity: sha512-XrNujG6ERUq8bwPCQgOEzuwBCSLKV5nC4AuO+QBpuC0xA9Qz9w025YKYNMIsXxVf0SBscMXKzhBAo9iUDTzKFw==}
     dependencies:
-      '@covector/files': 0.6.2
+      '@covector/files': 0.7.1
       effection: 2.0.6
       semver: 7.5.3
     transitivePeerDependencies:
       - encoding
     dev: true
 
-  /@covector/assemble@0.10.1:
-    resolution: {integrity: sha512-xz8kGgc2ZH4zUWgGotXAp9wX3QZoDXitZOPM5cYhOs3z6vS2Vj5dY4sqvgueAUpadHSjjQMWIktaw9yBJHAAnQ==}
+  /@covector/assemble@0.10.3:
+    resolution: {integrity: sha512-LcltbmTDHeCouIGvDJ268UQ2T/JGOjt/vE4lT15BOq3F+RjTdE3B+1XmhhkFzP6Ebp6hnU5mZXFDmWqqrQKWFA==}
     dependencies:
       '@covector/command': 0.7.0
-      '@covector/files': 0.6.2
+      '@covector/files': 0.7.1
       effection: 2.0.6
       js-yaml: 4.1.0
       lodash: 4.17.21
@@ -111,10 +111,10 @@ packages:
       - supports-color
     dev: true
 
-  /@covector/changelog@0.9.0:
-    resolution: {integrity: sha512-206w2jTX6ATaPhv2Frp8zTgMbjvaWEOOOyGnhQZdWTRst3vx2PUWxAoZ9xMLoYTk4jYpuzupKDOmgxk9NssOfQ==}
+  /@covector/changelog@0.10.1:
+    resolution: {integrity: sha512-p1kDf6abq8TAKIzLMcieMD+hoP4RamykoPpk3PYHUhZnz0xi1+8sVGEPByCQGb3SI9PCg8CZPuyIA91YtuiTsQ==}
     dependencies:
-      '@covector/files': 0.6.2
+      '@covector/files': 0.7.1
       effection: 2.0.6
       lodash: 4.17.21
       remark-parse: 9.0.0
@@ -135,14 +135,16 @@ packages:
       - encoding
     dev: true
 
-  /@covector/files@0.6.2:
-    resolution: {integrity: sha512-DmG0FBNnfJ1g8qDjETAkiMbetlrewfrFPkpej59rQ41cyRFPqypFsydMR3B+VTm0vIxXlP5WrJzoOSzf+bcGXA==}
+  /@covector/files@0.7.1:
+    resolution: {integrity: sha512-fGMNfTkjTvgXyj5ctfGxPhxW05SNlLK3V0eiSjP2nMVLEapPtp9ZMJNGqvvoHIs1R2IxURh0iUOjA8O2zQaCfQ==}
     dependencies:
       '@iarna/toml': 2.2.5
       '@tauri-apps/toml': 2.2.4
       globby: 11.1.0
       js-yaml: 4.1.0
       semver: 7.5.3
+      zod: 3.21.4
+      zod-validation-error: 1.5.0(zod@3.21.4)
     dev: true
 
   /@effection/channel@2.0.4:
@@ -691,19 +693,19 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
-  /covector@0.10.0:
-    resolution: {integrity: sha512-C8OqMG4ZA0bMwt0uHuCfPK8rfy6QFDV8qUaJW0giggywK+w7dz2dxpCcv2bYtJQyBh+GKSt8E4i2wB0c3paxCQ==}
+  /covector@0.10.2:
+    resolution: {integrity: sha512-Nbz2x5cnS7F0fTT/raNKo0UYbI6rjaDoCrAJNoOpsSHdztnlFi7Bb6lU6kOBEeEH1zHVJk5F3ChBs0VNAuf5mg==}
     hasBin: true
     dependencies:
-      '@covector/apply': 0.9.0
-      '@covector/assemble': 0.10.1
-      '@covector/changelog': 0.9.0
+      '@covector/apply': 0.9.2
+      '@covector/assemble': 0.10.3
+      '@covector/changelog': 0.10.1
       '@covector/command': 0.7.0
-      '@covector/files': 0.6.2
+      '@covector/files': 0.7.1
       effection: 2.0.6
       globby: 11.1.0
       inquirer: 8.2.5
-      yargs: 17.7.0
+      yargs: 17.7.2
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -1872,8 +1874,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /yargs@17.7.0:
-    resolution: {integrity: sha512-dwqOPg5trmrre9+v8SUo2q/hAwyKoVfu8OC1xPHKJGNdxAvPl4sKxL4vBnh3bQz/ZvvGAFeA5H3ou2kcOY8sQQ==}
+  /yargs@17.7.2:
+    resolution: {integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==}
     engines: {node: '>=12'}
     dependencies:
       cliui: 8.0.1
@@ -1891,6 +1893,15 @@ packages:
       cookie: 0.5.0
       mustache: 4.2.0
       stacktracey: 2.1.8
+    dev: true
+
+  /zod-validation-error@1.5.0(zod@3.21.4):
+    resolution: {integrity: sha512-/7eFkAI4qV0tcxMBB/3+d2c1P6jzzZYdYSlBuAklzMuCrJu5bzJfHS0yVAS87dRHVlhftd6RFJDIvv03JgkSbw==}
+    engines: {node: '>=16.0.0'}
+    peerDependencies:
+      zod: ^3.18.0
+    dependencies:
+      zod: 3.21.4
     dev: true
 
   /zod@3.21.4:
