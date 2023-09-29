@@ -12,11 +12,11 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@tauri-apps/api": "^1.4.0"
+    "@tauri-apps/api": "^1.5.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.0.3",
     "vite": "^4.4.4",
-    "@tauri-apps/cli": "^1.4.0"
+    "@tauri-apps/cli": "^1.5.0"
   }
 }
