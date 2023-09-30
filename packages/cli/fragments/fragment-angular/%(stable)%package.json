@@ -20,7 +20,7 @@
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0",
-    "@tauri-apps/api": "^1.4.0"
+    "@tauri-apps/api": "^1.5.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.2.0",
@@ -34,6 +34,6 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
     "typescript": "^4.9.5",
-    "@tauri-apps/cli": "^1.4.0"
+    "@tauri-apps/cli": "^1.5.0"
   }
 }
