@@ -1,5 +1,17 @@
 # Changelog
 
+## \[3.8.0]
+
+- [`f095dce`](https://www.github.com/tauri-apps/create-tauri-app/commit/f095dce22ba24cc2ef13b31491ae02d0162c01a8)([#498](https://www.github.com/tauri-apps/create-tauri-app/pull/498)) Update `@tauri-apps/api` to latest version for `--alpha` templates.
+- [`a962ef8`](https://www.github.com/tauri-apps/create-tauri-app/commit/a962ef868d1b86f44d124077ce52301873c52e41)([#481](https://www.github.com/tauri-apps/create-tauri-app/pull/481)) Support and detect Bun package manager
+- [`5e48a5c`](https://www.github.com/tauri-apps/create-tauri-app/commit/5e48a5c39fe356efa5734ae5c5ada00b8fabb339)([#486](https://www.github.com/tauri-apps/create-tauri-app/pull/486)) Auto-detect package manager used to run `create-tauri-app` and promote the most relevant category for it and select it and also make the package manager selected by default in the managers selection list.
+- [`724ff2b`](https://www.github.com/tauri-apps/create-tauri-app/commit/724ff2b134023f9818b3457da50ca6ef320fec93)([#485](https://www.github.com/tauri-apps/create-tauri-app/pull/485)) Skip deleting `.git` directory when initalizing a project in an already existing directoy.
+- [`f095dce`](https://www.github.com/tauri-apps/create-tauri-app/commit/f095dce22ba24cc2ef13b31491ae02d0162c01a8)([#498](https://www.github.com/tauri-apps/create-tauri-app/pull/498)) Update tauri versions for all templates to version `1.5`.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.8.0`
+
 ## \[3.7.3]
 
 - [`3449afc`](https://www.github.com/tauri-apps/create-tauri-app/commit/3449afcc9c872d0d20a7751c25b47b9c602f2804)([#476](https://www.github.com/tauri-apps/create-tauri-app/pull/476)) Fix typescript error in `solid-ts` template when importing some non-standard files.
