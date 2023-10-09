@@ -1,5 +1,13 @@
 # Changelog
 
+## \[3.9.0]
+
+- [`e867502`](https://www.github.com/tauri-apps/create-tauri-app/commit/e867502ed59c816e16bf457090e730b92333cafb)([#502](https://www.github.com/tauri-apps/create-tauri-app/pull/502)) Upgrade to leptos 0.5, serde-wasm-bindgen 0.6 and fixing some `cargo fmt`
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.9.0`
+
 ## \[3.8.0]
 
 - [`f095dce`](https://www.github.com/tauri-apps/create-tauri-app/commit/f095dce22ba24cc2ef13b31491ae02d0162c01a8)([#498](https://www.github.com/tauri-apps/create-tauri-app/pull/498)) Update `@tauri-apps/api` to latest version for `--alpha` templates.
