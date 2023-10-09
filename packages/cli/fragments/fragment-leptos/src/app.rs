@@ -1,4 +1,4 @@
-use leptos::leptos_dom::ev::{SubmitEvent};
+use leptos::leptos_dom::ev::SubmitEvent;
 use leptos::*;
 use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::to_value;
@@ -16,9 +16,9 @@ struct GreetArgs<'a> {
 }
 
 #[component]
-pub fn App(cx: Scope) -> impl IntoView {
-    let (name, set_name) = create_signal(cx, String::new());
-    let (greet_msg, set_greet_msg) = create_signal(cx, String::new());
+pub fn App() -> impl IntoView {
+    let (name, set_name) = create_signal(String::new());
+    let (greet_msg, set_greet_msg) = create_signal(String::new());
 
     let update_name = move |ev| {
         let v = event_target_value(&ev);
@@ -39,7 +39,7 @@ pub fn App(cx: Scope) -> impl IntoView {
         });
     };
 
-    view! { cx,
+    view! {
         <main class="container">
             <div class="row">
                 <a href="https://tauri.app" target="_blank">
