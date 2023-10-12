@@ -10,6 +10,6 @@
     "covector": "0.10.2"
   },
   "resolutions": {
-    "semver": ">=7.5.2"
+    "zod": ">=3.22.3"
   }
 }
