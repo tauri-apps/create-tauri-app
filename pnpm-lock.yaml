@@ -28,8 +28,8 @@ importers:
   packages/worker:
     devDependencies:
       wrangler:
-        specifier: 3.12.0
-        version: 3.12.0
+        specifier: 3.13.1
+        version: 3.13.1
 
 packages:
 
@@ -1617,8 +1617,8 @@ packages:
       '@cloudflare/workerd-windows-64': 1.20231010.0
     dev: true
 
-  /wrangler@3.12.0:
-    resolution: {integrity: sha512-tD0IKd+1n/K9LSAa+p4LPImaLr0qfDxR05Cajoq/1bY4Jd5Lvd3sYhPOPi0cn36udWKawo5Kz79EGzo9U0/nlw==}
+  /wrangler@3.13.1:
+    resolution: {integrity: sha512-CY73h4lfPx/3CmkC/tPj66DRRZ9Y42sMcHys6B6tjCILUo950IeOvnsj759el3/ewFLY4kG4jCrrrikan6TE+Q==}
     engines: {node: '>=16.13.0'}
     hasBin: true
     dependencies:
