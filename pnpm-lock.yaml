@@ -1839,22 +1839,12 @@ packages:
       '@cloudflare/workerd-windows-64': 1.20231010.0
     dev: true
 
-<<<<<<< Updated upstream
-  /wrangler@3.13.1:
-    resolution: {integrity: sha512-CY73h4lfPx/3CmkC/tPj66DRRZ9Y42sMcHys6B6tjCILUo950IeOvnsj759el3/ewFLY4kG4jCrrrikan6TE+Q==}
-=======
-<<<<<<< HEAD
   /workerpool@6.2.1:
     resolution: {integrity: sha512-ILEIE97kDZvF9Wb9f6h5aXK4swSlKGUcOEGiIYb2OOu/IrDU9iwj0fD//SsA6E5ibwJxpEvhullJY4Sl4GcpAw==}
     dev: true
 
-  /wrangler@3.12.0:
-    resolution: {integrity: sha512-tD0IKd+1n/K9LSAa+p4LPImaLr0qfDxR05Cajoq/1bY4Jd5Lvd3sYhPOPi0cn36udWKawo5Kz79EGzo9U0/nlw==}
-=======
   /wrangler@3.13.1:
     resolution: {integrity: sha512-CY73h4lfPx/3CmkC/tPj66DRRZ9Y42sMcHys6B6tjCILUo950IeOvnsj759el3/ewFLY4kG4jCrrrikan6TE+Q==}
->>>>>>> c8c91665df4db34d05de903f659c15ce21508796
->>>>>>> Stashed changes
     engines: {node: '>=16.13.0'}
     hasBin: true
     dependencies:
