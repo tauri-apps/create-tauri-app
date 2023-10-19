@@ -29,8 +29,8 @@ importers:
   packages/worker:
     devDependencies:
       wrangler:
-        specifier: 3.13.2
-        version: 3.13.2
+        specifier: 3.14.0
+        version: 3.14.0
 
 packages:
 
@@ -1839,8 +1839,8 @@ packages:
     resolution: {integrity: sha512-ILEIE97kDZvF9Wb9f6h5aXK4swSlKGUcOEGiIYb2OOu/IrDU9iwj0fD//SsA6E5ibwJxpEvhullJY4Sl4GcpAw==}
     dev: true
 
-  /wrangler@3.13.2:
-    resolution: {integrity: sha512-Z/ZrAL2mJc7E4ialOV9c3wGry0qagp9DfPl5XVd67vtlFPeTSR+1pemtZ5+qI2BXi59kP3OGHBKrrIyG0d9csg==}
+  /wrangler@3.14.0:
+    resolution: {integrity: sha512-4vzw11yG1/KXpYKbumvRJ61Iyhm/yKXb/ayOw/2xiIRdKdpsfN9/796d2l525+CDaGwZWswpLENe6ZMS0p/Ghg==}
     engines: {node: '>=16.13.0'}
     hasBin: true
     dependencies:
