@@ -20,4 +20,5 @@ path = "src/main.rs"
 anyhow = "1"
 dialoguer = "0.10"
 pico-args = "0.5"
+ctrlc = "3.4.1"
 rust-embed = { version = "8.0", features = [ "compression", "interpolate-folder-path" ] }

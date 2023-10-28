@@ -5,6 +5,8 @@
 use std::{env::args_os, ffi::OsStr, path::Path};
 
 fn main() {
+    ctrlc::set_handler(move || eprint!("\x1b[?25h")).expect("fail to set SIGINT handler");
+
     let mut args = args_os().peekable();
     let mut is_cargo = false;
     let bin_name = match args
