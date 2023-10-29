@@ -41,6 +41,7 @@ where
     I: IntoIterator<Item = A>,
     A: Into<OsString> + Clone,
 {
+    ctrlc::set_handler(move || eprint!("\x1b[?25h")).expect("fail to set SIGINT handler");
     if let Err(e) = try_run(args, bin_name, detected_manager) {
         eprintln!("{BOLD}{RED}error{RESET}: {e:#}");
         exit(1);
@@ -86,7 +87,9 @@ where
         Some(name) => name,
         None => {
             if skip {
-                defaults.project_name.context("project_name not defined")?
+                defaults
+                    .project_name
+                    .context("default project_name not set")?
             } else {
                 Input::<String>::with_theme(&ColorfulTheme::default())
                     .with_prompt("Project name")
@@ -207,9 +210,9 @@ where
         Some(manager) => manager,
         None => {
             if skip {
-                defaults.manager.context("manager not set")?
+                defaults.manager.context("default manager not set")?
             } else {
-                let category = category.context("category not set")?;
+                let category = category.context("category shouldn't be None at this point")?;
 
                 let mut managers = category.package_managers().to_owned();
                 // sort managers so the auto-detected package manager is selected first
@@ -241,7 +244,7 @@ where
         Some(template) => template,
         None => {
             if skip {
-                defaults.template.context("template not set")?
+                defaults.template.context("default template not set")?
             } else {
                 let index = Select::with_theme(&ColorfulTheme::default())
                     .with_prompt("Choose your UI template")
@@ -279,7 +282,7 @@ where
         Some(mobile) => mobile,
         None => {
             if skip || !alpha {
-                defaults.mobile.unwrap()
+                defaults.mobile.context("default mobile not set")?
             } else {
                 Confirm::with_theme(&ColorfulTheme::default())
                     .with_prompt("Would you like to setup the project for mobile as well?")
