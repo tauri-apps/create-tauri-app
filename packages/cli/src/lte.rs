@@ -8,6 +8,7 @@
 // 1. negative boolean
 // 2. multiple condition in the same if
 // 3. equality checks
+// 4. infinte loop when missing a closing `%}`
 
 use std::{collections::HashMap, fmt::Display};
 
