@@ -15,6 +15,7 @@ mod category;
 mod cli;
 mod colors;
 mod deps;
+mod lte;
 mod manifest;
 mod package_manager;
 mod template;
@@ -41,7 +42,10 @@ where
     I: IntoIterator<Item = A>,
     A: Into<OsString> + Clone,
 {
-    ctrlc::set_handler(move || eprint!("\x1b[?25h")).expect("fail to set SIGINT handler");
+    let _ = ctrlc::set_handler(move || {
+        eprint!("\x1b[?25h");
+        exit(0);
+    });
     if let Err(e) = try_run(args, bin_name, detected_manager) {
         eprintln!("{BOLD}{RED}error{RESET}: {e:#}");
         exit(1);
