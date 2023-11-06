@@ -23,8 +23,5 @@ export default defineConfig(async () => ({
           port: 1421,
         }
       : undefined,{% endif %}
-  },
-  // 3. to make use of `TAURI_DEBUG` and other env variables
-  // https://tauri.app/v1/api/config#buildconfig.beforedevcommand
-  envPrefix: ["VITE_", "TAURI_"],
+  }
 }));
