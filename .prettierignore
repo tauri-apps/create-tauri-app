@@ -7,3 +7,4 @@
 node_modules
 node/index.js
 node/index.d.ts
+packages/cli/fragments
