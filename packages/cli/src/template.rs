@@ -333,7 +333,7 @@ impl<'a> Template {
             };
 
             // Only modify files that need to use the template engine
-            let (file_data, file_name) = if let Some(file_name) = file_name.strip_prefix('%') {
+            let (file_data, file_name) = if let Some(file_name) = file_name.strip_suffix(".lts") {
                 let file_data = FRAGMENTS::get(file).unwrap().data.to_vec();
                 let file_data_as_str = std::str::from_utf8(&file_data)?;
                 (
