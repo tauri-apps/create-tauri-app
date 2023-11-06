@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.10.0]
+
+- [`6c50fc3`](https://www.github.com/tauri-apps/create-tauri-app/commit/6c50fc38019f5284d78873750a3fcdd1d7835931)([#90](https://www.github.com/tauri-apps/create-tauri-app/pull/90)) Update tauri to latest version for all templates and fix `invoke` import in `--alpha` templates.
+
 ## \[3.9.0]
 
 - [`e867502`](https://www.github.com/tauri-apps/create-tauri-app/commit/e867502ed59c816e16bf457090e730b92333cafb)([#502](https://www.github.com/tauri-apps/create-tauri-app/pull/502)) Upgrade to leptos 0.5, serde-wasm-bindgen 0.6 and fixing some `cargo fmt`
