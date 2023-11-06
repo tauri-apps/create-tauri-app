@@ -92,7 +92,7 @@ impl<'a> Lexer<'a> {
     }
 
     fn skip_whitespace(&mut self) {
-        while self.current_char().is_whitespace() {
+        while self.cursor < self.len && self.current_char().is_whitespace() {
             self.cursor += 1;
         }
     }
@@ -148,6 +148,7 @@ impl<'a> Lexer<'a> {
 
                 return Some(Token::Var(symbol));
             } else {
+                self.cursor += 1;
                 return Some(Token::Invalid(self.cursor));
             }
         }
@@ -335,6 +336,12 @@ impl<'a> Parser<'a> {
             return Ok(None);
         }
 
+        if let t @ Token::Invalid(_) = self.current_token() {
+            return Err(TemplateParseError {
+                message: t.to_string(),
+            });
+        }
+
         let text = self.consume_text();
         if text.is_some() {
             return Ok(text.map(Stmt::Text));
@@ -473,5 +480,13 @@ mod tests {
         <em>beta</em>
         </html>"#;
         assert_eq!(rendered, expected)
+    }
+
+    #[test]
+    fn it_panics() {
+        let template = "<html>Hello {% name }</html>";
+        let data: HashMap<&str, &str> = [("name", "world")].into();
+        let rendered = render(template, &data);
+        assert!(rendered.is_err())
     }
 }
