@@ -1,0 +1,26 @@
+{
+  "name": "{% package_name %}",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "tauri": "tauri"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "solid-js": "^1.7.8",
+    "@tauri-apps/api": "^{% if alpha %}2.0.0-alpha.8{% else %}1.5.0{% endif %}"{% if alpha %},
+    "@tauri-apps/plugin-shell": "^2.0.0-alpha.3"{% endif %}
+  },
+  "devDependencies": {
+    "typescript": "^5.0.2",
+    "vite": "^4.4.4",
+    "vite-plugin-solid": "^2.7.0",
+    "@tauri-apps/cli": "^{% if alpha %}2.0.0-alpha.9{% else %}1.5.0{% endif %}"{% if mobile %},
+    "internal-ip": "^7.0.0"{% endif %}
+  }
+}

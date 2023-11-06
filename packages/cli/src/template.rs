@@ -251,7 +251,6 @@ impl<'a> Template {
             ("stable", (!alpha).to_string()),
             ("alpha", alpha.to_string()),
             ("mobile", mobile.to_string()),
-            ("not_mobile", (!mobile).to_string()),
             ("lib_name", lib_name),
             ("package_name", package_name.to_string()),
             (
@@ -297,7 +296,6 @@ impl<'a> Template {
 
             let file_name = match &*file_name {
                 "_gitignore" => ".gitignore",
-                "_Cargo.toml" => "Cargo.toml",
                 // skip manifest
                 "_cta_manifest_" => return Ok(()),
                 // conditional files:

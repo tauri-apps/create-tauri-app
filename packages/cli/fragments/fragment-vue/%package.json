@@ -1,0 +1,23 @@
+{
+  "name": "{% package_name %}",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "vue": "^3.3.4",
+    "@tauri-apps/api": "^{% if alpha %}2.0.0-alpha.8{% else %}1.5.0{% endif %}"{% if alpha %},
+    "@tauri-apps/plugin-shell": "^2.0.0-alpha.3"{% endif %}
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.4.4",
+    "@tauri-apps/cli": "^{% if alpha %}2.0.0-alpha.9{% else %}1.5.0{% endif %}"{% if mobile %},
+    "internal-ip": "^7.0.0"{% endif %}
+  }
+}
