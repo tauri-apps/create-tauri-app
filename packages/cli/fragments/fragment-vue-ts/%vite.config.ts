@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import preact from "@preact/preset-vite";{% if mobile %}
+import vue from "@vitejs/plugin-vue";;{% if mobile %}
 import { internalIpV4 } from "internal-ip";
 
 // @ts-expect-error process is a nodejs global
@@ -7,7 +7,7 @@ const mobile = !!/android|ios/.exec(process.env.TAURI_ENV_PLATFORM);{% endif %}
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
-  plugins: [preact()],
+  plugins: [vue()],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //

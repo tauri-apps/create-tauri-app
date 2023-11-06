@@ -1,12 +1,12 @@
 import { defineConfig } from "vite";
-import preact from "@preact/preset-vite";{% if mobile %}
+import solid from "vite-plugin-solid";{% if mobile %}
 import { internalIpV4 } from "internal-ip";
 
 const mobile = !!/android|ios/.exec(process.env.TAURI_ENV_PLATFORM);{% endif %}
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
-  plugins: [preact()],
+  plugins: [solid()],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //
