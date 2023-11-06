@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import preact from "@preact/preset-vite";{% if mobile %}
 import { internalIpV4 } from "internal-ip";
 
-const mobile = !!/android|ios/.exec(process.env.TAURI_PLATFORM);{% endif %}
+const mobile = !!/android|ios/.exec(process.env.TAURI_ENV_PLATFORM);{% endif %}
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({

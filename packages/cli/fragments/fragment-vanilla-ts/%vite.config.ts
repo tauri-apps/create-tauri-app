@@ -3,7 +3,7 @@ import preact from "@preact/preset-vite";{% if mobile %}
 import { internalIpV4 } from "internal-ip";
 
 // @ts-expect-error process is a nodejs global
-const mobile = !!/android|ios/.exec(process.env.TAURI_PLATFORM);{% endif %}
+const mobile = !!/android|ios/.exec(process.env.TAURI_ENV_PLATFORM);{% endif %}
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
