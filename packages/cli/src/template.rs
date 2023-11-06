@@ -333,12 +333,12 @@ impl<'a> Template {
             };
 
             // Only modify files that need to use the template engine
-            let (file_data, file_name) = if file_name.starts_with('%') {
+            let (file_data, file_name) = if let Some(file_name) = file_name.strip_prefix('%') {
                 let file_data = FRAGMENTS::get(file).unwrap().data.to_vec();
                 let file_data_as_str = std::str::from_utf8(&file_data)?;
                 (
                     crate::lte::render(file_data_as_str, template_data)?.into_bytes(),
-                    &file_name[1..],
+                    file_name,
                 )
             } else {
                 (FRAGMENTS::get(file).unwrap().data.to_vec(), file_name)
@@ -346,7 +346,7 @@ impl<'a> Template {
 
             let parent = p.parent().unwrap();
             fs::create_dir_all(parent)?;
-            fs::write(parent.join(file_name), &file_data)?;
+            fs::write(parent.join(file_name), file_data)?;
             Ok(())
         };
 
