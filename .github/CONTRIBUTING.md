@@ -67,8 +67,8 @@ A template is a just combination of two fragments, [`_base_`](../packages/cli/fr
 - Add a directory in `<repo-root>/packages/cli/fragments` and name `fragment-template` where `template` is the name of the template and add all the files you need there as they should appear after the template is created.
 - A template also must have a `_cta_manifest_` file which contains info about the template:
   ```ini
-  beforeDevCommand = ~pkg_manager_run_command~ dev
-  beforeBuildCommand = ~pkg_manager_run_command~ build
+  beforeDevCommand = {% pkg_manager_run_command %} dev
+  beforeBuildCommand = {% pkg_manager_run_command %} build
   devPath = http://localhost:1420
   distDir = ../dist
 
