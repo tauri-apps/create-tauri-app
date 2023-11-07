@@ -1,5 +1,11 @@
 # Changelog
 
+## \[3.10.1]
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.10.1`
+
 ## \[3.10.0]
 
 - [`6c50fc3`](https://www.github.com/tauri-apps/create-tauri-app/commit/6c50fc38019f5284d78873750a3fcdd1d7835931)([#90](https://www.github.com/tauri-apps/create-tauri-app/pull/90)) Update tauri to latest version for all templates and fix `invoke` import in `--alpha` templates.

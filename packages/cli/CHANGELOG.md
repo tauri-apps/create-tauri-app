@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.10.1]
+
+- [`8bf1fca`](https://www.github.com/tauri-apps/create-tauri-app/commit/8bf1fcae8aaccf091b64e8f1f8ec23ae66418cd3)([#519](https://www.github.com/tauri-apps/create-tauri-app/pull/519)) Fix an incorrect format in `src-tauri/Cargo.toml` when mobile feature enabled.
+
 ## \[3.10.0]
 
 - [`6c50fc3`](https://www.github.com/tauri-apps/create-tauri-app/commit/6c50fc38019f5284d78873750a3fcdd1d7835931)([#90](https://www.github.com/tauri-apps/create-tauri-app/pull/90)) Update tauri to latest version for all templates and fix `invoke` import in `--alpha` templates.
