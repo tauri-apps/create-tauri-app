@@ -1,5 +1,15 @@
 # Changelog
 
+## \[3.11.0]
+
+- [`c6153e2`](https://www.github.com/tauri-apps/create-tauri-app/commit/c6153e26eb7a2753f42497c28eaf402e4944107b)([#526](https://www.github.com/tauri-apps/create-tauri-app/pull/526)) Fix incorrect `beforeDevCommand` in `angluar` template when using `npm` as the package manager.
+- [`c5c0d99`](https://www.github.com/tauri-apps/create-tauri-app/commit/c5c0d9954c105f2ea09fb86749431d9ac37c3479)([#529](https://www.github.com/tauri-apps/create-tauri-app/pull/529)) Generate `tauri.conf.json > project > productName` using the "Project name", which can contain spaces and uppercase letters, instead of "Package name".
+- [`3ca02f5`](https://www.github.com/tauri-apps/create-tauri-app/commit/3ca02f58895338cdf95011c2fcefb2cdeab206d4)([#527](https://www.github.com/tauri-apps/create-tauri-app/pull/527)) Disallow using an uppercase in the package name.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.11.0`
+
 ## \[3.10.1]
 
 ### Dependencies
