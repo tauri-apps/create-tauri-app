@@ -14,4 +14,4 @@ napi-derive = "2.13"
 create-tauri-app = { path = ".." }
 
 [build-dependencies]
-napi-build = "2.0"
+napi-build = "2.1"
