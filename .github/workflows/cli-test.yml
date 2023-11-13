@@ -28,7 +28,7 @@ concurrency:
    cancel-in-progress: true
 
 jobs:
-  test-cli:
+  test-without-node-cli:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -39,9 +39,9 @@ jobs:
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.toolchain }}
-      - run: cargo test --exclude create-tauri-app-node
+      - run: cargo test --exclude create-tauri-app-node --workspace
 
-  test-node-cli:
+  test-only-node-cli:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
