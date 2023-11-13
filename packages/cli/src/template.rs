@@ -237,9 +237,9 @@ impl<'a> Template {
         let manifest_template_data: HashMap<&str, &str> = [
             ("pkg_manager_run_command", pkg_manager.run_cmd()),
             (
-                "double_dash",
+                "double_dash_with_space",
                 if pkg_manager == PackageManager::Npm {
-                    "--"
+                    "-- "
                 } else {
                     ""
                 },
