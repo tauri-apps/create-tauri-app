@@ -9,6 +9,10 @@
         "packages/cli/fragments/**/*Cargo.toml"
       ],
       "schedule": ["after 3am on Wednesday"]
+    },
+    {
+      "groupName": "napi-rs dependencies",
+      "matchPackagePrefixes": ["napi"]
     }
   ]
 }
