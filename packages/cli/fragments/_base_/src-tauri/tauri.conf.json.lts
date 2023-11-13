@@ -7,7 +7,7 @@
     "withGlobalTauri": true{% endif %}
   },
   "package": {
-    "productName": "{% package_name %}",
+    "productName": "{% project_name %}",
     "version": "0.0.0"
   },
   "tauri": {
