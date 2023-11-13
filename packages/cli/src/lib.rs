@@ -85,7 +85,7 @@ where
         }
     }
 
-    // Project name used for the project directory name
+    // Project name used for the project directory name and productName in tauri.conf.json
     // and if valid, it will also be used in Cargo.toml, Package.json ...etc
     let project_name = match project_name {
         Some(name) => name,
@@ -123,7 +123,7 @@ where
                 if is_valid_pkg_name(input) {
                     Ok(())
                 } else {
-                    Err("Package name should only include alphanumeric character and hyphens \"-\" and doesn't start with numbers")
+                    Err("Package name should only include lowercase alphanumeric character and hyphens \"-\" and doesn't start with numbers")
                 }
             })
             .interact_text()?
@@ -332,7 +332,14 @@ where
     }
 
     // Render the template
-    template.render(&target_dir, pkg_manager, &package_name, alpha, mobile)?;
+    template.render(
+        &target_dir,
+        pkg_manager,
+        &project_name,
+        &package_name,
+        alpha,
+        mobile,
+    )?;
 
     // Print post-render instructions
     println!();

@@ -222,6 +222,7 @@ impl<'a> Template {
         &self,
         target_dir: &path::Path,
         pkg_manager: PackageManager,
+        project_name: &str,
         package_name: &str,
         alpha: bool,
         mobile: bool,
@@ -252,6 +253,7 @@ impl<'a> Template {
             ("alpha", alpha.to_string()),
             ("mobile", mobile.to_string()),
             ("lib_name", lib_name),
+            ("project_name", project_name.to_string()),
             ("package_name", package_name.to_string()),
             (
                 "before_dev_command",
