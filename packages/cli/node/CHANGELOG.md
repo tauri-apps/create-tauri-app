@@ -1,5 +1,13 @@
 # Changelog
 
+## \[3.11.1]
+
+- [`e1d1f88`](https://www.github.com/tauri-apps/create-tauri-app/commit/e1d1f8882a12acde242aa266374e0f6772bbf0d3)([#531](https://www.github.com/tauri-apps/create-tauri-app/pull/531)) Fix `angluar` template generated with a malformed `angluar.json`
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.11.1`
+
 ## \[3.11.0]
 
 - [`c6153e2`](https://www.github.com/tauri-apps/create-tauri-app/commit/c6153e26eb7a2753f42497c28eaf402e4944107b)([#526](https://www.github.com/tauri-apps/create-tauri-app/pull/526)) Fix incorrect `beforeDevCommand` in `angluar` template when using `npm` as the package manager.
