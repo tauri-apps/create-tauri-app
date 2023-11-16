@@ -237,6 +237,9 @@ impl<'a> Template {
 
         let manifest_template_data: HashMap<&str, &str> = [
             ("pkg_manager_run_command", pkg_manager.run_cmd()),
+            ("lib_name", &lib_name),
+            ("project_name", project_name),
+            ("package_name", package_name),
             (
                 "double_dash_with_space",
                 if pkg_manager == PackageManager::Npm {
@@ -252,7 +255,6 @@ impl<'a> Template {
             ("stable", (!alpha).to_string()),
             ("alpha", alpha.to_string()),
             ("mobile", mobile.to_string()),
-            ("lib_name", lib_name),
             ("project_name", project_name.to_string()),
             ("package_name", package_name.to_string()),
             (
@@ -271,16 +273,23 @@ impl<'a> Template {
             ),
             (
                 "dev_path",
-                manifest.dev_path.unwrap_or_default().to_string(),
+                crate::lte::render(
+                    manifest.dev_path.unwrap_or_default(),
+                    &manifest_template_data,
+                )?,
             ),
             (
                 "dist_dir",
-                manifest.dist_dir.unwrap_or_default().to_string(),
+                crate::lte::render(
+                    manifest.dist_dir.unwrap_or_default(),
+                    &manifest_template_data,
+                )?,
             ),
             (
                 "with_global_tauri",
                 manifest.with_global_tauri.unwrap_or_default().to_string(),
             ),
+            ("lib_name", lib_name),
         ]
         .into();
 
