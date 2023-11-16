@@ -14,6 +14,7 @@ const nodeJsTemplates = [
   "vanilla-ts",
   "preact",
   "preact-ts",
+  "angular",
 ];
 
 const matrixConfig = [
