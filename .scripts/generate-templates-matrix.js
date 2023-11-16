@@ -14,6 +14,7 @@ const nodeJsTemplates = [
   "vanilla-ts",
   "preact",
   "preact-ts",
+  "angular",
 ];
 
 const matrixConfig = [
@@ -62,7 +63,7 @@ matrixConfig
             e.includes(`packages/cli/fragments/fragment-${t}`) ||
             e.includes("packages/cli/src") ||
             e.includes("packages/cli/Cargo.toml") ||
-            e.includes(".github/workflows/templates-test.yml"),
+            e.includes(".github/workflows/templates-test.yml")
         )
       ) {
         outMatrix.push({
