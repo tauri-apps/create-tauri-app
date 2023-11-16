@@ -253,6 +253,10 @@ impl<'a> Parser<'a> {
             while self.current_token() == Token::OBracket || self.current_token() == Token::CBracket
             {
                 self.cursor += 1;
+
+                if self.cursor >= self.len {
+                    break;
+                }
             }
         }
     }
