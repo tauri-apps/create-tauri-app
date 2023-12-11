@@ -34,7 +34,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "typescript": "^5.0.0",
+    "typescript": "~5.0.0",
     "@tauri-apps/cli": "^{% if alpha %}2.0.0-alpha.18{% else %}1.5.7{% endif %}"{% if mobile %},
     "internal-ip": "^7.0.0"{% endif %}
   }
