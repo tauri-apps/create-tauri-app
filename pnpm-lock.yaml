@@ -23,8 +23,8 @@ importers:
   packages/cli/node:
     devDependencies:
       '@napi-rs/cli':
-        specifier: '2.16'
-        version: 2.16.0
+        specifier: '2.17'
+        version: 2.17.0
 
   packages/worker:
     devDependencies:
@@ -458,8 +458,8 @@ packages:
     resolution: {integrity: sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==}
     dev: true
 
-  /@napi-rs/cli@2.16.0:
-    resolution: {integrity: sha512-B0rgFiFmk2Nwngfea0jQHpTPpoi7FeKpDkIC+VIrjXMZS9dAHOYl4N9WmrIzm6vZhfPg1bTrWT0DRNRDblqNoQ==}
+  /@napi-rs/cli@2.17.0:
+    resolution: {integrity: sha512-/M7MZ3dIqyFs6c0Bxtk+SOobPq6vYWYqBLYCOKx3dYWqoyJNBEgmDKUTrxIZu9eHw9Ill3WyEoHPqS9P99cd8A==}
     engines: {node: '>= 10'}
     hasBin: true
     dev: true
