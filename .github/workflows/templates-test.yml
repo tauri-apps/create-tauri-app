@@ -78,11 +78,11 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Install Node.js@16
+      - name: Install Node.js@18
         if: matrix.settings.manager != 'cargo'
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 18
 
       - uses: dtolnay/rust-toolchain@stable
 
