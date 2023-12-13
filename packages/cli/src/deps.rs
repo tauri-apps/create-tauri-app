@@ -185,11 +185,7 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
         ),
         (
             "Trunk",
-            if alpha {
-                format!("Run `{BLUE}{BOLD}cargo install trunk --git https://github.com/amrbashir/trunk{RESET}`")
-            } else {
-                format!("Run `{BLUE}{BOLD}cargo install trunk{RESET}`")
-            },
+            format!("Run `{BLUE}{BOLD}cargo install trunk{RESET}`"),
             &is_trunk_installed,
             pkg_manager.is_node() || !template.needs_trunk(),
         ),
