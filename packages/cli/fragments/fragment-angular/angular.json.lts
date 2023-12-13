@@ -7,22 +7,21 @@
   },
   "projects": {
     "{% package_name %}": {
-      "root": "",
       "projectType": "application",
+      "root": "",
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/{% package_name %}",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "browser": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.css"],
-            "scripts": []
+            "assets": ["src/assets"],
+            "styles": ["src/styles.css"]
           },
           "configurations": {
             "production": {
@@ -41,24 +40,24 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "port": 1420
+          },
           "configurations": {
             "production": {
-              "browserTarget": "{% package_name %}:build:production"
+              "buildTarget": "{% package_name %}:build:production"
             },
             "development": {
-              "browserTarget": "{% package_name %}:build:development"
+              "buildTarget": "{% package_name %}:build:development"
             }
           },
           "defaultConfiguration": "development"
