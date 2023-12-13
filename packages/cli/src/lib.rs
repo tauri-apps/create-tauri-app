@@ -71,6 +71,7 @@ where
         manager,
         project_name,
         template,
+        force,
     } = args;
     let cwd = std::env::current_dir()?;
 
@@ -133,7 +134,9 @@ where
 
     // Confirm deleting the target project directory if not empty
     if target_dir.exists() && target_dir.read_dir()?.next().is_some() {
-        let overrwite = if skip {
+        let overwrite = if force {
+            true
+        } else if skip {
             false
         } else {
             Confirm::with_theme(&ColorfulTheme::default())
@@ -152,18 +155,17 @@ where
                 .default(false)
                 .interact()?
         };
-        if !overrwite {
-            eprintln!("{BOLD}{RED}✘{RESET} Operation Cancelled");
+        if !overwrite {
+            eprintln!("{BOLD}{RED}✘{RESET} Directory is not empty, Operation Cancelled");
             exit(1);
         }
     };
 
-    // Prompt for category if a package manger is not passed on the command line
-    let category = if manager.is_none() && !skip {
+    // Detect category if a package manger is not passed on the command line
+    let category = if manager.is_none() {
         // Filter managers if a template is passed on the command line
         let managers = PackageManager::ALL.to_vec();
-        let managers = args
-            .template
+        let managers = template
             .map(|t| {
                 managers
                     .iter()
@@ -193,8 +195,8 @@ where
                 )
         });
 
-        // If only one category is detected, skip prompt
-        if categories.len() == 1 {
+        // Skip prompt, if only one category is detected or explicit skip requested by `-y/--yes` flag
+        if categories.len() == 1 || skip {
             Some(categories[0])
         } else {
             let index = Select::with_theme(&ColorfulTheme::default())
@@ -213,11 +215,7 @@ where
     let pkg_manager = match manager {
         Some(manager) => manager,
         None => {
-            if skip {
-                defaults.manager.context("default manager not set")?
-            } else {
-                let category = category.context("category shouldn't be None at this point")?;
-
+            if let Some(category) = category {
                 let mut managers = category.package_managers().to_owned();
                 // sort managers so the auto-detected package manager is selected first
                 managers.sort_by(|a, b| {
@@ -226,8 +224,8 @@ where
                         .unwrap_or(false)
                         .cmp(&detected_manager.map(|p| p == *a).unwrap_or(false))
                 });
-                // If only one package manager is detected, skip prompt
-                if managers.len() == 1 {
+                // Skip prompt, if only one package manager is detected or explicit skip requested by `-y/--yes` flag
+                if managers.len() == 1 || skip {
                     managers[0]
                 } else {
                     let index = Select::with_theme(&ColorfulTheme::default())
@@ -237,6 +235,8 @@ where
                         .interact()?;
                     managers[index]
                 }
+            } else {
+                defaults.manager.context("default manager not set")?
             }
         }
     };

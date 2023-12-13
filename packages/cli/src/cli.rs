@@ -14,6 +14,7 @@ pub struct Args {
     pub manager: Option<PackageManager>,
     pub template: Option<Template>,
     pub skip: bool,
+    pub force: bool,
     pub alpha: bool,
     pub mobile: Option<bool>,
 }
@@ -25,6 +26,7 @@ impl Default for Args {
             manager: Some(PackageManager::Npm),
             template: Some(Template::Vanilla),
             skip: false,
+            force: false,
             alpha: false,
             mobile: Some(false),
         }
@@ -51,6 +53,7 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
   {GREEN}-m{RESET}, {GREEN}--manager <MANAGER>{RESET}       Specify preferred package manager [{managers}]
   {GREEN}-t{RESET}, {GREEN}--template <TEMPLATE>{RESET}     Specify the UI template to use [{fragments}]
   {GREEN}-y{RESET}, {GREEN}--yes{RESET}                     Skip prompts and use defaults where applicable
+  {GREEN}-f{RESET}, {GREEN}--force{RESET}                   Force create the directory even if it is not empty.
                     {GREEN}--alpha{RESET}                   Bootstraps a project using tauri@2.0-alpha
                     {GREEN}--mobile{RESET}                  Bootstraps a mobile project too. Only availabe with `--alpha` option.
   {GREEN}-h{RESET}, {GREEN}--help{RESET}                    Prints help information
@@ -84,6 +87,7 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
         manager: pargs.opt_value_from_str(["-m", "--manager"])?,
         template: pargs.opt_value_from_str(["-t", "--template"])?,
         skip: pargs.contains(["-y", "--yes"]),
+        force: pargs.contains(["-f", "--force"]),
         alpha: pargs.contains("--alpha"),
         mobile: if pargs.contains("--mobile") {
             Some(true)
