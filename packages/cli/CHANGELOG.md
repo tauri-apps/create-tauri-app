@@ -1,5 +1,11 @@
 # Changelog
 
+## \[3.11.3]
+
+- [`af40cfc`](https://www.github.com/tauri-apps/create-tauri-app/commit/af40cfcba6477b7e6d5139a74dd7dee408c7810d) Add `-f/--force` flag to force creating directory even if it is empty.
+- [`0c40f2b`](https://www.github.com/tauri-apps/create-tauri-app/commit/0c40f2b2f1c81bd07915ba87232769a87100bb0a) Suggest installing `trunk` for `--alpha` templates instead of `amrbashir/trunk` fork as the new version contains all the need features from the fork.
+- [`d1978aa`](https://www.github.com/tauri-apps/create-tauri-app/commit/d1978aa2e92b6022ac04d1213a49de899d5f3abf) Fix detection of `tauri-cli` when choosing `cargo` as the package manager.
+
 ## \[3.11.2]
 
 - [`aae95d1`](https://www.github.com/tauri-apps/create-tauri-app/commit/aae95d1e48a198b14264dd124ba1172df58ef4ea)([#544](https://www.github.com/tauri-apps/create-tauri-app/pull/544)) Update `angular` template to Angluar 17
