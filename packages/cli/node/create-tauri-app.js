@@ -18,7 +18,7 @@ if (bin === "@tauri-apps/cli") {
 }
 // Even if started by a package manager, the binary will be NodeJS or Bun.
 // Some distribution still use "nodejs" as the binary name.
-if (binStem.match(/(nodejs|node|bun)-*([1-9]*)*$/g)) {
+if (binStem.match(/(nodejs|node|bun)-*([0-9]*)*$/g)) {
   const managerStem = process.env.npm_execpath
     ? path.parse(process.env.npm_execpath).name.toLowerCase()
     : null;
