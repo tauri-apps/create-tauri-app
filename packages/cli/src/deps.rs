@@ -12,6 +12,7 @@ fn is_rustc_installed() -> bool {
         .map(|o| o.status.success())
         .unwrap_or(false)
 }
+
 fn is_cargo_installed() -> bool {
     Command::new("cargo")
         .arg("-V")
@@ -19,6 +20,7 @@ fn is_cargo_installed() -> bool {
         .map(|o| o.status.success())
         .unwrap_or(false)
 }
+
 fn is_node_installed() -> bool {
     Command::new("node")
         .arg("-v")
@@ -34,11 +36,12 @@ fn is_trunk_installed() -> bool {
         .map(|o| o.status.success())
         .unwrap_or(false)
 }
+
 fn is_appropriate_tauri_cli_installed(alpha: bool) -> bool {
     let check = |o: Output| match o.status.success() {
-        true if alpha => String::from_utf8_lossy(&o.stderr)
+        true => String::from_utf8_lossy(&o.stdout)
             .split_once(' ')
-            .map(|(_, v)| v.starts_with('2'))
+            .map(|(_, v)| v.starts_with(if alpha { '2' } else { '1' }))
             .unwrap_or(false),
         s => s,
     };
@@ -49,6 +52,7 @@ fn is_appropriate_tauri_cli_installed(alpha: bool) -> bool {
         .or_else(|_| Command::new("tauri").arg("-V").output().map(check))
         .unwrap_or(false)
 }
+
 fn is_wasm32_installed() -> bool {
     Command::new("rustup")
         .args(["target", "list", "--installed"])
@@ -59,6 +63,7 @@ fn is_wasm32_installed() -> bool {
         })
         .unwrap_or(false)
 }
+
 #[cfg(windows)]
 fn is_webview2_installed() -> bool {
     let powershell_path = std::env::var("SYSTEMROOT").map_or_else(
@@ -98,6 +103,7 @@ fn is_webview2_installed() -> bool {
 
     false
 }
+
 #[cfg(any(
     target_os = "linux",
     target_os = "dragonfly",
@@ -116,6 +122,7 @@ fn is_webkit2gtk_installed(alpha: bool) -> bool {
         .map(|o| o.status.success())
         .unwrap_or(false)
 }
+
 #[cfg(any(
     target_os = "linux",
     target_os = "dragonfly",
@@ -140,6 +147,13 @@ fn is_xcode_command_line_tools_installed() -> bool {
         .unwrap_or(false)
 }
 
+struct Dep<'a> {
+    name: &'a str,
+    instruction: String,
+    exists: &'a dyn Fn() -> bool,
+    skip: bool,
+}
+
 pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha: bool) {
     let rustc_installed = is_rustc_installed();
     let cargo_installed = is_cargo_installed();
@@ -154,60 +168,60 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
     let (webkit2gtk_installed, rsvg2_installed) =
         (is_webkit2gtk_installed(alpha), is_rsvg2_installed());
 
-    let deps: &[(&str, String, &dyn Fn() -> bool, bool)] = &[
-        (
-            "Rust",
-            format!("Visit {BLUE}{BOLD}https://www.rust-lang.org/learn/get-started#installing-rust{RESET}"),
-            &|| rustc_installed && cargo_installed,
-            rustc_installed || cargo_installed,
-        ),
-        (
-            "rustc",
-            format!("Visit {BLUE}{BOLD}https://www.rust-lang.org/learn/get-started#installing-rust{RESET} to install Rust"),
-            &|| rustc_installed,
-            !rustc_installed && !cargo_installed,
-        ),
-        (
-            "Cargo",
-            format!("Visit {BLUE}{BOLD}https://www.rust-lang.org/learn/get-started#installing-rust{RESET} to install Rust"),
-            &|| cargo_installed,
-            !rustc_installed && !cargo_installed,
-        ),
-        (
-            "Tauri CLI",
-            if alpha {
+    let deps: &[Dep<'_>] = &[
+        Dep {
+            name: "Rust",
+            instruction: format!("Visit {BLUE}{BOLD}https://www.rust-lang.org/learn/get-started#installing-rust{RESET}"),
+            exists: &|| rustc_installed && cargo_installed,
+            skip: rustc_installed || cargo_installed,
+        },
+        Dep  {
+            name: "rustc",
+            instruction: format!("Visit {BLUE}{BOLD}https://www.rust-lang.org/learn/get-started#installing-rust{RESET} to install Rust"),
+            exists: &|| rustc_installed,
+            skip: !rustc_installed && !cargo_installed,
+        },
+        Dep {
+            name: "Cargo",
+            instruction: format!("Visit {BLUE}{BOLD}https://www.rust-lang.org/learn/get-started#installing-rust{RESET} to install Rust"),
+            exists: &|| cargo_installed,
+            skip: !rustc_installed && !cargo_installed,
+        },
+        Dep {
+            name: "Tauri CLI",
+            instruction: if alpha {
                 format!("Run `{BLUE}{BOLD}cargo install tauri-cli --version '^2.0.0-alpha'{RESET}`")
             } else {
                 format!("Run `{BLUE}{BOLD}cargo install tauri-cli{RESET}`")
             },
-            &|| is_appropriate_tauri_cli_installed(alpha),
-            pkg_manager.is_node() || !template.needs_tauri_cli(),
-        ),
-        (
-            "Trunk",
-            format!("Run `{BLUE}{BOLD}cargo install trunk{RESET}`"),
-            &is_trunk_installed,
-            pkg_manager.is_node() || !template.needs_trunk(),
-        ),
-        (
-            "wasm32 target",
-            format!("Run `{BLUE}{BOLD}rustup target add wasm32-unknown-unknown{RESET}`"),
-            &is_wasm32_installed,
-            pkg_manager.is_node() || !template.needs_wasm32_target(),
-        ),
-        (
-            "Node.js",
-            format!("Visit {BLUE}{BOLD}https://nodejs.org/en/{RESET}"),
-            &is_node_installed,
-            !pkg_manager.is_node(),
-        ),
+            exists: &|| is_appropriate_tauri_cli_installed(alpha),
+            skip: pkg_manager.is_node() || !template.needs_tauri_cli(),
+        },
+        Dep {
+            name: "Trunk",
+            instruction: format!("Run `{BLUE}{BOLD}cargo install trunk{RESET}`"),
+            exists: &is_trunk_installed,
+            skip: pkg_manager.is_node() || !template.needs_trunk(),
+        },
+        Dep {
+            name: "wasm32 target",
+            instruction: format!("Run `{BLUE}{BOLD}rustup target add wasm32-unknown-unknown{RESET}`"),
+            exists: &is_wasm32_installed,
+            skip: pkg_manager.is_node() || !template.needs_wasm32_target(),
+        },
+        Dep {
+            name: "Node.js",
+            instruction: format!("Visit {BLUE}{BOLD}https://nodejs.org/en/{RESET}"),
+            exists: &is_node_installed,
+            skip: !pkg_manager.is_node(),
+        },
         #[cfg(windows)]
-        (
-            "Webview2",
-            format!("Visit {BLUE}{BOLD}https://go.microsoft.com/fwlink/p/?LinkId=2124703{RESET}"),
-            &is_webview2_installed,
-            false,
-        ),
+        Dep {
+            name: "Webview2",
+            instruction: format!("Visit {BLUE}{BOLD}https://go.microsoft.com/fwlink/p/?LinkId=2124703{RESET}"),
+            exists: &is_webview2_installed,
+            skip: false,
+        },
         #[cfg(any(
             target_os = "linux",
             target_os = "dragonfly",
@@ -215,16 +229,16 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
             target_os = "openbsd",
             target_os = "netbsd"
         ))]
-        (
-            "webkit2gtk & rsvg2",
-            format!("Visit {BLUE}{BOLD}{}{RESET}", if alpha {
+        Dep {
+            name: "webkit2gtk & rsvg2",
+            instruction: format!("Visit {BLUE}{BOLD}{}{RESET}", if alpha {
                 "https://next--tauri.netlify.app/next/guides/getting-started/prerequisites/linux#1-system-dependencies"
             } else {
                 "https://tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux"
             }),
-            &|| webkit2gtk_installed && rsvg2_installed,
-            webkit2gtk_installed || rsvg2_installed,
-        ),
+            exists: &|| webkit2gtk_installed && rsvg2_installed,
+            skip: webkit2gtk_installed || rsvg2_installed,
+        },
         #[cfg(any(
             target_os = "linux",
             target_os = "dragonfly",
@@ -232,16 +246,16 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
             target_os = "openbsd",
             target_os = "netbsd"
         ))]
-        (
-            "webkit2gtk",
-            format!("Visit {BLUE}{BOLD}{}{RESET}", if alpha {
+        Dep {
+            name: "webkit2gtk",
+            instruction: format!("Visit {BLUE}{BOLD}{}{RESET}", if alpha {
                 "https://next--tauri.netlify.app/next/guides/getting-started/prerequisites/linux#1-system-dependencies"
             } else {
                 "https://tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux"
             }),
-            &|| webkit2gtk_installed,
-            !rsvg2_installed && !webkit2gtk_installed,
-        ),
+            exists: &|| webkit2gtk_installed,
+            skip: !rsvg2_installed && !webkit2gtk_installed,
+        },
         #[cfg(any(
             target_os = "linux",
             target_os = "dragonfly",
@@ -249,29 +263,29 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
             target_os = "openbsd",
             target_os = "netbsd"
         ))]
-        (
-            "rsvg2",
-            format!("Visit {BLUE}{BOLD}{}{RESET}", if alpha {
+        Dep {
+            name: "rsvg2",
+            instruction: format!("Visit {BLUE}{BOLD}{}{RESET}", if alpha {
                 "https://next--tauri.netlify.app/next/guides/getting-started/prerequisites/linux#1-system-dependencies"
             } else {
                 "https://tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux"
             }),
-            &|| rsvg2_installed,
-            !rsvg2_installed && !webkit2gtk_installed,
-        ),
+            exists: &|| rsvg2_installed,
+            skip: !rsvg2_installed && !webkit2gtk_installed,
+        },
         #[cfg(target_os = "macos")]
-        (
-            "Xcode Command Line Tools",
-            format!("Run `{BLUE}{BOLD}xcode-select --install{RESET}`"),
-            &is_xcode_command_line_tools_installed,
-            false,
-        ),
+        Dep {
+            name: "Xcode Command Line Tools",
+            instruction: format!("Run `{BLUE}{BOLD}xcode-select --install{RESET}`"),
+            exists: &is_xcode_command_line_tools_installed,
+            skip: false,
+        },
     ];
 
     let missing_deps: Vec<(String, String)> = deps
         .iter()
-        .filter(|(_, _, exists, skip)| !skip && !exists())
-        .map(|(s, d, _, _)| (s.to_string(), d.clone()))
+        .filter(|dep| !dep.skip && !(dep.exists)())
+        .map(|dep| (dep.name.to_string(), dep.instruction.clone()))
         .collect();
 
     let (largest_first_cell, largest_second_cell) =
