@@ -1,5 +1,15 @@
 # Changelog
 
+## \[3.11.2]
+
+- [`aae95d1`](https://www.github.com/tauri-apps/create-tauri-app/commit/aae95d1e48a198b14264dd124ba1172df58ef4ea)([#544](https://www.github.com/tauri-apps/create-tauri-app/pull/544)) Update `angular` template to Angluar 17
+- [`aae95d1`](https://www.github.com/tauri-apps/create-tauri-app/commit/aae95d1e48a198b14264dd124ba1172df58ef4ea)([#544](https://www.github.com/tauri-apps/create-tauri-app/pull/544)) Update templates to latest tauri versions (1.5 and 2.0.0-alpha.18).
+- [`d2ceefc`](https://www.github.com/tauri-apps/create-tauri-app/commit/d2ceefcc4b9e5af1b0486a9e785e29def957c5e2)([#545](https://www.github.com/tauri-apps/create-tauri-app/pull/545)) Add `src-tauri` by default to vite server ignored watch list.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.11.2`
+
 ## \[3.11.1]
 
 - [`e1d1f88`](https://www.github.com/tauri-apps/create-tauri-app/commit/e1d1f8882a12acde242aa266374e0f6772bbf0d3)([#531](https://www.github.com/tauri-apps/create-tauri-app/pull/531)) Fix `angluar` template generated with a malformed `angluar.json`
