@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.5.0",
-    "vite": "^4.4.4",
+    "vite": "^5.0.0",
     "@tauri-apps/cli": "^{% if alpha %}2.0.0-alpha.18{% else %}1.5.7{% endif %}"{% if mobile %},
     "internal-ip": "^7.0.0"{% endif %}
   }
