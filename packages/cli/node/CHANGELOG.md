@@ -1,5 +1,13 @@
 # Changelog
 
+## \[3.11.4]
+
+- [`96cff24`](https://www.github.com/tauri-apps/create-tauri-app/commit/96cff24c4c86c633e3037cde916f125a12cc9fe0) Fix `--alpha` templates generating an incorrect `main.rs` that failed to compile.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.11.4`
+
 ## \[3.11.3]
 
 - [`af40cfc`](https://www.github.com/tauri-apps/create-tauri-app/commit/af40cfcba6477b7e6d5139a74dd7dee408c7810d) Add `-f/--force` flag to force creating directory even if it is empty.
