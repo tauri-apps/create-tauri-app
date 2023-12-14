@@ -2,4 +2,4 @@
 "create-tauri-app": minor
 ---
 
-Use Vite 5
+Vite 5 in templates
