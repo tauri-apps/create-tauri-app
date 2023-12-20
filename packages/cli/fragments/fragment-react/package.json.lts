@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.0.3",
-    "vite": "^4.4.4",
+    "vite": "^5.0.0",
     "@tauri-apps/cli": "^{% if alpha %}2.0.0-alpha.20{% else %}1.5.8{% endif %}"{% if mobile %},
     "internal-ip": "^7.0.0"{% endif %}
   }
