@@ -1,5 +1,10 @@
 # Changelog
 
+## \[3.12.0]
+
+- [`616a294`](https://www.github.com/tauri-apps/create-tauri-app/commit/616a294a9adaa5d7113961ba8af3bb85727e16c3)([#553](https://www.github.com/tauri-apps/create-tauri-app/pull/553)) Vite 5 in templates
+- [`4869b73`](https://www.github.com/tauri-apps/create-tauri-app/commit/4869b730af5679ae574319702ad2414b23299d01)([#558](https://www.github.com/tauri-apps/create-tauri-app/pull/558)) Adapt templates to `@tauri-apps/api@2.0.0-alpha.13` by changing the `primitives` import to `core`.
+
 ## \[3.11.4]
 
 - [`96cff24`](https://www.github.com/tauri-apps/create-tauri-app/commit/96cff24c4c86c633e3037cde916f125a12cc9fe0) Fix `--alpha` templates generating an incorrect `main.rs` that failed to compile.
