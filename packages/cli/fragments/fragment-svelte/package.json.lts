@@ -14,8 +14,8 @@
     "@tauri-apps/plugin-shell": "^2.0.0-alpha.3"{% endif %}
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^2.4.2",
-    "svelte": "^4.0.5",
+    "@sveltejs/vite-plugin-svelte": "^3.0.1",
+    "svelte": "^4.2.8",
     "vite": "^5.0.0",
     "@tauri-apps/cli": "^{% if alpha %}2.0.0-alpha.18{% else %}1.5.7{% endif %}"{% if mobile %},
     "internal-ip": "^7.0.0"{% endif %}
