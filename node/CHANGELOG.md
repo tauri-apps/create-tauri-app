@@ -1,5 +1,13 @@
 # Changelog
 
+## \[3.11.6]
+
+- [`6171792`](https://www.github.com/tauri-apps/create-tauri-app/commit/6171792b9641fc5210f4ca79842631e68e59b64e)([#561](https://www.github.com/tauri-apps/create-tauri-app/pull/561)) Upgrade `@vitejs/plugin-react` to `4.2.1` to fix peer depenency for react templates.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.12.1`
+
 ## \[3.11.5]
 
 - [`4869b73`](https://www.github.com/tauri-apps/create-tauri-app/commit/4869b730af5679ae574319702ad2414b23299d01)([#558](https://www.github.com/tauri-apps/create-tauri-app/pull/558)) Adapt templates to `@tauri-apps/api@2.0.0-alpha.13` by changing the `primitives` import to `core`.

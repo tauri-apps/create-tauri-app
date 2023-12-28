@@ -1,15 +1,15 @@
 [package]
 name = "create-tauri-app"
 description = "Rapidly scaffold out a new tauri app project."
-authors = ["Tauri Programme within The Commons Conservancy"]
-version = "3.12.0"
+authors = [ "Tauri Programme within The Commons Conservancy" ]
+version = "3.12.1"
 edition = "2021"
 license = "Apache-2.0 OR MIT"
 readme = "README.md"
 repository = "https://github.com/tauri-apps/create-tauri-app"
-keywords = ["tauri"]
-categories = ["gui"]
-exclude = ["node", "worker", ".github", ".changes", ".scripts"]
+keywords = [ "tauri" ]
+categories = [ "gui" ]
+exclude = [ "node", "worker", ".github", ".changes", ".scripts" ]
 rust-version = "1.61"
 
 [[bin]]
@@ -18,7 +18,7 @@ path = "src/main.rs"
 
 [workspace]
 resolver = "2"
-members = ["node"]
+members = [ "node" ]
 
 [profile.release]
 panic = "abort"
@@ -32,7 +32,4 @@ anyhow = "1"
 dialoguer = "0.10"
 pico-args = "0.5"
 ctrlc = "3.3"
-rust-embed = { version = "8.1", features = [
-    "compression",
-    "interpolate-folder-path",
-] }
+rust-embed = { version = "8.1", features = [ "compression", "interpolate-folder-path" ] }
