@@ -10,13 +10,13 @@ on:
       - dev
     paths:
       - '.github/workflows/clippy.yml'
-      - 'packages/cli/**'
+      - 'src/**'
       - 'Cargo.lock'
       - 'Cargo.toml'
   pull_request:
     paths:
       - .github/workflows/clippy.yml
-      - packages/cli/**
+      - src/**
       - Cargo.lock
       - Cargo.toml
 

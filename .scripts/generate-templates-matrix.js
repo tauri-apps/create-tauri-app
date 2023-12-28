@@ -59,11 +59,11 @@ matrixConfig
       if (
         changedFiles.some(
           (e) =>
-            e.includes(`packages/cli/fragments/base`) ||
-            e.includes(`packages/cli/fragments/fragment-${t}`) ||
-            e.includes("packages/cli/src") ||
-            e.includes("packages/cli/Cargo.toml") ||
-            e.includes(".github/workflows/templates-test.yml"),
+            e.startsWith(`templates/base`) ||
+            e.startsWith(`templates/template-${t}`) ||
+            e.startsWith("src") ||
+            e.startsWith("Cargo.toml") ||
+            e.startsWith(".github/workflows/templates-test.yml"),
         )
       ) {
         outMatrix.push({

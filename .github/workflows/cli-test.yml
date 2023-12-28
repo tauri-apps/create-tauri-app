@@ -10,13 +10,13 @@ on:
       - dev
     paths:
       - '.github/workflows/cli-test.yml'
-      - 'packages/cli/**'
+      - 'src/**'
       - 'Cargo.lock'
       - 'Cargo.toml'
   pull_request:
     paths:
       - '.github/workflows/cli-test.yml'
-      - 'packages/cli/**'
+      - 'src/**'
       - 'Cargo.lock'
       - 'Cargo.toml'
 

@@ -10,7 +10,7 @@ on:
       - 'dev'
     paths:
       - '.github/workflows/templates-test.yml'
-      - 'packages/cli/**'
+      - 'src/**'
 
 env:
   RUST_BACKTRACE: 1

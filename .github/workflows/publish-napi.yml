@@ -23,7 +23,7 @@ jobs:
   build:
     defaults:
       run:
-        working-directory: packages/cli/node
+        working-directory: node
     strategy:
       fail-fast: false
       matrix:
@@ -53,13 +53,13 @@ jobs:
             docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-debian
             build: |-
               set -e &&
-              cd packages/cli/node &&
+              cd node &&
               pnpm build --target x86_64-unknown-linux-gnu &&
               strip *.node
           - host: ubuntu-latest
             target: x86_64-unknown-linux-musl
             docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-alpine
-            build: set -e && cd packages/cli/node && pnpm build && strip *.node
+            build: set -e && cd node && pnpm build && strip *.node
           - host: macos-latest
             target: aarch64-apple-darwin
             build: |
@@ -75,7 +75,7 @@ jobs:
             docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-debian-aarch64
             build: |-
               set -e &&
-              cd packages/cli/node &&
+              cd node &&
               pnpm build --target aarch64-unknown-linux-gnu &&
               aarch64-unknown-linux-gnu-strip *.node
           - host: ubuntu-latest
@@ -94,7 +94,7 @@ jobs:
             build: |-
               set -e &&
               rustup target add aarch64-unknown-linux-musl &&
-              cd packages/cli/node &&
+              cd node &&
               pnpm build --target aarch64-unknown-linux-musl &&
               /aarch64-linux-musl-cross/bin/aarch64-linux-musl-strip *.node
 
@@ -150,13 +150,13 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: napi-${{ matrix.settings.target }}
-          path: packages/cli/node/${{ env.APP_NAME }}.*.node
+          path: node/${{ env.APP_NAME }}.*.node
           if-no-files-found: error
 
   publish:
     defaults:
       run:
-        working-directory: packages/cli/node
+        working-directory: node
     name: Publish
     runs-on: ubuntu-latest
     needs:
@@ -180,7 +180,7 @@ jobs:
       - name: Download all artifacts
         uses: actions/download-artifact@v3
         with:
-          path: packages/cli/node/artifacts
+          path: node/artifacts
 
       - name: Move artifacts
         run: pnpm artifacts

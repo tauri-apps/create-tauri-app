@@ -3,10 +3,10 @@
   "extends": ["config:base", ":disableDependencyDashboard"],
   "packageRules": [
     {
-      "groupName": "fragments dependencies",
+      "groupName": "templates dependencies",
       "matchFileNames": [
-        "packages/cli/fragments/**/*package.json",
-        "packages/cli/fragments/**/*Cargo.toml"
+        "templates/**/*package.json",
+        "templates/**/*Cargo.toml"
       ],
       "schedule": ["after 3am on Wednesday"]
     },
