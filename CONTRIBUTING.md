@@ -27,8 +27,8 @@ cargo run -- <cli arguments>
 - A template also must have a `_cta_manifest_` file which contains info about the template:
 
   ```ini
-  beforeDevCommand = {{ pkg_manager_run_command }} dev
-  beforeBuildCommand = {{ pkg_manager_run_command }} build
+  beforeDevCommand = {% pkg_manager_run_command %} dev
+  beforeBuildCommand = {% pkg_manager_run_command %} build
   devPath = http://localhost:1420
   distDir = ../dist
 
