@@ -4,7 +4,7 @@
 
 use std::{fmt::Display, str::FromStr};
 
-use crate::{colors::*, template::Template};
+use crate::{template::Template, utils::colors::*};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
@@ -19,6 +19,39 @@ pub enum PackageManager {
 impl Default for PackageManager {
     fn default() -> Self {
         PackageManager::Cargo
+    }
+}
+
+impl Display for PackageManager {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PackageManager::Cargo => write!(f, "cargo"),
+            PackageManager::Pnpm => write!(f, "pnpm"),
+            PackageManager::Yarn => write!(f, "yarn"),
+            PackageManager::Npm => write!(f, "npm"),
+            PackageManager::Bun => write!(f, "bun"),
+        }
+    }
+}
+
+impl FromStr for PackageManager {
+    type Err = String;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "cargo" => Ok(PackageManager::Cargo),
+            "pnpm" => Ok(PackageManager::Pnpm),
+            "yarn" => Ok(PackageManager::Yarn),
+            "npm" => Ok(PackageManager::Npm),
+            "bun" => Ok(PackageManager::Bun),
+            _ => Err(format!(
+                "{YELLOW}{s}{RESET} is not a valid package manager. Valid package mangers are [{}]",
+                PackageManager::ALL
+                    .iter()
+                    .map(|e| format!("{GREEN}{e}{RESET}"))
+                    .collect::<Vec<_>>()
+                    .join(", ")
+            )),
+        }
     }
 }
 
@@ -118,38 +151,5 @@ impl PackageManager {
             self,
             PackageManager::Pnpm | PackageManager::Yarn | PackageManager::Npm | PackageManager::Bun,
         )
-    }
-}
-
-impl Display for PackageManager {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            PackageManager::Cargo => write!(f, "cargo"),
-            PackageManager::Pnpm => write!(f, "pnpm"),
-            PackageManager::Yarn => write!(f, "yarn"),
-            PackageManager::Npm => write!(f, "npm"),
-            PackageManager::Bun => write!(f, "bun"),
-        }
-    }
-}
-
-impl FromStr for PackageManager {
-    type Err = String;
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
-        match s {
-            "cargo" => Ok(PackageManager::Cargo),
-            "pnpm" => Ok(PackageManager::Pnpm),
-            "yarn" => Ok(PackageManager::Yarn),
-            "npm" => Ok(PackageManager::Npm),
-            "bun" => Ok(PackageManager::Bun),
-            _ => Err(format!(
-                "{YELLOW}{s}{RESET} is not a valid package manager. Valid package mangers are [{}]",
-                PackageManager::ALL
-                    .iter()
-                    .map(|e| format!("{GREEN}{e}{RESET}"))
-                    .collect::<Vec<_>>()
-                    .join(", ")
-            )),
-        }
     }
 }

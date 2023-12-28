@@ -1,8 +1,8 @@
 use template::Template;
 
-use crate::colors::*;
 use crate::internal::template;
 use crate::package_manager::PackageManager;
+use crate::utils::colors::*;
 use std::process::{Command, Output};
 
 fn is_rustc_installed() -> bool {
@@ -154,7 +154,8 @@ struct Dep<'a> {
     skip: bool,
 }
 
-pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha: bool) {
+/// Print missing deps in a table and returns whether there was any missing deps.
+pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha: bool) -> bool {
     let rustc_installed = is_rustc_installed();
     let cargo_installed = is_cargo_installed();
 
@@ -282,10 +283,10 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
         },
     ];
 
-    let missing_deps: Vec<(String, String)> = deps
+    let missing_deps: Vec<(&str, &str)> = deps
         .iter()
         .filter(|dep| !dep.skip && !(dep.exists)())
-        .map(|dep| (dep.name.to_string(), dep.instruction.clone()))
+        .map(|dep| (dep.name, dep.instruction.as_str()))
         .collect();
 
     let (largest_first_cell, largest_second_cell) =
@@ -333,8 +334,9 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
             "─".repeat(largest_second_cell + 2),
         );
         println!();
-        println!("Make sure you have installed the prerequisites for your OS: {BLUE}{BOLD}https://tauri.app/v1/guides/getting-started/prerequisites{RESET}, then run:");
+
+        true
     } else {
-        println!(" To get started run:")
+        false
     }
 }

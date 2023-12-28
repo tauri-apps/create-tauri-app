@@ -7,12 +7,32 @@ use std::{collections::HashMap, fmt::Display, fs, io::Write, path, str::FromStr}
 use anyhow::Context;
 use rust_embed::RustEmbed;
 
-use crate::{colors::*, manifest::Manifest, package_manager::PackageManager};
+use crate::{
+    manifest::Manifest,
+    package_manager::PackageManager,
+    utils::{colors::*, lte},
+};
 
 #[derive(RustEmbed)]
-#[folder = "fragments"]
-#[allow(clippy::upper_case_acronyms)]
-struct FRAGMENTS;
+#[folder = "templates"]
+#[allow(clippy::upper_case_acronyms, non_camel_case_types)]
+struct EMBEDDED_TEMPLATES;
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[non_exhaustive]
+pub enum Flavor {
+    JavaScript,
+    TypeScript,
+}
+
+impl Display for Flavor {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Flavor::JavaScript => write!(f, "JavaScript"),
+            Flavor::TypeScript => write!(f, "TypeScript"),
+        }
+    }
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
@@ -38,24 +58,6 @@ pub enum Template {
 impl Default for Template {
     fn default() -> Self {
         Template::Vanilla
-    }
-}
-
-impl Template {
-    pub const fn select_text<'a>(&self) -> &'a str {
-        match self {
-            Template::Vanilla => "Vanilla",
-            Template::Vue => "Vue - (https://vuejs.org)",
-            Template::Svelte => "Svelte - (https://svelte.dev/)",
-            Template::React => "React - (https://reactjs.org/)",
-            Template::Solid => "Solid - (https://www.solidjs.com/)",
-            Template::Yew => "Yew - (https://yew.rs/)",
-            Template::Leptos => "Leptos - (https://github.com/leptos-rs/leptos)",
-            Template::Sycamore => "Sycamore - (https://sycamore-rs.netlify.app/)",
-            Template::Angular => "Angular - (https://angular.io/)",
-            Template::Preact => "Preact - (https://preactjs.com/)",
-            _ => unreachable!(),
-        }
     }
 }
 
@@ -110,6 +112,24 @@ impl FromStr for Template {
                     .collect::<Vec<_>>()
                     .join(", ")
             )),
+        }
+    }
+}
+
+impl Template {
+    pub const fn select_text<'a>(&self) -> &'a str {
+        match self {
+            Template::Vanilla => "Vanilla",
+            Template::Vue => "Vue - (https://vuejs.org)",
+            Template::Svelte => "Svelte - (https://svelte.dev/)",
+            Template::React => "React - (https://reactjs.org/)",
+            Template::Solid => "Solid - (https://www.solidjs.com/)",
+            Template::Yew => "Yew - (https://yew.rs/)",
+            Template::Leptos => "Leptos - (https://github.com/leptos-rs/leptos)",
+            Template::Sycamore => "Sycamore - (https://sycamore-rs.netlify.app/)",
+            Template::Angular => "Angular - (https://angular.io/)",
+            Template::Preact => "Preact - (https://preactjs.com/)",
+            _ => unreachable!(),
         }
     }
 }
@@ -185,21 +205,19 @@ impl<'a> Template {
                 PackageManager::Npm,
                 PackageManager::Bun,
             ],
-            Template::VanillaTs => PackageManager::NODE,
-            Template::Vue => PackageManager::NODE,
-            Template::VueTs => PackageManager::NODE,
-            Template::Svelte => PackageManager::NODE,
-            Template::SvelteTs => PackageManager::NODE,
-            Template::React => PackageManager::NODE,
-            Template::ReactTs => PackageManager::NODE,
-            Template::Solid => PackageManager::NODE,
-            Template::SolidTs => PackageManager::NODE,
-            Template::Yew => &[PackageManager::Cargo],
-            Template::Leptos => &[PackageManager::Cargo],
-            Template::Sycamore => &[PackageManager::Cargo],
-            Template::Angular => PackageManager::NODE,
-            Template::Preact => PackageManager::NODE,
-            Template::PreactTs => PackageManager::NODE,
+            Template::VanillaTs
+            | Template::Vue
+            | Template::VueTs
+            | Template::Svelte
+            | Template::SvelteTs
+            | Template::React
+            | Template::ReactTs
+            | Template::Solid
+            | Template::SolidTs
+            | Template::Angular
+            | Template::Preact
+            | Template::PreactTs => PackageManager::NODE,
+            Template::Yew | Template::Leptos | Template::Sycamore => &[PackageManager::Cargo],
         }
     }
 
@@ -227,7 +245,7 @@ impl<'a> Template {
         alpha: bool,
         mobile: bool,
     ) -> anyhow::Result<()> {
-        let manifest_bytes = FRAGMENTS::get(&format!("fragment-{self}/_cta_manifest_"))
+        let manifest_bytes = EMBEDDED_TEMPLATES::get(&format!("template-{self}/_cta_manifest_"))
             .with_context(|| "Failed to get manifest bytes")?
             .data;
         let manifest_str = String::from_utf8(manifest_bytes.to_vec())?;
@@ -259,28 +277,28 @@ impl<'a> Template {
             ("package_name", package_name.to_string()),
             (
                 "before_dev_command",
-                crate::lte::render(
+                lte::render(
                     manifest.before_dev_command.unwrap_or_default(),
                     &manifest_template_data,
                 )?,
             ),
             (
                 "before_build_command",
-                crate::lte::render(
+                lte::render(
                     manifest.before_build_command.unwrap_or_default(),
                     &manifest_template_data,
                 )?,
             ),
             (
                 "dev_path",
-                crate::lte::render(
+                lte::render(
                     manifest.dev_path.unwrap_or_default(),
                     &manifest_template_data,
                 )?,
             ),
             (
                 "dist_dir",
-                crate::lte::render(
+                lte::render(
                     manifest.dist_dir.unwrap_or_default(),
                     &manifest_template_data,
                 )?,
@@ -294,7 +312,7 @@ impl<'a> Template {
         .into();
 
         let write_file = |file: &str, template_data| -> anyhow::Result<()> {
-            // remove the first component, which is certainly the fragment directory they were in before getting embeded into the binary
+            // remove the first component, which is certainly the template directory they were in before getting embeded into the binary
             let p = path::PathBuf::from(file)
                 .components()
                 .skip(1)
@@ -345,14 +363,17 @@ impl<'a> Template {
 
             // Only modify files that need to use the template engine
             let (file_data, file_name) = if let Some(file_name) = file_name.strip_suffix(".lts") {
-                let file_data = FRAGMENTS::get(file).unwrap().data.to_vec();
+                let file_data = EMBEDDED_TEMPLATES::get(file).unwrap().data.to_vec();
                 let file_data_as_str = std::str::from_utf8(&file_data)?;
                 (
-                    crate::lte::render(file_data_as_str, template_data)?.into_bytes(),
+                    lte::render(file_data_as_str, template_data)?.into_bytes(),
                     file_name,
                 )
             } else {
-                (FRAGMENTS::get(file).unwrap().data.to_vec(), file_name)
+                (
+                    EMBEDDED_TEMPLATES::get(file).unwrap().data.to_vec(),
+                    file_name,
+                )
             };
 
             let parent = p.parent().unwrap();
@@ -362,7 +383,7 @@ impl<'a> Template {
         };
 
         // 1. write base files
-        for file in FRAGMENTS::iter().filter(|e| {
+        for file in EMBEDDED_TEMPLATES::iter().filter(|e| {
             path::PathBuf::from(e.to_string())
                 .components()
                 .next()
@@ -374,20 +395,20 @@ impl<'a> Template {
         }
 
         // 2. write template files which can override files from base
-        for file in FRAGMENTS::iter().filter(|e| {
+        for file in EMBEDDED_TEMPLATES::iter().filter(|e| {
             path::PathBuf::from(e.to_string())
                 .components()
                 .next()
                 .unwrap()
                 .as_os_str()
-                == path::PathBuf::from(format!("fragment-{self}"))
+                == path::PathBuf::from(format!("template-{self}"))
         }) {
             write_file(&file, &template_data)?;
         }
 
-        // 3. write extra files specified in the fragment manifest
+        // 3. write extra files specified in the template manifest
         for (src, dest) in manifest.files {
-            let data = FRAGMENTS::get(&format!("_assets_/{src}"))
+            let data = EMBEDDED_TEMPLATES::get(&format!("_assets_/{src}"))
                 .with_context(|| format!("Failed to get asset file bytes: {src}"))?
                 .data;
             let dest = target_dir.join(dest);
@@ -401,21 +422,5 @@ impl<'a> Template {
         }
 
         Ok(())
-    }
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-#[non_exhaustive]
-pub enum Flavor {
-    JavaScript,
-    TypeScript,
-}
-
-impl Display for Flavor {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            Flavor::JavaScript => write!(f, "JavaScript"),
-            Flavor::TypeScript => write!(f, "TypeScript"),
-        }
     }
 }

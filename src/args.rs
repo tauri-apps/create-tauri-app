@@ -6,7 +6,7 @@ use std::ffi::OsString;
 
 use pico_args::Arguments;
 
-use crate::{colors::*, package_manager::PackageManager, template::Template};
+use crate::{package_manager::PackageManager, template::Template, utils::colors::*};
 
 #[derive(Debug)]
 pub struct Args {
@@ -51,7 +51,7 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
 
 {YELLOW}OPTIONS:{RESET}
   {GREEN}-m{RESET}, {GREEN}--manager <MANAGER>{RESET}       Specify preferred package manager [{managers}]
-  {GREEN}-t{RESET}, {GREEN}--template <TEMPLATE>{RESET}     Specify the UI template to use [{fragments}]
+  {GREEN}-t{RESET}, {GREEN}--template <TEMPLATE>{RESET}     Specify the UI template to use [{templates}]
   {GREEN}-y{RESET}, {GREEN}--yes{RESET}                     Skip prompts and use defaults where applicable
   {GREEN}-f{RESET}, {GREEN}--force{RESET}                   Force create the directory even if it is not empty.
                     {GREEN}--alpha{RESET}                   Bootstraps a project using tauri@2.0-alpha
@@ -68,7 +68,7 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
                 .map(|e| format!("{GREEN}{e}{RESET}"))
                 .collect::<Vec<_>>()
                 .join(", "),
-            fragments = Template::ALL
+            templates = Template::ALL
                 .iter()
                 .map(|e| format!("{GREEN}{e}{RESET}"))
                 .collect::<Vec<_>>()

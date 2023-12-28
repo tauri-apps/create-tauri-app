@@ -7,7 +7,7 @@
 [![website](https://img.shields.io/badge/website-tauri.app-purple.svg)](https://tauri.app)
 [![https://good-labs.github.io/greater-good-affirmation/assets/images/badge.svg](https://good-labs.github.io/greater-good-affirmation/assets/images/badge.svg)](https://good-labs.github.io/greater-good-affirmation)
 [![support](https://img.shields.io/badge/sponsor-Open%20Collective-blue.svg)](https://opencollective.com/tauri)
-[![changelog](https://img.shields.io/badge/CHANGELOG-yellowgreen)](./packages/cli/CHANGELOG.md)
+[![changelog](https://img.shields.io/badge/CHANGELOG-yellowgreen)](./CHANGELOG.md)
 
 # Usage
 

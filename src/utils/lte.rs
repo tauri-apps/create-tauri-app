@@ -8,7 +8,6 @@
 // 1. negative boolean
 // 2. multiple condition in the same if
 // 3. equality checks
-// 4. infinte loop when missing a closing `%}`
 
 use std::{collections::HashMap, fmt::Display};
 
@@ -44,12 +43,12 @@ enum Token<'a> {
 impl Display for Token<'_> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Token::OBracket => write!(f, "{{%"),
+            Token::OBracket => write!(f, "{{{{"),
             Token::If => write!(f, "if"),
             Token::Var(var) => write!(f, "{} (variable)", var),
             Token::Else => write!(f, "else"),
             Token::EndIf => write!(f, "endif"),
-            Token::CBracket => write!(f, "%}}"),
+            Token::CBracket => write!(f, "}}}}"),
             Token::Text(_) => write!(f, "(text)"),
             Token::Invalid(col) => write!(f, "invalid token at {col}"),
         }
@@ -91,6 +90,10 @@ impl<'a> Lexer<'a> {
         self.bytes[self.cursor + 1] as char
     }
 
+    fn prev_char(&self) -> char {
+        self.bytes[self.cursor - 1] as char
+    }
+
     fn skip_whitespace(&mut self) {
         while self.cursor < self.len && self.current_char().is_whitespace() {
             self.cursor += 1;
@@ -125,13 +128,13 @@ impl<'a> Lexer<'a> {
             return None;
         }
 
-        if self.current_char() == '{' && self.next_char() == '%' {
+        if self.current_char() == '{' && self.next_char() == '{' && self.prev_char() != '\\' {
             self.in_bracket = true;
             self.cursor += 2;
             return Some(Token::OBracket);
         }
 
-        if self.current_char() == '%' && self.next_char() == '}' {
+        if self.current_char() == '}' && self.next_char() == '}' {
             self.in_bracket = false;
             self.cursor += 2;
             return Some(Token::CBracket);
@@ -155,7 +158,10 @@ impl<'a> Lexer<'a> {
 
         if !self.in_bracket {
             let start = self.cursor;
-            while !(self.current_char() == '{' && self.next_char() == '%') {
+            while !(self.current_char() == '{'
+                && self.next_char() == '{'
+                && self.prev_char() != '\\')
+            {
                 self.cursor += 1;
 
                 if self.cursor >= self.len {
@@ -388,7 +394,7 @@ mod tests {
 
     #[test]
     fn it_replaces_variable() {
-        let template = "<html>Hello {% name %}</html>";
+        let template = "<html>Hello {{ name }}</html>";
         let data: HashMap<&str, &str> = [("name", "world")].into();
         let rendered = render(template, &data).expect("it should render");
         assert_eq!(rendered, "<html>Hello world</html>")
@@ -399,7 +405,7 @@ mod tests {
         let template = r#"
         <html>
         <h1>Hello<h2>
-        <em>{% name %}</em>
+        <em>{{ name }}</em>
         </html>"#;
         let data: HashMap<&str, &str> = [("name", "world")].into();
         let rendered = render(template, &data).expect("it should render");
@@ -413,7 +419,7 @@ mod tests {
 
     #[test]
     fn it_performs_condition() {
-        let template = "<html>Hello {% if alpha %}alpha{% else %}stable{% endif %}</html>";
+        let template = "<html>Hello {{ if alpha }}alpha{{ else }}stable{{ endif }}</html>";
         let data: HashMap<&str, bool> = [("alpha", true)].into();
         let rendered = render(template, &data).expect("it should render");
         assert_eq!(rendered, "<html>Hello alpha</html>")
@@ -421,7 +427,7 @@ mod tests {
 
     #[test]
     fn it_performs_else_condition() {
-        let template = "<html>Hello {% if alpha %}alpha{% else %}stable{% endif %}</html>";
+        let template = "<html>Hello {{ if alpha }}alpha{{ else }}stable{{ endif }}</html>";
         let data: HashMap<&str, bool> = [("alpha", false)].into();
         let rendered = render(template, &data).expect("it should render");
         assert_eq!(rendered, "<html>Hello stable</html>")
@@ -431,9 +437,9 @@ mod tests {
     fn it_performs_condition_with_new_lines() {
         let template = r#"
         <html>
-        <h1>Hello<h2>{% if alpha %}
-        <em>alpha</em>{% else %}
-        <em>stable</em>{% endif %}
+        <h1>Hello<h2>{{ if alpha }}
+        <em>alpha</em>{{ else }}
+        <em>stable</em>{{ endif }}
         </html>"#;
         let data: HashMap<&str, bool> = [("alpha", true)].into();
         let rendered = render(template, &data).expect("it should render");
@@ -449,9 +455,9 @@ mod tests {
     fn it_replaces_variable_within_if() {
         let template = r#"
         <html>
-        <h1>Hello<h2>{% if alpha %}
-        <em>{% alpha_str %}</em>{% else %}
-        <em>stable</em>{% endif %}
+        <h1>Hello<h2>{{ if alpha }}
+        <em>{{ alpha_str }}</em>{{ else }}
+        <em>stable</em>{{ endif }}
         </html>"#;
         let data: HashMap<&str, &str> = [("alpha", "true"), ("alpha_str", "holla alpha")].into();
         let rendered = render(template, &data).expect("it should render");
@@ -467,9 +473,9 @@ mod tests {
     fn it_performs_nested_conditions() {
         let template = r#"
         <html>
-        <h1>Hello<h2>{% if alpha %}
-        <em>{% alpha_str %}</em>{% else %}
-        <em>{% if beta %}beta{%else%}stable{%endif%}</em>{% endif %}
+        <h1>Hello<h2>{{ if alpha }}
+        <em>{{ alpha_str }}</em>{{ else }}
+        <em>{{ if beta }}beta{{else}}stable{{endif}}</em>{{ endif }}
         </html>"#;
         let data: HashMap<&str, &str> = [
             ("alpha", "false"),
@@ -488,9 +494,17 @@ mod tests {
 
     #[test]
     fn it_panics() {
-        let template = "<html>Hello {% name }</html>";
+        let template = "<html>Hello {{ name }</html>";
         let data: HashMap<&str, &str> = [("name", "world")].into();
         let rendered = render(template, &data);
         assert!(rendered.is_err())
+    }
+
+    #[test]
+    fn it_escapes_brackets() {
+        let template = "<html>Hello \\{{ name }}</html>";
+        let data: HashMap<&str, &str> = [("name", "world")].into();
+        let rendered = render(template, &data).unwrap();
+        assert_eq!(rendered, template)
     }
 }

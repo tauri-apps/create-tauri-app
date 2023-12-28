@@ -39,13 +39,13 @@
   },
   "packages": {
     "create-tauri-app": {
-      "path": "./packages/cli",
+      "path": ".",
       "manager": "rust",
       "postversion": [
         "cargo check",
-        "node ../../.scripts/sync-scripts-tagname.js ${ release.type }",
-        "cp ../../create-tauri-app.ps1 ../worker/scripts",
-        "cp ../../create-tauri-app.sh ../worker/scripts"
+        "node .scripts/sync-scripts-tagname.js ${ release.type }",
+        "cp create-tauri-app.ps1 worker/scripts",
+        "cp create-tauri-app.sh worker/scripts"
       ],
       "assets": [
         {
@@ -55,7 +55,7 @@
       ]
     },
     "create-tauri-app-js": {
-      "path": "./packages/cli/node",
+      "path": "./node",
       "manager": "javascript",
       "dependencies": ["create-tauri-app"],
       "prepublish": [],

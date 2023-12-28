@@ -42,12 +42,6 @@ pub struct ColorfulTheme {
     pub picked_item_prefix: StyledObject<String>,
     /// Unpicked item in sort prefix value and style
     pub unpicked_item_prefix: StyledObject<String>,
-    /// Formats the cursor for a fuzzy select prompt
-    #[cfg(feature = "fuzzy-select")]
-    pub fuzzy_cursor_style: Style,
-    // Formats the highlighting if matched characters
-    #[cfg(feature = "fuzzy-select")]
-    pub fuzzy_match_highlight_style: Style,
     /// Show the selections from certain prompts inline
     pub inline_selections: bool,
 }
@@ -73,10 +67,6 @@ impl Default for ColorfulTheme {
             unchecked_item_prefix: style("✔".to_string()).for_stderr().black(),
             picked_item_prefix: style("❯".to_string()).for_stderr().green(),
             unpicked_item_prefix: style(" ".to_string()).for_stderr(),
-            #[cfg(feature = "fuzzy-select")]
-            fuzzy_cursor_style: Style::new().for_stderr().black().on_white(),
-            #[cfg(feature = "fuzzy-select")]
-            fuzzy_match_highlight_style: Style::new().for_stderr().bold(),
             inline_selections: true,
         }
     }
@@ -230,16 +220,6 @@ impl Theme for ColorfulTheme {
         )
     }
 
-    /// Formats a password prompt after selection.
-    #[cfg(feature = "password")]
-    fn format_password_prompt_selection(
-        &self,
-        f: &mut dyn fmt::Write,
-        prompt: &str,
-    ) -> fmt::Result {
-        self.format_input_prompt_selection(f, prompt, "********")
-    }
-
     /// Formats a multi select prompt after selection.
     fn format_multi_select_prompt_selection(
         &self,
@@ -353,97 +333,5 @@ impl Theme for ColorfulTheme {
         };
 
         write!(f, "{} {}", details.0, details.1)
-    }
-
-    /// Formats a fuzzy select prompt item.
-    #[cfg(feature = "fuzzy-select")]
-    fn format_fuzzy_select_prompt_item(
-        &self,
-        f: &mut dyn fmt::Write,
-        text: &str,
-        active: bool,
-        highlight_matches: bool,
-        matcher: &SkimMatcherV2,
-        search_term: &str,
-    ) -> fmt::Result {
-        write!(
-            f,
-            "{} ",
-            if active {
-                &self.active_item_prefix
-            } else {
-                &self.inactive_item_prefix
-            }
-        )?;
-
-        if highlight_matches {
-            if let Some((_score, indices)) = matcher.fuzzy_indices(text, &search_term) {
-                for (idx, c) in text.chars().into_iter().enumerate() {
-                    if indices.contains(&idx) {
-                        if active {
-                            write!(
-                                f,
-                                "{}",
-                                self.active_item_style
-                                    .apply_to(self.fuzzy_match_highlight_style.apply_to(c))
-                            )?;
-                        } else {
-                            write!(f, "{}", self.fuzzy_match_highlight_style.apply_to(c))?;
-                        }
-                    } else {
-                        if active {
-                            write!(f, "{}", self.active_item_style.apply_to(c))?;
-                        } else {
-                            write!(f, "{}", c)?;
-                        }
-                    }
-                }
-
-                return Ok(());
-            }
-        }
-
-        write!(f, "{}", text)
-    }
-
-    /// Formats a fuzzy-selectprompt after selection.
-    #[cfg(feature = "fuzzy-select")]
-    fn format_fuzzy_select_prompt(
-        &self,
-        f: &mut dyn fmt::Write,
-        prompt: &str,
-        search_term: &str,
-        cursor_pos: usize,
-    ) -> fmt::Result {
-        if !prompt.is_empty() {
-            write!(
-                f,
-                "{} {} ",
-                &self.prompt_prefix,
-                self.prompt_style.apply_to(prompt)
-            )?;
-        }
-
-        if cursor_pos < search_term.len() {
-            let st_head = search_term[0..cursor_pos].to_string();
-            let st_tail = search_term[cursor_pos + 1..search_term.len()].to_string();
-            let st_cursor = self
-                .fuzzy_cursor_style
-                .apply_to(search_term.to_string().chars().nth(cursor_pos).unwrap());
-            write!(
-                f,
-                "{} {}{}{}",
-                &self.prompt_suffix, st_head, st_cursor, st_tail
-            )
-        } else {
-            let cursor = self.fuzzy_cursor_style.apply_to(" ");
-            write!(
-                f,
-                "{} {}{}",
-                &self.prompt_suffix,
-                search_term.to_string(),
-                cursor
-            )
-        }
     }
 }

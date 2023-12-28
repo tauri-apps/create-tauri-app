@@ -7,19 +7,19 @@ use dialoguer::{Confirm, Input, Select};
 use std::{ffi::OsString, fs, process::exit};
 
 use crate::{
-    category::Category, colors::*, deps::print_missing_deps, package_manager::PackageManager,
-    theme::ColorfulTheme,
+    category::Category,
+    deps::print_missing_deps,
+    package_manager::PackageManager,
+    utils::{colors::*, theme::ColorfulTheme},
 };
 
+mod args;
 mod category;
-mod cli;
-mod colors;
 mod deps;
-mod lte;
 mod manifest;
 mod package_manager;
 mod template;
-mod theme;
+mod utils;
 
 pub mod internal {
     //! Re-export of create-tauri-app internals
@@ -62,9 +62,9 @@ where
     A: Into<OsString> + Clone,
 {
     let detected_manager = detected_manager.and_then(|p| p.parse::<PackageManager>().ok());
-    let args = cli::parse(args.into_iter().map(Into::into).collect(), bin_name)?;
-    let defaults = cli::Args::default();
-    let cli::Args {
+    let args = args::parse(args.into_iter().map(Into::into).collect(), bin_name)?;
+    let defaults = args::Args::default();
+    let args::Args {
         skip,
         mobile,
         alpha,
@@ -344,7 +344,12 @@ where
     // Print post-render instructions
     println!();
     print!("Template created!");
-    print_missing_deps(pkg_manager, template, alpha);
+    let has_missing = print_missing_deps(pkg_manager, template, alpha);
+    if has_missing {
+        println!("Make sure you have installed the prerequisites for your OS: {BLUE}{BOLD}https://tauri.app/v1/guides/getting-started/prerequisites{RESET}, then run:");
+    } else {
+        println!(" To get started run:")
+    }
     if target_dir != cwd {
         println!(
             "  cd {}",

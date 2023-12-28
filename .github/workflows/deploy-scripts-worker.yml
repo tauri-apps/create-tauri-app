@@ -10,7 +10,7 @@ on:
       - dev
     paths:
       - '.github/workflows/deploy-scripts.yml'
-      - 'packages/worker/**'
+      - 'worker/**'
 
 jobs:
   deploy:
@@ -22,6 +22,6 @@ jobs:
       - uses: cloudflare/wrangler-action@2.0.0
         with:
           command: publish
-          workingDirectory: 'packages/worker'
+          workingDirectory: 'worker'
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
