@@ -1,5 +1,5 @@
 [package]
-name = "{% package_name %}"
+name = "{{ package_name }}"
 version = "0.0.0"
 description = "A Tauri App"
 authors = ["you"]
@@ -9,21 +9,21 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-{% if mobile %}[lib]
-name = "{% lib_name %}"
+{{ if mobile }}[lib]
+name = "{{ lib_name }}"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
-{% endif %}{% if stable %}[build-dependencies]
+{{ endif }}{{ if stable }}[build-dependencies]
 tauri-build = { version = "1.5", features = [] }
 
 [dependencies]
 tauri = { version = "1.5", features = ["shell-open"] }
-serde = { version = "1.0", features = ["derive"] }{% else %}[build-dependencies]
+serde = { version = "1.0", features = ["derive"] }{{ else }}[build-dependencies]
 tauri-build = { version = "2.0.0-alpha", features = [] }
 
 [dependencies]
 tauri = { version = "2.0.0-alpha", features = [] }
-tauri-plugin-shell = "2.0.0-alpha"{% endif %}
+tauri-plugin-shell = "2.0.0-alpha"{{ endif }}
 serde_json = "1.0"
 
 [features]

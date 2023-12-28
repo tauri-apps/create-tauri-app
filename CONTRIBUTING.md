@@ -25,9 +25,10 @@ cargo run -- <cli arguments>
 
 - Add a directory in `templates` and name it `template-<template-name>` where `<template-name>` is the name of the template and add all the files you need there.
 - A template also must have a `_cta_manifest_` file which contains info about the template:
+
   ```ini
-  beforeDevCommand = {% pkg_manager_run_command %} dev
-  beforeBuildCommand = {% pkg_manager_run_command %} build
+  beforeDevCommand = {{ pkg_manager_run_command }} dev
+  beforeBuildCommand = {{ pkg_manager_run_command }} build
   devPath = http://localhost:1420
   distDir = ../dist
 
@@ -41,6 +42,7 @@ cargo run -- <cli arguments>
   # the second part is the path that the file will be copied to under the final template directory
   tauri.svg = public/tauri.svg
   ```
+
 - In `src/template.rs`, add an entry in the `Template` enum, and modify its methods if needed.
 - In `src/package_manager.rs` add your new template to the appropriate package manager in the `templates` method.
 - Modify `.scripts/generate-templates-matrix.js` and append the template name inside the template list for the appropriate package manager so the CI would run tests for it.

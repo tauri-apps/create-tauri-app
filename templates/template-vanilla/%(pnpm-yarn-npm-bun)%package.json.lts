@@ -1,5 +1,5 @@
 {
-  "name": "{% package_name %}",
+  "name": "{{ package_name }}",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,6 +7,6 @@
     "tauri": "tauri"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^{% if alpha %}2.0.0-alpha.20{% else %}1.5.8{% endif %}"
+    "@tauri-apps/cli": "^{{ if alpha }}2.0.0-alpha.20{{ else }}1.5.8{{ endif }}"
   }
 }

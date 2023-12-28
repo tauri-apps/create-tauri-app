@@ -1,5 +1,5 @@
 <script>
-  import { invoke } from "@tauri-apps/api/{% if alpha %}core{% else %}tauri{% endif %}"
+  import { invoke } from "@tauri-apps/api/{{ if alpha }}core{{ else }}tauri{{ endif }}"
 
   let name = "";
   let greetMsg = ""

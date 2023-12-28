@@ -1,24 +1,24 @@
 {
   "build": {
-    "beforeDevCommand": "{% before_dev_command %}",
-    "beforeBuildCommand": "{% before_build_command %}",
-    "devPath": "{% dev_path %}",
-    "distDir": "{% dist_dir %}"{% if with_global_tauri %},
-    "withGlobalTauri": true{% endif %}
+    "beforeDevCommand": "{{ before_dev_command }}",
+    "beforeBuildCommand": "{{ before_build_command }}",
+    "devPath": "{{ dev_path }}",
+    "distDir": "{{ dist_dir }}"{{ if with_global_tauri }},
+    "withGlobalTauri": true{{ endif }}
   },
   "package": {
-    "productName": "{% project_name %}",
+    "productName": "{{ project_name }}",
     "version": "0.0.0"
   },
   "tauri": {
-    {% if stable %}"allowlist": {
+    {{ if stable }}"allowlist": {
       "all": false,
       "shell": {
         "all": false,
         "open": true
       }
     },
-    {% endif %}"bundle": {
+    {{ endif }}"bundle": {
       "active": true,
       "targets": "all",
       "identifier": "com.tauri.dev",
@@ -37,15 +37,15 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "{% package_name %}",
+        "title": "{{ package_name }}",
         "width": 800,
         "height": 600
       }
     ]
-  }{% if alpha %},
+  }{{ if alpha }},
   "plugins": {
     "shell": {
       "open": true
     }
-  }{% endif %}
+  }{{ endif }}
 }

@@ -1,5 +1,5 @@
 {
-  "name": "{% package_name %}",
+  "name": "{{ package_name }}",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,12 +10,12 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@tauri-apps/api": "^{% if alpha %}2.0.0-alpha.13{% else %}1.5.2{% endif %}"{% if alpha %},
-    "@tauri-apps/plugin-shell": "^2.0.0-alpha.3"{% endif %}
+    "@tauri-apps/api": "^{{ if alpha }}2.0.0-alpha.13{{ else }}1.5.2{{ endif }}"{{ if alpha }},
+    "@tauri-apps/plugin-shell": "^2.0.0-alpha.3"{{ endif }}
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^{% if alpha %}2.0.0-alpha.20{% else %}1.5.8{% endif %}"{% if mobile %},
-    "internal-ip": "^7.0.0"{% endif %},
+    "@tauri-apps/cli": "^{{ if alpha }}2.0.0-alpha.20{{ else }}1.5.8{{ endif }}"{{ if mobile }},
+    "internal-ip": "^7.0.0"{{ endif }},
     "vite": "^5.0.0",
     "typescript": "^5.0.2"
   }

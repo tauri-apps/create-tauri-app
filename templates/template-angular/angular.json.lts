@@ -6,7 +6,7 @@
     "analytics": false
   },
   "projects": {
-    "{% package_name %}": {
+    "{{ package_name }}": {
       "projectType": "application",
       "root": "",
       "sourceRoot": "src",
@@ -15,7 +15,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/{% package_name %}",
+            "outputPath": "dist/{{ package_name }}",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -54,10 +54,10 @@
           },
           "configurations": {
             "production": {
-              "buildTarget": "{% package_name %}:build:production"
+              "buildTarget": "{{ package_name }}:build:production"
             },
             "development": {
-              "buildTarget": "{% package_name %}:build:development"
+              "buildTarget": "{{ package_name }}:build:development"
             }
           },
           "defaultConfiguration": "development"
