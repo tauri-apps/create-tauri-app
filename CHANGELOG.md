@@ -1,5 +1,10 @@
 # Changelog
 
+## \[3.12.1]
+
+- [`7cd8cf8`](https://www.github.com/tauri-apps/create-tauri-app/commit/7cd8cf8e71d44698adadfffa3615922e60a58c19)([#542](https://www.github.com/tauri-apps/create-tauri-app/pull/542)) Bump MSRV to `1.61`
+- [`6171792`](https://www.github.com/tauri-apps/create-tauri-app/commit/6171792b9641fc5210f4ca79842631e68e59b64e)([#561](https://www.github.com/tauri-apps/create-tauri-app/pull/561)) Upgrade `@vitejs/plugin-react` to `4.2.1` to fix peer depenency for react templates.
+
 ## \[3.12.0]
 
 - [`616a294`](https://www.github.com/tauri-apps/create-tauri-app/commit/616a294a9adaa5d7113961ba8af3bb85727e16c3)([#553](https://www.github.com/tauri-apps/create-tauri-app/pull/553)) Vite 5 in templates
