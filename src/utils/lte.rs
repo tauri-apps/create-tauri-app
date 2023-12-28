@@ -91,7 +91,7 @@ impl<'a> Lexer<'a> {
     }
 
     fn prev_char(&self) -> char {
-        self.bytes[self.cursor - 1] as char
+        self.bytes[self.cursor.saturating_sub(1)] as char
     }
 
     fn skip_whitespace(&mut self) {
