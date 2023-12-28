@@ -2,4 +2,4 @@
 "create-tauri-app": "patch"
 ---
 
-Bump MSRV to `1.60`
+Bump MSRV to `1.61`
