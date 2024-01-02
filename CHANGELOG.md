@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.12.2]
+
+- [`3e6e530`](https://www.github.com/tauri-apps/create-tauri-app/commit/3e6e53044e00cee37369e96826166bd575c77ba3)([#568](https://www.github.com/tauri-apps/create-tauri-app/pull/568)) Fix warnings in `leptos` template related to reactivity.
+
 ## \[3.12.1]
 
 - [`7cd8cf8`](https://www.github.com/tauri-apps/create-tauri-app/commit/7cd8cf8e71d44698adadfffa3615922e60a58c19)([#542](https://www.github.com/tauri-apps/create-tauri-app/pull/542)) Bump MSRV to `1.61`
