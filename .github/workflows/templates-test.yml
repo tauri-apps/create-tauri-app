@@ -11,6 +11,7 @@ on:
     paths:
       - '.github/workflows/templates-test.yml'
       - 'src/**'
+      - 'templates/**'
 
 env:
   RUST_BACKTRACE: 1
