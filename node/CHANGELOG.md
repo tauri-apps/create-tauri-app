@@ -1,5 +1,13 @@
 # Changelog
 
+## \[3.11.7]
+
+- [`3e6e530`](https://www.github.com/tauri-apps/create-tauri-app/commit/3e6e53044e00cee37369e96826166bd575c77ba3)([#568](https://www.github.com/tauri-apps/create-tauri-app/pull/568)) Fix warnings in `leptos` template related to reactivity.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.12.2`
+
 ## \[3.11.6]
 
 - [`6171792`](https://www.github.com/tauri-apps/create-tauri-app/commit/6171792b9641fc5210f4ca79842631e68e59b64e)([#561](https://www.github.com/tauri-apps/create-tauri-app/pull/561)) Upgrade `@vitejs/plugin-react` to `4.2.1` to fix peer depenency for react templates.
