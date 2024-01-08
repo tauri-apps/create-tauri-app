@@ -29,8 +29,8 @@ importers:
   worker:
     devDependencies:
       wrangler:
-        specifier: 3.22.2
-        version: 3.22.2
+        specifier: 3.22.3
+        version: 3.22.3
 
 packages:
 
@@ -1281,8 +1281,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /miniflare@3.20231218.0:
-    resolution: {integrity: sha512-WAnLfLE8IRsxZPBDkxZGJvCSmm6nwIkxzrxiu0xDhw82BFFamtWpJ49TMYbgtNmQoOgxHuAenVImwbHHSg9MhA==}
+  /miniflare@3.20231218.1:
+    resolution: {integrity: sha512-rl/wADgaRLpbl7EMobwbAt6BgVqkOoWsVQJAliIIUCRzC0s0xg7ZVeoV+DuQD4ffN4RySXsPnP97hp7ksc7ylA==}
     engines: {node: '>=16.13'}
     hasBin: true
     dependencies:
@@ -1857,8 +1857,8 @@ packages:
     resolution: {integrity: sha512-ILEIE97kDZvF9Wb9f6h5aXK4swSlKGUcOEGiIYb2OOu/IrDU9iwj0fD//SsA6E5ibwJxpEvhullJY4Sl4GcpAw==}
     dev: true
 
-  /wrangler@3.22.2:
-    resolution: {integrity: sha512-lDq+921TGEpqzN3Wan8j8k683qnOJfpLgn6Fhc7NrvN3zNeqGHcQhn19v2uoXs22lL04Uyc0I61CRtdiT7paCg==}
+  /wrangler@3.22.3:
+    resolution: {integrity: sha512-EhGEQLoMcQm71v6XrtnKfMG2B8BTM7RxhoS9iWIkc1hc3l9cOWyoN0cJnoBqcGTgtQk5V7+cRECTfwh08IEjBQ==}
     engines: {node: '>=16.17.0'}
     hasBin: true
     dependencies:
@@ -1869,7 +1869,7 @@ packages:
       blake3-wasm: 2.1.5
       chokidar: 3.5.3
       esbuild: 0.17.19
-      miniflare: 3.20231218.0
+      miniflare: 3.20231218.1
       nanoid: 3.3.4
       path-to-regexp: 6.2.1
       resolve.exports: 2.0.2
