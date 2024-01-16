@@ -48,6 +48,7 @@ pub enum Template {
     Solid,
     SolidTs,
     Yew,
+    Dominator,
     Leptos,
     Sycamore,
     Angular,
@@ -75,6 +76,7 @@ impl Display for Template {
             Template::Solid => write!(f, "solid"),
             Template::SolidTs => write!(f, "solid-ts"),
             Template::Yew => write!(f, "yew"),
+            Template::Dominator => write!(f, "dominator"),
             Template::Leptos => write!(f, "leptos"),
             Template::Sycamore => write!(f, "sycamore"),
             Template::Angular => write!(f, "angular"),
@@ -99,6 +101,7 @@ impl FromStr for Template {
             "solid" => Ok(Template::Solid),
             "solid-ts" => Ok(Template::SolidTs),
             "yew" => Ok(Template::Yew),
+            "dominator" => Ok(Template::Dominator),
             "leptos" => Ok(Template::Leptos),
             "sycamore" => Ok(Template::Sycamore),
             "angular" => Ok(Template::Angular),
@@ -125,6 +128,7 @@ impl Template {
             Template::React => "React - (https://reactjs.org/)",
             Template::Solid => "Solid - (https://www.solidjs.com/)",
             Template::Yew => "Yew - (https://yew.rs/)",
+            Template::Dominator => "Dominator - (https://github.com/Pauan/rust-dominator)",
             Template::Leptos => "Leptos - (https://github.com/leptos-rs/leptos)",
             Template::Sycamore => "Sycamore - (https://sycamore-rs.netlify.app/)",
             Template::Angular => "Angular - (https://angular.io/)",
@@ -147,6 +151,7 @@ impl<'a> Template {
         Template::Solid,
         Template::SolidTs,
         Template::Yew,
+        Template::Dominator,
         Template::Leptos,
         Template::Sycamore,
         Template::Angular,
@@ -217,23 +222,23 @@ impl<'a> Template {
             | Template::Angular
             | Template::Preact
             | Template::PreactTs => PackageManager::NODE,
-            Template::Yew | Template::Leptos | Template::Sycamore => &[PackageManager::Cargo],
+            Template::Yew | Template::Dominator | Template::Leptos | Template::Sycamore => &[PackageManager::Cargo],
         }
     }
 
     pub const fn needs_trunk(&self) -> bool {
-        matches!(self, Template::Sycamore | Template::Yew | Template::Leptos)
+        matches!(self, Template::Sycamore | Template::Yew | Template::Dominator | Template::Leptos)
     }
 
     pub const fn needs_tauri_cli(&self) -> bool {
         matches!(
             self,
-            Template::Sycamore | Template::Yew | Template::Leptos | Template::Vanilla
+            Template::Sycamore | Template::Yew | Template::Dominator | Template::Leptos | Template::Vanilla
         )
     }
 
     pub const fn needs_wasm32_target(&self) -> bool {
-        matches!(self, Template::Sycamore | Template::Yew | Template::Leptos)
+        matches!(self, Template::Sycamore | Template::Yew | Template::Dominator | Template::Leptos)
     }
 
     pub fn render(
