@@ -1,0 +1,20 @@
+{
+    "name": "{% package_name %}-ui",
+    "version": "0.1.0",
+    "scripts": {
+        "start": "npm-run-all --parallel localmedia:serve trunk:serve:dev tauri:dev",
+        "localmedia:serve": "cd public && http-server -g -b --cors -p 9000",
+        "trunk:serve:dev": "cross-env RUSTFLAGS=--cfg=web_sys_unstable_apis trunk serve --features dev --watch .",
+        "tauri:dev": "tauri dev",
+        "build": "cross-env RUSTFLAGS=--cfg=web_sys_unstable_apis trunk build --release"
+    },
+    "dependencies": {
+        "@tauri-apps/api": "^1.4.0"
+    },
+    "devDependencies": {
+        "@tauri-apps/cli": "^1.5.9",
+        "cross-env": "^7.0.3",
+        "http-server": "^14.1.1",
+        "npm-run-all": "^4.1.5"
+    }
+}

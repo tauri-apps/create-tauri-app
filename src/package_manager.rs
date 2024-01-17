@@ -79,6 +79,7 @@ impl PackageManager {
             PackageManager::Cargo => &[
                 Template::Vanilla,
                 Template::Yew,
+                Template::Dominator,
                 Template::Leptos,
                 Template::Sycamore,
             ],
@@ -102,6 +103,7 @@ impl PackageManager {
             PackageManager::Cargo => &[
                 Template::Vanilla,
                 Template::Yew,
+                Template::Dominator,
                 Template::Leptos,
                 Template::Sycamore,
             ],
