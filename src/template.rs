@@ -120,12 +120,12 @@ impl Template {
     pub const fn select_text<'a>(&self) -> &'a str {
         match self {
             Template::Vanilla => "Vanilla",
-            Template::Vue => "Vue - (https://vuejs.org)",
+            Template::Vue => "Vue - (https://vuejs.org/)",
             Template::Svelte => "Svelte - (https://svelte.dev/)",
-            Template::React => "React - (https://reactjs.org/)",
-            Template::Solid => "Solid - (https://www.solidjs.com/)",
+            Template::React => "React - (https://react.dev/)",
+            Template::Solid => "Solid - (https://solidjs.com/)",
             Template::Yew => "Yew - (https://yew.rs/)",
-            Template::Leptos => "Leptos - (https://github.com/leptos-rs/leptos)",
+            Template::Leptos => "Leptos - (https://leptos.dev/)",
             Template::Sycamore => "Sycamore - (https://sycamore-rs.netlify.app/)",
             Template::Angular => "Angular - (https://angular.io/)",
             Template::Preact => "Preact - (https://preactjs.com/)",
