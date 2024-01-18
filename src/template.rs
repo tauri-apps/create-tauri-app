@@ -125,7 +125,7 @@ impl Template {
             Template::React => "React - (https://react.dev/)",
             Template::Solid => "Solid - (https://solidjs.com/)",
             Template::Yew => "Yew - (https://yew.rs/)",
-            Template::Leptos => "Leptos - (https://github.com/leptos-rs/leptos/)",
+            Template::Leptos => "Leptos - (https://leptos.dev/)",
             Template::Sycamore => "Sycamore - (https://sycamore-rs.netlify.app/)",
             Template::Angular => "Angular - (https://angular.io/)",
             Template::Preact => "Preact - (https://preactjs.com/)",
