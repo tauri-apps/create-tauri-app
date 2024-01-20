@@ -23,8 +23,8 @@ importers:
   node:
     devDependencies:
       '@napi-rs/cli':
-        specifier: '2.17'
-        version: 2.17.0
+        specifier: '2.18'
+        version: 2.18.0
 
   worker:
     devDependencies:
@@ -481,8 +481,8 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@napi-rs/cli@2.17.0:
-    resolution: {integrity: sha512-/M7MZ3dIqyFs6c0Bxtk+SOobPq6vYWYqBLYCOKx3dYWqoyJNBEgmDKUTrxIZu9eHw9Ill3WyEoHPqS9P99cd8A==}
+  /@napi-rs/cli@2.18.0:
+    resolution: {integrity: sha512-lfSRT7cs3iC4L+kv9suGYQEezn5Nii7Kpu+THsYVI0tA1Vh59LH45p4QADaD7hvIkmOz79eEGtoKQ9nAkAPkzA==}
     engines: {node: '>= 10'}
     hasBin: true
     dev: true
