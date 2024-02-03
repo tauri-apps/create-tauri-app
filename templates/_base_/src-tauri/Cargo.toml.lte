@@ -17,11 +17,11 @@ tauri-build = { version = "1.5", features = [] }
 [dependencies]
 tauri = { version = "1.5", features = ["shell-open"] }
 serde = { version = "1.0", features = ["derive"] }{% else %}[build-dependencies]
-tauri-build = { version = "2.0.0-alpha", features = [] }
+tauri-build = { version = "2.0.0-beta", features = [] }
 
 [dependencies]
-tauri = { version = "2.0.0-alpha", features = [] }
-tauri-plugin-shell = "2.0.0-alpha"{% endif %}
+tauri = { version = "2.0.0-beta", features = [] }
+tauri-plugin-shell = "2.0.0-beta"{% endif %}
 serde_json = "1.0"
 
 [features]

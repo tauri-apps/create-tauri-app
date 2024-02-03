@@ -10,14 +10,14 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@tauri-apps/api": "^{% if alpha %}2.0.0-alpha.13{% else %}1.5.2{% endif %}"{% if alpha %},
-    "@tauri-apps/plugin-shell": "^2.0.0-alpha.3"{% endif %}
+    "@tauri-apps/api": "^{% if alpha %}2.0.0-beta.0{% else %}1.5.2{% endif %}"{% if alpha %},
+    "@tauri-apps/plugin-shell": "^2.0.0-beta.0"{% endif %}
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.0.1",
     "svelte": "^4.2.8",
     "vite": "^5.0.0",
-    "@tauri-apps/cli": "^{% if alpha %}2.0.0-alpha.20{% else %}1.5.8{% endif %}"{% if mobile %},
+    "@tauri-apps/cli": "^{% if alpha %}2.0.0-beta.0{% else %}1.5.8{% endif %}"{% if mobile %},
     "internal-ip": "^7.0.0"{% endif %}
   }
 }
