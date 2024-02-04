@@ -84,7 +84,7 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
     }
     if pargs.contains("--alpha") {
         eprintln!(
-                "{BOLD}{YELLOW}warning{RESET}: The `{GREEN}--alpha{RESET}` option is now an alias for `{GREEN}--beta{RESET}`."
+                "{BOLD}{YELLOW}warning{RESET}: The `{GREEN}--alpha{RESET}` option is now an alias for `{GREEN}--beta{RESET}` and may be removed in the future."
             );
     }
 
