@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.13.1]
+
+- [`8b3624b`](https://www.github.com/tauri-apps/create-tauri-app/commit/8b3624b6e87c758c1ac1507acce5ed8b7a8b24b8)([#593](https://www.github.com/tauri-apps/create-tauri-app/pull/593)) Fix tauri v2 beta templates.
+
 ## \[3.13.0]
 
 - [`4dbdcc9`](https://www.github.com/tauri-apps/create-tauri-app/commit/4dbdcc97a34e53c81350acd8e3b2b72302a796de)([#589](https://www.github.com/tauri-apps/create-tauri-app/pull/589)) Updated the templates to Tauri v2 beta.
