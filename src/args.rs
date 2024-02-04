@@ -82,18 +82,23 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
         println!("{}", env!("CARGO_PKG_VERSION"));
         std::process::exit(0);
     }
-    if pargs.contains("--alpha") {
+
+    // pargs.contains() consume the flag so we have to bind the bool to a variable.
+    let alpha = if pargs.contains("--alpha") {
         eprintln!(
                 "{BOLD}{YELLOW}warning{RESET}: The `{GREEN}--alpha{RESET}` option is now an alias for `{GREEN}--beta{RESET}` and may be removed in the future."
             );
-    }
+        true
+    } else {
+        pargs.contains("--beta")
+    };
 
     let args = Args {
         manager: pargs.opt_value_from_str(["-m", "--manager"])?,
         template: pargs.opt_value_from_str(["-t", "--template"])?,
         skip: pargs.contains(["-y", "--yes"]),
         force: pargs.contains(["-f", "--force"]),
-        alpha: pargs.contains("--alpha") || pargs.contains("--beta"),
+        alpha,
         mobile: if pargs.contains("--mobile") {
             Some(true)
         } else {
