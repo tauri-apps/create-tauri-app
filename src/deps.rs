@@ -191,7 +191,7 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, alpha
         Dep {
             name: "Tauri CLI",
             instruction: if alpha {
-                format!("Run `{BLUE}{BOLD}cargo install tauri-cli --version '^2.0.0-alpha'{RESET}`")
+                format!("Run `{BLUE}{BOLD}cargo install tauri-cli --version '^2.0.0-beta'{RESET}`")
             } else {
                 format!("Run `{BLUE}{BOLD}cargo install tauri-cli{RESET}`")
             },
