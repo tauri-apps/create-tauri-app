@@ -54,8 +54,8 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
   {GREEN}-t{RESET}, {GREEN}--template <TEMPLATE>{RESET}     Specify the UI template to use [{templates}]
   {GREEN}-y{RESET}, {GREEN}--yes{RESET}                     Skip prompts and use defaults where applicable
   {GREEN}-f{RESET}, {GREEN}--force{RESET}                   Force create the directory even if it is not empty.
-                    {GREEN}--alpha{RESET}                   Bootstraps a project using tauri@2.0-alpha
-                    {GREEN}--mobile{RESET}                  Bootstraps a mobile project too. Only availabe with `--alpha` option.
+                    {GREEN}--beta{RESET}                    Bootstraps a project using tauri@2.0-alpha
+                    {GREEN}--mobile{RESET}                  Bootstraps a mobile project too. Only availabe with `--beta` option.
   {GREEN}-h{RESET}, {GREEN}--help{RESET}                    Prints help information
   {GREEN}-v{RESET}, {GREEN}--version{RESET}                 Prints version information
 "#,
@@ -82,13 +82,18 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
         println!("{}", env!("CARGO_PKG_VERSION"));
         std::process::exit(0);
     }
+    if pargs.contains("--alpha") {
+        eprintln!(
+                "{BOLD}{YELLOW}warning{RESET}: The `{GREEN}--alpha{RESET}` option is now an alias for `{GREEN}--beta{RESET}`."
+            );
+    }
 
     let args = Args {
         manager: pargs.opt_value_from_str(["-m", "--manager"])?,
         template: pargs.opt_value_from_str(["-t", "--template"])?,
         skip: pargs.contains(["-y", "--yes"]),
         force: pargs.contains(["-f", "--force"]),
-        alpha: pargs.contains("--alpha"),
+        alpha: pargs.contains("--alpha") || pargs.contains("--beta"),
         mobile: if pargs.contains("--mobile") {
             Some(true)
         } else {

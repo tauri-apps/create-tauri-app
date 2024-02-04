@@ -75,12 +75,12 @@ where
     } = args;
     let cwd = std::env::current_dir()?;
 
-    // Allow `--mobile` to only be used with `--alpha` for now
+    // Allow `--mobile` to only be used with `--beta` for now
     // TODO: remove this limitation once tauri@v2 is stable
     if let Some(mobile) = mobile {
         if mobile && !alpha {
             eprintln!(
-                "{BOLD}{RED}error{RESET}: `{GREEN}--mobile{RESET}` option is only available if `{GREEN}--alpha{RESET}` option is also used"
+                "{BOLD}{RED}error{RESET}: `{GREEN}--mobile{RESET}` option is only available if `{GREEN}--beta{RESET}` option is also used"
             );
             exit(1);
         }
@@ -280,7 +280,7 @@ where
     };
 
     // Prompt for wether to bootstrap a mobile-friendly tauri project
-    // This should only be prompted if `--alpha` is used on the command line and `--mobile` wasn't.
+    // This should only be prompted if `--beta` is used on the command line and `--mobile` wasn't.
     // TODO: remove this limitation once tauri@v2 is stable
     let mobile = match mobile {
         Some(mobile) => mobile,
