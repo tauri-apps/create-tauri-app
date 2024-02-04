@@ -347,7 +347,7 @@ impl<'a> Template {
                     flags.retain(|e| !["stable", "alpha", "mobile"].contains(e));
 
                     if ((for_stable && !alpha)
-                        || (for_alpha && alpha && !mobile)
+                        || (for_alpha && alpha)
                         || (for_mobile && alpha && mobile)
                         || (!for_stable && !for_alpha && !for_mobile))
                         && (flags.contains(&pkg_manager.to_string().as_str()) || flags.is_empty())
