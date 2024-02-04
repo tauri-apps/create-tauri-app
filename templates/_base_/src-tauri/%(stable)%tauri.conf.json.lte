@@ -11,14 +11,14 @@
     "version": "0.0.0"
   },
   "tauri": {
-    {% if stable %}"allowlist": {
+    "allowlist": {
       "all": false,
       "shell": {
         "all": false,
         "open": true
       }
     },
-    {% endif %}"bundle": {
+    "bundle": {
       "active": true,
       "targets": "all",
       "identifier": "com.tauri.dev",
@@ -42,10 +42,5 @@
         "height": 600
       }
     ]
-  }{% if alpha %},
-  "plugins": {
-    "shell": {
-      "open": true
-    }
-  }{% endif %}
+  }
 }
