@@ -1,5 +1,13 @@
 # Changelog
 
+## \[3.13.3]
+
+- [`f91ce78`](https://www.github.com/tauri-apps/create-tauri-app/commit/f91ce78498f4c337d54a30df4c6a2bc74fd10564)([#598](https://www.github.com/tauri-apps/create-tauri-app/pull/598)) Fix `vanilla` template generating an invalid `tauri.conf.json` file.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.13.3`
+
 ## \[3.13.2]
 
 - [`fe2e7a4`](https://www.github.com/tauri-apps/create-tauri-app/commit/fe2e7a421f1b626f134af62c093842b26ceee833)([#595](https://www.github.com/tauri-apps/create-tauri-app/pull/595)) Fixed an issue where `tauri.conf.json` was missing in projects with mobile support.
