@@ -37,26 +37,30 @@ type Result<T> = std::result::Result<T, TemplateParseError>;
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 enum Token<'a> {
     OBracket,
+    CBracket,
+    Bang,
     If,
     Var(&'a [u8]),
     Else,
     EndIf,
-    CBracket,
     Text(&'a [u8]),
-    Invalid(usize),
+    Invalid(usize, char),
 }
 
 impl Display for Token<'_> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Token::OBracket => write!(f, "{{%"),
+            Token::CBracket => write!(f, "%}}"),
+            Token::Bang => write!(f, "!"),
             Token::If => write!(f, "if"),
             Token::Var(var) => write!(f, "{} (variable)", String::from_utf8_lossy(var)),
             Token::Else => write!(f, "else"),
             Token::EndIf => write!(f, "endif"),
-            Token::CBracket => write!(f, "%}}"),
             Token::Text(_) => write!(f, "(text)"),
-            Token::Invalid(col) => write!(f, "invalid token at {col}"),
+            Token::Invalid(col, token) => {
+                write!(f, "invalid token {token} at {col}",)
+            }
         }
     }
 }
@@ -141,6 +145,11 @@ impl<'a> Lexer<'a> {
             return Some(Token::CBracket);
         }
 
+        if self.current_char() == '!' {
+            self.cursor += 1;
+            return Some(Token::Bang);
+        }
+
         if self.in_bracket {
             if self.is_symbol_start() {
                 let symbol = self.read_symbol();
@@ -153,7 +162,7 @@ impl<'a> Lexer<'a> {
                 return Some(Token::Var(symbol));
             } else {
                 self.cursor += 1;
-                return Some(Token::Invalid(self.cursor));
+                return Some(Token::Invalid(self.cursor, self.current_char()));
             }
         }
 
@@ -183,7 +192,11 @@ impl<'a> Iterator for Lexer<'a> {
 }
 
 fn is_truthy(value: &[u8]) -> bool {
-    value == TRUE || (value != FALSE && !value.is_empty())
+    match value {
+        TRUE => true,
+        FALSE => false,
+        _ => !value.is_empty(),
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
@@ -192,6 +205,7 @@ enum Stmt<'a> {
     Var(&'a [u8]),
     If {
         var: &'a [u8],
+        negated: bool,
         condition: Vec<Stmt<'a>>,
         else_condition: Option<Vec<Stmt<'a>>>,
     },
@@ -216,6 +230,7 @@ impl<'a> Stmt<'a> {
             }
             Stmt::If {
                 var,
+                negated,
                 condition,
                 else_condition,
             } => {
@@ -225,7 +240,8 @@ impl<'a> Stmt<'a> {
                     .ok_or_else(|| format!("Unrecognized variable: {var}"))?;
                 let value = value.as_ref();
 
-                let evaluated = if is_truthy(value) {
+                let truthy = is_truthy(value);
+                let evaluated = if (truthy && !negated) || (!truthy && *negated) {
                     condition
                 } else if let Some(else_condition) = else_condition {
                     else_condition
@@ -298,6 +314,13 @@ impl<'a> Parser<'a> {
         if self.current_token() == Token::If {
             self.cursor += 1;
 
+            let negated = if self.current_token() == Token::Bang {
+                self.cursor += 1;
+                true
+            } else {
+                false
+            };
+
             let var = self.consume_var().ok_or_else(|| {
                 format!(
                     "expected variable after if, found: {}",
@@ -337,6 +360,7 @@ impl<'a> Parser<'a> {
 
             Ok(Some(Stmt::If {
                 var,
+                negated,
                 condition,
                 else_condition,
             }))
@@ -352,7 +376,7 @@ impl<'a> Parser<'a> {
             return Ok(None);
         }
 
-        if let t @ Token::Invalid(_) = self.current_token() {
+        if let t @ Token::Invalid(_, _) = self.current_token() {
             return Err(t.to_string().into());
         }
 
@@ -502,14 +526,6 @@ mod tests {
     }
 
     #[test]
-    fn it_panics() {
-        let template = "<html>Hello {% name }</html>";
-        let data: HashMap<&str, &str> = [("name", "world")].into();
-        let rendered = render(template, &data);
-        assert!(rendered.is_err())
-    }
-
-    #[test]
     fn truthy_and_falsy() {
         let template =
             "<html>Hello {% if beforeDevCommand %}{% beforeDevCommand %}{% endif %}</html>";
@@ -522,5 +538,36 @@ mod tests {
         let data: HashMap<&str, &str> = [("beforeDevCommand", "")].into();
         let rendered = render(template, &data).expect("it should render");
         assert_eq!(rendered, "<html>Hello </html>");
+    }
+
+    #[test]
+    fn negated_value() {
+        let template = "<html>Hello {% if !name %}world{% else %}{ %name% }{%endif %}</html>";
+        let data: HashMap<&str, &str> = [("name", "")].into();
+        let rendered = render(template, &data).expect("it should render");
+        assert_eq!(rendered, "<html>Hello world</html>");
+
+        let template = "<html>Hello {% if !name %}world{% else %}{% name %}{%endif %}</html>";
+        let data: HashMap<&str, &str> = [("name", "tauri")].into();
+        let rendered = render(template, &data).expect("it should render");
+        assert_eq!(rendered, "<html>Hello tauri</html>");
+
+        let template = "<html>Hello {% if !render %}world{% else %}{% name %}{%endif %}</html>";
+        let data: HashMap<&str, &str> = [("render", "true"), ("name", "tauri")].into();
+        let rendered = render(template, &data).expect("it should render");
+        assert_eq!(rendered, "<html>Hello tauri</html>");
+
+        let template = "<html>Hello {% if !render %}world{% else %}{% name %}{%endif %}</html>";
+        let data: HashMap<&str, &str> = [("render", "false"), ("name", "tauri")].into();
+        let rendered = render(template, &data).expect("it should render");
+        assert_eq!(rendered, "<html>Hello world</html>");
+    }
+
+    #[test]
+    #[should_panic]
+    fn it_panics() {
+        let template = "<html>Hello {% name }</html>";
+        let data: HashMap<&str, &str> = [("name", "world")].into();
+        render(template, &data).unwrap();
     }
 }
