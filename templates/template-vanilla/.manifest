@@ -1,4 +1,4 @@
-devPath = ../src
+devPath = {% if stable %}../src{% endif %}
 distDir = ../src
 withGlobalTauri = true
 

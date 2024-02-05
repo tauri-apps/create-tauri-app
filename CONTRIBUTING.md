@@ -24,7 +24,7 @@ cargo run -- <cli arguments>
 > You should open a new issue first to discuss the addition of a certain template.
 
 - Add a directory in `templates` and name it `template-<template-name>` where `<template-name>` is the name of the template and add all the files you need there.
-- A template also must have a `_cta_manifest_` file which contains info about the template:
+- A template also must have a `.manifest` file which contains info about the template:
 
   ```ini
   beforeDevCommand = {% pkg_manager_run_command %} dev
