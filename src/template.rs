@@ -257,9 +257,9 @@ impl<'a> Template {
 
         let lib_name = format!("{}_lib", package_name.replace('-', "_"));
 
-        let stable_str = (!alpha).to_string();
+        let alpha_str = alpha.to_string();
         let manifest_template_data: HashMap<&str, &str> = [
-            ("stable", stable_str.as_str()),
+            ("alpha", alpha_str.as_str()),
             ("pkg_manager_run_command", pkg_manager.run_cmd()),
             ("lib_name", &lib_name),
             ("project_name", project_name),
@@ -276,8 +276,8 @@ impl<'a> Template {
         .into();
 
         let template_data: HashMap<&str, String> = [
-            ("stable", stable_str.clone()),
-            ("alpha", alpha.to_string()),
+            ("stable", (!alpha).to_string()),
+            ("alpha", alpha_str.clone()),
             ("mobile", mobile.to_string()),
             ("project_name", project_name.to_string()),
             ("package_name", package_name.to_string()),
