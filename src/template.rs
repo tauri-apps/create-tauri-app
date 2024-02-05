@@ -370,7 +370,7 @@ impl<'a> Template {
             // Only modify files that need to use the template engine
             let (file_data, file_name) = if let Some(new_name) = file_name.strip_suffix(".lte") {
                 let data = EMBEDDED_TEMPLATES::get(file).unwrap().data.to_vec();
-                let data = lte::render(&data, template_data)?.into_bytes();
+                let data = lte::render(data, template_data)?.into_bytes();
                 (data, new_name)
             } else {
                 let data = EMBEDDED_TEMPLATES::get(file).unwrap().data.to_vec();
