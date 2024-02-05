@@ -3,16 +3,14 @@
   "version": "0.0.0",
   "identifier": "com.tauri.dev",
   "build": {
-    "beforeDevCommand": "{% before_dev_command %}",
-    "beforeBuildCommand": "{% before_build_command %}",
-    "devUrl": "{% dev_path %}",
-    "frontendDist": "{% dist_dir %}"
+    {% if before_dev_command %}"beforeDevCommand": "{% before_dev_command %}",
+    {% endif %}{% if dev_path %}"devUrl": "{% dev_path %}",
+    {% endif %}{% if before_build_command %}"beforeBuildCommand": "{% before_build_command %}",
+    {% endif %}"frontendDist": "{% dist_dir %}"
   },
-  "app": {
-    "security": {
-      "csp": null
-    },
-    "windows": [
+  "app": {{% if with_global_tauri %}
+    "withGlobalTauri": true,
+    {% endif %}"windows": [
       {
         "fullscreen": false,
         "resizable": true,
@@ -20,8 +18,10 @@
         "width": 800,
         "height": 600
       }
-    ]{% if with_global_tauri %},
-    "withGlobalTauri": true{% endif %}
+    ],
+    "security": {
+      "csp": null
+    }
   },
   "bundle": {
     "active": true,
@@ -33,10 +33,5 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ]
-  },
-  "plugins": {
-    "shell": {
-      "open": true
-    }
   }
 }

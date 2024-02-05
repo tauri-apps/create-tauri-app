@@ -9,34 +9,40 @@
 // 2. multiple condition in the same if
 // 3. equality checks
 
-use std::{collections::HashMap, fmt::Display};
+use std::{collections::HashMap, fmt::Display, io::Write};
 
 #[derive(Debug)]
 pub struct TemplateParseError {
     message: String,
 }
-impl TemplateParseError {
-    fn new(message: String) -> Self {
-        Self { message }
-    }
-}
+
 impl std::fmt::Display for TemplateParseError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "Failed to parse template: {}", self.message)
     }
 }
+
+impl<T: AsRef<str>> From<T> for TemplateParseError {
+    fn from(value: T) -> Self {
+        Self {
+            message: value.as_ref().to_string(),
+        }
+    }
+}
+
 impl std::error::Error for TemplateParseError {}
+
 type Result<T> = std::result::Result<T, TemplateParseError>;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 enum Token<'a> {
     OBracket,
     If,
-    Var(&'a str),
+    Var(&'a [u8]),
     Else,
     EndIf,
     CBracket,
-    Text(&'a str),
+    Text(&'a [u8]),
     Invalid(usize),
 }
 
@@ -45,7 +51,7 @@ impl Display for Token<'_> {
         match self {
             Token::OBracket => write!(f, "{{%"),
             Token::If => write!(f, "if"),
-            Token::Var(var) => write!(f, "{} (variable)", var),
+            Token::Var(var) => write!(f, "{} (variable)", String::from_utf8_lossy(var)),
             Token::Else => write!(f, "else"),
             Token::EndIf => write!(f, "endif"),
             Token::CBracket => write!(f, "%}}"),
@@ -55,14 +61,15 @@ impl Display for Token<'_> {
     }
 }
 
-const KEYWORDS: &[(&str, Token)] = &[
-    ("if", Token::If),
-    ("else", Token::Else),
-    ("endif", Token::EndIf),
+const TRUE: &[u8] = b"true";
+const FALSE: &[u8] = b"false";
+const KEYWORDS: &[(&[u8], Token)] = &[
+    (b"if", Token::If),
+    (b"else", Token::Else),
+    (b"endif", Token::EndIf),
 ];
 
 struct Lexer<'a> {
-    input: &'a str,
     bytes: &'a [u8],
     len: usize,
     cursor: usize,
@@ -70,13 +77,11 @@ struct Lexer<'a> {
 }
 
 impl<'a> Lexer<'a> {
-    fn new(input: &'a str) -> Self {
-        let bytes = input.as_bytes();
+    fn new(bytes: &'a [u8]) -> Self {
         let len = bytes.len();
         Self {
             len,
             bytes,
-            input,
             cursor: 0,
             in_bracket: false,
         }
@@ -106,13 +111,13 @@ impl<'a> Lexer<'a> {
         c.is_alphanumeric() || c == '_'
     }
 
-    fn read_symbol(&mut self) -> &'a str {
+    fn read_symbol(&mut self) -> &'a [u8] {
         let start = self.cursor;
         while self.is_symbol() {
             self.cursor += 1;
         }
         let end = self.cursor - 1;
-        &self.input[start..=end]
+        &self.bytes[start..=end]
     }
 
     fn next(&mut self) -> Option<Token<'a>> {
@@ -162,7 +167,7 @@ impl<'a> Lexer<'a> {
                 }
             }
             let end = self.cursor - 1;
-            return Some(Token::Text(&self.input[start..=end]));
+            return Some(Token::Text(&self.bytes[start..=end]));
         }
 
         None
@@ -177,45 +182,56 @@ impl<'a> Iterator for Lexer<'a> {
     }
 }
 
+fn is_truthy(value: &[u8]) -> bool {
+    value == TRUE || (value != FALSE && !value.is_empty())
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 enum Stmt<'a> {
-    Text(&'a str),
-    Var(&'a str),
+    Text(&'a [u8]),
+    Var(&'a [u8]),
     If {
-        var: &'a str,
+        var: &'a [u8],
         condition: Vec<Stmt<'a>>,
         else_condition: Option<Vec<Stmt<'a>>>,
     },
 }
 
 impl<'a> Stmt<'a> {
-    fn execute<T: ToString>(&self, out: &mut String, data: &HashMap<&str, T>) -> Result<()> {
+    fn execute<V, T>(&self, out: &mut T, data: &HashMap<&str, V>) -> Result<()>
+    where
+        T: Write,
+        V: AsRef<[u8]>,
+    {
         match self {
-            Stmt::Text(t) => out.push_str(t),
-            Stmt::Var(v) => {
-                let value = data.get(v).ok_or_else(|| {
-                    TemplateParseError::new(format!("Unrecognized variable: {v}"))
-                })?;
-                out.push_str(&value.to_string())
+            Stmt::Text(t) => {
+                out.write_all(t).map_err(|e| e.to_string())?;
+            }
+            Stmt::Var(var) => {
+                let var = std::str::from_utf8(var).map_err(|e| e.to_string())?;
+                let value = data
+                    .get(var)
+                    .ok_or_else(|| format!("Unrecognized variable: {var}"))?;
+                out.write_all(value.as_ref()).map_err(|e| e.to_string())?;
             }
             Stmt::If {
                 var,
                 condition,
                 else_condition,
             } => {
+                let var = std::str::from_utf8(var).map_err(|e| e.to_string())?;
                 let value = data
                     .get(var)
-                    .ok_or_else(|| {
-                        TemplateParseError::new(format!("Unrecognized variable: {var}"))
-                    })?
-                    .to_string();
+                    .ok_or_else(|| format!("Unrecognized variable: {var}"))?;
+                let value = value.as_ref();
 
-                let evaluated = if value == "true" {
-                    condition.as_slice()
+                let evaluated = if is_truthy(value) {
+                    condition
                 } else if let Some(else_condition) = else_condition {
-                    else_condition.as_slice()
+                    else_condition
                 } else {
-                    &[]
+                    // no need to do anything, return early
+                    return Ok(());
                 };
 
                 for stmt in evaluated {
@@ -260,7 +276,7 @@ impl<'a> Parser<'a> {
         }
     }
 
-    fn consume_text(&mut self) -> Option<&'a str> {
+    fn consume_text(&mut self) -> Option<&'a [u8]> {
         if let Token::Text(text) = self.current_token() {
             self.cursor += 1;
             Some(text)
@@ -269,7 +285,7 @@ impl<'a> Parser<'a> {
         }
     }
 
-    fn consume_var(&mut self) -> Option<&'a str> {
+    fn consume_var(&mut self) -> Option<&'a [u8]> {
         if let Token::Var(var) = self.current_token() {
             self.cursor += 1;
             Some(var)
@@ -283,10 +299,10 @@ impl<'a> Parser<'a> {
             self.cursor += 1;
 
             let var = self.consume_var().ok_or_else(|| {
-                TemplateParseError::new(format!(
+                format!(
                     "expected variable after if, found: {}",
                     self.current_token()
-                ))
+                )
             })?;
 
             let mut condition = Vec::new();
@@ -316,10 +332,7 @@ impl<'a> Parser<'a> {
             if self.current_token() == Token::EndIf {
                 self.cursor += 1;
             } else {
-                return Err(TemplateParseError::new(format!(
-                    "expected endif, found: {}",
-                    self.current_token()
-                )));
+                return Err(format!("expected endif, found: {}", self.current_token()).into());
             }
 
             Ok(Some(Stmt::If {
@@ -340,9 +353,7 @@ impl<'a> Parser<'a> {
         }
 
         if let t @ Token::Invalid(_) = self.current_token() {
-            return Err(TemplateParseError {
-                message: t.to_string(),
-            });
+            return Err(t.to_string().into());
         }
 
         let text = self.consume_text();
@@ -364,19 +375,24 @@ impl<'a> Parser<'a> {
     }
 }
 
-pub fn render<T: ToString>(template: &str, data: &HashMap<&str, T>) -> Result<String> {
+pub fn render<T, V>(template: T, data: &HashMap<&str, V>) -> Result<String>
+where
+    T: AsRef<[u8]>,
+    V: AsRef<[u8]>,
+{
+    let template = template.as_ref();
     let tokens: Vec<Token> = Lexer::new(template).collect();
     let mut parser = Parser::new(&tokens);
     let mut stmts: Vec<Stmt> = Vec::new();
     while let Some(stmt) = parser.next()? {
         stmts.push(stmt);
     }
-    let mut out = String::new();
+    let mut out = Vec::new();
     for stmt in stmts {
         stmt.execute(&mut out, data)?;
     }
 
-    Ok(out)
+    String::from_utf8(out).map_err(|e| e.to_string().into())
 }
 
 #[cfg(test)]
@@ -413,7 +429,7 @@ mod tests {
     #[test]
     fn it_performs_condition() {
         let template = "<html>Hello {% if alpha %}alpha{% else %}stable{% endif %}</html>";
-        let data: HashMap<&str, bool> = [("alpha", true)].into();
+        let data: HashMap<&str, &str> = [("alpha", "true")].into();
         let rendered = render(template, &data).expect("it should render");
         assert_eq!(rendered, "<html>Hello alpha</html>")
     }
@@ -421,7 +437,7 @@ mod tests {
     #[test]
     fn it_performs_else_condition() {
         let template = "<html>Hello {% if alpha %}alpha{% else %}stable{% endif %}</html>";
-        let data: HashMap<&str, bool> = [("alpha", false)].into();
+        let data: HashMap<&str, &str> = [("alpha", "false")].into();
         let rendered = render(template, &data).expect("it should render");
         assert_eq!(rendered, "<html>Hello stable</html>")
     }
@@ -434,7 +450,7 @@ mod tests {
         <em>alpha</em>{% else %}
         <em>stable</em>{% endif %}
         </html>"#;
-        let data: HashMap<&str, bool> = [("alpha", true)].into();
+        let data: HashMap<&str, &str> = [("alpha", "true")].into();
         let rendered = render(template, &data).expect("it should render");
         let expected = r#"
         <html>
@@ -491,5 +507,20 @@ mod tests {
         let data: HashMap<&str, &str> = [("name", "world")].into();
         let rendered = render(template, &data);
         assert!(rendered.is_err())
+    }
+
+    #[test]
+    fn truthy_and_falsy() {
+        let template =
+            "<html>Hello {% if beforeDevCommand %}{% beforeDevCommand %}{% endif %}</html>";
+        let data: HashMap<&str, &str> = [("beforeDevCommand", "pnpm run")].into();
+        let rendered = render(template, &data).expect("it should render");
+        assert_eq!(rendered, "<html>Hello pnpm run</html>");
+
+        let template =
+            "<html>Hello {% if beforeDevCommand %}{% beforeDevCommand %}{% endif %}</html>";
+        let data: HashMap<&str, &str> = [("beforeDevCommand", "")].into();
+        let rendered = render(template, &data).expect("it should render");
+        assert_eq!(rendered, "<html>Hello </html>");
     }
 }

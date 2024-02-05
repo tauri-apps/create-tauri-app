@@ -13,6 +13,8 @@ use crate::{
     utils::{colors::*, lte},
 };
 
+const CTA_MANIFEST_FILENAME: &str = ".manifest";
+
 #[derive(RustEmbed)]
 #[folder = "templates"]
 #[allow(clippy::upper_case_acronyms, non_camel_case_types)]
@@ -245,15 +247,19 @@ impl<'a> Template {
         alpha: bool,
         mobile: bool,
     ) -> anyhow::Result<()> {
-        let manifest_bytes = EMBEDDED_TEMPLATES::get(&format!("template-{self}/_cta_manifest_"))
-            .with_context(|| "Failed to get manifest bytes")?
-            .data;
-        let manifest_str = String::from_utf8(manifest_bytes.to_vec())?;
+        let manifest_bytes =
+            EMBEDDED_TEMPLATES::get(&format!("template-{self}/{CTA_MANIFEST_FILENAME}"))
+                .with_context(|| "Failed to get manifest bytes")?
+                .data
+                .to_vec();
+        let manifest_str = String::from_utf8(manifest_bytes)?;
         let manifest = Manifest::parse(&manifest_str, mobile)?;
 
         let lib_name = format!("{}_lib", package_name.replace('-', "_"));
 
+        let stable_str = (!alpha).to_string();
         let manifest_template_data: HashMap<&str, &str> = [
+            ("stable", stable_str.as_str()),
             ("pkg_manager_run_command", pkg_manager.run_cmd()),
             ("lib_name", &lib_name),
             ("project_name", project_name),
@@ -270,7 +276,7 @@ impl<'a> Template {
         .into();
 
         let template_data: HashMap<&str, String> = [
-            ("stable", (!alpha).to_string()),
+            ("stable", stable_str.clone()),
             ("alpha", alpha.to_string()),
             ("mobile", mobile.to_string()),
             ("project_name", project_name.to_string()),
@@ -326,7 +332,7 @@ impl<'a> Template {
             let file_name = match &*file_name {
                 "_gitignore" => ".gitignore",
                 // skip manifest
-                "_cta_manifest_" => return Ok(()),
+                CTA_MANIFEST_FILENAME => return Ok(()),
                 // conditional files:
                 // are files that start with a special syntax
                 //          "%(<list of flags separated by `-`>%)<file_name>"
@@ -362,18 +368,13 @@ impl<'a> Template {
             };
 
             // Only modify files that need to use the template engine
-            let (file_data, file_name) = if let Some(file_name) = file_name.strip_suffix(".lte") {
-                let file_data = EMBEDDED_TEMPLATES::get(file).unwrap().data.to_vec();
-                let file_data_as_str = std::str::from_utf8(&file_data)?;
-                (
-                    lte::render(file_data_as_str, template_data)?.into_bytes(),
-                    file_name,
-                )
+            let (file_data, file_name) = if let Some(new_name) = file_name.strip_suffix(".lte") {
+                let data = EMBEDDED_TEMPLATES::get(file).unwrap().data.to_vec();
+                let data = lte::render(&data, template_data)?.into_bytes();
+                (data, new_name)
             } else {
-                (
-                    EMBEDDED_TEMPLATES::get(file).unwrap().data.to_vec(),
-                    file_name,
-                )
+                let data = EMBEDDED_TEMPLATES::get(file).unwrap().data.to_vec();
+                (data, file_name)
             };
 
             let parent = p.parent().unwrap();
