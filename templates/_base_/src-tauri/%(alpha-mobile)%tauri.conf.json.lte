@@ -12,8 +12,6 @@
     "withGlobalTauri": true,
     {% endif %}"windows": [
       {
-        "fullscreen": false,
-        "resizable": true,
         "title": "{% package_name %}",
         "width": 800,
         "height": 600
