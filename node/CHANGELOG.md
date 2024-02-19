@@ -1,5 +1,13 @@
 # Changelog
 
+## \[3.13.4]
+
+- [`683f2bb`](https://www.github.com/tauri-apps/create-tauri-app/commit/683f2bbfe038e9ff6c3a62f8729d7409ba3111a9)([#607](https://www.github.com/tauri-apps/create-tauri-app/pull/607)) Update `@vitejs/plugin-vue` version for `vue` and `vue-ts` templates.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.13.4`
+
 ## \[3.13.3]
 
 - [`f91ce78`](https://www.github.com/tauri-apps/create-tauri-app/commit/f91ce78498f4c337d54a30df4c6a2bc74fd10564)([#598](https://www.github.com/tauri-apps/create-tauri-app/pull/598)) Fix `vanilla` template generating an invalid `tauri.conf.json` file.
