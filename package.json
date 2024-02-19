@@ -10,7 +10,6 @@
     "covector": "0.10.2"
   },
   "resolutions": {
-    "zod": ">=3.22.3",
-    "undici": ">=5.26.2"
+    "undici": ">=5.28.3"
   }
 }
