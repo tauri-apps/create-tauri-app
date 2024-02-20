@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.13.5]
+
+- [`ff5bf7e`](https://www.github.com/tauri-apps/create-tauri-app/commit/ff5bf7e5d0a7157b09f7d499f096b601f22cf838)([#609](https://www.github.com/tauri-apps/create-tauri-app/pull/609)) Update `yew` template to `0.21`
+
 ## \[3.13.4]
 
 - [`683f2bb`](https://www.github.com/tauri-apps/create-tauri-app/commit/683f2bbfe038e9ff6c3a62f8729d7409ba3111a9)([#607](https://www.github.com/tauri-apps/create-tauri-app/pull/607)) Update `@vitejs/plugin-vue` version for `vue` and `vue-ts` templates.
