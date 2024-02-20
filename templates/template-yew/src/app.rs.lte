@@ -26,7 +26,8 @@ pub fn app() -> Html {
         let greet_msg = greet_msg.clone();
         let name = name.clone();
         let name2 = name.clone();
-        use_effect_with_deps(
+        use_effect_with(
+            name2,
             move |_| {
                 spawn_local(async move {
                     if name.is_empty() {
@@ -41,7 +42,6 @@ pub fn app() -> Html {
 
                 || {}
             },
-            name2,
         );
     }
 
