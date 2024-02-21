@@ -1,4 +1,6 @@
-const changedFilesStr = process.argv[2];
+const isCron = process.argv[2] === "schedule";
+
+const changedFilesStr = process.argv[3];
 const changedFiles = changedFilesStr.split(",");
 
 const nodeJsTemplates = [
@@ -19,6 +21,12 @@ const nodeJsTemplates = [
 
 const matrixConfig = [
   {
+    manager: "cargo",
+    install_cmd: "",
+    run_cmd: "cargo",
+    templates: ["vanilla", "yew", "sycamore", "leptos"],
+  },
+  {
     manager: "pnpm",
     install_cmd: "pnpm install",
     run_cmd: "pnpm",
@@ -37,12 +45,6 @@ const matrixConfig = [
     templates: nodeJsTemplates,
   },
   {
-    manager: "cargo",
-    install_cmd: "",
-    run_cmd: "cargo",
-    templates: ["vanilla", "yew", "leptos"],
-  },
-  {
     manager: "bun",
     install_cmd: "bun install",
     run_cmd: "bun run",
@@ -57,6 +59,7 @@ matrixConfig
     let { templates, ...managerInfo } = matrixConfig[i];
     for (const t of ts) {
       if (
+        isCron ||
         changedFiles.some(
           (e) =>
             e.startsWith(`templates/base`) ||
@@ -68,7 +71,7 @@ matrixConfig
       ) {
         outMatrix.push({
           template: t,
-          install_trunk: ["yew", "leptos"].includes(t),
+          install_trunk: ["yew", "sycamore", "leptos"].includes(t),
           ...managerInfo,
         });
       }

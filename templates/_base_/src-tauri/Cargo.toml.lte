@@ -12,19 +12,18 @@ name = "{% lib_name %}"
 crate-type = ["lib", "cdylib", "staticlib"]
 
 {% endif %}{% if stable %}[build-dependencies]
-tauri-build = { version = "1.5", features = [] }
+tauri-build = { version = "1", features = [] }
 
 [dependencies]
-tauri = { version = "1.5", features = ["shell-open"] }
-serde = { version = "1.0", features = ["derive"] }{% else %}[build-dependencies]
+tauri = { version = "1", features = ["shell-open"] }{% else %}[build-dependencies]
 tauri-build = { version = "2.0.0-beta", features = [] }
 
 [dependencies]
 tauri = { version = "2.0.0-beta", features = [] }
 tauri-plugin-shell = "2.0.0-beta"{% endif %}
-serde_json = "1.0"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
 
 [features]
-# this feature is used for production builds or when `devPath` points to the filesystem
-# DO NOT REMOVE!!
+# This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!
 custom-protocol = ["tauri/custom-protocol"]
