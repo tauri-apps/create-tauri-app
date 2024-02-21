@@ -5,6 +5,9 @@
 name: test create-tauri-app templates
 
 on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
   pull_request:
     branches:
       - 'dev'
@@ -55,7 +58,7 @@ jobs:
         id: set-matrix
         shell: bash
         run: |
-          OUT="$(node .scripts/generate-templates-matrix.js '${{ steps.changed-files.outputs.all_changed_files }}')"
+          OUT="$(node .scripts/generate-templates-matrix.js '${{ github.event_name }}' '${{ steps.changed-files.outputs.all_changed_files }}')"
           echo "matrix=$OUT" >> $GITHUB_OUTPUT
 
   test:
