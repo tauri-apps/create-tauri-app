@@ -1,5 +1,4 @@
 const isCron = process.argv[1] === "schedule";
-console.log(process.argv[1]);
 
 const changedFilesStr = process.argv[2];
 const changedFiles = changedFilesStr.split(",");
@@ -67,7 +66,7 @@ matrixConfig
             e.startsWith(`templates/template-${t}`) ||
             e.startsWith("src") ||
             e.startsWith("Cargo.toml") ||
-            e.startsWith(".github/workflows/templates-test.yml")
+            e.startsWith(".github/workflows/templates-test.yml"),
         )
       ) {
         outMatrix.push({
