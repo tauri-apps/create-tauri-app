@@ -9,7 +9,7 @@ edition = "2021"
 
 {% if mobile %}[lib]
 name = "{% lib_name %}"
-crate-type = ["lib", "cdylib"]
+crate-type = ["lib", "cdylib", "staticlib"]
 
 {% endif %}{% if stable %}[build-dependencies]
 tauri-build = { version = "1.5", features = [] }
