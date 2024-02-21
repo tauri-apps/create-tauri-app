@@ -1,6 +1,6 @@
-const isCron = process.argv[1] === "schedule";
+const isCron = process.argv[2] === "schedule";
 
-const changedFilesStr = process.argv[2];
+const changedFilesStr = process.argv[3];
 const changedFiles = changedFilesStr.split(",");
 
 const nodeJsTemplates = [
@@ -66,7 +66,7 @@ matrixConfig
             e.startsWith(`templates/template-${t}`) ||
             e.startsWith("src") ||
             e.startsWith("Cargo.toml") ||
-            e.startsWith(".github/workflows/templates-test.yml"),
+            e.startsWith(".github/workflows/templates-test.yml")
         )
       ) {
         outMatrix.push({

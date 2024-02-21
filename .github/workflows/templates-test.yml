@@ -24,7 +24,29 @@ concurrency:
    cancel-in-progress: true
 
 jobs:
+  generate-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+        with:
+          sha: 'dev'
+          separator: ","
+
+      - name: set matrix
+        id: set-matrix
+        shell: bash
+        run: |
+          OUT="$(node .scripts/generate-templates-matrix.js '${{ github.event_name }}' '${{ steps.changed-files.outputs.all_changed_files }}')"
+          echo "matrix=$OUT" >> $GITHUB_OUTPUT
+
   build-cli:
+    needs: [generate-matrix]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -40,27 +62,6 @@ jobs:
           name: create-tauri-app
           path: create-tauri-app.tar
           if-no-files-found: error
-
-  generate-matrix:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v35
-        with:
-          since_last_remote_commit: true
-          separator: ","
-
-      - name: set matrix
-        id: set-matrix
-        shell: bash
-        run: |
-          OUT="$(node .scripts/generate-templates-matrix.js '${{ github.event_name }}' '${{ steps.changed-files.outputs.all_changed_files }}')"
-          echo "matrix=$OUT" >> $GITHUB_OUTPUT
 
   test:
     needs: [build-cli, generate-matrix]
