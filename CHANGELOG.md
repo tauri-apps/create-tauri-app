@@ -1,5 +1,10 @@
 # Changelog
 
+## \[3.13.6]
+
+- [`766eb7e`](https://www.github.com/tauri-apps/create-tauri-app/commit/766eb7e01c557cec7be44c9bade07544aa825378)([#612](https://www.github.com/tauri-apps/create-tauri-app/pull/612)) Add crate-type `staticlib` to `Cargo.toml` for mobile builds.
+- [`28b301d`](https://www.github.com/tauri-apps/create-tauri-app/commit/28b301d1f586f5cfde492d2f60ae13a5bc127f91)([#614](https://www.github.com/tauri-apps/create-tauri-app/pull/614)) Change all templates to specify tauri crates and packages version as `^1` so it will always pull latest versions.
+
 ## \[3.13.5]
 
 - [`ff5bf7e`](https://www.github.com/tauri-apps/create-tauri-app/commit/ff5bf7e5d0a7157b09f7d499f096b601f22cf838)([#609](https://www.github.com/tauri-apps/create-tauri-app/pull/609)) Update `yew` template to `0.21`
