@@ -1,0 +1,1 @@
+Fix `productName` incorrectly set when initializing a project in current directory

@@ -262,7 +262,6 @@ impl<'a> Template {
             ("alpha", alpha_str.as_str()),
             ("pkg_manager_run_command", pkg_manager.run_cmd()),
             ("lib_name", &lib_name),
-            ("project_name", project_name),
             ("package_name", package_name),
             (
                 "double_dash_with_space",
