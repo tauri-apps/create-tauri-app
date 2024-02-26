@@ -1,5 +1,5 @@
 {
-  "productName": "{% project_name %}",
+  "productName": "{% package_name %}",
   "version": "0.0.0",
   "identifier": "com.tauri.dev",
   "build": {
