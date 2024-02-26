@@ -1,5 +1,13 @@
 # Changelog
 
+## \[3.13.8]
+
+- [`66a0298`](https://www.github.com/tauri-apps/create-tauri-app/commit/66a0298f76d37452d85fe0e1d7171ed342a0dec1)([#621](https://www.github.com/tauri-apps/create-tauri-app/pull/621)) Fix `productName` incorrectly set when initializing a project in current directory
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.13.8`
+
 ## \[3.13.7]
 
 - [`6fbdc50`](https://www.github.com/tauri-apps/create-tauri-app/commit/6fbdc50f199eabd948860a688e3294c31eab91c9)([#618](https://www.github.com/tauri-apps/create-tauri-app/pull/618)) Fixed `@tauri-apps/plugin-shell` version in generated templates.
