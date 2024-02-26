@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.13.7]
+
+- [`6fbdc50`](https://www.github.com/tauri-apps/create-tauri-app/commit/6fbdc50f199eabd948860a688e3294c31eab91c9)([#618](https://www.github.com/tauri-apps/create-tauri-app/pull/618)) Fixed `@tauri-apps/plugin-shell` version in generated templates.
+
 ## \[3.13.6]
 
 - [`766eb7e`](https://www.github.com/tauri-apps/create-tauri-app/commit/766eb7e01c557cec7be44c9bade07544aa825378)([#612](https://www.github.com/tauri-apps/create-tauri-app/pull/612)) Add crate-type `staticlib` to `Cargo.toml` for mobile builds.

@@ -1,5 +1,13 @@
 # Changelog
 
+## \[3.13.7]
+
+- [`6fbdc50`](https://www.github.com/tauri-apps/create-tauri-app/commit/6fbdc50f199eabd948860a688e3294c31eab91c9)([#618](https://www.github.com/tauri-apps/create-tauri-app/pull/618)) Fixed `@tauri-apps/plugin-shell` version in generated templates.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.13.7`
+
 ## \[3.13.6]
 
 - [`28b301d`](https://www.github.com/tauri-apps/create-tauri-app/commit/28b301d1f586f5cfde492d2f60ae13a5bc127f91)([#614](https://www.github.com/tauri-apps/create-tauri-app/pull/614)) Change all templates to specify tauri crates and packages version as `^1` so it will always pull latest versions.
