@@ -15,8 +15,9 @@ pub struct Args {
     pub template: Option<Template>,
     pub skip: bool,
     pub force: bool,
-    pub alpha: bool,
+    pub beta: bool,
     pub mobile: Option<bool>,
+    pub no_mobile: Option<bool>,
 }
 
 impl Default for Args {
@@ -27,8 +28,9 @@ impl Default for Args {
             template: Some(Template::Vanilla),
             skip: false,
             force: false,
-            alpha: false,
-            mobile: Some(false),
+            beta: false,
+            mobile: Some(false), // default for this value must be Some(false), as we use it as fallback when -y is used
+            no_mobile: None,
         }
     }
 }
@@ -54,8 +56,9 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
   {GREEN}-t{RESET}, {GREEN}--template <TEMPLATE>{RESET}     Specify the UI template to use [{templates}]
   {GREEN}-y{RESET}, {GREEN}--yes{RESET}                     Skip prompts and use defaults where applicable
   {GREEN}-f{RESET}, {GREEN}--force{RESET}                   Force create the directory even if it is not empty.
-                    {GREEN}--beta{RESET}                    Bootstraps a project using tauri@2.0-alpha
+                    {GREEN}--beta{RESET}                    Bootstraps a project using tauri@2.0-beta
                     {GREEN}--mobile{RESET}                  Bootstraps a mobile project too. Only availabe with `--beta` option.
+                    {GREEN}--no-mobile{RESET}               Skip bootstraping a mobile project. Only availabe with `--beta` option.
   {GREEN}-h{RESET}, {GREEN}--help{RESET}                    Prints help information
   {GREEN}-v{RESET}, {GREEN}--version{RESET}                 Prints version information
 "#,
@@ -84,7 +87,7 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
     }
 
     // pargs.contains() consume the flag so we have to bind the bool to a variable.
-    let alpha = if pargs.contains("--alpha") {
+    let beta = if pargs.contains("--alpha") {
         eprintln!(
                 "{BOLD}{YELLOW}warning{RESET}: The `{GREEN}--alpha{RESET}` option is now an alias for `{GREEN}--beta{RESET}` and may be removed in the future."
             );
@@ -98,8 +101,13 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
         template: pargs.opt_value_from_str(["-t", "--template"])?,
         skip: pargs.contains(["-y", "--yes"]),
         force: pargs.contains(["-f", "--force"]),
-        alpha,
+        beta,
         mobile: if pargs.contains("--mobile") {
+            Some(true)
+        } else {
+            None
+        },
+        no_mobile: if pargs.contains("--no-mobile") {
             Some(true)
         } else {
             None
