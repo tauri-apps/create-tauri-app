@@ -72,7 +72,7 @@ jobs:
       matrix:
         settings: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
 
-    name: ${{ matrix.settings.manager }} - ${{ matrix.settings.template }} (${{ matrix.settings.flags }})
+    name: ${{ matrix.settings.manager }} - ${{ matrix.settings.template }} ${{ matrix.settings.flags }}
     steps:
       - uses: pnpm/action-setup@v2.2.4
         if: matrix.settings.manager == 'pnpm'
