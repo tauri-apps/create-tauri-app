@@ -1,5 +1,14 @@
 # Changelog
 
+## \[3.13.9]
+
+- [`4a2f33b`](https://www.github.com/tauri-apps/create-tauri-app/commit/4a2f33b0c29c9a79cc156abfde5de296578b3f50)([#628](https://www.github.com/tauri-apps/create-tauri-app/pull/628)) Add `--no-mobile` flag.
+- [`0574bd8`](https://www.github.com/tauri-apps/create-tauri-app/commit/0574bd824d22af48b63faffa81324723469f551d)([#627](https://www.github.com/tauri-apps/create-tauri-app/pull/627)) Generate tauri v2 beta tempaltes without default features in Cargo.toml as it is no longer needed.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.13.9`
+
 ## \[3.13.8]
 
 - [`66a0298`](https://www.github.com/tauri-apps/create-tauri-app/commit/66a0298f76d37452d85fe0e1d7171ed342a0dec1)([#621](https://www.github.com/tauri-apps/create-tauri-app/pull/621)) Fix `productName` incorrectly set when initializing a project in current directory
