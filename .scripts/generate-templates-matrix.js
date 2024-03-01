@@ -69,10 +69,17 @@ matrixConfig
             e.startsWith(".github/workflows/templates-test.yml"),
         )
       ) {
-        outMatrix.push({
+        const jobInfo = {
           template: t,
           install_trunk: ["yew", "sycamore", "leptos"].includes(t),
+          beta: false,
           ...managerInfo,
+        };
+        outMatrix.push(jobInfo);
+        outMatrix.push({
+          ...jobInfo,
+          beta: true,
+          flags: "--beta",
         });
       }
     }

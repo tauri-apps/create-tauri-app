@@ -72,7 +72,7 @@ jobs:
       matrix:
         settings: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
 
-    name: ${{ matrix.settings.manager }} - ${{ matrix.settings.template }}
+    name: ${{ matrix.settings.manager }} - ${{ matrix.settings.template }} ${{ matrix.settings.flags }}
     steps:
       - uses: pnpm/action-setup@v2.2.4
         if: matrix.settings.manager == 'pnpm'
@@ -100,13 +100,25 @@ jobs:
           cargo install --locked trunk
         if: matrix.settings.install_trunk
 
+      - name: install system dependencies
+        if: matrix.settings.beta != true
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libayatana-appindicator3-dev librsvg2-dev patchelf
+
+      - name: install system dependencies (beta)
+        if: matrix.settings.beta == true
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.1 libayatana-appindicator3-dev librsvg2-dev patchelf
+
       - name: download cli artifact
         uses: actions/download-artifact@v3
 
       - run: tar -xf create-tauri-app/create-tauri-app.tar
 
-      - name: bootstrap a ${{ matrix.settings.template }} project
-        run: ./target/release/cargo-create-tauri-app tauri-app -m ${{ matrix.settings.manager }} -t ${{ matrix.settings.template }} -y
+      - name: bootstrap a ${{ matrix.settings.template }} project (${{ matrix.settings.flags }})
+        run: ./target/release/cargo-create-tauri-app tauri-app -m ${{ matrix.settings.manager }} -t ${{ matrix.settings.template }} ${{ matrix.settings.flags }} -y
 
       - run: sed -i 's/com.tauri.dev/com.create-tauri-app.dev/g' **/tauri.conf.json
         working-directory: tauri-app
@@ -114,11 +126,6 @@ jobs:
       - run: ${{ matrix.settings.install_cmd }}
         if: matrix.settings.install_cmd  != ''
         working-directory: tauri-app
-
-      - name: install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libayatana-appindicator3-dev librsvg2-dev patchelf
 
       - run: ${{ matrix.settings.run_cmd }} tauri build -b none
         if: matrix.settings.manager != 'npm'

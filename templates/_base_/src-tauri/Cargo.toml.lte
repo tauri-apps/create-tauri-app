@@ -23,7 +23,7 @@ tauri = { version = "2.0.0-beta", features = [] }
 tauri-plugin-shell = "2.0.0-beta"{% endif %}
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-
+{% if stable %}
 [features]
 # This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!
-custom-protocol = ["tauri/custom-protocol"]
+custom-protocol = ["tauri/custom-protocol"]{% endif %}
