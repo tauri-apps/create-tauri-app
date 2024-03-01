@@ -66,8 +66,9 @@ where
     let defaults = args::Args::default();
     let args::Args {
         skip,
-        mobile,
-        alpha,
+        mut mobile,
+        no_mobile,
+        beta,
         manager,
         project_name,
         template,
@@ -77,13 +78,14 @@ where
 
     // Allow `--mobile` to only be used with `--beta` for now
     // TODO: remove this limitation once tauri@v2 is stable
-    if let Some(mobile) = mobile {
-        if mobile && !alpha {
-            eprintln!(
-                "{BOLD}{RED}error{RESET}: `{GREEN}--mobile{RESET}` option is only available if `{GREEN}--beta{RESET}` option is also used"
-            );
-            exit(1);
-        }
+    if (mobile.is_some() || no_mobile.is_some()) && !beta {
+        let flag = if mobile.is_some() {
+            "--mobile"
+        } else {
+            "--no-mobile"
+        };
+        eprintln!("{BOLD}{RED}error{RESET}: `{GREEN}{}{RESET}` option is only available if `{GREEN}--beta{RESET}` option is also used", flag);
+        exit(1);
     }
 
     // Project name used for the project directory name and productName in tauri.conf.json
@@ -279,13 +281,18 @@ where
         }
     };
 
+    // if --no-mobile is specified, ignore --mobile and force it to fale
+    if no_mobile.is_some() {
+        mobile = Some(false);
+    };
+
     // Prompt for wether to bootstrap a mobile-friendly tauri project
     // This should only be prompted if `--beta` is used on the command line and `--mobile` wasn't.
     // TODO: remove this limitation once tauri@v2 is stable
     let mobile = match mobile {
         Some(mobile) => mobile,
         None => {
-            if skip || !alpha {
+            if skip || !beta {
                 defaults.mobile.context("default mobile not set")?
             } else {
                 Confirm::with_theme(&ColorfulTheme::default())
@@ -337,14 +344,14 @@ where
         pkg_manager,
         &project_name,
         &package_name,
-        alpha,
+        beta,
         mobile,
     )?;
 
     // Print post-render instructions
     println!();
     print!("Template created!");
-    let has_missing = print_missing_deps(pkg_manager, template, alpha);
+    let has_missing = print_missing_deps(pkg_manager, template, beta);
     if has_missing {
         println!("Make sure you have installed the prerequisites for your OS: {BLUE}{BOLD}https://tauri.app/v1/guides/getting-started/prerequisites{RESET}, then run:");
     } else {
