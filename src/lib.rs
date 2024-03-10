@@ -145,7 +145,7 @@ where
                 .with_prompt(format!(
                     "{} directory is not empty, do you want to overwrite?",
                     if target_dir == cwd {
-                        "Current directory".to_string()
+                        "Current".to_string()
                     } else {
                         target_dir
                             .file_name()
