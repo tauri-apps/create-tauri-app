@@ -8,7 +8,7 @@
     "event:default",
     "window:default",
     "app:default",
-    "image:default,
+    "image:default",
     "resources:default",
     "menu:default",
     "tray:default",
