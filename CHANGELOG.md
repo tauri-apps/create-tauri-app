@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.13.11]
+
+- [`209f0d7`](https://www.github.com/tauri-apps/create-tauri-app/commit/209f0d7bc32f40c635e11dd6f9588d1b0850cb12) Fix missing closing quote in the capability file in beta templates.
+
 ## \[3.13.10]
 
 - [`1458321`](https://www.github.com/tauri-apps/create-tauri-app/commit/14583219c7efff47c4cb20ed297a067d1dbf5a1a) Fix incorrect schema path in beta temaplate's capability.
