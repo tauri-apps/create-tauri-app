@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.13.10]
+
+- [`1458321`](https://www.github.com/tauri-apps/create-tauri-app/commit/14583219c7efff47c4cb20ed297a067d1dbf5a1a) Fix incorrect schema path in beta temaplate's capability.
+
 ## \[3.13.9]
 
 - [`4a2f33b`](https://www.github.com/tauri-apps/create-tauri-app/commit/4a2f33b0c29c9a79cc156abfde5de296578b3f50)([#628](https://www.github.com/tauri-apps/create-tauri-app/pull/628)) Add `--no-mobile` flag.
