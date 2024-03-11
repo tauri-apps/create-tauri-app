@@ -1,5 +1,5 @@
 {
-  "$schema": "./schemas/desktop-schema.json",
+  "$schema": "../schemas/desktop-schema.json",
   "identifier": "default",
   "description": "Capability for the main window",
   "windows": ["main"],
@@ -8,8 +8,8 @@
     "event:default",
     "window:default",
     "app:default",
-    "resources:default",
     "image:default,
+    "resources:default",
     "menu:default",
     "tray:default",
     "shell:allow-open"
