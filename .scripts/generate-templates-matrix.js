@@ -66,7 +66,7 @@ matrixConfig
             e.startsWith(`templates/template-${t}`) ||
             e.startsWith("src") ||
             e.startsWith("Cargo.toml") ||
-            e.startsWith(".github/workflows/templates-test.yml")
+            e.startsWith(".github/workflows/templates-test.yml"),
         )
       ) {
         const jobInfo = {
