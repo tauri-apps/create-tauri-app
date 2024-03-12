@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.13.14]
+
+- [`88680f1`](https://www.github.com/tauri-apps/create-tauri-app/commit/88680f14c19e2b23bd1f8847be0983a33642578b) Move `vite-env.d.ts` inside `src` directory for `solid-ts` template to fix a typescript error on importing `.svg`;
+
 ## \[3.13.13]
 
 - [`44df26b`](https://www.github.com/tauri-apps/create-tauri-app/commit/44df26b63561c50220af9421b6996be46f58d4ce) Fix `leptos` template has invalid dependency specifier in `Cargo.toml`
