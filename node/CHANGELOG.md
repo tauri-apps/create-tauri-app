@@ -1,5 +1,13 @@
 # Changelog
 
+## \[3.13.13]
+
+- [`44df26b`](https://www.github.com/tauri-apps/create-tauri-app/commit/44df26b63561c50220af9421b6996be46f58d4ce) Fix `leptos` template has invalid dependency specifier in `Cargo.toml`
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.13.13`
+
 ## \[3.13.12]
 
 - [`0881d1e`](https://www.github.com/tauri-apps/create-tauri-app/commit/0881d1e248f98e43f0ad25d0ac6d654a371061d1)([#635](https://www.github.com/tauri-apps/create-tauri-app/pull/635)) Removed the deprecated `serde-serialize` feature of `wasm-bindgen` in favor of `serde-wasm-bindgen` to prevent cyclic dependency issues.
