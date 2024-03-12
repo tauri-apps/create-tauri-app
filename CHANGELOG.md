@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.13.12]
+
+- [`0881d1e`](https://www.github.com/tauri-apps/create-tauri-app/commit/0881d1e248f98e43f0ad25d0ac6d654a371061d1)([#635](https://www.github.com/tauri-apps/create-tauri-app/pull/635)) Removed the deprecated `serde-serialize` feature of `wasm-bindgen` in favor of `serde-wasm-bindgen` to prevent cyclic dependency issues.
+
 ## \[3.13.11]
 
 - [`209f0d7`](https://www.github.com/tauri-apps/create-tauri-app/commit/209f0d7bc32f40c635e11dd6f9588d1b0850cb12) Fix missing closing quote in the capability file in beta templates.
