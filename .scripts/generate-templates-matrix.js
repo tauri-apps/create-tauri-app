@@ -66,19 +66,21 @@ matrixConfig
             e.startsWith(`templates/template-${t}`) ||
             e.startsWith("src") ||
             e.startsWith("Cargo.toml") ||
-            e.startsWith(".github/workflows/templates-test.yml"),
+            e.startsWith(".github/workflows/templates-test.yml")
         )
       ) {
         const jobInfo = {
           template: t,
           install_trunk: ["yew", "sycamore", "leptos"].includes(t),
           beta: false,
+          no_bundle_flag: "-b none",
           ...managerInfo,
         };
         outMatrix.push(jobInfo);
         outMatrix.push({
           ...jobInfo,
           beta: true,
+          no_bundle_flag: "--no-bundle",
           flags: "--beta",
         });
       }
