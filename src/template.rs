@@ -129,7 +129,7 @@ impl Template {
             Template::Yew => "Yew - (https://yew.rs/)",
             Template::Leptos => "Leptos - (https://leptos.dev/)",
             Template::Sycamore => "Sycamore - (https://sycamore-rs.netlify.app/)",
-            Template::Angular => "Angular - (https://angular.io/)",
+            Template::Angular => "Angular - (https://angular.dev/)",
             Template::Preact => "Preact - (https://preactjs.com/)",
             _ => unreachable!(),
         }
