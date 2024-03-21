@@ -1,5 +1,13 @@
 # Changelog
 
+## \[3.13.15]
+
+- [`c90a561`](https://www.github.com/tauri-apps/create-tauri-app/commit/c90a5614780eb2b4f0cd5b9ca3ce527bd02bd177)([#645](https://www.github.com/tauri-apps/create-tauri-app/pull/645)) Fix incorrect schema path in beta template's capability.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.13.15`
+
 ## \[3.13.14]
 
 - [`88680f1`](https://www.github.com/tauri-apps/create-tauri-app/commit/88680f14c19e2b23bd1f8847be0983a33642578b) Move `vite-env.d.ts` inside `src` directory for `solid-ts` template to fix a typescript error on importing `.svg`;
