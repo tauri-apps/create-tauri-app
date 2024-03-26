@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.13.17]
+
+- [`616a294`](https://www.github.com/tauri-apps/create-tauri-app/commit/616a294a9adaa5d7113961ba8af3bb85727e16c3)([#553](https://www.github.com/tauri-apps/create-tauri-app/pull/553)) Update `leptos` template to `v0.6`
+
 ## \[3.13.16]
 
 - [`7a851c8`](https://www.github.com/tauri-apps/create-tauri-app/commit/7a851c8733590ad268b5035eadb74f1d2536c2b5)([#647](https://www.github.com/tauri-apps/create-tauri-app/pull/647)) Ignore `gen/schemas` directory for `--beta` templates.
