@@ -147,6 +147,14 @@ fn is_xcode_command_line_tools_installed() -> bool {
         .unwrap_or(false)
 }
 
+fn is_dotnet_installed() -> bool {
+    Command::new("dotnet")
+        .arg("--version")
+        .output()
+        .map(|o| o.status.success())
+        .unwrap_or(false)
+}
+
 struct Dep<'a> {
     name: &'a str,
     instruction: String,
@@ -281,6 +289,12 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, beta:
             exists: &is_xcode_command_line_tools_installed,
             skip: false,
         },
+        Dep {
+            name: ".NET",
+            instruction: format!("Visit {BLUE}{BOLD}https://dotnet.microsoft.com/download{RESET}"),
+            exists: &is_dotnet_installed,
+            skip: !template.needs_dotnet() || pkg_manager.is_node(),
+        }
     ];
 
     let missing_deps: Vec<(&str, &str)> = deps
