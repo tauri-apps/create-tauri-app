@@ -81,6 +81,7 @@ impl PackageManager {
                 Template::Yew,
                 Template::Leptos,
                 Template::Sycamore,
+                Template::Blazor,
             ],
             PackageManager::Pnpm
             | PackageManager::Yarn
@@ -104,6 +105,7 @@ impl PackageManager {
                 Template::Yew,
                 Template::Leptos,
                 Template::Sycamore,
+                Template::Blazor,
             ],
             PackageManager::Pnpm
             | PackageManager::Yarn
