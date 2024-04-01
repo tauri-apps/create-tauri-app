@@ -55,6 +55,7 @@ pub enum Template {
     Angular,
     Preact,
     PreactTs,
+    Blazor,
 }
 
 impl Default for Template {
@@ -82,6 +83,7 @@ impl Display for Template {
             Template::Angular => write!(f, "angular"),
             Template::Preact => write!(f, "preact"),
             Template::PreactTs => write!(f, "preact-ts"),
+            Template::Blazor => write!(f, "blazor"),
         }
     }
 }
@@ -106,6 +108,7 @@ impl FromStr for Template {
             "angular" => Ok(Template::Angular),
             "preact" => Ok(Template::Preact),
             "preact-ts" => Ok(Template::PreactTs),
+            "blazor" => Ok(Template::Blazor),
             _ => Err(format!(
                 "{YELLOW}{s}{RESET} is not a valid template. Valid templates are [{}]",
                 Template::ALL
@@ -131,6 +134,7 @@ impl Template {
             Template::Sycamore => "Sycamore - (https://sycamore-rs.netlify.app/)",
             Template::Angular => "Angular - (https://angular.dev/)",
             Template::Preact => "Preact - (https://preactjs.com/)",
+            Template::Blazor => "Blazor - (https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor/)",
             _ => unreachable!(),
         }
     }
@@ -154,6 +158,7 @@ impl<'a> Template {
         Template::Angular,
         Template::Preact,
         Template::PreactTs,
+        Template::Blazor,
     ];
 
     pub fn flavors<'b>(&self, pkg_manager: PackageManager) -> Option<&'b [Flavor]> {
@@ -219,7 +224,7 @@ impl<'a> Template {
             | Template::Angular
             | Template::Preact
             | Template::PreactTs => PackageManager::NODE,
-            Template::Yew | Template::Leptos | Template::Sycamore => &[PackageManager::Cargo],
+            Template::Yew | Template::Leptos | Template::Sycamore | Template::Blazor => &[PackageManager::Cargo],
         }
     }
 
@@ -232,6 +237,10 @@ impl<'a> Template {
             self,
             Template::Sycamore | Template::Yew | Template::Leptos | Template::Vanilla
         )
+    }
+
+    pub const fn needs_dotnet(&self) -> bool {
+        matches!(self, Template::Blazor)
     }
 
     pub const fn needs_wasm32_target(&self) -> bool {
@@ -263,6 +272,7 @@ impl<'a> Template {
             ("pkg_manager_run_command", pkg_manager.run_cmd()),
             ("lib_name", &lib_name),
             ("package_name", package_name),
+            ("project_name", project_name),
             (
                 "double_dash_with_space",
                 if pkg_manager == PackageManager::Npm {
@@ -329,7 +339,7 @@ impl<'a> Template {
             let file_name = p.file_name().unwrap().to_string_lossy();
 
             let file_name = match &*file_name {
-                "_gitignore" => ".gitignore",
+                "_gitignore" => "_gitignore",
                 // skip manifest
                 CTA_MANIFEST_FILENAME => return Ok(()),
                 // conditional files:
