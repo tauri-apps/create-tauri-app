@@ -339,7 +339,7 @@ impl<'a> Template {
             let file_name = p.file_name().unwrap().to_string_lossy();
 
             let file_name = match &*file_name {
-                "_gitignore" => "_gitignore",
+                "_gitignore" => ".gitignore",
                 // skip manifest
                 CTA_MANIFEST_FILENAME => return Ok(()),
                 // conditional files:
