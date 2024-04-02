@@ -426,17 +426,55 @@ fn to_valid_pkg_name(project_name: &str) -> String {
 }
 
 fn create_dotnet_webassembly_project(project_name: &str, target_dir: &std::path::PathBuf) -> anyhow::Result<()> {
-    let src_dir = target_dir.join("src");
-    fs::create_dir_all(&src_dir).context("failed to create src directory")?;
+    // Create the src-blazor directory
+    let blazor_src_dir = target_dir.join("src-blazor");
+    fs::create_dir_all(&blazor_src_dir).context("failed to create src directory")?;
+    
+    // Create the solution file
+    Command::new("dotnet")
+        .arg("new")
+        .arg("sln")
+        .arg("-n")
+        .arg(project_name)
+        .arg("-o")
+        .arg(&blazor_src_dir)
+        .output()
+        .context("failed to create solution file")?;
+    
+    // Create the .gitignore file
+    Command::new("dotnet")
+        .arg("new")
+        .arg("gitignore")
+        .arg("-o")
+        .arg(&blazor_src_dir)
+        .output()
+        .context("failed to create .gitignore file")?;
+    
+    // Create the csharp src directory
+    let csharp_src_dir = blazor_src_dir.join("src").join(project_name);
+    fs::create_dir_all(&csharp_src_dir).context("failed to create csharp src directory")?;
+    
+    // Create the blazor webassembly project
     Command::new("dotnet")
         .arg("new")
         .arg("blazorwasm")
         .arg("-n")
-        .arg(&project_name)
+        .arg(project_name)
         .arg("-o")
-        .arg(&src_dir)
+        .arg(&csharp_src_dir)
         .output()
-        .context("failed to create blazor project")?;
+        .context("failed to create blazor webassembly project")?;
+    
+    // Add the blazor webassembly project to the solution
+    Command::new("dotnet")
+        .arg("sln")
+        .arg(&blazor_src_dir)
+        .arg("add")
+        .arg(&csharp_src_dir.join(format!("{}.csproj", project_name)))
+        .arg("--solution-folder")
+        .arg("src")
+        .output()
+        .context("failed to add blazor webassembly project to solution")?;
     Ok(())
 }
 
