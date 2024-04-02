@@ -358,7 +358,7 @@ where
         println!("Make sure you have installed the prerequisites for your OS: {BLUE}{BOLD}https://tauri.app/v1/guides/getting-started/prerequisites{RESET}, then run:");
     } else {
         if template == Template::Blazor {
-            create_and_alter_dotnet_webassembly_project(&project_name, &target_dir)?;
+            create_dotnet_webassembly_project(&project_name, &target_dir)?;
         }
         println!(" To get started run:")
     }
@@ -425,10 +425,9 @@ fn to_valid_pkg_name(project_name: &str) -> String {
     }
 }
 
-fn create_and_alter_dotnet_webassembly_project(project_name: &str, target_dir: &std::path::PathBuf) -> anyhow::Result<()> {
+fn create_dotnet_webassembly_project(project_name: &str, target_dir: &std::path::PathBuf) -> anyhow::Result<()> {
     let src_dir = target_dir.join("src");
-    let _ = fs::remove_dir_all(&src_dir);
-    let _ = fs::create_dir_all(&src_dir);
+    fs::create_dir_all(&src_dir).context("failed to create src directory")?;
     Command::new("dotnet")
         .arg("new")
         .arg("blazorwasm")
@@ -438,23 +437,6 @@ fn create_and_alter_dotnet_webassembly_project(project_name: &str, target_dir: &
         .arg(&src_dir)
         .output()
         .context("failed to create blazor project")?;
-    
-    fs::write(&src_dir.join("Properties").join("launchSettings.json"), r#"
-{
-  "$schema": "https://json.schemastore.org/launchsettings.json",
-  "profiles": {
-    "http": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": false,
-      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
-      "applicationUrl": "http://localhost:1420",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    }
-  }
-}"#).context("failed to write launchSettings.json")?;
     Ok(())
 }
 
