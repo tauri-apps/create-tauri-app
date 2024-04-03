@@ -385,6 +385,8 @@ impl<'a> Template {
                 let data = EMBEDDED_TEMPLATES::get(file).unwrap().data.to_vec();
                 (data, file_name)
             };
+            
+            let file_name = lte::render(file_name, template_data)?;
 
             let parent = p.parent().unwrap();
             fs::create_dir_all(parent)?;
