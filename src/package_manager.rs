@@ -14,6 +14,7 @@ pub enum PackageManager {
     Yarn,
     Npm,
     Bun,
+    Dotnet,
 }
 
 impl Default for PackageManager {
@@ -30,6 +31,7 @@ impl Display for PackageManager {
             PackageManager::Yarn => write!(f, "yarn"),
             PackageManager::Npm => write!(f, "npm"),
             PackageManager::Bun => write!(f, "bun"),
+            PackageManager::Dotnet => write!(f, ".NET CLI"),
         }
     }
 }
@@ -43,6 +45,7 @@ impl FromStr for PackageManager {
             "yarn" => Ok(PackageManager::Yarn),
             "npm" => Ok(PackageManager::Npm),
             "bun" => Ok(PackageManager::Bun),
+            ".NET CLI" => Ok(PackageManager::Dotnet),
             _ => Err(format!(
                 "{YELLOW}{s}{RESET} is not a valid package manager. Valid package mangers are [{}]",
                 PackageManager::ALL
@@ -62,6 +65,7 @@ impl<'a> PackageManager {
         PackageManager::Yarn,
         PackageManager::Npm,
         PackageManager::Bun,
+        PackageManager::Dotnet,
     ];
 
     /// Node.js managers
@@ -81,7 +85,6 @@ impl PackageManager {
                 Template::Yew,
                 Template::Leptos,
                 Template::Sycamore,
-                Template::Blazor,
             ],
             PackageManager::Pnpm
             | PackageManager::Yarn
@@ -95,6 +98,7 @@ impl PackageManager {
                 Template::Angular,
                 Template::Preact,
             ],
+            PackageManager::Dotnet => &[Template::Blazor],
         }
     }
 
@@ -105,7 +109,6 @@ impl PackageManager {
                 Template::Yew,
                 Template::Leptos,
                 Template::Sycamore,
-                Template::Blazor,
             ],
             PackageManager::Pnpm
             | PackageManager::Yarn
@@ -125,6 +128,7 @@ impl PackageManager {
                 Template::Preact,
                 Template::PreactTs,
             ],
+            PackageManager::Dotnet => &[Template::Blazor],
         }
     }
 
@@ -145,6 +149,7 @@ impl PackageManager {
             PackageManager::Yarn => "yarn",
             PackageManager::Npm => "npm run",
             PackageManager::Bun => "bun run",
+            PackageManager::Dotnet => "cargo",
         }
     }
 

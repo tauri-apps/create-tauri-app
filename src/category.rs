@@ -7,6 +7,7 @@ use crate::package_manager::PackageManager;
 pub enum Category {
     Rust,
     JsTs,
+    Dotnet,
 }
 impl Default for Category {
     fn default() -> Self {
@@ -15,7 +16,7 @@ impl Default for Category {
 }
 
 impl<'a> Category {
-    pub const ALL: &'a [Self] = &[Category::JsTs, Category::Rust];
+    pub const ALL: &'a [Self] = &[Category::JsTs, Category::Rust, Category::Dotnet];
 
     pub const fn package_managers(&self) -> &[PackageManager] {
         match self {
@@ -26,6 +27,7 @@ impl<'a> Category {
                 PackageManager::Npm,
                 PackageManager::Bun,
             ],
+            Category::Dotnet => &[PackageManager::Dotnet],
         }
     }
 }
@@ -42,6 +44,7 @@ impl Display for Category {
         match self {
             Category::Rust => write!(f, "Rust - ({managers})"),
             Category::JsTs => write!(f, "TypeScript / JavaScript - ({managers})"),
+            Category::Dotnet => write!(f, ".NET - ({managers})"),
         }
     }
 }
