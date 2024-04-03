@@ -1,5 +1,5 @@
-beforeDevCommand = dotnet watch run --project src-blazor/src/{% project_name %}/{% project_name %}.csproj --no-launch-profile --urls http://localhost:1420
-beforeBuildCommand = dotnet publish -c release src-blazor/src/{% project_name %}/{% project_name %}.csproj -o dist
+beforeDevCommand = dotnet watch run --project src/{% project_name %}.csproj
+beforeBuildCommand = dotnet publish -c release src/{% project_name %}.csproj -o dist
 devPath = http://localhost:1420
 distDir = ../dist/wwwroot
 withGlobalTauri = true
