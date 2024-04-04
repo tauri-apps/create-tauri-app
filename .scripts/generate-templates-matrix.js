@@ -17,7 +17,6 @@ const nodeJsTemplates = [
   "preact",
   "preact-ts",
   "angular",
-  "blazor",
 ];
 
 const matrixConfig = [
@@ -52,7 +51,7 @@ const matrixConfig = [
     templates: nodeJsTemplates,
   },
   {
-    manager: ".NET CLI",
+    manager: "\".NET CLI\"",
     install_cmd: "",
     run_cmd: "cargo",
     templates: ["blazor"]
