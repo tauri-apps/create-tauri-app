@@ -127,7 +127,12 @@ jobs:
       - run: tar -xf create-tauri-app/create-tauri-app.tar
 
       - name: bootstrap a ${{ matrix.settings.template }} project (${{ matrix.settings.flags }})
+        if: matrix.settings.manager != 'dotnet'
         run: ./target/release/cargo-create-tauri-app tauri-app -m ${{ matrix.settings.manager }} -t ${{ matrix.settings.template }} ${{ matrix.settings.flags }} -y
+
+      - name: bootstrap a ${{ matrix.settings.template }} project (${{ matrix.settings.flags }})
+        if: matrix.settings.manager == 'dotnet'
+        run: ./target/release/cargo-create-tauri-app TauriApp -m ${{ matrix.settings.manager }} -t ${{ matrix.settings.template }} ${{ matrix.settings.flags }} -y
 
       - run: sed -i 's/com.tauri.dev/com.create-tauri-app.dev/g' **/tauri.conf.json
         working-directory: tauri-app
