@@ -99,10 +99,10 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
 
       - run: cargo install tauri-cli
-        if: (matrix.settings.manager == 'cargo' || matrix.settings.manager == '.NET CLI') && matrix.settings.beta != true
+        if: (matrix.settings.manager == 'cargo' || matrix.settings.manager == 'dotnet') && matrix.settings.beta != true
 
       - run: cargo install tauri-cli --version '^2.0.0-beta'
-        if: (matrix.settings.manager == 'cargo' || matrix.settings.manager == '.NET CLI') && matrix.settings.beta == true
+        if: (matrix.settings.manager == 'cargo' || matrix.settings.manager == 'dotnet') && matrix.settings.beta == true
 
       - run: |
           rustup target add wasm32-unknown-unknown

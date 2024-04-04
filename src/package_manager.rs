@@ -31,7 +31,7 @@ impl Display for PackageManager {
             PackageManager::Yarn => write!(f, "yarn"),
             PackageManager::Npm => write!(f, "npm"),
             PackageManager::Bun => write!(f, "bun"),
-            PackageManager::Dotnet => write!(f, ".NET CLI"),
+            PackageManager::Dotnet => write!(f, "dotnet"),
         }
     }
 }
@@ -45,7 +45,7 @@ impl FromStr for PackageManager {
             "yarn" => Ok(PackageManager::Yarn),
             "npm" => Ok(PackageManager::Npm),
             "bun" => Ok(PackageManager::Bun),
-            ".NET CLI" => Ok(PackageManager::Dotnet),
+            "dotnet" => Ok(PackageManager::Dotnet),
             _ => Err(format!(
                 "{YELLOW}{s}{RESET} is not a valid package manager. Valid package mangers are [{}]",
                 PackageManager::ALL

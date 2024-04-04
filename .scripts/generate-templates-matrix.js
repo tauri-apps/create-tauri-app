@@ -51,7 +51,7 @@ const matrixConfig = [
     templates: nodeJsTemplates,
   },
   {
-    manager: "\".NET CLI\"",
+    manager: "dotnet",
     install_cmd: "",
     run_cmd: "cargo",
     templates: ["blazor"]
