@@ -91,7 +91,7 @@ jobs:
           node-version: 18
 
       - name: Install .NET@8.0.x
-        if: matrix.settings.manager == '.NET CLI'
+        if: matrix.settings.manager == 'dotnet'
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 8.0.x
