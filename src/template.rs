@@ -134,7 +134,9 @@ impl Template {
             Template::Sycamore => "Sycamore - (https://sycamore-rs.netlify.app/)",
             Template::Angular => "Angular - (https://angular.dev/)",
             Template::Preact => "Preact - (https://preactjs.com/)",
-            Template::Blazor => "Blazor - (https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor/)",
+            Template::Blazor => {
+                "Blazor - (https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor/)"
+            }
             _ => unreachable!(),
         }
     }
@@ -224,7 +226,9 @@ impl<'a> Template {
             | Template::Angular
             | Template::Preact
             | Template::PreactTs => PackageManager::NODE,
-            Template::Yew | Template::Leptos | Template::Sycamore | Template::Blazor => &[PackageManager::Cargo],
+            Template::Yew | Template::Leptos | Template::Sycamore | Template::Blazor => {
+                &[PackageManager::Cargo]
+            }
         }
     }
 
@@ -385,7 +389,7 @@ impl<'a> Template {
                 let data = EMBEDDED_TEMPLATES::get(file).unwrap().data.to_vec();
                 (data, file_name)
             };
-            
+
             let file_name = lte::render(file_name, template_data)?;
 
             let parent = p.parent().unwrap();

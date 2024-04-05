@@ -54,7 +54,7 @@ const matrixConfig = [
     manager: "dotnet",
     install_cmd: "",
     run_cmd: "cargo",
-    templates: ["blazor"]
+    templates: ["blazor"],
   },
 ];
 
