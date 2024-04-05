@@ -226,9 +226,8 @@ impl<'a> Template {
             | Template::Angular
             | Template::Preact
             | Template::PreactTs => PackageManager::NODE,
-            Template::Yew | Template::Leptos | Template::Sycamore | Template::Blazor => {
-                &[PackageManager::Cargo]
-            }
+            Template::Yew | Template::Leptos | Template::Sycamore => &[PackageManager::Cargo],
+            Template::Blazor => &[PackageManager::Dotnet],
         }
     }
 
