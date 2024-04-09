@@ -451,11 +451,11 @@ impl<'a> Template {
         for (s, c) in s.chars().enumerate() {
             if s == 0 {
                 result.push(c.to_ascii_uppercase());
-            } else if c == '_' {
-                capitalize_next = true;
             } else if capitalize_next {
                 result.push(c.to_ascii_uppercase());
                 capitalize_next = false;
+            } else if ['_', '-'].contains(&c) {
+                capitalize_next = true;
             } else {
                 result.push(c);
             }
