@@ -268,6 +268,7 @@ impl<'a> Template {
         let manifest = Manifest::parse(&manifest_str, mobile)?;
 
         let lib_name = format!("{}_lib", package_name.replace('-', "_"));
+        let project_name_pascal_case = Self::transform_to_pascal_case(project_name.to_string());
 
         let beta_str = beta.to_string();
         let manifest_template_data: HashMap<&str, &str> = [
@@ -276,6 +277,7 @@ impl<'a> Template {
             ("lib_name", &lib_name),
             ("package_name", package_name),
             ("project_name", project_name),
+            ("project_name_pascal_case", &project_name_pascal_case),
             (
                 "double_dash_with_space",
                 if pkg_manager == PackageManager::Npm {
@@ -294,7 +296,7 @@ impl<'a> Template {
             ("project_name", project_name.to_string()),
             (
                 "project_name_pascal_case",
-                Self::transform_to_pascal_case(project_name.to_string()),
+                project_name_pascal_case.to_string(),
             ),
             ("package_name", package_name.to_string()),
             (
