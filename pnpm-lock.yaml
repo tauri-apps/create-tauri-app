@@ -23,7 +23,7 @@ importers:
     devDependencies:
       '@napi-rs/cli':
         specifier: '2.18'
-        version: 2.18.1
+        version: 2.18.2
 
   worker:
     devDependencies:
@@ -273,8 +273,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@napi-rs/cli@2.18.1':
-    resolution: {integrity: sha512-N4iTeip2VSk0RftgDGuk7IBrgOST/WPUSA3lYstILXsNifR3tHugcbLzo04+OtSrMc+ZUPsXo3Jd1t3dlswAlw==}
+  '@napi-rs/cli@2.18.2':
+    resolution: {integrity: sha512-IXQji3IF5eStxTHe/PxDSRjPrFymYAQ5FbIvqurxzxyWR8nJql9mtvmCP8y2g8tSoW5xhaToLQW0+mO3lUZq4w==}
     engines: {node: '>= 10'}
     hasBin: true
 
@@ -1385,7 +1385,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
 
-  '@napi-rs/cli@2.18.1': {}
+  '@napi-rs/cli@2.18.2': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
