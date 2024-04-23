@@ -50,6 +50,12 @@ const matrixConfig = [
     run_cmd: "bun run",
     templates: nodeJsTemplates,
   },
+  {
+    manager: "dotnet",
+    install_cmd: "",
+    run_cmd: "cargo",
+    templates: ["blazor"],
+  },
 ];
 
 const outMatrix = [];

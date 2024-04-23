@@ -90,13 +90,19 @@ jobs:
         with:
           node-version: 18
 
+      - name: Install .NET@8.0.x
+        if: matrix.settings.manager == 'dotnet'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
       - uses: dtolnay/rust-toolchain@stable
 
       - run: cargo install tauri-cli
-        if: matrix.settings.manager == 'cargo' && matrix.settings.beta != true
+        if: (matrix.settings.manager == 'cargo' || matrix.settings.manager == 'dotnet') && matrix.settings.beta != true
 
       - run: cargo install tauri-cli --version '^2.0.0-beta'
-        if: matrix.settings.manager == 'cargo' && matrix.settings.beta == true
+        if: (matrix.settings.manager == 'cargo' || matrix.settings.manager == 'dotnet') && matrix.settings.beta == true
 
       - run: |
           rustup target add wasm32-unknown-unknown

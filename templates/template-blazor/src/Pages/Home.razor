@@ -1,0 +1,36 @@
+﻿@page "/"
+@inject IJSRuntime JsRuntime
+
+<div class="container">
+    <h1>Welcome to Tauri!</h1>
+    
+    <div class="row">
+        <a href="https://tauri.app" target="_blank">
+            <img src="img/tauri.svg" class="logo tauri" alt="Tauri logo"/>
+        </a>
+        <a href="https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor" target="_blank">
+            <img src="img/blazor.png" class="logo blazor" alt="Blazor logo"/>
+        </a>
+    </div>
+    
+    <p>Click on the Tauri and Blazor logos to learn more.</p>
+    
+    <form class="row">
+        <input id="greet-input" placeholder="Enter a name..." @bind="GreetInput"/>
+        <button type="submit" @onclick="GreetAsync">Greet</button>
+    </form>
+    
+    <p>@GreetMsg</p>
+</div>
+
+@code
+{
+    private string? GreetInput { get; set; }
+    
+    private string? GreetMsg { get; set; }
+
+    private async Task GreetAsync()
+    {
+        GreetMsg = await JsRuntime.InvokeAsync<string>("__TAURI__.tauri.invoke", "greet", new { name = GreetInput });
+    }
+}

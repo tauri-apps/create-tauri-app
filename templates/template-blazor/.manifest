@@ -1,0 +1,9 @@
+beforeDevCommand = dotnet watch run --project src/{% project_name_pascal_case %}.csproj
+beforeBuildCommand = dotnet publish -c release src/{% project_name_pascal_case %}.csproj -o dist
+devPath = http://localhost:1420
+distDir = ../dist/wwwroot
+withGlobalTauri = true
+
+[files]
+styles.css = src/wwwroot/css/app.css
+tauri.svg = src/wwwroot/img/tauri.svg

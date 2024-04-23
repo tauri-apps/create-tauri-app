@@ -55,6 +55,7 @@ pub enum Template {
     Angular,
     Preact,
     PreactTs,
+    Blazor,
 }
 
 impl Default for Template {
@@ -82,6 +83,7 @@ impl Display for Template {
             Template::Angular => write!(f, "angular"),
             Template::Preact => write!(f, "preact"),
             Template::PreactTs => write!(f, "preact-ts"),
+            Template::Blazor => write!(f, "blazor"),
         }
     }
 }
@@ -106,6 +108,7 @@ impl FromStr for Template {
             "angular" => Ok(Template::Angular),
             "preact" => Ok(Template::Preact),
             "preact-ts" => Ok(Template::PreactTs),
+            "blazor" => Ok(Template::Blazor),
             _ => Err(format!(
                 "{YELLOW}{s}{RESET} is not a valid template. Valid templates are [{}]",
                 Template::ALL
@@ -131,6 +134,9 @@ impl Template {
             Template::Sycamore => "Sycamore - (https://sycamore-rs.netlify.app/)",
             Template::Angular => "Angular - (https://angular.dev/)",
             Template::Preact => "Preact - (https://preactjs.com/)",
+            Template::Blazor => {
+                "Blazor - (https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor/)"
+            }
             _ => unreachable!(),
         }
     }
@@ -154,6 +160,7 @@ impl<'a> Template {
         Template::Angular,
         Template::Preact,
         Template::PreactTs,
+        Template::Blazor,
     ];
 
     pub fn flavors<'b>(&self, pkg_manager: PackageManager) -> Option<&'b [Flavor]> {
@@ -220,6 +227,7 @@ impl<'a> Template {
             | Template::Preact
             | Template::PreactTs => PackageManager::NODE,
             Template::Yew | Template::Leptos | Template::Sycamore => &[PackageManager::Cargo],
+            Template::Blazor => &[PackageManager::Dotnet],
         }
     }
 
@@ -232,6 +240,10 @@ impl<'a> Template {
             self,
             Template::Sycamore | Template::Yew | Template::Leptos | Template::Vanilla
         )
+    }
+
+    pub const fn needs_dotnet(&self) -> bool {
+        matches!(self, Template::Blazor)
     }
 
     pub const fn needs_wasm32_target(&self) -> bool {
@@ -256,6 +268,7 @@ impl<'a> Template {
         let manifest = Manifest::parse(&manifest_str, mobile)?;
 
         let lib_name = format!("{}_lib", package_name.replace('-', "_"));
+        let project_name_pascal_case = Self::transform_to_pascal_case(project_name.to_string());
 
         let beta_str = beta.to_string();
         let manifest_template_data: HashMap<&str, &str> = [
@@ -263,6 +276,8 @@ impl<'a> Template {
             ("pkg_manager_run_command", pkg_manager.run_cmd()),
             ("lib_name", &lib_name),
             ("package_name", package_name),
+            ("project_name", project_name),
+            ("project_name_pascal_case", &project_name_pascal_case),
             (
                 "double_dash_with_space",
                 if pkg_manager == PackageManager::Npm {
@@ -279,6 +294,10 @@ impl<'a> Template {
             ("beta", beta_str.clone()),
             ("mobile", mobile.to_string()),
             ("project_name", project_name.to_string()),
+            (
+                "project_name_pascal_case",
+                project_name_pascal_case.to_string(),
+            ),
             ("package_name", package_name.to_string()),
             (
                 "before_dev_command",
@@ -376,6 +395,8 @@ impl<'a> Template {
                 (data, file_name)
             };
 
+            let file_name = lte::render(file_name, template_data)?;
+
             let parent = p.parent().unwrap();
             fs::create_dir_all(parent)?;
             fs::write(parent.join(file_name), file_data)?;
@@ -422,5 +443,23 @@ impl<'a> Template {
         }
 
         Ok(())
+    }
+
+    fn transform_to_pascal_case(s: String) -> String {
+        let mut result = String::new();
+        let mut capitalize_next = false;
+        for (s, c) in s.chars().enumerate() {
+            if s == 0 {
+                result.push(c.to_ascii_uppercase());
+            } else if capitalize_next {
+                result.push(c.to_ascii_uppercase());
+                capitalize_next = false;
+            } else if ['_', '-'].contains(&c) {
+                capitalize_next = true;
+            } else {
+                result.push(c);
+            }
+        }
+        result
     }
 }
