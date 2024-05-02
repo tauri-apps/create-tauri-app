@@ -28,7 +28,7 @@ opt-level = "s"
 strip = true
 
 [dependencies]
-anyhow = "1"
+anyhow = "1.0.82"
 dialoguer = "0.10"
 pico-args = "0.5"
 ctrlc = "3.3"
