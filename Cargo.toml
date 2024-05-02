@@ -31,5 +31,5 @@ strip = true
 anyhow = "1"
 dialoguer = "0.10"
 pico-args = "0.5"
-ctrlc = "3.3"
+ctrlc = "3.4.4"
 rust-embed = { version = "8.3", features = [ "compression", "interpolate-folder-path" ] }
