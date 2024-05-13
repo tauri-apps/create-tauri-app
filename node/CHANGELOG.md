@@ -1,5 +1,14 @@
 # Changelog
 
+## \[3.14.0]
+
+- [`4edb69f`](https://www.github.com/tauri-apps/create-tauri-app/commit/4edb69f8b79a8f03eb5d29772509fad68f28e904)([#656](https://www.github.com/tauri-apps/create-tauri-app/pull/656)) Add Blazor template
+- [`7000c6c`](https://www.github.com/tauri-apps/create-tauri-app/commit/7000c6ce2db33234169cc2b5f98264feb5e02351)([#687](https://www.github.com/tauri-apps/create-tauri-app/pull/687)) Fix `yew`, `leptos` and `sycamore` templates failing with latest versions of `trunk` CLI.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.14.0`
+
 ## \[3.13.17]
 
 - [`616a294`](https://www.github.com/tauri-apps/create-tauri-app/commit/616a294a9adaa5d7113961ba8af3bb85727e16c3)([#553](https://www.github.com/tauri-apps/create-tauri-app/pull/553)) Update `leptos` template to `v0.6`
