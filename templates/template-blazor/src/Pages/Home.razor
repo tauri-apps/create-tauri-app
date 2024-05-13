@@ -12,21 +12,21 @@
             <img src="img/blazor.png" class="logo blazor" alt="Blazor logo"/>
         </a>
     </div>
-    
+
     <p>Click on the Tauri and Blazor logos to learn more.</p>
-    
-    <form class="row">
+
+    <form class="row" @submit="GreetAsync" @submit:preventDefault="true">
         <input id="greet-input" placeholder="Enter a name..." @bind="GreetInput"/>
-        <button type="submit" @onclick="GreetAsync">Greet</button>
+        <button type="submit">Greet</button>
     </form>
-    
+
     <p>@GreetMsg</p>
 </div>
 
 @code
 {
     private string? GreetInput { get; set; }
-    
+
     private string? GreetMsg { get; set; }
 
     private async Task GreetAsync()
