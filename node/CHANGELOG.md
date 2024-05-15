@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.14.1]
+
+- [`edef1cb`](https://www.github.com/tauri-apps/create-tauri-app/commit/edef1cb5a78530b0c16657e11f12474fd473cad0)([#695](https://www.github.com/tauri-apps/create-tauri-app/pull/695)) Fix `Cannot find module 'create-tauri-app-darwin-x64'`
+
 ## \[3.14.0]
 
 - [`4edb69f`](https://www.github.com/tauri-apps/create-tauri-app/commit/4edb69f8b79a8f03eb5d29772509fad68f28e904)([#656](https://www.github.com/tauri-apps/create-tauri-app/pull/656)) Add Blazor template
