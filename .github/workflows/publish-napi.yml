@@ -21,6 +21,9 @@ on:
 
 jobs:
   build:
+    defaults:
+      run:
+        working-directory: node
     strategy:
       fail-fast: false
       matrix:
