@@ -39,7 +39,7 @@
   },
   "license": "Apache-2.0 OR MIT",
   "devDependencies": {
-    "@napi-rs/cli": "2.18"
+    "@napi-rs/cli": "2.18.3"
   },
   "engines": {
     "node": ">= 10"
@@ -50,7 +50,7 @@
   "scripts": {
     "create-tauri-app": "node ./create-tauri-app.js",
     "artifacts": "napi artifacts",
-    "build": "napi build --platform --release",
+    "build": "napi build --platform --release --strip",
     "build:debug": "napi build --platform",
     "prepublishOnly": "napi prepublish -t npm --gh-release-id $RELEASE_ID",
     "version": "napi version"

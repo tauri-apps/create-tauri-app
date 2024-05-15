@@ -45,26 +45,26 @@ jobs:
             build: pnpm build --platform --target aarch64-pc-windows-msvc
           - host: ubuntu-latest
             target: 'x86_64-unknown-linux-gnu'
-            build: pnpm build --platform --target x86_64-unknown-linux-gnu --use-napi-cross
+            build: pnpm build --platform --target x86_64-unknown-linux-gnu
           - host: ubuntu-latest
             target: 'x86_64-unknown-linux-musl'
-            build: pnpm build --platform --target x86_64-unknown-linux-musl -x
+            build: pnpm build --platform --target x86_64-unknown-linux-musl
           - host: ubuntu-latest
             target: 'armv7-unknown-linux-gnueabihf'
-            build: pnpm build --platform --target armv7-unknown-linux-gnueabihf --use-napi-cross
+            build: pnpm build --platform --target armv7-unknown-linux-gnueabihf
           - host: ubuntu-latest
             target: 'aarch64-unknown-linux-gnu'
-            build: pnpm build --platform --target aarch64-unknown-linux-gnu --use-napi-cross
+            build: pnpm build --platform --target aarch64-unknown-linux-gnu
           - host: ubuntu-latest
             target: 'aarch64-unknown-linux-musl'
-            build: pnpm build --platform --target aarch64-unknown-linux-musl -x
+            build: pnpm build --platform --target aarch64-unknown-linux-musl
 
     name: stable - ${{ matrix.settings.target }} - node@20
     runs-on: ${{ matrix.settings.host }}
 
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2.2.4
+      - uses: pnpm/action-setup@v4
         with:
           version: 9
       - name: Setup node
@@ -175,9 +175,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2.2.4
+      - uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 9
       - name: Setup node
         uses: actions/setup-node@v4
         with:
