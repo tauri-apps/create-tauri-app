@@ -110,6 +110,11 @@ jobs:
         run: pnpm config set supportedArchitectures.cpu "ia32"
         shell: bash
 
+      - name: Setup toolchain
+        run: ${{ matrix.settings.setup }}
+        if: ${{ matrix.settings.setup }}
+        shell: bash
+
       - name: 'Install dependencies'
         run: pnpm install
 
@@ -120,7 +125,16 @@ jobs:
           node-version: 20
           architecture: x86
 
-      - name: 'Build'
+      - name: Build in docker
+        uses: addnab/docker-run-action@v3
+        if: ${{ matrix.settings.docker }}
+        with:
+          image: ${{ matrix.settings.docker }}
+          options: '--user 0:0 -v ${{ github.workspace }}/.cargo-cache/git/db:/root/.cargo/git/db -v ${{ github.workspace }}/.cargo/registry/cache:/root/.cargo/registry/cache -v ${{ github.workspace }}/.cargo/registry/index:/root/.cargo/registry/index -v ${{ github.workspace }}:/build -w /build'
+          run: ${{ matrix.settings.build }}
+
+      - name: Build
+        if: ${{ !matrix.settings.docker }}
         run: ${{ matrix.settings.build }}
         shell: bash
 
