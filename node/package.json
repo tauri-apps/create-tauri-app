@@ -26,6 +26,7 @@
     "name": "create-tauri-app",
     "triples": {
       "additional": [
+        "universal-apple-darwin",
         "aarch64-apple-darwin",
         "aarch64-unknown-linux-gnu",
         "aarch64-unknown-linux-musl",
