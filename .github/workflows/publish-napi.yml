@@ -58,8 +58,7 @@ jobs:
             build: |-
               set -e &&
               cd node &&
-              npm run build --target aarch64-unknown-linux-gnu &&
-              aarch64-unknown-linux-gnu-strip *.node
+              npm run build --target aarch64-unknown-linux-gnu
           - host: ubuntu-latest
             target: armv7-unknown-linux-gnueabihf
             architecture: x64
