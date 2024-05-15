@@ -21,158 +21,165 @@ on:
 
 jobs:
   build:
-    defaults:
-      run:
-        working-directory: node
     strategy:
       fail-fast: false
       matrix:
         settings:
           - host: macos-latest
-            target: x86_64-apple-darwin
-            architecture: x64
-            build: |
-              pnpm build
-              strip -x *.node
-          - host: windows-latest
-            target: x86_64-pc-windows-msvc
-            architecture: x64
-            build: pnpm build
-          - host: windows-latest
-            target: i686-pc-windows-msvc
-            architecture: x64
-            build: |
-              pnpm build --target i686-pc-windows-msvc
-          - host: windows-latest
-            target: aarch64-pc-windows-msvc
-            architecture: x64
-            build: |
-              pnpm build --target aarch64-pc-windows-msvc
-          - host: ubuntu-latest
-            target: x86_64-unknown-linux-gnu
-            docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-debian
-            build: |-
-              set -e &&
-              cd node &&
-              pnpm build --target x86_64-unknown-linux-gnu &&
-              strip *.node
-          - host: ubuntu-latest
-            target: x86_64-unknown-linux-musl
-            docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-alpine
-            build: set -e && cd node && pnpm build && strip *.node
+            target: 'x86_64-apple-darwin'
+            build: pnpm build --platform --target x86_64-apple-darwin
           - host: macos-latest
-            target: aarch64-apple-darwin
-            build: |
-              sudo rm -Rf /Library/Developer/CommandLineTools/SDKs/*;
-              export CC=$(xcrun -f clang);
-              export CXX=$(xcrun -f clang++);
-              SYSROOT=$(xcrun --sdk macosx --show-sdk-path);
-              export CFLAGS="-isysroot $SYSROOT -isystem $SYSROOT";
-              pnpm build --target aarch64-apple-darwin
-              strip -x *.node
+            target: 'aarch64-apple-darwin'
+            build: pnpm build --platform --target aarch64-apple-darwin
+          - host: windows-latest
+            build: pnpm build --platform
+            target: 'x86_64-pc-windows-msvc'
+          - host: windows-latest
+            build: pnpm build --platform --target i686-pc-windows-msvc
+            target: 'i686-pc-windows-msvc'
+          - host: windows-latest
+            target: 'aarch64-pc-windows-msvc'
+            build: pnpm build --platform --target aarch64-pc-windows-msvc
           - host: ubuntu-latest
-            target: aarch64-unknown-linux-gnu
-            docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-debian-aarch64
-            build: |-
-              set -e &&
-              cd node &&
-              pnpm build --target aarch64-unknown-linux-gnu &&
-              aarch64-unknown-linux-gnu-strip *.node
+            target: 'x86_64-unknown-linux-gnu'
+            build: pnpm build --platform --target x86_64-unknown-linux-gnu --use-napi-cross
           - host: ubuntu-latest
-            target: armv7-unknown-linux-gnueabihf
-            architecture: x64
-            setup: |
-              sudo apt-get update
-              sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf -y
-            build: |
-              pnpm build --target=armv7-unknown-linux-gnueabihf
-              arm-linux-gnueabihf-strip *.node
+            target: 'x86_64-unknown-linux-musl'
+            build: pnpm build --platform --target x86_64-unknown-linux-musl -x
           - host: ubuntu-latest
-            target: aarch64-unknown-linux-musl
-            architecture: x64
-            docker: ghcr.io/napi-rs/napi-rs/nodejs-rust:lts-alpine
-            build: |-
-              set -e &&
-              rustup target add aarch64-unknown-linux-musl &&
-              cd node &&
-              pnpm build --target aarch64-unknown-linux-musl &&
-              /aarch64-linux-musl-cross/bin/aarch64-linux-musl-strip *.node
+            target: 'armv7-unknown-linux-gnueabihf'
+            build: pnpm build --platform --target armv7-unknown-linux-gnueabihf --use-napi-cross
+          - host: ubuntu-latest
+            target: 'aarch64-unknown-linux-gnu'
+            build: pnpm build --platform --target aarch64-unknown-linux-gnu --use-napi-cross
+          - host: ubuntu-latest
+            target: 'aarch64-unknown-linux-musl'
+            build: pnpm build --platform --target aarch64-unknown-linux-musl -x
 
-    name: napi - ${{ matrix.settings.target }} - node@16
+    name: stable - ${{ matrix.settings.target }} - node@20
     runs-on: ${{ matrix.settings.host }}
+
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2.2.4
         with:
-          version: 8
-
+          version: 9
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
-          check-latest: true
-          cache: 'pnpm'
-          cache-dependency-path: '**/pnpm-lock.yaml'
-          architecture: ${{ matrix.settings.architecture }}
+          node-version: 20
+          cache: pnpm
 
-      - uses: dtolnay/rust-toolchain@stable
-        if: ${{ !matrix.settings.docker }}
+      - name: Install
+        uses: dtolnay/rust-toolchain@stable
         with:
+          toolchain: stable
           targets: ${{ matrix.settings.target }}
 
-      - uses: Swatinem/rust-cache@v1
-        if: ${{ matrix.settings.docker }}
+      - name: Cache cargo
+        uses: actions/cache@v3
         with:
-          key: ${{ matrix.settings.target }}
+          path: |
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            ~/.napi-rs
+            .cargo-cache
+            target/
+          key: ${{ matrix.settings.target }}-cargo-${{ matrix.settings.host }}
 
-      - name: Setup toolchain
-        run: ${{ matrix.settings.setup }}
-        if: ${{ matrix.settings.setup }}
+      - uses: goto-bus-stop/setup-zig@v2
+        if: ${{ contains(matrix.settings.target, 'musl') }}
+        with:
+          version: 0.12.0
+
+      - name: Setup node x86
+        if: matrix.settings.target == 'i686-pc-windows-msvc'
+        run: pnpm config set supportedArchitectures.cpu "ia32"
         shell: bash
 
-      - name: Install dependencies
-        run: pnpm install -w --filter .
+      - name: 'Install dependencies'
+        run: pnpm install
 
-      - name: Build in docker
-        uses: addnab/docker-run-action@v3
-        if: ${{ matrix.settings.docker }}
+      - name: Setup node x86
+        uses: actions/setup-node@v4
+        if: matrix.settings.target == 'i686-pc-windows-msvc'
         with:
-          image: ${{ matrix.settings.docker }}
-          options: '--user 0:0 -v ${{ github.workspace }}/.cargo-cache/git/db:/root/.cargo/git/db -v ${{ github.workspace }}/.cargo/registry/cache:/root/.cargo/registry/cache -v ${{ github.workspace }}/.cargo/registry/index:/root/.cargo/registry/index -v ${{ github.workspace }}:/build -w /build'
-          run: ${{ matrix.settings.build }}
+          node-version: 20
+          architecture: x86
 
-      - name: Build
+      - name: 'Build'
         run: ${{ matrix.settings.build }}
-        if: ${{ !matrix.settings.docker }}
         shell: bash
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: napi-${{ matrix.settings.target }}
           path: node/${{ env.APP_NAME }}.*.node
           if-no-files-found: error
 
-  publish:
+  build-universal-macOS:
+    name: Build universal macOS binary
     defaults:
       run:
         working-directory: node
-    name: Publish
-    runs-on: ubuntu-latest
     needs:
       - build
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: 'Install dependencies'
+        run: pnpm install -w --filter .
+
+      - name: Download macOS x64 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: bindings-x86_64-apple-darwin
+          path: .
+      - name: Download macOS arm64 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: bindings-aarch64-apple-darwin
+          path: .
+
+      - name: Combine binaries
+        run: pnpm napi universalize
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: napi-universal-apple-darwin
+          path: "${{ env.APP_NAME }}.*.node"
+          if-no-files-found: error
+
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: node
+    needs:
+      - build-universal-macOS
+
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2.2.4
         with:
           version: 8
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
-          check-latest: true
+          node-version: 20
           cache: pnpm
-          cache-dependency-path: '**/pnpm-lock.yaml'
 
       - name: Install dependencies
         run: pnpm install -w --filter .
