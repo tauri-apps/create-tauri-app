@@ -1,0 +1,15 @@
+{
+  "name": "create-tauri-app-darwin-universal",
+  "version": "0.0.0",
+  "os": [
+    "darwin"
+  ],
+  "main": "create-tauri-app.darwin-universal.node",
+  "files": [
+    "create-tauri-app.darwin-universal.node"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10"
+  }
+}
