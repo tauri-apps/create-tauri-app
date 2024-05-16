@@ -10,8 +10,6 @@ env:
   MACOSX_DEPLOYMENT_TARGET: '10.13'
 
 on:
-  push:
-    branches: ["fix/ci"]
   workflow_dispatch:
     inputs:
       releaseId:
@@ -189,7 +187,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: napi-universal-apple-darwin
-          path: node/${{ env.APP_NAME }}.*.node
+          path: node/${{ env.APP_NAME }}.darwin-universal.node
           if-no-files-found: error
 
   publish:
@@ -216,9 +214,13 @@ jobs:
         run: pnpm install
 
       - name: Download all artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           path: node/artifacts
+
+      - name: List artifacts
+        run: ls artifacts
+        shell: bash
 
       - name: Move artifacts
         run: pnpm artifacts
