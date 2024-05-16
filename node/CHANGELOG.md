@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.14.2]
+
+- [`9914fc8`](https://www.github.com/tauri-apps/create-tauri-app/commit/9914fc8ab5749f090ddbb2f2106a66098bbe2a0b) Fix `Cannot find module 'create-tauri-app-darwin-x64'` again.
+
 ## \[3.14.1]
 
 - [`edef1cb`](https://www.github.com/tauri-apps/create-tauri-app/commit/edef1cb5a78530b0c16657e11f12474fd473cad0)([#695](https://www.github.com/tauri-apps/create-tauri-app/pull/695)) Fix `Cannot find module 'create-tauri-app-darwin-x64'`
