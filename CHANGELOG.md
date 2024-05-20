@@ -1,5 +1,9 @@
 # Changelog
 
+## \[3.14.1]
+
+- [`29ea869`](https://www.github.com/tauri-apps/create-tauri-app/commit/29ea869972ef175578734076c828f38aac20e46d)([#705](https://www.github.com/tauri-apps/create-tauri-app/pull/705)) Fix `capabilities` directory not created when generating a template with mobile support.
+
 ## \[3.14.0]
 
 - [`4edb69f`](https://www.github.com/tauri-apps/create-tauri-app/commit/4edb69f8b79a8f03eb5d29772509fad68f28e904)([#656](https://www.github.com/tauri-apps/create-tauri-app/pull/656)) Add Blazor template
