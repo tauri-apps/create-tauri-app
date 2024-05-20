@@ -1,5 +1,13 @@
 # Changelog
 
+## \[3.14.3]
+
+- [`29ea869`](https://www.github.com/tauri-apps/create-tauri-app/commit/29ea869972ef175578734076c828f38aac20e46d)([#705](https://www.github.com/tauri-apps/create-tauri-app/pull/705)) Fix `capabilities` directory not created when generating a template with mobile support.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@3.14.1`
+
 ## \[3.14.2]
 
 - [`9914fc8`](https://www.github.com/tauri-apps/create-tauri-app/commit/9914fc8ab5749f090ddbb2f2106a66098bbe2a0b) Fix `Cannot find module 'create-tauri-app-darwin-x64'` again.
