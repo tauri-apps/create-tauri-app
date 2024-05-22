@@ -1,5 +1,13 @@
 # Changelog
 
+## \[4.0.0]
+
+- [`11c26e1`](https://www.github.com/tauri-apps/create-tauri-app/commit/11c26e1fc331aa3cf5fa9ba94617bd5be5686ec5)([#271](https://www.github.com/tauri-apps/create-tauri-app/pull/271)) Replace Svelte templates with SvelteKit based on the community [request](https://discord.com/channels/616186924390023171/1232318266542915617/1239666162032181369).
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@4.0.0`
+
 ## \[3.14.3]
 
 - [`29ea869`](https://www.github.com/tauri-apps/create-tauri-app/commit/29ea869972ef175578734076c828f38aac20e46d)([#705](https://www.github.com/tauri-apps/create-tauri-app/pull/705)) Fix `capabilities` directory not created when generating a template with mobile support.
