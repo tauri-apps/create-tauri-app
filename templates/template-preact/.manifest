@@ -11,4 +11,4 @@ distDir = ../dist
 preact.svg = src/assets/preact.svg
 vite.svg = public/vite.svg
 tauri.svg = public/tauri.svg
-styles.css = src/styles.css
+styles.css = src/App.css

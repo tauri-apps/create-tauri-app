@@ -5,10 +5,10 @@
 beforeDevCommand = {% pkg_manager_run_command %} dev
 beforeBuildCommand = {% pkg_manager_run_command %} build
 devPath = http://localhost:1420
-distDir = ../dist
+distDir = ../build
 
 [files]
-vite.svg = public/vite.svg
-tauri.svg = public/tauri.svg
-svelte.svg = public/svelte.svg
-styles.css = src/styles.css
+vite.svg = static/vite.svg
+tauri.svg = static/tauri.svg
+svelte.png = static/favicon.png
+svelte.svg = static/svelte.svg

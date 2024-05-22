@@ -47,23 +47,11 @@ pub fn App<G: Html>(cx: Scope) -> View<G> {
                     img(src="public/sycamore.svg",class="logo sycamore",alt="Sycamore logo")
                 }
             }
+
             p {
                 "Click on the Tauri and Sycamore logos to learn more."
             }
-            p {
-                "Recommended IDE setup: "
-                a(href="https://code.visualstudio.com/",target="_blank") {
-                    "VS Code"
-                }
-                " + "
-                a(href="https://github.com/tauri-apps/tauri-vscode",target="_blank") {
-                    "Tauri"
-                }
-                " + "
-                a(href="https://github.com/rust-lang/rust-analyzer",target="_blank") {
-                    "rust-analyzer"
-                }
-            }
+
             form(class="row",on:submit=greet) {
                 input(id="greet-input",bind:value=name,placeholder="Enter a name...")
                 button(type="submit") {

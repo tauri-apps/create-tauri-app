@@ -72,15 +72,6 @@ pub fn app() -> Html {
 
             <p>{"Click on the Tauri and Yew logos to learn more."}</p>
 
-            <p>
-                {"Recommended IDE setup: "}
-                <a href="https://code.visualstudio.com/" target="_blank">{"VS Code"}</a>
-                {" + "}
-                <a href="https://github.com/tauri-apps/tauri-vscode" target="_blank">{"Tauri"}</a>
-                {" + "}
-                <a href="https://github.com/rust-lang/rust-analyzer" target="_blank">{"rust-analyzer"}</a>
-            </p>
-
             <form class="row" onsubmit={greet}>
                 <input id="greet-input" ref={greet_input_ref} placeholder="Enter a name..." />
                 <button type="submit">{"Greet"}</button>
