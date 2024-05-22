@@ -8,9 +8,9 @@
     {% endif %}{% if before_build_command %}"beforeBuildCommand": "{% before_build_command %}",
     {% endif %}"frontendDist": "{% dist_dir %}"
   },
-  "app": {{% if with_global_tauri %}
-    "withGlobalTauri": true,{% endif %}
-    "windows": [
+  "app": {
+    {% if with_global_tauri %}"withGlobalTauri": true,
+    {% endif %}"windows": [
       {
         "title": "{% package_name %}",
         "width": 800,
