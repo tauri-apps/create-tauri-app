@@ -11,4 +11,3 @@ distDir = ../dist
 vite.svg = public/vite.svg
 tauri.svg = public/tauri.svg
 vue.svg = src/assets/vue.svg
-styles.css = src/styles.css

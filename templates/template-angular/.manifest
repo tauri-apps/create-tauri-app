@@ -12,4 +12,4 @@ beforeDevCommand = {% pkg_manager_run_command %} start {% double_dash_with_space
 
 [files]
 tauri.svg = src/assets/tauri.svg
-styles.css = src/styles.css
+styles.css = src/app/app.component.css

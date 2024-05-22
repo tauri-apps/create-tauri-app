@@ -11,4 +11,4 @@ distDir = ../dist
 react.svg = src/assets/react.svg
 vite.svg = public/vite.svg
 tauri.svg = public/tauri.svg
-styles.css = src/styles.css
+styles.css = src/App.css

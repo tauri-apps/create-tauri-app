@@ -289,6 +289,13 @@ impl<'a> Template {
         ]
         .into();
 
+        let styles = String::from_utf8(
+            EMBEDDED_TEMPLATES::get("_assets_/styles.css")
+                .unwrap()
+                .data
+                .to_vec(),
+        )?;
+
         let template_data: HashMap<&str, String> = [
             ("stable", (!beta).to_string()),
             ("beta", beta_str.clone()),
@@ -332,6 +339,21 @@ impl<'a> Template {
                 manifest.with_global_tauri.unwrap_or_default().to_string(),
             ),
             ("lib_name", lib_name),
+            (
+                "styles_padded",
+                styles
+                    .lines()
+                    .map(|l| {
+                        if l.is_empty() {
+                            l.to_string()
+                        } else {
+                            format!("  {l}")
+                        }
+                    })
+                    .collect::<Vec<_>>()
+                    .join("\n"),
+            ),
+            ("styles", styles),
         ]
         .into();
 

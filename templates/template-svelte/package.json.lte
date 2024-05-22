@@ -1,22 +1,29 @@
 {
   "name": "{% package_name %}",
-  "private": true,
   "version": "0.0.0",
+  "description": "",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
     "tauri": "tauri"
   },
+  "license": "MIT",
   "dependencies": {
     "@tauri-apps/api": "{% if beta %}>=2.0.0-beta.0{% else %}^1{% endif %}"{% if beta %},
     "@tauri-apps/plugin-shell": ">=2.0.0-beta.0"{% endif %}
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^3.0.1",
-    "svelte": "^4.2.8",
-    "vite": "^5.0.0",
+    "@sveltejs/adapter-static": "^3.0.1",
+    "@sveltejs/kit": "^2.0.0",
+    "@sveltejs/vite-plugin-svelte": "^3.0.0",
+    "svelte": "^4.2.7",
+    "svelte-check": "^3.6.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.3",
     "@tauri-apps/cli": "{% if beta %}>=2.0.0-beta.0{% else %}^1{% endif %}"{% if mobile %},
     "internal-ip": "^7.0.0"{% endif %}
   }
