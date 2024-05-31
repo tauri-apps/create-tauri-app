@@ -28,8 +28,8 @@ importers:
   worker:
     devDependencies:
       wrangler:
-        specifier: 3.57.2
-        version: 3.57.2
+        specifier: 3.58.0
+        version: 3.58.0
 
 packages:
 
@@ -730,8 +730,8 @@ packages:
     resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==}
     engines: {node: '>=6'}
 
-  miniflare@3.20240524.0:
-    resolution: {integrity: sha512-RQAfpz7spI6gWlczeUYvJBgGyt0gNR2pYoCydgukCYZ+0bGfJl0yAiNFW62uH7uMZli/4juWPpQOBI5m7URoyA==}
+  miniflare@3.20240524.1:
+    resolution: {integrity: sha512-5d3pRxvd5pT7lX1SsBH9+AjXuyHJnChSNOnYhubfi7pxMek4ZfULwhnUmNUp1R7b2xKuzqdFDZa0fsZuUoFxlw==}
     engines: {node: '>=16.13'}
     hasBin: true
 
@@ -1053,8 +1053,8 @@ packages:
   workerpool@6.2.1:
     resolution: {integrity: sha512-ILEIE97kDZvF9Wb9f6h5aXK4swSlKGUcOEGiIYb2OOu/IrDU9iwj0fD//SsA6E5ibwJxpEvhullJY4Sl4GcpAw==}
 
-  wrangler@3.57.2:
-    resolution: {integrity: sha512-QegYf0FW+4prlFKE9iHr1EGrCo8ejcGL9gaqEXrzQ0vbTdazykYbY0I5UpHFLNq2dIF9I/ifEoLRKr636tyHEw==}
+  wrangler@3.58.0:
+    resolution: {integrity: sha512-h9gWER7LXLnmHABDNP1p3aqXtchlvSBN8Dp22ZurnkxaLMZ3L3H1Ze1ftiFSs0VRWv0BUnz7AWIUqZmzuBY4Nw==}
     engines: {node: '>=16.17.0'}
     hasBin: true
     peerDependencies:
@@ -1169,9 +1169,9 @@ snapshots:
       - encoding
       - mocha
 
-  '@covector/assemble@0.10.3':
+  '@covector/assemble@0.10.3(mocha@10.4.0)':
     dependencies:
-      '@covector/command': 0.7.0
+      '@covector/command': 0.7.0(mocha@10.4.0)
       '@covector/files': 0.7.1
       effection: 2.0.7(mocha@10.4.0)
       js-yaml: 4.1.0
@@ -1182,9 +1182,10 @@ snapshots:
       unified: 9.2.2
     transitivePeerDependencies:
       - encoding
+      - mocha
       - supports-color
 
-  '@covector/changelog@0.10.1':
+  '@covector/changelog@0.10.1(mocha@10.4.0)':
     dependencies:
       '@covector/files': 0.7.1
       effection: 2.0.7(mocha@10.4.0)
@@ -1194,15 +1195,17 @@ snapshots:
       unified: 9.2.2
     transitivePeerDependencies:
       - encoding
+      - mocha
       - supports-color
 
-  '@covector/command@0.7.0':
+  '@covector/command@0.7.0(mocha@10.4.0)':
     dependencies:
       '@effection/process': 2.1.3
       effection: 2.0.7(mocha@10.4.0)
       strip-ansi: 6.0.1
     transitivePeerDependencies:
       - encoding
+      - mocha
 
   '@covector/files@0.7.1':
     dependencies:
@@ -1252,8 +1255,6 @@ snapshots:
     dependencies:
       effection: 2.0.7(mocha@10.4.0)
       mocha: 10.4.0
-    transitivePeerDependencies:
-      - encoding
 
   '@effection/process@2.1.3':
     dependencies:
@@ -1261,8 +1262,6 @@ snapshots:
       ctrlc-windows: 2.1.0
       effection: 2.0.7(mocha@10.4.0)
       shellwords: 0.1.1
-    transitivePeerDependencies:
-      - encoding
 
   '@effection/stream@2.0.5':
     dependencies:
@@ -1509,9 +1508,9 @@ snapshots:
   covector@0.10.2(mocha@10.4.0):
     dependencies:
       '@covector/apply': 0.9.2(mocha@10.4.0)
-      '@covector/assemble': 0.10.3
-      '@covector/changelog': 0.10.1
-      '@covector/command': 0.7.0
+      '@covector/assemble': 0.10.3(mocha@10.4.0)
+      '@covector/changelog': 0.10.1(mocha@10.4.0)
+      '@covector/command': 0.7.0(mocha@10.4.0)
       '@covector/files': 0.7.1
       effection: 2.0.7(mocha@10.4.0)
       globby: 11.1.0
@@ -1840,7 +1839,7 @@ snapshots:
 
   mimic-fn@2.1.0: {}
 
-  miniflare@3.20240524.0:
+  miniflare@3.20240524.1:
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       acorn: 8.8.2
@@ -2177,7 +2176,7 @@ snapshots:
 
   workerpool@6.2.1: {}
 
-  wrangler@3.57.2:
+  wrangler@3.58.0:
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.2
       '@esbuild-plugins/node-globals-polyfill': 0.2.3(esbuild@0.17.19)
@@ -2185,7 +2184,7 @@ snapshots:
       blake3-wasm: 2.1.5
       chokidar: 3.5.3
       esbuild: 0.17.19
-      miniflare: 3.20240524.0
+      miniflare: 3.20240524.1
       nanoid: 3.3.4
       path-to-regexp: 6.2.1
       resolve: 1.22.8
