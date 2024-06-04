@@ -28,8 +28,8 @@ importers:
   worker:
     devDependencies:
       wrangler:
-        specifier: 3.58.0
-        version: 3.58.0
+        specifier: 3.59.0
+        version: 3.59.0
 
 packages:
 
@@ -723,8 +723,8 @@ packages:
     resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==}
     engines: {node: '>=6'}
 
-  miniflare@3.20240524.1:
-    resolution: {integrity: sha512-5d3pRxvd5pT7lX1SsBH9+AjXuyHJnChSNOnYhubfi7pxMek4ZfULwhnUmNUp1R7b2xKuzqdFDZa0fsZuUoFxlw==}
+  miniflare@3.20240524.2:
+    resolution: {integrity: sha512-Js+8cB61KJG0z2HuQTPLT9S6FwTBuMZfjtml3azUarLYsCF91N+PhIkvNpbkwCXcfRvscdjJ0RlT6lBQYEuIwA==}
     engines: {node: '>=16.13'}
     hasBin: true
 
@@ -1046,8 +1046,8 @@ packages:
   workerpool@6.2.1:
     resolution: {integrity: sha512-ILEIE97kDZvF9Wb9f6h5aXK4swSlKGUcOEGiIYb2OOu/IrDU9iwj0fD//SsA6E5ibwJxpEvhullJY4Sl4GcpAw==}
 
-  wrangler@3.58.0:
-    resolution: {integrity: sha512-h9gWER7LXLnmHABDNP1p3aqXtchlvSBN8Dp22ZurnkxaLMZ3L3H1Ze1ftiFSs0VRWv0BUnz7AWIUqZmzuBY4Nw==}
+  wrangler@3.59.0:
+    resolution: {integrity: sha512-MLKejazUJrekbD8EnQfN6d7fei+IGnq2aVXeILFDy0aTktVNXKvO+eC+mND1zOr+k0KvQN4sJo8vGwqYoY7btw==}
     engines: {node: '>=16.17.0'}
     hasBin: true
     peerDependencies:
@@ -1828,7 +1828,7 @@ snapshots:
 
   mimic-fn@2.1.0: {}
 
-  miniflare@3.20240524.1:
+  miniflare@3.20240524.2:
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       acorn: 8.8.2
@@ -2165,7 +2165,7 @@ snapshots:
 
   workerpool@6.2.1: {}
 
-  wrangler@3.58.0:
+  wrangler@3.59.0:
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.2
       '@esbuild-plugins/node-globals-polyfill': 0.2.3(esbuild@0.17.19)
@@ -2173,7 +2173,7 @@ snapshots:
       blake3-wasm: 2.1.5
       chokidar: 3.5.3
       esbuild: 0.17.19
-      miniflare: 3.20240524.1
+      miniflare: 3.20240524.2
       nanoid: 3.3.4
       path-to-regexp: 6.2.1
       resolve: 1.22.8
