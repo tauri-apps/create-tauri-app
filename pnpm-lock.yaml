@@ -12,8 +12,8 @@ importers:
   .:
     dependencies:
       prettier:
-        specifier: 3.3.1
-        version: 3.3.1
+        specifier: 3.3.2
+        version: 3.3.2
     devDependencies:
       covector:
         specifier: 0.11.0
@@ -833,8 +833,8 @@ packages:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
 
-  prettier@3.3.1:
-    resolution: {integrity: sha512-7CAwy5dRsxs8PHXT3twixW9/OEll8MLE0VRPCJyl7CkS6VHGPSlsVaWTiASPTyGyYRyApxlaWTzwUxVNrhcwDg==}
+  prettier@3.3.2:
+    resolution: {integrity: sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -1068,6 +1068,7 @@ packages:
   wrangler@3.60.0:
     resolution: {integrity: sha512-8lW4E7VAhCVXy7AV7Vom2BsyjekIt15Aa8jnBLsfE2CxalzWQzx49BK25hOYhjHQT4GqBXeoNOZ43FrMQ+SUUA==}
     engines: {node: '>=16.17.0'}
+    deprecated: bug affecting usage of `wrangler pages deploy` with > 1000 assets in wrangler@3.60.0, fixed in wrangler@3.60.1
     hasBin: true
     peerDependencies:
       '@cloudflare/workers-types': ^4.20240605.0
@@ -1172,17 +1173,18 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20240605.0':
     optional: true
 
-  '@covector/apply@0.9.3':
+  '@covector/apply@0.9.3(mocha@10.4.0)':
     dependencies:
       '@covector/files': 0.7.2
       effection: 2.0.7(mocha@10.4.0)
       semver: 7.5.4
     transitivePeerDependencies:
       - encoding
+      - mocha
 
-  '@covector/assemble@0.11.0':
+  '@covector/assemble@0.11.0(mocha@10.4.0)':
     dependencies:
-      '@covector/command': 0.7.1
+      '@covector/command': 0.7.1(mocha@10.4.0)
       '@covector/files': 0.7.2
       effection: 2.0.7(mocha@10.4.0)
       js-yaml: 4.1.0
@@ -1193,6 +1195,7 @@ snapshots:
       unified: 9.2.2
     transitivePeerDependencies:
       - encoding
+      - mocha
       - supports-color
 
   '@covector/changelog@0.11.0(mocha@10.4.0)':
@@ -1208,12 +1211,13 @@ snapshots:
       - mocha
       - supports-color
 
-  '@covector/command@0.7.1':
+  '@covector/command@0.7.1(mocha@10.4.0)':
     dependencies:
       '@effection/process': 2.1.3
       effection: 2.0.7(mocha@10.4.0)
     transitivePeerDependencies:
       - encoding
+      - mocha
 
   '@covector/files@0.7.2':
     dependencies:
@@ -1264,8 +1268,6 @@ snapshots:
     dependencies:
       effection: 2.0.7(mocha@10.4.0)
       mocha: 10.4.0
-    transitivePeerDependencies:
-      - encoding
 
   '@effection/process@2.1.3':
     dependencies:
@@ -1273,8 +1275,6 @@ snapshots:
       ctrlc-windows: 2.1.0
       effection: 2.0.7(mocha@10.4.0)
       shellwords: 0.1.1
-    transitivePeerDependencies:
-      - encoding
 
   '@effection/stream@2.0.5':
     dependencies:
@@ -1518,10 +1518,10 @@ snapshots:
 
   covector@0.11.0(mocha@10.4.0):
     dependencies:
-      '@covector/apply': 0.9.3
-      '@covector/assemble': 0.11.0
+      '@covector/apply': 0.9.3(mocha@10.4.0)
+      '@covector/assemble': 0.11.0(mocha@10.4.0)
       '@covector/changelog': 0.11.0(mocha@10.4.0)
-      '@covector/command': 0.7.1
+      '@covector/command': 0.7.1(mocha@10.4.0)
       '@covector/files': 0.7.2
       effection: 2.0.7(mocha@10.4.0)
       globby: 11.1.0
@@ -1971,7 +1971,7 @@ snapshots:
 
   picomatch@2.3.1: {}
 
-  prettier@3.3.1: {}
+  prettier@3.3.2: {}
 
   printable-characters@1.0.42: {}
 
