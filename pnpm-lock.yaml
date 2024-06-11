@@ -28,8 +28,8 @@ importers:
   worker:
     devDependencies:
       wrangler:
-        specifier: 3.60.1
-        version: 3.60.1
+        specifier: 3.60.2
+        version: 3.60.2
 
 packages:
 
@@ -1065,8 +1065,8 @@ packages:
   workerpool@6.2.1:
     resolution: {integrity: sha512-ILEIE97kDZvF9Wb9f6h5aXK4swSlKGUcOEGiIYb2OOu/IrDU9iwj0fD//SsA6E5ibwJxpEvhullJY4Sl4GcpAw==}
 
-  wrangler@3.60.1:
-    resolution: {integrity: sha512-pVrqzgpRwFk/8bp/afsnuw6ttOJ0Y8XFDfLjVMnVeDGZJpQ5eHV3hf8fImavn2BeH6DLHucKnJHwISnzDciqRQ==}
+  wrangler@3.60.2:
+    resolution: {integrity: sha512-lGIuxzaVm8W0ddzwzwZtx3kL/0PUGMZfKBayUzcMq5wGk88aE9UA2lYeGF51EHVXX2yBbnw7Ltw2eXsx2ixNOQ==}
     engines: {node: '>=16.17.0'}
     hasBin: true
     peerDependencies:
@@ -1172,17 +1172,18 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20240605.0':
     optional: true
 
-  '@covector/apply@0.9.3':
+  '@covector/apply@0.9.3(mocha@10.4.0)':
     dependencies:
       '@covector/files': 0.7.2
       effection: 2.0.7(mocha@10.4.0)
       semver: 7.5.4
     transitivePeerDependencies:
       - encoding
+      - mocha
 
-  '@covector/assemble@0.11.0':
+  '@covector/assemble@0.11.0(mocha@10.4.0)':
     dependencies:
-      '@covector/command': 0.7.1
+      '@covector/command': 0.7.1(mocha@10.4.0)
       '@covector/files': 0.7.2
       effection: 2.0.7(mocha@10.4.0)
       js-yaml: 4.1.0
@@ -1193,6 +1194,7 @@ snapshots:
       unified: 9.2.2
     transitivePeerDependencies:
       - encoding
+      - mocha
       - supports-color
 
   '@covector/changelog@0.11.0(mocha@10.4.0)':
@@ -1208,12 +1210,13 @@ snapshots:
       - mocha
       - supports-color
 
-  '@covector/command@0.7.1':
+  '@covector/command@0.7.1(mocha@10.4.0)':
     dependencies:
       '@effection/process': 2.1.3
       effection: 2.0.7(mocha@10.4.0)
     transitivePeerDependencies:
       - encoding
+      - mocha
 
   '@covector/files@0.7.2':
     dependencies:
@@ -1264,8 +1267,6 @@ snapshots:
     dependencies:
       effection: 2.0.7(mocha@10.4.0)
       mocha: 10.4.0
-    transitivePeerDependencies:
-      - encoding
 
   '@effection/process@2.1.3':
     dependencies:
@@ -1273,8 +1274,6 @@ snapshots:
       ctrlc-windows: 2.1.0
       effection: 2.0.7(mocha@10.4.0)
       shellwords: 0.1.1
-    transitivePeerDependencies:
-      - encoding
 
   '@effection/stream@2.0.5':
     dependencies:
@@ -1518,10 +1517,10 @@ snapshots:
 
   covector@0.11.0(mocha@10.4.0):
     dependencies:
-      '@covector/apply': 0.9.3
-      '@covector/assemble': 0.11.0
+      '@covector/apply': 0.9.3(mocha@10.4.0)
+      '@covector/assemble': 0.11.0(mocha@10.4.0)
       '@covector/changelog': 0.11.0(mocha@10.4.0)
-      '@covector/command': 0.7.1
+      '@covector/command': 0.7.1(mocha@10.4.0)
       '@covector/files': 0.7.2
       effection: 2.0.7(mocha@10.4.0)
       globby: 11.1.0
@@ -2204,7 +2203,7 @@ snapshots:
 
   workerpool@6.2.1: {}
 
-  wrangler@3.60.1:
+  wrangler@3.60.2:
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.2
       '@esbuild-plugins/node-globals-polyfill': 0.2.3(esbuild@0.17.19)
