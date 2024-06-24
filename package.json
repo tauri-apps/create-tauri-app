@@ -10,6 +10,6 @@
     "covector": "0.11.0"
   },
   "resolutions": {
-    "undici": ">=6.11.1"
+    "braces": ">=3.0.3"
   }
 }
