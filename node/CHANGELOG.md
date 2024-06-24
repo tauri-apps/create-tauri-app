@@ -1,5 +1,13 @@
 # Changelog
 
+## \[4.0.1]
+
+- [`96dcd36`](https://www.github.com/tauri-apps/create-tauri-app/commit/96dcd36354a0c656d2ca439bd51e30660fb51235) ([#726](https://www.github.com/tauri-apps/create-tauri-app/pull/726)) Updated `vue-tsc` dependency in `vue-ts` template to fix issues with newer typescript versions.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@4.0.1`
+
 ## \[4.0.0]
 
 - [`11c26e1`](https://www.github.com/tauri-apps/create-tauri-app/commit/11c26e1fc331aa3cf5fa9ba94617bd5be5686ec5)([#271](https://www.github.com/tauri-apps/create-tauri-app/pull/271)) Replace Svelte templates with SvelteKit based on the community [request](https://discord.com/channels/616186924390023171/1232318266542915617/1239666162032181369).
