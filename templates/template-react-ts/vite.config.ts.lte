@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";{% if mobile %}
+import react from "@vitejs/plugin-react-swc";{% if mobile %}
 import { internalIpV4 } from "internal-ip";
 
 // @ts-expect-error process is a nodejs global
