@@ -3,7 +3,7 @@
 
 <div class="container">
     <h1>Welcome to Tauri!</h1>
-    
+
     <div class="row">
         <a href="https://tauri.app" target="_blank">
             <img src="img/tauri.svg" class="logo tauri" alt="Tauri logo"/>
@@ -15,7 +15,7 @@
 
     <p>Click on the Tauri and Blazor logos to learn more.</p>
 
-    <form class="row" @submit="GreetAsync" @submit:preventDefault="true">
+    <form class="row" @onsubmit="GreetAsync" @onsubmit:preventDefault="true">
         <input id="greet-input" placeholder="Enter a name..." @bind="GreetInput"/>
         <button type="submit">Greet</button>
     </form>
@@ -31,6 +31,6 @@
 
     private async Task GreetAsync()
     {
-        GreetMsg = await JsRuntime.InvokeAsync<string>("__TAURI__.tauri.invoke", "greet", new { name = GreetInput });
+        GreetMsg = await JsRuntime.InvokeAsync<string>("__TAURI__.{% if beta %}core{% else %}tauri{% endif %}.invoke", "greet", new { name = GreetInput });
     }
 }
