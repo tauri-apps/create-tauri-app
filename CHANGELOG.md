@@ -1,5 +1,9 @@
 # Changelog
 
+## \[4.0.2]
+
+- [`2321bd4`](https://www.github.com/tauri-apps/create-tauri-app/commit/2321bd4d97e1b9a13108906fd723718f80c32af7) ([#734](https://www.github.com/tauri-apps/create-tauri-app/pull/734) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Fix `blazor` template `onsubmit` handler.
+
 ## \[4.0.1]
 
 - [`96dcd36`](https://www.github.com/tauri-apps/create-tauri-app/commit/96dcd36354a0c656d2ca439bd51e30660fb51235) ([#726](https://www.github.com/tauri-apps/create-tauri-app/pull/726)) Updated `vue-tsc` dependency in `vue-ts` template to fix issues with newer typescript versions.
