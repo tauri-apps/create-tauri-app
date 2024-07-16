@@ -1,5 +1,13 @@
 # Changelog
 
+## \[4.0.3]
+
+- [`db2f4de`](https://www.github.com/tauri-apps/create-tauri-app/commit/db2f4de39a097a5a8fb7c62889c60fb056aae37a) Fix `blazor` template rendered `Home.razor` incorrectly.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@4.0.3`
+
 ## \[4.0.2]
 
 - [`2321bd4`](https://www.github.com/tauri-apps/create-tauri-app/commit/2321bd4d97e1b9a13108906fd723718f80c32af7) ([#734](https://www.github.com/tauri-apps/create-tauri-app/pull/734) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Fix `blazor` template `onsubmit` handler.
