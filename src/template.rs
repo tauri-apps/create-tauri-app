@@ -389,7 +389,7 @@ impl<'a> Template {
                     // remove these flags to only keep package managers flags
                     flags.retain(|e| !["stable", "rc"].contains(e));
 
-                    if ((for_stable && !rc) || (for_rc && rc))
+                    if ((for_stable && !rc) || (for_rc && rc) || (!for_stable && !for_rc))
                         && (flags.contains(&pkg_manager.to_string().as_str()) || flags.is_empty())
                     {
                         name
