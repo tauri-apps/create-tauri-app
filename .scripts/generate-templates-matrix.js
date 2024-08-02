@@ -78,16 +78,16 @@ matrixConfig
         const jobInfo = {
           template: t,
           install_trunk: ["yew", "sycamore", "leptos"].includes(t),
-          beta: false,
+          rc: false,
           no_bundle_flag: "-b none",
           ...managerInfo,
         };
         outMatrix.push(jobInfo);
         outMatrix.push({
           ...jobInfo,
-          beta: true,
+          rc: true,
           no_bundle_flag: "--no-bundle",
-          flags: "--beta",
+          flags: "--rc",
         });
       }
     }

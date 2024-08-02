@@ -31,6 +31,6 @@
 
     private async Task GreetAsync()
     {
-        GreetMsg = await JsRuntime.InvokeAsync<string>("__TAURI__.{% if beta %}core{% else %}tauri{% endif %}.invoke", "greet", new { name = GreetInput });
+        GreetMsg = await JsRuntime.InvokeAsync<string>("__TAURI__.{% if rc %}core{% else %}tauri{% endif %}.invoke", "greet", new { name = GreetInput });
     }
 }

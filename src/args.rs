@@ -15,7 +15,7 @@ pub struct Args {
     pub template: Option<Template>,
     pub skip: bool,
     pub force: bool,
-    pub beta: bool,
+    pub rc: bool,
     pub mobile: Option<bool>,
     pub no_mobile: Option<bool>,
 }
@@ -28,7 +28,7 @@ impl Default for Args {
             template: Some(Template::Vanilla),
             skip: false,
             force: false,
-            beta: false,
+            rc: false,
             mobile: Some(false), // default for this value must be Some(false), as we use it as fallback when -y is used
             no_mobile: None,
         }
@@ -56,9 +56,9 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
   {GREEN}-t{RESET}, {GREEN}--template <TEMPLATE>{RESET}     Specify the UI template to use [{templates}]
   {GREEN}-y{RESET}, {GREEN}--yes{RESET}                     Skip prompts and use defaults where applicable
   {GREEN}-f{RESET}, {GREEN}--force{RESET}                   Force create the directory even if it is not empty.
-                    {GREEN}--beta{RESET}                    Bootstraps a project using tauri@2.0-beta
-                    {GREEN}--mobile{RESET}                  Bootstraps a mobile project too. Only availabe with `--beta` option.
-                    {GREEN}--no-mobile{RESET}               Skip bootstraping a mobile project. Only availabe with `--beta` option.
+                    {GREEN}--rc{RESET}                      Bootstraps a project using tauri@2.0-rc.
+                    {GREEN}--mobile{RESET}                  Bootstraps a mobile project too. Only availabe with `--rc` option.
+                    {GREEN}--no-mobile{RESET}               Skip bootstraping a mobile project. Only availabe with `--rc` option.
   {GREEN}-h{RESET}, {GREEN}--help{RESET}                    Prints help information
   {GREEN}-v{RESET}, {GREEN}--version{RESET}                 Prints version information
 "#,
@@ -87,13 +87,18 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
     }
 
     // pargs.contains() consume the flag so we have to bind the bool to a variable.
-    let beta = if pargs.contains("--alpha") {
+    let rc = if pargs.contains("--alpha") {
         eprintln!(
-                "{BOLD}{YELLOW}warning{RESET}: The `{GREEN}--alpha{RESET}` option is now an alias for `{GREEN}--beta{RESET}` and may be removed in the future."
+                "{BOLD}{YELLOW}warning{RESET}: The `{GREEN}--alpha{RESET}` option is now an alias for `{GREEN}--rc{RESET}` and may be removed in the future."
+            );
+        true
+    } else if pargs.contains("--beta") {
+        eprintln!(
+                "{BOLD}{YELLOW}warning{RESET}: The `{GREEN}--beta{RESET}` option is now an alias for `{GREEN}--rc{RESET}` and may be removed in the future."
             );
         true
     } else {
-        pargs.contains("--beta")
+        pargs.contains("--rc")
     };
 
     let args = Args {
@@ -101,7 +106,7 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
         template: pargs.opt_value_from_str(["-t", "--template"])?,
         skip: pargs.contains(["-y", "--yes"]),
         force: pargs.contains(["-f", "--force"]),
-        beta,
+        rc,
         mobile: if pargs.contains("--mobile") {
             Some(true)
         } else {

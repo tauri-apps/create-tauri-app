@@ -11,14 +11,13 @@
   },
   "dependencies": {
     "preact": "^10.16.0",
-    "@tauri-apps/api": "{% if beta %}>=2.0.0-beta.0{% else %}^1{% endif %}"{% if beta %},
-    "@tauri-apps/plugin-shell": ">=2.0.0-beta.0"{% endif %}
+    "@tauri-apps/api": "{% if rc %}>=2.0.0-rc.0{% else %}^1{% endif %}"{% if rc %},
+    "@tauri-apps/plugin-shell": ">=2.0.0-rc.0"{% endif %}
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.5.0",
     "typescript": "^5.2.2",
     "vite": "^5.3.1",
-    "@tauri-apps/cli": "{% if beta %}>=2.0.0-beta.0{% else %}^1{% endif %}"{% if mobile %},
-    "internal-ip": "^7.0.0"{% endif %}
+    "@tauri-apps/cli": "{% if rc %}>=2.0.0-rc.0{% else %}^1{% endif %}"
   }
 }

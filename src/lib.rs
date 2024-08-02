@@ -68,7 +68,7 @@ where
         skip,
         mut mobile,
         no_mobile,
-        beta,
+        rc,
         manager,
         project_name,
         template,
@@ -76,15 +76,15 @@ where
     } = args;
     let cwd = std::env::current_dir()?;
 
-    // Allow `--mobile` to only be used with `--beta` for now
+    // Allow `--mobile` to only be used with `--rc` for now
     // TODO: remove this limitation once tauri@v2 is stable
-    if (mobile.is_some() || no_mobile.is_some()) && !beta {
+    if (mobile.is_some() || no_mobile.is_some()) && !rc {
         let flag = if mobile.is_some() {
             "--mobile"
         } else {
             "--no-mobile"
         };
-        eprintln!("{BOLD}{RED}error{RESET}: `{GREEN}{}{RESET}` option is only available if `{GREEN}--beta{RESET}` option is also used", flag);
+        eprintln!("{BOLD}{RED}error{RESET}: `{GREEN}{}{RESET}` option is only available if `{GREEN}--rc{RESET}` option is also used", flag);
         exit(1);
     }
 
@@ -287,12 +287,12 @@ where
     };
 
     // Prompt for wether to bootstrap a mobile-friendly tauri project
-    // This should only be prompted if `--beta` is used on the command line and `--mobile` wasn't.
+    // This should only be prompted if `--rc` is used on the command line and `--mobile` wasn't.
     // TODO: remove this limitation once tauri@v2 is stable
     let mobile = match mobile {
         Some(mobile) => mobile,
         None => {
-            if skip || !beta {
+            if skip || !rc {
                 defaults.mobile.context("default mobile not set")?
             } else {
                 Confirm::with_theme(&ColorfulTheme::default())
@@ -344,14 +344,14 @@ where
         pkg_manager,
         &project_name,
         &package_name,
-        beta,
+        rc,
         mobile,
     )?;
 
     // Print post-render instructions
     println!();
     print!("Template created!");
-    let has_missing = print_missing_deps(pkg_manager, template, beta);
+    let has_missing = print_missing_deps(pkg_manager, template, rc);
     if has_missing {
         println!("Make sure you have installed the prerequisites for your OS: {BLUE}{BOLD}https://tauri.app/v1/guides/getting-started/prerequisites{RESET}, then run:");
     } else {

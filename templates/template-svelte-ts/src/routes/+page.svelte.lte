@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { invoke } from "@tauri-apps/api/{% if beta %}core{% else %}tauri{% endif %}";
+  import { invoke } from "@tauri-apps/api/{% if rc %}core{% else %}tauri{% endif %}";
 
   let name = "";
   let greetMsg = "";
