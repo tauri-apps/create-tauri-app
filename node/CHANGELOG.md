@@ -1,5 +1,14 @@
 # Changelog
 
+## \[4.1.0]
+
+- [`d34ff53`](https://www.github.com/tauri-apps/create-tauri-app/commit/d34ff53000954c45f1fcb8bcd4c416b252f9f6f2) ([#746](https://www.github.com/tauri-apps/create-tauri-app/pull/746) by [@lucasfernog](https://www.github.com/tauri-apps/create-tauri-app/../../lucasfernog)) Updated the templates to Tauri v2 RC.
+- [`26eb17d`](https://www.github.com/tauri-apps/create-tauri-app/commit/26eb17ddbc3a3aeb0909b444d213b637c223b765) ([#748](https://www.github.com/tauri-apps/create-tauri-app/pull/748) by [@lucasfernog](https://www.github.com/tauri-apps/create-tauri-app/../../lucasfernog)) Removed the `--mobile` and `--no-mobile` arguments. When using `--rc` we will always generate a template that supports both desktop and mobile using Tauri v2.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@4.1.0`
+
 ## \[4.0.3]
 
 - [`db2f4de`](https://www.github.com/tauri-apps/create-tauri-app/commit/db2f4de39a097a5a8fb7c62889c60fb056aae37a) Fix `blazor` template rendered `Home.razor` incorrectly.
