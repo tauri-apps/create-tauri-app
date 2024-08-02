@@ -257,7 +257,6 @@ impl<'a> Template {
         project_name: &str,
         package_name: &str,
         rc: bool,
-        mobile: bool,
     ) -> anyhow::Result<()> {
         let manifest_bytes =
             EMBEDDED_TEMPLATES::get(&format!("template-{self}/{CTA_MANIFEST_FILENAME}"))
@@ -265,7 +264,7 @@ impl<'a> Template {
                 .data
                 .to_vec();
         let manifest_str = String::from_utf8(manifest_bytes)?;
-        let manifest = Manifest::parse(&manifest_str, mobile)?;
+        let manifest = Manifest::parse(&manifest_str, rc)?;
 
         let lib_name = format!("{}_lib", package_name.replace('-', "_"));
         let project_name_pascal_case = Self::transform_to_pascal_case(project_name.to_string());
@@ -299,7 +298,6 @@ impl<'a> Template {
         let template_data: HashMap<&str, String> = [
             ("stable", (!rc).to_string()),
             ("rc", rc_str.clone()),
-            ("mobile", mobile.to_string()),
             ("project_name", project_name.to_string()),
             (
                 "project_name_pascal_case",
@@ -376,7 +374,7 @@ impl<'a> Template {
                 // conditional files:
                 // are files that start with a special syntax
                 //          "%(<list of flags separated by `-`>%)<file_name>"
-                // flags are supported package managers, stable, rc and mobile.
+                // flags are supported package managers, stable and rc.
                 // example: "%(pnpm-npm-yarn-stable-rc)%package.json"
                 name if name.starts_with("%(") && name[1..].contains(")%") => {
                     let mut s = name.strip_prefix("%(").unwrap().split(")%");
@@ -387,15 +385,11 @@ impl<'a> Template {
 
                     let for_stable = flags.contains(&"stable");
                     let for_rc = flags.contains(&"rc");
-                    let for_mobile = flags.contains(&"mobile");
 
                     // remove these flags to only keep package managers flags
-                    flags.retain(|e| !["stable", "rc", "mobile"].contains(e));
+                    flags.retain(|e| !["stable", "rc"].contains(e));
 
-                    if ((for_stable && !rc)
-                        || (for_rc && rc && !mobile)
-                        || (for_mobile && rc && mobile)
-                        || (!for_stable && !for_rc && !for_mobile))
+                    if ((for_stable && !rc) || (for_rc && rc) || (!for_stable && !for_rc))
                         && (flags.contains(&pkg_manager.to_string().as_str()) || flags.is_empty())
                     {
                         name

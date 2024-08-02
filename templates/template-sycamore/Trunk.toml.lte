@@ -5,7 +5,7 @@ target = "./index.html"
 ignore = ["./src-tauri"]
 
 [serve]
-address = "{% if mobile %}0.0.0.0{% else %}127.0.0.1{% endif %}"
+address = "{% if rc %}0.0.0.0{% else %}127.0.0.1{% endif %}"
 port = 1420
-open = false{% if mobile %}
+open = false{% if rc %}
 ws_protocol = "ws"{% endif %}

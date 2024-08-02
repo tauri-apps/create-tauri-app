@@ -16,8 +16,6 @@ pub struct Args {
     pub skip: bool,
     pub force: bool,
     pub rc: bool,
-    pub mobile: Option<bool>,
-    pub no_mobile: Option<bool>,
 }
 
 impl Default for Args {
@@ -29,8 +27,6 @@ impl Default for Args {
             skip: false,
             force: false,
             rc: false,
-            mobile: Some(false), // default for this value must be Some(false), as we use it as fallback when -y is used
-            no_mobile: None,
         }
     }
 }
@@ -57,8 +53,6 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
   {GREEN}-y{RESET}, {GREEN}--yes{RESET}                     Skip prompts and use defaults where applicable
   {GREEN}-f{RESET}, {GREEN}--force{RESET}                   Force create the directory even if it is not empty.
                     {GREEN}--rc{RESET}                      Bootstraps a project using tauri@2.0-rc.
-                    {GREEN}--mobile{RESET}                  Bootstraps a mobile project too. Only availabe with `--rc` option.
-                    {GREEN}--no-mobile{RESET}               Skip bootstraping a mobile project. Only availabe with `--rc` option.
   {GREEN}-h{RESET}, {GREEN}--help{RESET}                    Prints help information
   {GREEN}-v{RESET}, {GREEN}--version{RESET}                 Prints version information
 "#,
@@ -107,16 +101,6 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
         skip: pargs.contains(["-y", "--yes"]),
         force: pargs.contains(["-f", "--force"]),
         rc,
-        mobile: if pargs.contains("--mobile") {
-            Some(true)
-        } else {
-            None
-        },
-        no_mobile: if pargs.contains("--no-mobile") {
-            Some(true)
-        } else {
-            None
-        },
         project_name: pargs.opt_free_from_str()?,
     };
 
