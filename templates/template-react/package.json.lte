@@ -12,13 +12,12 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@tauri-apps/api": "{% if beta %}>=2.0.0-beta.0{% else %}^1{% endif %}"{% if beta %},
-    "@tauri-apps/plugin-shell": ">=2.0.0-beta.0"{% endif %}
+    "@tauri-apps/api": "{% if rc %}>=2.0.0-rc.0{% else %}^1{% endif %}"{% if rc %},
+    "@tauri-apps/plugin-shell": ">=2.0.0-rc.0"{% endif %}
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
     "vite": "^5.3.1",
-    "@tauri-apps/cli": "{% if beta %}>=2.0.0-beta.0{% else %}^1{% endif %}"{% if mobile %},
-    "internal-ip": "^7.0.0"{% endif %}
+    "@tauri-apps/cli": "{% if rc %}>=2.0.0-rc.0{% else %}^1{% endif %}"
   }
 }

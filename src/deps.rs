@@ -37,11 +37,11 @@ fn is_trunk_installed() -> bool {
         .unwrap_or(false)
 }
 
-fn is_appropriate_tauri_cli_installed(beta: bool) -> bool {
+fn is_appropriate_tauri_cli_installed(rc: bool) -> bool {
     let check = |o: Output| match o.status.success() {
         true => String::from_utf8_lossy(&o.stdout)
             .split_once(' ')
-            .map(|(_, v)| v.starts_with(if beta { '2' } else { '1' }))
+            .map(|(_, v)| v.starts_with(if rc { '2' } else { '1' }))
             .unwrap_or(false),
         s => s,
     };
@@ -111,9 +111,9 @@ fn is_webview2_installed() -> bool {
     target_os = "openbsd",
     target_os = "netbsd"
 ))]
-fn is_webkit2gtk_installed(beta: bool) -> bool {
+fn is_webkit2gtk_installed(rc: bool) -> bool {
     Command::new("pkg-config")
-        .arg(if beta {
+        .arg(if rc {
             "webkit2gtk-4.1"
         } else {
             "webkit2gtk-4.0"
@@ -163,7 +163,7 @@ struct Dep<'a> {
 }
 
 /// Print missing deps in a table and returns whether there was any missing deps.
-pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, beta: bool) -> bool {
+pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, rc: bool) -> bool {
     let rustc_installed = is_rustc_installed();
     let cargo_installed = is_cargo_installed();
 
@@ -175,7 +175,7 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, beta:
         target_os = "netbsd"
     ))]
     let (webkit2gtk_installed, rsvg2_installed) =
-        (is_webkit2gtk_installed(beta), is_rsvg2_installed());
+        (is_webkit2gtk_installed(rc), is_rsvg2_installed());
 
     let deps: &[Dep<'_>] = &[
         Dep {
@@ -198,12 +198,12 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, beta:
         },
         Dep {
             name: "Tauri CLI",
-            instruction: if beta {
-                format!("Run `{BLUE}{BOLD}cargo install tauri-cli --version '^2.0.0-beta'{RESET}`")
+            instruction: if rc {
+                format!("Run `{BLUE}{BOLD}cargo install tauri-cli --version '^2.0.0-rc'{RESET}`")
             } else {
                 format!("Run `{BLUE}{BOLD}cargo install tauri-cli{RESET}`")
             },
-            exists: &|| is_appropriate_tauri_cli_installed(beta),
+            exists: &|| is_appropriate_tauri_cli_installed(rc),
             skip: pkg_manager.is_node() || !template.needs_tauri_cli(),
         },
         Dep {
@@ -240,8 +240,8 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, beta:
         ))]
         Dep {
             name: "webkit2gtk & rsvg2",
-            instruction: format!("Visit {BLUE}{BOLD}{}{RESET}", if beta {
-                "https://beta.tauri.app/guides/prerequisites/#linux"
+            instruction: format!("Visit {BLUE}{BOLD}{}{RESET}", if rc {
+                "https://v2.tauri.app/guides/prerequisites/#linux"
             } else {
                 "https://tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux"
             }),
@@ -257,8 +257,8 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, beta:
         ))]
         Dep {
             name: "webkit2gtk",
-            instruction: format!("Visit {BLUE}{BOLD}{}{RESET}", if beta {
-                "https://beta.tauri.app/guides/prerequisites/#linux"
+            instruction: format!("Visit {BLUE}{BOLD}{}{RESET}", if rc {
+                "https://v2.tauri.app/guides/prerequisites/#linux"
             } else {
                 "https://tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux"
             }),
@@ -274,8 +274,8 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, beta:
         ))]
         Dep {
             name: "rsvg2",
-            instruction: format!("Visit {BLUE}{BOLD}{}{RESET}", if beta {
-                "https://beta.tauri.app/guides/prerequisites/#linux"
+            instruction: format!("Visit {BLUE}{BOLD}{}{RESET}", if rc {
+                "https://v2.tauri.app/guides/prerequisites/#linux"
             } else {
                 "https://tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux"
             }),

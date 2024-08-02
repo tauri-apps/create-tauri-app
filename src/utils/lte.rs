@@ -508,11 +508,11 @@ mod tests {
         <html>
         <h1>Hello<h2>{% if alpha %}
         <em>{% alpha_str %}</em>{% else %}
-        <em>{% if beta %}beta{%else%}stable{%endif%}</em>{% endif %}
+        <em>{% if rc %}rc{%else%}stable{%endif%}</em>{% endif %}
         </html>"#;
         let data: HashMap<&str, &str> = [
             ("alpha", "false"),
-            ("beta", "true"),
+            ("rc", "true"),
             ("alpha_str", "holla alpha"),
         ]
         .into();
@@ -520,7 +520,7 @@ mod tests {
         let expected = r#"
         <html>
         <h1>Hello<h2>
-        <em>beta</em>
+        <em>rc</em>
         </html>"#;
         assert_eq!(rendered, expected)
     }

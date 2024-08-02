@@ -1,4 +1,4 @@
-const { invoke } = window.__TAURI__.{% if beta %}core{% else %}tauri{% endif %};
+const { invoke } = window.__TAURI__.{% if rc %}core{% else %}tauri{% endif %};
 
 let greetInputEl;
 let greetMsgEl;

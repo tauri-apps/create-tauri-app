@@ -256,7 +256,7 @@ impl<'a> Template {
         pkg_manager: PackageManager,
         project_name: &str,
         package_name: &str,
-        beta: bool,
+        rc: bool,
         mobile: bool,
     ) -> anyhow::Result<()> {
         let manifest_bytes =
@@ -270,9 +270,9 @@ impl<'a> Template {
         let lib_name = format!("{}_lib", package_name.replace('-', "_"));
         let project_name_pascal_case = Self::transform_to_pascal_case(project_name.to_string());
 
-        let beta_str = beta.to_string();
+        let rc_str = rc.to_string();
         let manifest_template_data: HashMap<&str, &str> = [
-            ("beta", beta_str.as_str()),
+            ("rc", rc_str.as_str()),
             ("pkg_manager_run_command", pkg_manager.run_cmd()),
             ("lib_name", &lib_name),
             ("package_name", package_name),
@@ -297,8 +297,8 @@ impl<'a> Template {
         )?;
 
         let template_data: HashMap<&str, String> = [
-            ("stable", (!beta).to_string()),
-            ("beta", beta_str.clone()),
+            ("stable", (!rc).to_string()),
+            ("rc", rc_str.clone()),
             ("mobile", mobile.to_string()),
             ("project_name", project_name.to_string()),
             (
@@ -376,8 +376,8 @@ impl<'a> Template {
                 // conditional files:
                 // are files that start with a special syntax
                 //          "%(<list of flags separated by `-`>%)<file_name>"
-                // flags are supported package managers, stable, beta and mobile.
-                // example: "%(pnpm-npm-yarn-stable-beta)%package.json"
+                // flags are supported package managers, stable, rc and mobile.
+                // example: "%(pnpm-npm-yarn-stable-rc)%package.json"
                 name if name.starts_with("%(") && name[1..].contains(")%") => {
                     let mut s = name.strip_prefix("%(").unwrap().split(")%");
                     let (mut flags, name) = (
@@ -386,16 +386,16 @@ impl<'a> Template {
                     );
 
                     let for_stable = flags.contains(&"stable");
-                    let for_beta = flags.contains(&"beta");
+                    let for_rc = flags.contains(&"rc");
                     let for_mobile = flags.contains(&"mobile");
 
                     // remove these flags to only keep package managers flags
-                    flags.retain(|e| !["stable", "beta", "mobile"].contains(e));
+                    flags.retain(|e| !["stable", "rc", "mobile"].contains(e));
 
-                    if ((for_stable && !beta)
-                        || (for_beta && beta && !mobile)
-                        || (for_mobile && beta && mobile)
-                        || (!for_stable && !for_beta && !for_mobile))
+                    if ((for_stable && !rc)
+                        || (for_rc && rc && !mobile)
+                        || (for_mobile && rc && mobile)
+                        || (!for_stable && !for_rc && !for_mobile))
                         && (flags.contains(&pkg_manager.to_string().as_str()) || flags.is_empty())
                     {
                         name
