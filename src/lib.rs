@@ -66,8 +66,6 @@ where
     let defaults = args::Args::default();
     let args::Args {
         skip,
-        mut mobile,
-        no_mobile,
         rc,
         manager,
         project_name,
@@ -75,18 +73,6 @@ where
         force,
     } = args;
     let cwd = std::env::current_dir()?;
-
-    // Allow `--mobile` to only be used with `--rc` for now
-    // TODO: remove this limitation once tauri@v2 is stable
-    if (mobile.is_some() || no_mobile.is_some()) && !rc {
-        let flag = if mobile.is_some() {
-            "--mobile"
-        } else {
-            "--no-mobile"
-        };
-        eprintln!("{BOLD}{RED}error{RESET}: `{GREEN}{}{RESET}` option is only available if `{GREEN}--rc{RESET}` option is also used", flag);
-        exit(1);
-    }
 
     // Project name used for the project directory name and productName in tauri.conf.json
     // and if valid, it will also be used in Cargo.toml, Package.json ...etc
@@ -281,28 +267,6 @@ where
         }
     };
 
-    // if --no-mobile is specified, ignore --mobile and force it to fale
-    if no_mobile.is_some() {
-        mobile = Some(false);
-    };
-
-    // Prompt for wether to bootstrap a mobile-friendly tauri project
-    // This should only be prompted if `--rc` is used on the command line and `--mobile` wasn't.
-    // TODO: remove this limitation once tauri@v2 is stable
-    let mobile = match mobile {
-        Some(mobile) => mobile,
-        None => {
-            if skip || !rc {
-                defaults.mobile.context("default mobile not set")?
-            } else {
-                Confirm::with_theme(&ColorfulTheme::default())
-                    .with_prompt("Would you like to setup the project for mobile as well?")
-                    .default(false)
-                    .interact()?
-            }
-        }
-    };
-
     // If the package manager and the template are specified on the command line
     // then almost all prompts are skipped so we need to make sure that the combination
     // is valid, otherwise, we error and exit
@@ -339,14 +303,7 @@ where
     }
 
     // Render the template
-    template.render(
-        &target_dir,
-        pkg_manager,
-        &project_name,
-        &package_name,
-        rc,
-        mobile,
-    )?;
+    template.render(&target_dir, pkg_manager, &project_name, &package_name, rc)?;
 
     // Print post-render instructions
     println!();
@@ -370,7 +327,7 @@ where
     if let Some(cmd) = pkg_manager.install_cmd() {
         println!("  {cmd}");
     }
-    if !mobile {
+    if !rc {
         println!("  {} tauri dev", pkg_manager.run_cmd());
     } else {
         println!("  {} tauri android init", pkg_manager.run_cmd());
