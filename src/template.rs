@@ -10,7 +10,7 @@ use rust_embed::RustEmbed;
 use crate::{
     manifest::Manifest,
     package_manager::PackageManager,
-    utils::{colors::*, lte},
+    utils::{self, colors::*, lte},
 };
 
 const CTA_MANIFEST_FILENAME: &str = ".manifest";
@@ -256,6 +256,7 @@ impl<'a> Template {
         pkg_manager: PackageManager,
         project_name: &str,
         package_name: &str,
+        identifier: &str,
         rc: bool,
     ) -> anyhow::Result<()> {
         let manifest_bytes =
@@ -267,7 +268,7 @@ impl<'a> Template {
         let manifest = Manifest::parse(&manifest_str, rc)?;
 
         let lib_name = format!("{}_lib", package_name.replace('-', "_"));
-        let project_name_pascal_case = Self::transform_to_pascal_case(project_name.to_string());
+        let project_name_pascal_case = utils::to_pascal_case(project_name);
 
         let rc_str = rc.to_string();
         let manifest_template_data: HashMap<&str, &str> = [
@@ -276,6 +277,7 @@ impl<'a> Template {
             ("lib_name", &lib_name),
             ("package_name", package_name),
             ("project_name", project_name),
+            ("identifier", identifier),
             ("project_name_pascal_case", &project_name_pascal_case),
             (
                 "double_dash_with_space",
@@ -304,6 +306,7 @@ impl<'a> Template {
                 project_name_pascal_case.to_string(),
             ),
             ("package_name", package_name.to_string()),
+            ("identifier", identifier.to_string()),
             (
                 "before_dev_command",
                 lte::render(
@@ -459,23 +462,5 @@ impl<'a> Template {
         }
 
         Ok(())
-    }
-
-    fn transform_to_pascal_case(s: String) -> String {
-        let mut result = String::new();
-        let mut capitalize_next = false;
-        for (s, c) in s.chars().enumerate() {
-            if s == 0 {
-                result.push(c.to_ascii_uppercase());
-            } else if capitalize_next {
-                result.push(c.to_ascii_uppercase());
-                capitalize_next = false;
-            } else if ['_', '-'].contains(&c) {
-                capitalize_next = true;
-            } else {
-                result.push(c);
-            }
-        }
-        result
     }
 }

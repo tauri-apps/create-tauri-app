@@ -13,6 +13,7 @@ pub struct Args {
     pub project_name: Option<String>,
     pub manager: Option<PackageManager>,
     pub template: Option<Template>,
+    pub identifier: Option<String>,
     pub skip: bool,
     pub force: bool,
     pub rc: bool,
@@ -22,6 +23,7 @@ impl Default for Args {
     fn default() -> Self {
         Self {
             project_name: Some("tauri-app".to_string()),
+            identifier: Some("com.tauri.dev".to_string()),
             manager: Some(PackageManager::Npm),
             template: Some(Template::Vanilla),
             skip: false,
@@ -50,6 +52,7 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
 {YELLOW}OPTIONS:{RESET}
   {GREEN}-m{RESET}, {GREEN}--manager <MANAGER>{RESET}       Specify preferred package manager [{managers}]
   {GREEN}-t{RESET}, {GREEN}--template <TEMPLATE>{RESET}     Specify the UI template to use [{templates}]
+                    {GREEN}--identifier <identifier>{RESET} Specify a unique identifier for your application
   {GREEN}-y{RESET}, {GREEN}--yes{RESET}                     Skip prompts and use defaults where applicable
   {GREEN}-f{RESET}, {GREEN}--force{RESET}                   Force create the directory even if it is not empty.
                     {GREEN}--rc{RESET}                      Bootstraps a project using tauri@2.0-rc.
@@ -101,6 +104,7 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
         skip: pargs.contains(["-y", "--yes"]),
         force: pargs.contains(["-f", "--force"]),
         rc,
+        identifier: pargs.opt_value_from_str("--identifier")?,
         project_name: pargs.opt_free_from_str()?,
     };
 
