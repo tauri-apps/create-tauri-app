@@ -268,7 +268,7 @@ impl<'a> Template {
         let manifest = Manifest::parse(&manifest_str, rc)?;
 
         let lib_name = format!("{}_lib", package_name.replace('-', "_"));
-        let project_name_pascal_case = utils::to_pascal_case(&project_name);
+        let project_name_pascal_case = utils::to_pascal_case(project_name);
 
         let rc_str = rc.to_string();
         let manifest_template_data: HashMap<&str, &str> = [
