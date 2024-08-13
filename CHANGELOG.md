@@ -1,5 +1,10 @@
 # Changelog
 
+## \[4.2.0]
+
+- [`2e18467`](https://www.github.com/tauri-apps/create-tauri-app/commit/2e18467a4ceae0161ade568a434e9766f9d3e756) ([#751](https://www.github.com/tauri-apps/create-tauri-app/pull/751) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Changed default version in templates from `0.0.0` to `0.1.0`
+- [`441b0ba`](https://www.github.com/tauri-apps/create-tauri-app/commit/441b0ba54caf27fd1f8a2d9672715800cf41acb5) ([#752](https://www.github.com/tauri-apps/create-tauri-app/pull/752) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Add `--identifier` flag and prompt to choose the identifier of your app.
+
 ## \[4.1.0]
 
 - [`d34ff53`](https://www.github.com/tauri-apps/create-tauri-app/commit/d34ff53000954c45f1fcb8bcd4c416b252f9f6f2) ([#746](https://www.github.com/tauri-apps/create-tauri-app/pull/746) by [@lucasfernog](https://www.github.com/tauri-apps/create-tauri-app/../../lucasfernog)) Updated the templates to Tauri v2 RC.
