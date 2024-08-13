@@ -76,8 +76,6 @@ jobs:
     steps:
       - uses: pnpm/action-setup@v4
         if: matrix.settings.manager == 'pnpm'
-        with:
-          version: 9
 
       - uses: oven-sh/setup-bun@v1
         if: matrix.settings.manager == 'bun'
