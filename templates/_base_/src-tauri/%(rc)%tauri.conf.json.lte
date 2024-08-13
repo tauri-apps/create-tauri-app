@@ -1,7 +1,7 @@
 {
   "productName": "{% package_name %}",
   "version": "0.0.0",
-  "identifier": "com.tauri.dev",
+  "identifier": "{% identifier %}",
   "build": {
     {% if before_dev_command %}"beforeDevCommand": "{% before_dev_command %}",
     {% endif %}{% if dev_path %}"devUrl": "{% dev_path %}",

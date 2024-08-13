@@ -191,6 +191,7 @@ impl<'a> Iterator for Lexer<'a> {
     }
 }
 
+#[inline]
 fn is_truthy(value: &[u8]) -> bool {
     match value {
         TRUE => true,

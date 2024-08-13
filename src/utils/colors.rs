@@ -16,6 +16,7 @@ pub const ITALIC: &str = "\x1b[3m";
 pub const DIM: &str = "\x1b[2m";
 pub const DIMRESET: &str = "\x1b[22m";
 
+#[inline]
 pub fn remove_colors(s: &str) -> String {
     s.replace(BLACK, "")
         .replace(RED, "")

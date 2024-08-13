@@ -10,7 +10,7 @@ use crate::{
     category::Category,
     deps::print_missing_deps,
     package_manager::PackageManager,
-    utils::{colors::*, theme::ColorfulTheme},
+    utils::{colors::*, dialoguer_theme::ColorfulTheme},
 };
 
 mod args;
@@ -71,6 +71,7 @@ where
         project_name,
         template,
         force,
+        identifier,
     } = args;
     let cwd = std::env::current_dir()?;
 
@@ -79,14 +80,15 @@ where
     let project_name = match project_name {
         Some(name) => name,
         None => {
+            let default = defaults
+                .project_name
+                .context("default project_name not set")?;
             if skip {
-                defaults
-                    .project_name
-                    .context("default project_name not set")?
+                default
             } else {
                 Input::<String>::with_theme(&ColorfulTheme::default())
                     .with_prompt("Project name")
-                    .default("tauri-app".into())
+                    .default(default)
                     .interact_text()?
                     .trim()
                     .into()
@@ -97,10 +99,10 @@ where
     let target_dir = cwd.join(&project_name);
 
     // Package name used in Cargo.toml, Package.json ...etc
-    let package_name = if is_valid_pkg_name(&project_name) {
+    let package_name = if utils::is_valid_pkg_name(&project_name) {
         project_name.clone()
     } else {
-        let valid_name = to_valid_pkg_name(&project_name);
+        let valid_name = utils::to_valid_pkg_name(&project_name);
         if skip {
             valid_name
         } else {
@@ -109,7 +111,7 @@ where
             .default(valid_name.clone())
             .with_initial_text(valid_name)
             .validate_with(|input: &String| {
-                if is_valid_pkg_name(input) {
+                if utils::is_valid_pkg_name(input) {
                     Ok(())
                 } else {
                     Err("Package name should only include lowercase alphanumeric character and hyphens \"-\" and doesn't start with numbers")
@@ -117,6 +119,23 @@ where
             })
             .interact_text()?
             .trim().to_string()
+        }
+    };
+
+    let identifier = match identifier {
+        Some(name) => name,
+        None => {
+            let default = format!("com.{package_name}.app");
+            if skip {
+                default
+            } else {
+                Input::<String>::with_theme(&ColorfulTheme::default())
+                    .with_prompt("Identifier")
+                    .default(default)
+                    .interact_text()?
+                    .trim()
+                    .into()
+            }
         }
     };
 
@@ -303,7 +322,14 @@ where
     }
 
     // Render the template
-    template.render(&target_dir, pkg_manager, &project_name, &package_name, rc)?;
+    template.render(
+        &target_dir,
+        pkg_manager,
+        &project_name,
+        &package_name,
+        &identifier,
+        rc,
+    )?;
 
     // Print post-render instructions
     println!();
@@ -349,71 +375,4 @@ where
     }
     println!();
     Ok(())
-}
-
-fn is_valid_pkg_name(project_name: &str) -> bool {
-    let mut chars = project_name.chars().peekable();
-    !project_name.is_empty()
-        && !chars.peek().map(|c| c.is_ascii_digit()).unwrap_or_default()
-        && !chars.any(|ch| !(ch.is_alphanumeric() || ch == '-' || ch == '_') || ch.is_uppercase())
-}
-
-fn to_valid_pkg_name(project_name: &str) -> String {
-    let ret = project_name
-        .trim()
-        .to_lowercase()
-        .replace([':', ';', ' ', '~'], "-")
-        .replace(['.', '\\', '/'], "");
-
-    let ret = ret
-        .chars()
-        .skip_while(|ch| ch.is_ascii_digit() || *ch == '-')
-        .collect::<String>();
-
-    if ret.is_empty() {
-        "tauri-app".to_string()
-    } else {
-        ret
-    }
-}
-
-#[cfg(test)]
-mod test {
-    use super::*;
-    #[test]
-    fn valiadtes_pkg_name() {
-        assert!(is_valid_pkg_name("tauri-app"));
-        assert!(is_valid_pkg_name("tauri_app"));
-        assert!(is_valid_pkg_name("t2auriapp"));
-        assert!(!is_valid_pkg_name("1tauriapp"));
-        assert!(!is_valid_pkg_name("tauri app"));
-        assert!(!is_valid_pkg_name("tauri:app"));
-        assert!(!is_valid_pkg_name("tauri.app"));
-        assert!(!is_valid_pkg_name("tauri/app"));
-        assert!(!is_valid_pkg_name("tauri\\app"));
-        assert!(!is_valid_pkg_name("tauri~app"));
-        assert!(!is_valid_pkg_name("Tauriapp"));
-    }
-
-    #[test]
-    fn converts_to_valid_pkg_name() {
-        assert_eq!(to_valid_pkg_name("tauri-app"), "tauri-app");
-        assert_eq!(to_valid_pkg_name("tauri_app"), "tauri_app");
-        assert_eq!(to_valid_pkg_name("t2auriapp"), "t2auriapp");
-        assert_eq!(to_valid_pkg_name("1tauriapp"), "tauriapp");
-        assert_eq!(to_valid_pkg_name("123tauriapp"), "tauriapp");
-        assert_eq!(to_valid_pkg_name("123-tauriapp"), "tauriapp");
-        assert_eq!(to_valid_pkg_name("tauri app"), "tauri-app");
-        assert_eq!(to_valid_pkg_name("tauri:app"), "tauri-app");
-        assert_eq!(to_valid_pkg_name("tauri;app"), "tauri-app");
-        assert_eq!(to_valid_pkg_name("tauri.app"), "tauriapp");
-        assert_eq!(to_valid_pkg_name("tauri/app"), "tauriapp");
-        assert_eq!(to_valid_pkg_name("tauri\\app"), "tauriapp");
-        assert_eq!(to_valid_pkg_name("tauri~app"), "tauri-app");
-        assert_eq!(to_valid_pkg_name("-tauri.app"), "tauriapp");
-        assert_eq!(to_valid_pkg_name("-123tauri.app"), "tauriapp");
-        assert_eq!(to_valid_pkg_name("-2-123tau2ri-app-2"), "tau2ri-app-2");
-        assert_eq!(to_valid_pkg_name("1-2-3tau2ri-app2-"), "tau2ri-app2-");
-        assert_eq!(to_valid_pkg_name("Tauriapp"), "tauriapp");
-    }
 }
