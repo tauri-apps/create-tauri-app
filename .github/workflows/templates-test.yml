@@ -74,14 +74,14 @@ jobs:
 
     name: ${{ matrix.settings.manager }} - ${{ matrix.settings.template }} ${{ matrix.settings.flags }}
     steps:
-      - uses: pnpm/action-setup@v4
-        if: matrix.settings.manager == 'pnpm'
-
       - uses: oven-sh/setup-bun@v1
         if: matrix.settings.manager == 'bun'
         with:
           bun-version: latest
 
+      - run: corepack enable
+        if: matrix.settings.manager != 'cargo'
+        
       - name: Install Node.js@18
         if: matrix.settings.manager != 'cargo'
         uses: actions/setup-node@v4
