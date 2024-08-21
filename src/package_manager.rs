@@ -8,7 +8,9 @@ use crate::{template::Template, utils::colors::*};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
+#[derive(Default)]
 pub enum PackageManager {
+    #[default]
     Cargo,
     Pnpm,
     Yarn,
@@ -17,11 +19,6 @@ pub enum PackageManager {
     Dotnet,
 }
 
-impl Default for PackageManager {
-    fn default() -> Self {
-        PackageManager::Cargo
-    }
-}
 
 impl Display for PackageManager {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
