@@ -10,7 +10,7 @@ repository = "https://github.com/tauri-apps/create-tauri-app"
 keywords = [ "tauri" ]
 categories = [ "gui" ]
 exclude = [ "node", "worker", ".github", ".changes", ".scripts" ]
-rust-version = "1.61"
+rust-version = "1.63"
 
 [[bin]]
 name = "cargo-create-tauri-app"
