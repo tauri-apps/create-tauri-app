@@ -1,5 +1,10 @@
 # Changelog
 
+## \[4.3.0]
+
+- [`10163ee`](https://www.github.com/tauri-apps/create-tauri-app/commit/10163eeb7910fd205fbebe31e6f98b5f03ae2708) ([#759](https://www.github.com/tauri-apps/create-tauri-app/pull/759) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Fix `cargo install crate-tauri-app` with `--locked` flag.
+- [`10163ee`](https://www.github.com/tauri-apps/create-tauri-app/commit/10163eeb7910fd205fbebe31e6f98b5f03ae2708) ([#759](https://www.github.com/tauri-apps/create-tauri-app/pull/759) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Update MSRV of this crate to 1.71
+
 ## \[4.2.0]
 
 - [`2e18467`](https://www.github.com/tauri-apps/create-tauri-app/commit/2e18467a4ceae0161ade568a434e9766f9d3e756) ([#751](https://www.github.com/tauri-apps/create-tauri-app/pull/751) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Changed default version in templates from `0.0.0` to `0.1.0`
