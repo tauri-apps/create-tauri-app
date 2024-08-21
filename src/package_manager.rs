@@ -8,19 +8,15 @@ use crate::{template::Template, utils::colors::*};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
+#[derive(Default)]
 pub enum PackageManager {
+    #[default]
     Cargo,
     Pnpm,
     Yarn,
     Npm,
     Bun,
     Dotnet,
-}
-
-impl Default for PackageManager {
-    fn default() -> Self {
-        PackageManager::Cargo
-    }
 }
 
 impl Display for PackageManager {

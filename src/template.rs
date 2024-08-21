@@ -5,7 +5,7 @@
 use std::{collections::HashMap, fmt::Display, fs, io::Write, path, str::FromStr};
 
 use anyhow::Context;
-use rust_embed::RustEmbed;
+use rust_embed::Embed;
 
 use crate::{
     manifest::Manifest,
@@ -15,9 +15,9 @@ use crate::{
 
 const CTA_MANIFEST_FILENAME: &str = ".manifest";
 
-#[derive(RustEmbed)]
+#[derive(Embed)]
 #[folder = "templates"]
-#[allow(clippy::upper_case_acronyms, non_camel_case_types)]
+#[allow(non_camel_case_types)]
 struct EMBEDDED_TEMPLATES;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -38,7 +38,9 @@ impl Display for Flavor {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
+#[derive(Default)]
 pub enum Template {
+    #[default]
     Vanilla,
     VanillaTs,
     Vue,
@@ -56,12 +58,6 @@ pub enum Template {
     Preact,
     PreactTs,
     Blazor,
-}
-
-impl Default for Template {
-    fn default() -> Self {
-        Template::Vanilla
-    }
 }
 
 impl Display for Template {

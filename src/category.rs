@@ -4,15 +4,12 @@ use crate::package_manager::PackageManager;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[non_exhaustive]
+#[derive(Default)]
 pub enum Category {
     Rust,
+    #[default]
     JsTs,
     Dotnet,
-}
-impl Default for Category {
-    fn default() -> Self {
-        Category::JsTs
-    }
 }
 
 impl<'a> Category {

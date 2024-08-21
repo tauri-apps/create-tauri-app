@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        toolchain: [1.61, stable]
+        toolchain: [1.71, stable]
 
     steps:
       - uses: actions/checkout@v3
@@ -40,6 +40,3 @@ jobs:
         with:
           toolchain: ${{ matrix.toolchain }}
       - run: cargo test
-        if: matrix.toolchain != 1.61
-      - run: cargo test --workspace --exclude create-tauri-app-node
-        if: matrix.toolchain == 1.61
