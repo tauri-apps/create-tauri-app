@@ -1,4 +1,5 @@
 {
+  "$schema": "https://schema.tauri.app/config/1",
   "build": {
     {% if before_dev_command %}"beforeDevCommand": "{% before_dev_command %}",
     {% endif %}{% if before_build_command %}"beforeBuildCommand": "{% before_build_command %}",
