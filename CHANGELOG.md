@@ -1,5 +1,9 @@
 # Changelog
 
+## \[4.3.1]
+
+- [`d8e65fe`](https://www.github.com/tauri-apps/create-tauri-app/commit/d8e65fe9ae2aa8dac791e8f4a4e593cdddb8e254) ([#768](https://www.github.com/tauri-apps/create-tauri-app/pull/768) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Fix  `--rc` angluar template invalid configuration
+
 ## \[4.3.0]
 
 - [`10163ee`](https://www.github.com/tauri-apps/create-tauri-app/commit/10163eeb7910fd205fbebe31e6f98b5f03ae2708) ([#759](https://www.github.com/tauri-apps/create-tauri-app/pull/759) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Fix `cargo install crate-tauri-app` with `--locked` flag.
