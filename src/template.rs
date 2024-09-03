@@ -261,7 +261,7 @@ impl<'a> Template {
                 .data
                 .to_vec();
         let manifest_str = String::from_utf8(manifest_bytes)?;
-        let manifest = Manifest::parse(&manifest_str, rc)?;
+        let manifest = Manifest::parse(&manifest_str)?;
 
         let lib_name = format!("{}_lib", package_name.replace('-', "_"));
         let project_name_pascal_case = utils::to_pascal_case(project_name);

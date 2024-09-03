@@ -13,11 +13,10 @@ pub struct Manifest<'a> {
 }
 
 impl<'a> Manifest<'a> {
-    pub fn parse(s: &'a str, mobile: bool) -> Result<Self, anyhow::Error> {
+    pub fn parse(s: &'a str) -> Result<Self, anyhow::Error> {
         let mut manifest = Self::default();
 
         let mut in_files_section = false;
-        let mut in_mobile_section = false;
 
         for (i, line) in s.split('\n').enumerate() {
             let line_number = i + 1;
@@ -31,13 +30,6 @@ impl<'a> Manifest<'a> {
 
             if line == "[files]" {
                 in_files_section = true;
-                in_mobile_section = false;
-                continue;
-            }
-
-            if line == "[mobile]" {
-                in_mobile_section = true;
-                in_files_section = false;
                 continue;
             }
 
@@ -64,16 +56,12 @@ impl<'a> Manifest<'a> {
                     bail!("parsing manifest: value is empty in line {line_number}");
                 }
 
-                #[allow(clippy::nonminimal_bool)]
-                let replace =
-                    !in_files_section && (!in_mobile_section || (in_mobile_section && mobile));
-
                 match k {
-                    "beforeDevCommand" if replace => manifest.before_dev_command = Some(v),
-                    "beforeBuildCommand" if replace => manifest.before_build_command = Some(v),
-                    "devPath" if replace => manifest.dev_path = Some(v),
-                    "distDir" if replace => manifest.dist_dir = Some(v),
-                    "withGlobalTauri" if replace => manifest.with_global_tauri = Some(v.parse()?),
+                    "beforeDevCommand" => manifest.before_dev_command = Some(v),
+                    "beforeBuildCommand" => manifest.before_build_command = Some(v),
+                    "devPath" => manifest.dev_path = Some(v),
+                    "distDir" => manifest.dist_dir = Some(v),
+                    "withGlobalTauri" => manifest.with_global_tauri = Some(v.parse()?),
                     _ if in_files_section => {
                         manifest.files.insert(k, v);
                     }
@@ -100,15 +88,12 @@ mod test {
             beforeBuildCommand = {% pkg_manager_run_command %} build # this comment should be stripped
             devPath = http://localhost:1420
 
-            [mobile]
-            beforeBuildCommand = {% pkg_manager_run_command %} build mobile
-
             [files]
             tauri.svg = src/assets/tauri.svg
             styles.css = src/styles.css
         "#;
 
-        assert_eq!(Manifest::parse(manifest_file, false).unwrap(), {
+        assert_eq!(Manifest::parse(manifest_file).unwrap(), {
             let mut files = HashMap::new();
             files.insert("tauri.svg", "src/assets/tauri.svg");
             files.insert("styles.css", "src/styles.css");
@@ -116,21 +101,6 @@ mod test {
             Manifest {
                 before_dev_command: Some("npm start -- --port 1420"),
                 before_build_command: Some("{% pkg_manager_run_command %} build"),
-                dev_path: Some("http://localhost:1420"),
-                dist_dir: None,
-                with_global_tauri: None,
-                files,
-            }
-        });
-
-        assert_eq!(Manifest::parse(manifest_file, true).unwrap(), {
-            let mut files = HashMap::new();
-            files.insert("tauri.svg", "src/assets/tauri.svg");
-            files.insert("styles.css", "src/styles.css");
-
-            Manifest {
-                before_dev_command: Some("npm start -- --port 1420"),
-                before_build_command: Some("{% pkg_manager_run_command %} build mobile"),
                 dev_path: Some("http://localhost:1420"),
                 dist_dir: None,
                 with_global_tauri: None,
@@ -151,15 +121,12 @@ mod test {
             beforeBuildCommand =
             devPath = http://localhost:1420
 
-            [mobile]
-            beforeBuildCommand = {% pkg_manager_run_command %} build mobile
-
             [files]
             tauri.svg = src/assets/tauri.svg
             styles.css = src/styles.css
         "#;
 
-        Manifest::parse(manifest_file, false).unwrap();
+        Manifest::parse(manifest_file).unwrap();
     }
 
     #[test]
@@ -179,7 +146,7 @@ mod test {
         styles.css = src/styles.css
     "#;
 
-        assert_eq!(Manifest::parse(manifest_file, false).unwrap(), {
+        assert_eq!(Manifest::parse(manifest_file).unwrap(), {
             let mut files = HashMap::new();
             files.insert("tauri.svg", "src/assets/tauri.svg");
             files.insert("styles.css", "src/styles.css");

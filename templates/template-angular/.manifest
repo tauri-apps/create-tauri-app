@@ -7,9 +7,6 @@ beforeBuildCommand = {% pkg_manager_run_command %} build
 devPath = http://localhost:1420
 distDir = ../dist/{% package_name %}/browser
 
-[mobile]
-beforeDevCommand = {% pkg_manager_run_command %} start {% double_dash_with_space %}--host $HOST --public-host $HOST
-
 [files]
 tauri.svg = src/assets/tauri.svg
 styles.css = src/app/app.component.css

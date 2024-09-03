@@ -20,7 +20,7 @@
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": ["src/assets"],
+            "assets": ["src/assets"]
           },
           "configurations": {
             "production": {
@@ -49,7 +49,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "port": 1420
+            "port": 1420{% if rc %},
+            "host": "0.0.0.0"{% endif %}
           },
           "configurations": {
             "production": {
