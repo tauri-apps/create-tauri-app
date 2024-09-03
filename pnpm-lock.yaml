@@ -21,7 +21,7 @@ importers:
   worker:
     devDependencies:
       wrangler:
-        specifier: 3.74.0
+        specifier: ^3.74
         version: 3.74.0
 
 packages:
