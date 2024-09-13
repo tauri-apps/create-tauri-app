@@ -22,7 +22,7 @@ importers:
     devDependencies:
       wrangler:
         specifier: ^3.74
-        version: 3.78.0
+        version: 3.78.1
 
 packages:
 
@@ -60,8 +60,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workers-shared@0.5.1':
-    resolution: {integrity: sha512-HahGg7rp0WUDduJq3R1l/vbuA31rXm8paz6YGCZXIG/Vs2hxC64jxUvddwcbH5vdxQngc3+J6MkMwnZ6mmxP7w==}
+  '@cloudflare/workers-shared@0.5.2':
+    resolution: {integrity: sha512-7A4srUwAAfL+OeQdXgWZEflIvT0u8MQ7S/Frm1VfgdPF1kFEzTrCa37GHcL2MzXftLm3hNGdqi24vwNuQyFv2A==}
     engines: {node: '>=16.7.0'}
 
   '@cspotcode/source-map-support@0.8.1':
@@ -480,8 +480,8 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
-  wrangler@3.78.0:
-    resolution: {integrity: sha512-RJVf/hTj/AXgEtmbLF5wYw3ltTaIcuRGpOj7NOhhW91R5WaRIi521JLbIsyLfsr5M3un2i+2kas/tsC2sDJtOQ==}
+  wrangler@3.78.1:
+    resolution: {integrity: sha512-octA1RZBB/AmHPHEcFQJEdPEIVaLbQd0guTNECkmJ/aKi+VSW+EKsvfhMx0m6TWLmH8NWSJBnqwJ98uiwgLvqQ==}
     engines: {node: '>=16.17.0'}
     hasBin: true
     peerDependencies:
@@ -532,7 +532,7 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20240909.0':
     optional: true
 
-  '@cloudflare/workers-shared@0.5.1':
+  '@cloudflare/workers-shared@0.5.2':
     dependencies:
       mime: 3.0.0
       zod: 3.23.8
@@ -885,10 +885,10 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20240909.0
       '@cloudflare/workerd-windows-64': 1.20240909.0
 
-  wrangler@3.78.0:
+  wrangler@3.78.1:
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.4
-      '@cloudflare/workers-shared': 0.5.1
+      '@cloudflare/workers-shared': 0.5.2
       '@esbuild-plugins/node-globals-polyfill': 0.2.3(esbuild@0.17.19)
       '@esbuild-plugins/node-modules-polyfill': 0.2.2(esbuild@0.17.19)
       blake3-wasm: 2.1.5
