@@ -1,0 +1,13 @@
+# Copyright 2019-2022 Tauri Programme within The Commons Conservancy
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
+
+beforeDevCommand = dx serve --port 1420
+beforeBuildCommand = dx build
+devPath = http://localhost:1420
+distDir = ../dist
+withGlobalTauri = true
+
+[files]
+tauri.svg = assets/tauri.svg
+styles.css = assets/styles.css
