@@ -1,5 +1,10 @@
 # Changelog
 
+## \[4.4.0]
+
+- [`27524c3`](https://www.github.com/tauri-apps/create-tauri-app/commit/27524c369210d5026d2e8620e0ad9b8fc030a010) ([#784](https://www.github.com/tauri-apps/create-tauri-app/pull/784) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Add `dioxus` template
+- [`81d776f`](https://www.github.com/tauri-apps/create-tauri-app/commit/81d776f882ab7eede3fe3da5d9f824e3067fa9a7) ([#770](https://www.github.com/tauri-apps/create-tauri-app/pull/770) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Include `$schema` property in `tauri.conf.json` file by default
+
 ## \[4.3.1]
 
 - [`d8e65fe`](https://www.github.com/tauri-apps/create-tauri-app/commit/d8e65fe9ae2aa8dac791e8f4a4e593cdddb8e254) ([#768](https://www.github.com/tauri-apps/create-tauri-app/pull/768) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Fix  `--rc` angluar template invalid configuration
