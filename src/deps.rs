@@ -37,6 +37,14 @@ fn is_trunk_installed() -> bool {
         .unwrap_or(false)
 }
 
+fn is_dioxus_cli_installed() -> bool {
+    Command::new("dx")
+        .arg("-V")
+        .output()
+        .map(|o| o.status.success())
+        .unwrap_or(false)
+}
+
 fn is_appropriate_tauri_cli_installed(rc: bool) -> bool {
     let check = |o: Output| match o.status.success() {
         true => String::from_utf8_lossy(&o.stdout)
@@ -211,6 +219,12 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, rc: b
             instruction: format!("Run `{BLUE}{BOLD}cargo install trunk{RESET}`"),
             exists: &is_trunk_installed,
             skip: pkg_manager.is_node() || !template.needs_trunk(),
+        },
+        Dep {
+            name: "Dioxus CLI",
+            instruction: format!("Run `{BLUE}{BOLD}cargo install dioxus-cli{RESET}`"),
+            exists: &is_dioxus_cli_installed,
+            skip: pkg_manager.is_node() || !template.needs_dioxus_cli(),
         },
         Dep {
             name: "wasm32 target",

@@ -24,7 +24,7 @@ const matrixConfig = [
     manager: "cargo",
     install_cmd: "",
     run_cmd: "cargo",
-    templates: ["vanilla", "yew", "sycamore", "leptos"],
+    templates: ["vanilla", "yew", "sycamore", "leptos", "dioxus"],
   },
   {
     manager: "pnpm",
@@ -78,6 +78,7 @@ matrixConfig
         const jobInfo = {
           template: t,
           install_trunk: ["yew", "sycamore", "leptos"].includes(t),
+          install_dioxus_cli: t === "dioxus",
           rc: false,
           no_bundle_flag: "-b none",
           ...managerInfo,

@@ -1,5 +1,4 @@
 use serde::{Deserialize, Serialize};
-use serde_wasm_bindgen::to_value;
 use sycamore::futures::spawn_local_scoped;
 use sycamore::prelude::*;
 use sycamore::rt::Event;
@@ -9,9 +8,6 @@ use wasm_bindgen::prelude::*;
 extern "C" {
     #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "{% if rc %}core{% else %}tauri{% endif %}"])]
     async fn invoke(cmd: &str, args: JsValue) -> JsValue;
-
-    #[wasm_bindgen(js_namespace = console)]
-    fn log(s: &str);
 }
 
 #[derive(Serialize, Deserialize)]
@@ -28,11 +24,8 @@ pub fn App<G: Html>(cx: Scope) -> View<G> {
         e.prevent_default();
         spawn_local_scoped(cx, async move {
             // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-            let new_msg =
-                invoke("greet", to_value(&GreetArgs { name: &name.get() }).unwrap()).await;
-
-            log(&new_msg.as_string().unwrap());
-
+            let args = serde_wasm_bindgen::to_value(&GreetArgs { name: &name.get() }).unwrap();
+            let new_msg = invoke("greet", args).await;
             greet_msg.set(new_msg.as_string().unwrap());
         })
     };

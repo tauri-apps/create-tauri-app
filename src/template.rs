@@ -58,6 +58,7 @@ pub enum Template {
     Preact,
     PreactTs,
     Blazor,
+    Dioxus,
 }
 
 impl Display for Template {
@@ -80,6 +81,7 @@ impl Display for Template {
             Template::Preact => write!(f, "preact"),
             Template::PreactTs => write!(f, "preact-ts"),
             Template::Blazor => write!(f, "blazor"),
+            Template::Dioxus => write!(f, "dioxus"),
         }
     }
 }
@@ -105,6 +107,7 @@ impl FromStr for Template {
             "preact" => Ok(Template::Preact),
             "preact-ts" => Ok(Template::PreactTs),
             "blazor" => Ok(Template::Blazor),
+            "dioxus" => Ok(Template::Dioxus),
             _ => Err(format!(
                 "{YELLOW}{s}{RESET} is not a valid template. Valid templates are [{}]",
                 Template::ALL
@@ -133,6 +136,7 @@ impl Template {
             Template::Blazor => {
                 "Blazor - (https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor/)"
             }
+            Template::Dioxus => "Dioxus - (https://dioxuslabs.com/)",
             _ => unreachable!(),
         }
     }
@@ -157,6 +161,7 @@ impl<'a> Template {
         Template::Preact,
         Template::PreactTs,
         Template::Blazor,
+        Template::Dioxus,
     ];
 
     pub fn flavors<'b>(&self, pkg_manager: PackageManager) -> Option<&'b [Flavor]> {
@@ -222,7 +227,9 @@ impl<'a> Template {
             | Template::Angular
             | Template::Preact
             | Template::PreactTs => PackageManager::NODE,
-            Template::Yew | Template::Leptos | Template::Sycamore => &[PackageManager::Cargo],
+            Template::Yew | Template::Leptos | Template::Sycamore | Template::Dioxus => {
+                &[PackageManager::Cargo]
+            }
             Template::Blazor => &[PackageManager::Dotnet],
         }
     }
@@ -240,6 +247,10 @@ impl<'a> Template {
 
     pub const fn needs_dotnet(&self) -> bool {
         matches!(self, Template::Blazor)
+    }
+
+    pub const fn needs_dioxus_cli(&self) -> bool {
+        matches!(self, Template::Dioxus)
     }
 
     pub const fn needs_wasm32_target(&self) -> bool {
