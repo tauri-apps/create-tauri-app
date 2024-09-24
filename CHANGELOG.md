@@ -1,5 +1,9 @@
 # Changelog
 
+## \[4.4.1]
+
+- [`9467547`](https://www.github.com/tauri-apps/create-tauri-app/commit/94675475f56db69ef3525b6d2e38aa9eecee3e62) ([#791](https://www.github.com/tauri-apps/create-tauri-app/pull/791) by [@AlexProgrammerDE](https://www.github.com/tauri-apps/create-tauri-app/../../AlexProgrammerDE)) Fix crate type.
+
 ## \[4.4.0]
 
 - [`27524c3`](https://www.github.com/tauri-apps/create-tauri-app/commit/27524c369210d5026d2e8620e0ad9b8fc030a010) ([#784](https://www.github.com/tauri-apps/create-tauri-app/pull/784) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Add `dioxus` template
