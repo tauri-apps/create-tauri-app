@@ -22,7 +22,7 @@ importers:
     devDependencies:
       wrangler:
         specifier: ^3.74
-        version: 3.78.8
+        version: 3.78.9
 
 packages:
 
@@ -232,8 +232,8 @@ packages:
   '@types/node-forge@1.3.11':
     resolution: {integrity: sha512-FQx220y22OKNTqaByeBGqHWYz4cl94tpcxeFdvBo3wjG6XPBuZ0BNgNZRV5J5TFmmcsJ4IzsLkmGRiQbnYsBEQ==}
 
-  '@types/node@22.6.1':
-    resolution: {integrity: sha512-V48tCfcKb/e6cVUigLAaJDAILdMP0fUW6BidkPK4GpGjXcfbnoHasCZDwz3N3yVt5we2RHm4XTQCpv0KJz9zqw==}
+  '@types/node@22.7.0':
+    resolution: {integrity: sha512-MOdOibwBs6KW1vfqz2uKMlxq5xAfAZ98SZjO8e3XnAbFnTJtAspqhWk7hrdSAs9/Y14ZWMiy7/MxMUzAOadYEw==}
 
   acorn-walk@8.3.4:
     resolution: {integrity: sha512-ueEepnujpqee2o5aIYnvHU6C0A42MNdsIDeqy5BydrkuC5R1ZuUFnm27EeFJGoEHJQgn3uleRvmTXaJgfXbt4g==}
@@ -275,9 +275,6 @@ packages:
 
   data-uri-to-buffer@2.0.2:
     resolution: {integrity: sha512-ND9qDTLc6diwj+Xe5cdAgVTbLVdXbtxTJRXRhli8Mowuaan+0EJOtdqJ0QCHNSSPyoXGx9HX2/VMnKeC34AChA==}
-
-  date-fns@3.6.0:
-    resolution: {integrity: sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==}
 
   debug@4.3.7:
     resolution: {integrity: sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==}
@@ -480,8 +477,8 @@ packages:
     engines: {node: '>=16'}
     hasBin: true
 
-  wrangler@3.78.8:
-    resolution: {integrity: sha512-tnJ++KY0EeQKa7Pm5Zxl1Cnf1QcmlLit2CohCpTEFHSgCzwzwViuxFL8JQvVKj8Qb65ouBNbfPZnlqrEyGpbew==}
+  wrangler@3.78.9:
+    resolution: {integrity: sha512-4Z+KBai+xVU59EN8eyDyRXh+f0om3zKwIf2x9YZa9NCuw3bLF77n7wSoghjInTTYfPrKhsZqkPwlcDfVt/yK7g==}
     engines: {node: '>=16.17.0'}
     hasBin: true
     peerDependencies:
@@ -632,9 +629,9 @@ snapshots:
 
   '@types/node-forge@1.3.11':
     dependencies:
-      '@types/node': 22.6.1
+      '@types/node': 22.7.0
 
-  '@types/node@22.6.1':
+  '@types/node@22.7.0':
     dependencies:
       undici-types: 6.19.8
 
@@ -683,8 +680,6 @@ snapshots:
   cookie@0.5.0: {}
 
   data-uri-to-buffer@2.0.2: {}
-
-  date-fns@3.6.0: {}
 
   debug@4.3.7:
     dependencies:
@@ -885,7 +880,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20240909.0
       '@cloudflare/workerd-windows-64': 1.20240909.0
 
-  wrangler@3.78.8:
+  wrangler@3.78.9:
     dependencies:
       '@cloudflare/kv-asset-handler': 0.3.4
       '@cloudflare/workers-shared': 0.5.4
@@ -893,7 +888,6 @@ snapshots:
       '@esbuild-plugins/node-modules-polyfill': 0.2.2(esbuild@0.17.19)
       blake3-wasm: 2.1.5
       chokidar: 3.6.0
-      date-fns: 3.6.0
       esbuild: 0.17.19
       miniflare: 3.20240909.5
       nanoid: 3.3.7
