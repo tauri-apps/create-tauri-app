@@ -1,5 +1,9 @@
 # Changelog
 
+## \[4.4.2]
+
+- [`c8d8fa8`](https://www.github.com/tauri-apps/create-tauri-app/commit/c8d8fa8c105416dbc74d3e0cfce6e602d5240b82) ([#797](https://www.github.com/tauri-apps/create-tauri-app/pull/797) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Suggest using `--locked` flag when installing CLIs using `cargo install`
+
 ## \[4.4.1]
 
 - [`9467547`](https://www.github.com/tauri-apps/create-tauri-app/commit/94675475f56db69ef3525b6d2e38aa9eecee3e62) ([#791](https://www.github.com/tauri-apps/create-tauri-app/pull/791) by [@AlexProgrammerDE](https://www.github.com/tauri-apps/create-tauri-app/../../AlexProgrammerDE)) Fix crate type.
