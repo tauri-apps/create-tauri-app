@@ -108,7 +108,7 @@ jobs:
         if: matrix.settings.install_trunk
       - run: |
           rustup target add wasm32-unknown-unknown
-          cargo install --locked dioxus-cli --locked
+          cargo install dioxus-cli --locked
         if: matrix.settings.install_dioxus_cli
 
       - name: install system dependencies
