@@ -104,7 +104,7 @@ jobs:
 
       - run: |
           rustup target add wasm32-unknown-unknown
-          cargo install --locked trunk --locked
+          cargo install trunk --locked
         if: matrix.settings.install_trunk
       - run: |
           rustup target add wasm32-unknown-unknown
