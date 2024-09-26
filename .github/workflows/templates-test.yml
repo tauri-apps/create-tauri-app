@@ -96,19 +96,19 @@ jobs:
 
       - uses: dtolnay/rust-toolchain@stable
 
-      - run: cargo install tauri-cli
+      - run: cargo install tauri-cli --locked
         if: (matrix.settings.manager == 'cargo' || matrix.settings.manager == 'dotnet') && matrix.settings.rc != true
 
-      - run: cargo install tauri-cli --version '^2.0.0-rc'
+      - run: cargo install tauri-cli --version '^2.0.0-rc' --locked
         if: (matrix.settings.manager == 'cargo' || matrix.settings.manager == 'dotnet') && matrix.settings.rc == true
 
       - run: |
           rustup target add wasm32-unknown-unknown
-          cargo install --locked trunk
+          cargo install trunk --locked
         if: matrix.settings.install_trunk
       - run: |
           rustup target add wasm32-unknown-unknown
-          cargo install --locked dioxus-cli
+          cargo install dioxus-cli --locked
         if: matrix.settings.install_dioxus_cli
 
       - name: install system dependencies

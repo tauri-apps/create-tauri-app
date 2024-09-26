@@ -207,22 +207,22 @@ pub fn print_missing_deps(pkg_manager: PackageManager, template: Template, rc: b
         Dep {
             name: "Tauri CLI",
             instruction: if rc {
-                format!("Run `{BLUE}{BOLD}cargo install tauri-cli --version '^2.0.0-rc'{RESET}`")
+                format!("Run `{BLUE}{BOLD}cargo install tauri-cli --version '^2.0.0-rc' --locked{RESET}`")
             } else {
-                format!("Run `{BLUE}{BOLD}cargo install tauri-cli{RESET}`")
+                format!("Run `{BLUE}{BOLD}cargo install tauri-cli{RESET} --locked`")
             },
             exists: &|| is_appropriate_tauri_cli_installed(rc),
             skip: pkg_manager.is_node() || !template.needs_tauri_cli(),
         },
         Dep {
             name: "Trunk",
-            instruction: format!("Run `{BLUE}{BOLD}cargo install trunk{RESET}`"),
+            instruction: format!("Run `{BLUE}{BOLD}cargo install trunk --locked{RESET}`"),
             exists: &is_trunk_installed,
             skip: pkg_manager.is_node() || !template.needs_trunk(),
         },
         Dep {
             name: "Dioxus CLI",
-            instruction: format!("Run `{BLUE}{BOLD}cargo install dioxus-cli{RESET}`"),
+            instruction: format!("Run `{BLUE}{BOLD}cargo install dioxus-cli --locked{RESET}`"),
             exists: &is_dioxus_cli_installed,
             skip: pkg_manager.is_node() || !template.needs_dioxus_cli(),
         },
