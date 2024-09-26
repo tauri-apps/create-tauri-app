@@ -32,7 +32,7 @@ irm https://create.tauri.app/ps | iex
 ## Cargo:
 
 ```bash
-cargo install create-tauri-app
+cargo install create-tauri-app --locked
 cargo create-tauri-app
 ```
 
