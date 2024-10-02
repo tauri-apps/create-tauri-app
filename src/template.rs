@@ -8,6 +8,7 @@ use anyhow::Context;
 use rust_embed::Embed;
 
 use crate::{
+    args::TauriVersion,
     manifest::Manifest,
     package_manager::PackageManager,
     utils::{self, colors::*, lte},
@@ -264,7 +265,7 @@ impl<'a> Template {
         project_name: &str,
         package_name: &str,
         identifier: &str,
-        rc: bool,
+        tauri_version: TauriVersion,
     ) -> anyhow::Result<()> {
         let manifest_bytes =
             EMBEDDED_TEMPLATES::get(&format!("template-{self}/{CTA_MANIFEST_FILENAME}"))
@@ -277,9 +278,9 @@ impl<'a> Template {
         let lib_name = format!("{}_lib", package_name.replace('-', "_"));
         let project_name_pascal_case = utils::to_pascal_case(project_name);
 
-        let rc_str = rc.to_string();
+        let tauri_version_str = tauri_version.to_string();
         let manifest_template_data: HashMap<&str, &str> = [
-            ("rc", rc_str.as_str()),
+            ("tauri_version", tauri_version_str.as_str()),
             ("pkg_manager_run_command", pkg_manager.run_cmd()),
             ("lib_name", &lib_name),
             ("package_name", package_name),
@@ -305,8 +306,7 @@ impl<'a> Template {
         )?;
 
         let template_data: HashMap<&str, String> = [
-            ("stable", (!rc).to_string()),
-            ("rc", rc_str.clone()),
+            ("tauri_version", tauri_version.to_string()),
             ("project_name", project_name.to_string()),
             (
                 "project_name_pascal_case",
@@ -377,6 +377,11 @@ impl<'a> Template {
             let p = target_dir.join(p);
             let file_name = p.file_name().unwrap().to_string_lossy();
 
+            let version_flags = TauriVersion::all()
+                .iter()
+                .map(|version| (format!("v{version}"), *version))
+                .collect::<Vec<_>>();
+
             let file_name = match &*file_name {
                 "_gitignore" => ".gitignore",
                 // skip manifest
@@ -393,15 +398,23 @@ impl<'a> Template {
                         s.next().unwrap(),
                     );
 
-                    let for_stable = flags.contains(&"stable");
-                    let for_rc = flags.contains(&"rc");
+                    let for_version = version_flags
+                        .iter()
+                        .find(|(flag, _version)| flags.contains(&flag.as_str()))
+                        .map(|(_flag, version)| *version);
 
                     // remove these flags to only keep package managers flags
                     flags.retain(|e| !["stable", "rc"].contains(e));
 
-                    if ((for_stable && !rc) || (for_rc && rc) || (!for_stable && !for_rc))
-                        && (flags.contains(&pkg_manager.to_string().as_str()) || flags.is_empty())
-                    {
+                    if let Some(for_version) = for_version {
+                        if for_version == tauri_version {
+                            name
+                        } else {
+                            return Ok(());
+                        }
+                    } else if flags.contains(&pkg_manager.to_string().as_str()) {
+                        name
+                    } else if flags.is_empty() {
                         name
                     } else {
                         // skip writing this file

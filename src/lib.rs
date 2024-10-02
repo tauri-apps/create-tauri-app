@@ -7,6 +7,7 @@ use dialoguer::{Confirm, Input, Select};
 use std::{ffi::OsString, fs, process::exit};
 
 use crate::{
+    args::TauriVersion,
     category::Category,
     deps::print_missing_deps,
     package_manager::PackageManager,
@@ -66,7 +67,7 @@ where
     let defaults = args::Args::default();
     let args::Args {
         skip,
-        rc,
+        tauri_version,
         manager,
         project_name,
         template,
@@ -328,13 +329,13 @@ where
         &project_name,
         &package_name,
         &identifier,
-        rc,
+        tauri_version,
     )?;
 
     // Print post-render instructions
     println!();
     print!("Template created!");
-    let has_missing = print_missing_deps(pkg_manager, template, rc);
+    let has_missing = print_missing_deps(pkg_manager, template, tauri_version);
     if has_missing {
         println!("Make sure you have installed the prerequisites for your OS: {BLUE}{BOLD}https://tauri.app/v1/guides/getting-started/prerequisites{RESET}, then run:");
     } else {
@@ -353,7 +354,7 @@ where
     if let Some(cmd) = pkg_manager.install_cmd() {
         println!("  {cmd}");
     }
-    if !rc {
+    if matches!(tauri_version, TauriVersion::V1) {
         println!("  {} tauri dev", pkg_manager.run_cmd());
     } else {
         println!("  {} tauri android init", pkg_manager.run_cmd());
