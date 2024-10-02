@@ -88,7 +88,7 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
                     {GREEN}--identifier <identifier>{RESET} Specify a unique identifier for your application
   {GREEN}-y{RESET}, {GREEN}--yes{RESET}                     Skip prompts and use defaults where applicable
   {GREEN}-f{RESET}, {GREEN}--force{RESET}                   Force create the directory even if it is not empty.
-                    {GREEN}--version [1 | 2]{RESET}         Bootstrap a project using the provided Tauri version. Defaults to the latest stable release.
+                    {GREEN}--tauri-version [1 | 2]{RESET}   Bootstrap a project using the provided Tauri version. Defaults to the latest stable release.
   {GREEN}-h{RESET}, {GREEN}--help{RESET}                    Prints help information
   {GREEN}-v{RESET}, {GREEN}--version{RESET}                 Prints version information
 "#,
@@ -116,7 +116,8 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
         std::process::exit(0);
     }
 
-    let tauri_version: Option<TauriVersion> = pargs.opt_value_from_str(["-v", "--version"])?;
+    let tauri_version: Option<TauriVersion> =
+        pargs.opt_value_from_str(["-t", "--tauri-version"])?;
 
     let args = Args {
         manager: pargs.opt_value_from_str(["-m", "--manager"])?,

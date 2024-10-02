@@ -72,7 +72,7 @@ matrixConfig
             e.startsWith(`templates/template-${t}`) ||
             e.startsWith("src") ||
             e.startsWith("Cargo.toml") ||
-            e.startsWith(".github/workflows/templates-test.yml"),
+            e.startsWith(".github/workflows/templates-test.yml")
         )
       ) {
         const jobInfo = {
@@ -88,7 +88,7 @@ matrixConfig
           ...jobInfo,
           tauriVersion: 1,
           no_bundle_flag: "--no-bundle",
-          flags: "--version 1",
+          flags: "--tauri-version 1",
         });
       }
     }
