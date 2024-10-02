@@ -79,7 +79,7 @@ matrixConfig
           template: t,
           install_trunk: ["yew", "sycamore", "leptos"].includes(t),
           install_dioxus_cli: t === "dioxus",
-          tauriVersion: 'latest',
+          tauriVersion: "latest",
           no_bundle_flag: "-b none",
           ...managerInfo,
         };
