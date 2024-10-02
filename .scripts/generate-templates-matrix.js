@@ -80,14 +80,14 @@ matrixConfig
           install_trunk: ["yew", "sycamore", "leptos"].includes(t),
           install_dioxus_cli: t === "dioxus",
           tauriVersion: "latest",
-          no_bundle_flag: "-b none",
+          no_bundle_flag: "--no-bundle",
           ...managerInfo,
         };
         outMatrix.push(jobInfo);
         outMatrix.push({
           ...jobInfo,
           tauriVersion: 1,
-          no_bundle_flag: "--no-bundle",
+          no_bundle_flag: "-b none",
           flags: "--tauri-version 1",
         });
       }
