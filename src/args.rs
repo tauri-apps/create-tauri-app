@@ -116,8 +116,7 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
         std::process::exit(0);
     }
 
-    let tauri_version: Option<TauriVersion> =
-        pargs.opt_value_from_str(["-t", "--tauri-version"])?;
+    let tauri_version: Option<TauriVersion> = pargs.opt_value_from_str("--tauri-version")?;
 
     let args = Args {
         manager: pargs.opt_value_from_str(["-m", "--manager"])?,
