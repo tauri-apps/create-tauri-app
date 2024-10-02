@@ -278,9 +278,9 @@ impl<'a> Template {
         let lib_name = format!("{}_lib", package_name.replace('-', "_"));
         let project_name_pascal_case = utils::to_pascal_case(project_name);
 
-        let tauri_version_str = tauri_version.to_string();
+        let tauri_version_key = format!("v{tauri_version}");
         let manifest_template_data: HashMap<&str, &str> = [
-            ("tauri_version", tauri_version_str.as_str()),
+            (tauri_version_key.as_str(), "true"),
             ("pkg_manager_run_command", pkg_manager.run_cmd()),
             ("lib_name", &lib_name),
             ("package_name", package_name),

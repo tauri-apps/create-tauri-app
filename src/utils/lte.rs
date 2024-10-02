@@ -509,11 +509,11 @@ mod tests {
         <html>
         <h1>Hello<h2>{% if alpha %}
         <em>{% alpha_str %}</em>{% else %}
-        <em>{% if (eq tauri_version "2") %}rc{%else%}stable{%endif%}</em>{% endif %}
+        <em>{% if v2 %}rc{%else%}stable{%endif%}</em>{% endif %}
         </html>"#;
         let data: HashMap<&str, &str> = [
             ("alpha", "false"),
-            ("tauri_version", "2"),
+            ("v2", "true"),
             ("alpha_str", "holla alpha"),
         ]
         .into();
