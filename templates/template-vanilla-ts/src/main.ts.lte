@@ -1,4 +1,4 @@
-import { invoke } from "@tauri-apps/api/{% eq(tauri_version "2") %}core{% else %}tauri{% endif %}";
+import { invoke } from "@tauri-apps/api/{% (eq tauri_version "2") %}core{% else %}tauri{% endif %}";
 
 let greetInputEl: HTMLInputElement | null;
 let greetMsgEl: HTMLElement | null;
