@@ -389,8 +389,8 @@ impl<'a> Template {
                 // conditional files:
                 // are files that start with a special syntax
                 //          "%(<list of flags separated by `-`>%)<file_name>"
-                // flags are supported package managers, stable and rc.
-                // example: "%(pnpm-npm-yarn-stable-rc)%package.json"
+                // flags are supported package managers, and `v-$versionNumber` (tauri version filter).
+                // example: "%(pnpm-npm-yarn-stable-v1)%package.json"
                 name if name.starts_with("%(") && name[1..].contains(")%") => {
                     let mut s = name.strip_prefix("%(").unwrap().split(")%");
                     let (mut flags, name) = (

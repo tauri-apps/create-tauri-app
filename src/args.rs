@@ -88,7 +88,7 @@ pub fn parse(argv: Vec<OsString>, bin_name: Option<String>) -> anyhow::Result<Ar
                     {GREEN}--identifier <identifier>{RESET} Specify a unique identifier for your application
   {GREEN}-y{RESET}, {GREEN}--yes{RESET}                     Skip prompts and use defaults where applicable
   {GREEN}-f{RESET}, {GREEN}--force{RESET}                   Force create the directory even if it is not empty.
-                    {GREEN}--rc{RESET}                      Bootstraps a project using tauri@2.0-rc.
+                    {GREEN}--version [1 | 2]{RESET}         Bootstrap a project using the provided Tauri version. Defaults to the latest stable release.
   {GREEN}-h{RESET}, {GREEN}--help{RESET}                    Prints help information
   {GREEN}-v{RESET}, {GREEN}--version{RESET}                 Prints version information
 "#,
