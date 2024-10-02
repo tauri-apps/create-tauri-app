@@ -1,5 +1,9 @@
 # Changelog
 
+## \[4.5.0]
+
+- [`1130b7b`](https://www.github.com/tauri-apps/create-tauri-app/commit/1130b7b3ad20fe094eb49815ac7a777ea08f0157) ([#806](https://www.github.com/tauri-apps/create-tauri-app/pull/806) by [@lucasfernog](https://www.github.com/tauri-apps/create-tauri-app/../../lucasfernog)) Update to v2 stable, meaning the `--alpha`, `--beta`, `--rc` flags are removed, and added a `--tauri-version [1|2]` option to change the Tauri version (defaults to latest stable - v2).
+
 ## \[4.4.2]
 
 - [`c8d8fa8`](https://www.github.com/tauri-apps/create-tauri-app/commit/c8d8fa8c105416dbc74d3e0cfce6e602d5240b82) ([#797](https://www.github.com/tauri-apps/create-tauri-app/pull/797) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Suggest using `--locked` flag when installing CLIs using `cargo install`
