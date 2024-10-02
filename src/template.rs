@@ -412,9 +412,8 @@ impl<'a> Template {
                         } else {
                             return Ok(());
                         }
-                    } else if flags.contains(&pkg_manager.to_string().as_str()) {
-                        name
-                    } else if flags.is_empty() {
+                    } else if flags.contains(&pkg_manager.to_string().as_str()) || flags.is_empty()
+                    {
                         name
                     } else {
                         // skip writing this file
