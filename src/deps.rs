@@ -123,7 +123,7 @@ fn is_webkit2gtk_installed(tauri_version: TauriVersion) -> bool {
     Command::new("pkg-config")
         .arg(match tauri_version {
             TauriVersion::V1 => "webkit2gtk-4.0",
-            TauriVersion::v2 => "webkit2gtk-4.1",
+            TauriVersion::V2 => "webkit2gtk-4.1",
         })
         .output()
         .map(|o| o.status.success())
@@ -186,7 +186,7 @@ pub fn print_missing_deps(
         target_os = "netbsd"
     ))]
     let (webkit2gtk_installed, rsvg2_installed) =
-        (is_webkit2gtk_installed(rc), is_rsvg2_installed());
+        (is_webkit2gtk_installed(tauri_version), is_rsvg2_installed());
 
     let deps: &[Dep<'_>] = &[
         Dep {
