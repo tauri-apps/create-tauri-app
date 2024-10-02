@@ -278,9 +278,7 @@ impl<'a> Template {
         let lib_name = format!("{}_lib", package_name.replace('-', "_"));
         let project_name_pascal_case = utils::to_pascal_case(project_name);
 
-        let tauri_version_key = format!("v{tauri_version}");
-        let manifest_template_data: HashMap<&str, &str> = [
-            (tauri_version_key.as_str(), "true"),
+        let mut manifest_template_data: HashMap<&str, &str> = [
             ("pkg_manager_run_command", pkg_manager.run_cmd()),
             ("lib_name", &lib_name),
             ("package_name", package_name),
@@ -298,6 +296,16 @@ impl<'a> Template {
         ]
         .into();
 
+        let versions = TauriVersion::all()
+            .iter()
+            .map(|v| format!("v{v}"))
+            .collect::<Vec<_>>();
+        for version in &versions {
+            manifest_template_data.insert(version.as_str(), "false");
+        }
+        let tauri_version_key = format!("v{tauri_version}");
+        manifest_template_data.insert(tauri_version_key.as_str(), "true");
+
         let styles = String::from_utf8(
             EMBEDDED_TEMPLATES::get("_assets_/styles.css")
                 .unwrap()
@@ -305,8 +313,7 @@ impl<'a> Template {
                 .to_vec(),
         )?;
 
-        let template_data: HashMap<&str, String> = [
-            ("tauri_version", tauri_version.to_string()),
+        let mut template_data: HashMap<&str, String> = [
             ("project_name", project_name.to_string()),
             (
                 "project_name_pascal_case",
@@ -364,6 +371,16 @@ impl<'a> Template {
             ("styles", styles),
         ]
         .into();
+
+        let versions = TauriVersion::all()
+            .iter()
+            .map(|v| format!("v{v}"))
+            .collect::<Vec<_>>();
+        for version in &versions {
+            template_data.insert(version.as_str(), "false".to_string());
+        }
+        let tauri_version_key = format!("v{tauri_version}");
+        template_data.insert(tauri_version_key.as_str(), "true".to_string());
 
         let write_file = |file: &str, template_data| -> anyhow::Result<()> {
             // remove the first component, which is certainly the template directory they were in before getting embeded into the binary

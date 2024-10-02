@@ -36,6 +36,6 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.2.2",
-    "@tauri-apps/cli": "{% (eq tauri_version "2") %}>=2.0.0{% else %}^1{% endif %}"
+    "@tauri-apps/cli": "{% v2 %}>=2.0.0{% else %}^1{% endif %}"
   }
 }

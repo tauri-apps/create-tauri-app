@@ -1,4 +1,4 @@
-devPath = {% if !rc %}../src{% endif %}
+devPath = {% if v1 %}../src{% endif %}
 distDir = ../src
 withGlobalTauri = true
 
