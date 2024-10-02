@@ -1,6 +1,6 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/{% if rc %}core{% else %}tauri{% endif %}";
+import { invoke } from "@tauri-apps/api/{% if v2 %}core{% else %}tauri{% endif %}";
 import "./App.css";
 
 function App() {

@@ -7,6 +7,6 @@
     "tauri": "tauri"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "{% if rc %}>=2.0.0-rc.0{% else %}^1{% endif %}"
+    "@tauri-apps/cli": "{% if v2 %}>=2.0.0{% else %}^1{% endif %}"
   }
 }

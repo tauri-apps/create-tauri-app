@@ -7,26 +7,26 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
-{% if rc %}[lib]
+{% if v2 %}[lib]
 # The `_lib` suffix may seem redundant but it is necessary
 # to make the lib name unique and wouldn't conflict with the bin name.
 # This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
 name = "{% lib_name %}"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
-{% endif %}{% if stable %}[build-dependencies]
+{% endif %}{% if v1 %}[build-dependencies]
 tauri-build = { version = "1", features = [] }
 
 [dependencies]
 tauri = { version = "1", features = ["shell-open"] }{% else %}[build-dependencies]
-tauri-build = { version = "2.0.0-rc", features = [] }
+tauri-build = { version = "2.0.0", features = [] }
 
 [dependencies]
-tauri = { version = "2.0.0-rc", features = [] }
-tauri-plugin-shell = "2.0.0-rc"{% endif %}
+tauri = { version = "2.0.0", features = [] }
+tauri-plugin-shell = "2.0.0"{% endif %}
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-{% if stable %}
+{% if v1 %}
 [features]
 # This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!
 custom-protocol = ["tauri/custom-protocol"]{% endif %}

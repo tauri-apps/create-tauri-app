@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { invoke } from "@tauri-apps/api/{% if rc %}core{% else %}tauri{% endif %}";
+import { invoke } from "@tauri-apps/api/{% if v2 %}core{% else %}tauri{% endif %}";
 
 const greetMsg = ref("");
 const name = ref("");

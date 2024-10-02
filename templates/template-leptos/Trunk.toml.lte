@@ -5,7 +5,5 @@ target = "./index.html"
 ignore = ["./src-tauri"]
 
 [serve]
-address = "{% if rc %}0.0.0.0{% else %}127.0.0.1{% endif %}"
 port = 1420
-open = false{% if rc %}
-ws_protocol = "ws"{% endif %}
+open = false

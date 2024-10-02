@@ -79,16 +79,16 @@ matrixConfig
           template: t,
           install_trunk: ["yew", "sycamore", "leptos"].includes(t),
           install_dioxus_cli: t === "dioxus",
-          rc: false,
-          no_bundle_flag: "-b none",
+          tauriVersion: "latest",
+          no_bundle_flag: "--no-bundle",
           ...managerInfo,
         };
         outMatrix.push(jobInfo);
         outMatrix.push({
           ...jobInfo,
-          rc: true,
-          no_bundle_flag: "--no-bundle",
-          flags: "--rc",
+          tauriVersion: 1,
+          no_bundle_flag: "-b none",
+          flags: "--tauri-version 1",
         });
       }
     }

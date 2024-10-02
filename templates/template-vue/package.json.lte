@@ -11,12 +11,12 @@
   },
   "dependencies": {
     "vue": "^3.3.4",
-    "@tauri-apps/api": "{% if rc %}>=2.0.0-rc.0{% else %}^1{% endif %}"{% if rc %},
-    "@tauri-apps/plugin-shell": ">=2.0.0-rc.0"{% endif %}
+    "@tauri-apps/api": "{% if v2 %}>=2.0.0{% else %}^1{% endif %}"{% if v2 %},
+    "@tauri-apps/plugin-shell": ">=2.0.0"{% endif %}
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
     "vite": "^5.3.1",
-    "@tauri-apps/cli": "{% if rc %}>=2.0.0-rc.0{% else %}^1{% endif %}"
+    "@tauri-apps/cli": "{% if v2 %}>=2.0.0{% else %}^1{% endif %}"
   }
 }

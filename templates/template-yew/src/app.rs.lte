@@ -5,7 +5,7 @@ use yew::prelude::*;
 
 #[wasm_bindgen]
 extern "C" {
-    #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "{% if rc %}core{% else %}tauri{% endif %}"])]
+    #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "{% if v2 %}core{% else %}tauri{% endif %}"])]
     async fn invoke(cmd: &str, args: JsValue) -> JsValue;
 }
 

@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";{% if rc %}
+import vue from "@vitejs/plugin-vue";{% if v2 %}
 
 // @ts-expect-error process is a nodejs global
 const host = process.env.TAURI_DEV_HOST;{% endif %}
@@ -15,7 +15,7 @@ export default defineConfig(async () => ({
   // 2. tauri expects a fixed port, fail if that port is not available
   server: {
     port: 1420,
-    strictPort: true,{% if rc %}
+    strictPort: true,{% if v2 %}
     host: host || false,
     hmr: host
       ? {
