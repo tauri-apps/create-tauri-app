@@ -1,4 +1,5 @@
-const isCron = process.argv[2] === "schedule" || process.argv[2] === "workflow_dispatch";
+const trigger = process.argv[2];
+const isCron = trigger === "schedule" || trigger === "workflow_dispatch";
 
 const changedFilesStr = process.argv[3];
 const changedFiles = changedFilesStr.split(",");
