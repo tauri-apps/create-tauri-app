@@ -1,5 +1,13 @@
 # Changelog
 
+## \[4.5.1]
+
+- [`caf8a6e`](https://www.github.com/tauri-apps/create-tauri-app/commit/caf8a6ed0189c6a5afe4522a3cb2e8db5aa30459) ([#806](https://www.github.com/tauri-apps/create-tauri-app/pull/806)) Fix incorrect version printed for installing `tauri-cli` command
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@4.5.1`
+
 ## \[4.5.0]
 
 - [`1130b7b`](https://www.github.com/tauri-apps/create-tauri-app/commit/1130b7b3ad20fe094eb49815ac7a777ea08f0157) ([#806](https://www.github.com/tauri-apps/create-tauri-app/pull/806) by [@lucasfernog](https://www.github.com/tauri-apps/create-tauri-app/../../lucasfernog)) Update to v2 stable, meaning the `--alpha`, `--beta`, `--rc` flags are removed, and added a `--tauri-version [1|2]` option to change the Tauri version (defaults to latest stable - v2).
