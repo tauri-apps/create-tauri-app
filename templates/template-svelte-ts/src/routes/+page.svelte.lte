@@ -36,13 +36,13 @@
 </div>
 
 <style>
-  .logo.vite:hover {
-    filter: drop-shadow(0 0 2em #747bff);
-  }
+.logo.vite:hover {
+  filter: drop-shadow(0 0 2em #747bff);
+}
 
-  .logo.svelte-kit:hover {
-    filter: drop-shadow(0 0 2em #ff3e00);
-  }
+.logo.svelte-kit:hover {
+  filter: drop-shadow(0 0 2em #ff3e00);
+}
 
-{% styles_padded %}
+{% styles %}
 </style>

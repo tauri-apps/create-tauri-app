@@ -111,13 +111,13 @@ jobs:
           cargo install dioxus-cli --locked
         if: matrix.settings.install_dioxus_cli
 
-      - name: install system dependencies
+      - name: install system dependencies (v1)
         if: matrix.settings.tauriVersion == 1
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libayatana-appindicator3-dev librsvg2-dev patchelf
 
-      - name: install system dependencies (rc)
+      - name: install system dependencies
         if: matrix.settings.tauriVersion == 'latest'
         run: |
           sudo apt-get update

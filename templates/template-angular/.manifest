@@ -4,8 +4,8 @@
 
 beforeDevCommand = {% pkg_manager_run_command %} start
 beforeBuildCommand = {% pkg_manager_run_command %} build
-devPath = http://localhost:1420
-distDir = ../dist/{% package_name %}/browser
+devUrl = http://localhost:1420
+frontendDist = ../dist/{% package_name %}/browser
 
 [files]
 tauri.svg = src/assets/tauri.svg

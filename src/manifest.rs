@@ -6,8 +6,8 @@ use anyhow::{bail, Context};
 pub struct Manifest<'a> {
     pub before_dev_command: Option<&'a str>,
     pub before_build_command: Option<&'a str>,
-    pub dev_path: Option<&'a str>,
-    pub dist_dir: Option<&'a str>,
+    pub dev_url: Option<&'a str>,
+    pub frontend_dist: Option<&'a str>,
     pub with_global_tauri: Option<bool>,
     pub files: HashMap<&'a str, &'a str>,
 }
@@ -59,8 +59,8 @@ impl<'a> Manifest<'a> {
                 match k {
                     "beforeDevCommand" => manifest.before_dev_command = Some(v),
                     "beforeBuildCommand" => manifest.before_build_command = Some(v),
-                    "devPath" => manifest.dev_path = Some(v),
-                    "distDir" => manifest.dist_dir = Some(v),
+                    "devUrl" => manifest.dev_url = Some(v),
+                    "frontendDist" => manifest.frontend_dist = Some(v),
                     "withGlobalTauri" => manifest.with_global_tauri = Some(v.parse()?),
                     _ if in_files_section => {
                         manifest.files.insert(k, v);
@@ -86,7 +86,7 @@ mod test {
 
             beforeDevCommand = npm start -- --port 1420
             beforeBuildCommand = {% pkg_manager_run_command %} build # this comment should be stripped
-            devPath = http://localhost:1420
+            devUrl = http://localhost:1420
 
             [files]
             tauri.svg = src/assets/tauri.svg
@@ -101,8 +101,8 @@ mod test {
             Manifest {
                 before_dev_command: Some("npm start -- --port 1420"),
                 before_build_command: Some("{% pkg_manager_run_command %} build"),
-                dev_path: Some("http://localhost:1420"),
-                dist_dir: None,
+                dev_url: Some("http://localhost:1420"),
+                frontend_dist: None,
                 with_global_tauri: None,
                 files,
             }
@@ -119,7 +119,7 @@ mod test {
 
             beforeDevCommand = npm start -- --port 1420
             beforeBuildCommand =
-            devPath = http://localhost:1420
+            devUrl = http://localhost:1420
 
             [files]
             tauri.svg = src/assets/tauri.svg
@@ -138,7 +138,7 @@ mod test {
 
         beforeDevCommand = npm start -- --port 1420
         beforeBuildCommand = {% pkg_manager_run_command %} build # this comment should be stripped
-        devPath = http://localhost:1420
+        devUrl = http://localhost:1420
         beforeBuildCommand = {% pkg_manager_run_command %} build mobile
 
         [files]
@@ -154,8 +154,8 @@ mod test {
             Manifest {
                 before_dev_command: Some("npm start -- --port 1420"),
                 before_build_command: Some("{% pkg_manager_run_command %} build mobile"),
-                dev_path: Some("http://localhost:1420"),
-                dist_dir: None,
+                dev_url: Some("http://localhost:1420"),
+                frontend_dist: None,
                 with_global_tauri: None,
                 files,
             }

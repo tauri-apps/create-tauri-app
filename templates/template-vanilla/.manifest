@@ -1,5 +1,5 @@
-devPath = {% if v1 %}../src{% endif %}
-distDir = ../src
+devUrl = {% if v1 %}../src{% endif %}
+frontendDist = ../src
 withGlobalTauri = true
 
 [files]

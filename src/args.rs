@@ -16,8 +16,8 @@ pub enum TauriVersion {
 }
 
 impl TauriVersion {
-    pub fn all() -> &'static [TauriVersion] {
-        &[TauriVersion::V1, TauriVersion::V2]
+    pub fn all() -> [TauriVersion; 2] {
+        [TauriVersion::V1, TauriVersion::V2]
     }
 }
 

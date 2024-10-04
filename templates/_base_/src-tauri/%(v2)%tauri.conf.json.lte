@@ -5,9 +5,9 @@
   "identifier": "{% identifier %}",
   "build": {
     {% if before_dev_command %}"beforeDevCommand": "{% before_dev_command %}",
-    {% endif %}{% if dev_path %}"devUrl": "{% dev_path %}",
+    {% endif %}{% if dev_url %}"devUrl": "{% dev_url %}",
     {% endif %}{% if before_build_command %}"beforeBuildCommand": "{% before_build_command %}",
-    {% endif %}"frontendDist": "{% dist_dir %}"
+    {% endif %}"frontendDist": "{% frontend_dist %}"
   },
   "app": {
     {% if with_global_tauri %}"withGlobalTauri": true,

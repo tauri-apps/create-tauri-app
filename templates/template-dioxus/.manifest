@@ -4,8 +4,8 @@
 
 beforeDevCommand = dx serve --port 1420
 beforeBuildCommand = dx build
-devPath = http://localhost:1420
-distDir = ../dist
+devUrl = http://localhost:1420
+frontendDist = ../dist
 withGlobalTauri = true
 
 [files]

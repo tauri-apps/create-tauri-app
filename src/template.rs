@@ -278,33 +278,18 @@ impl<'a> Template {
         let lib_name = format!("{}_lib", package_name.replace('-', "_"));
         let project_name_pascal_case = utils::to_pascal_case(project_name);
 
-        let mut manifest_template_data: HashMap<&str, &str> = [
-            ("pkg_manager_run_command", pkg_manager.run_cmd()),
-            ("lib_name", &lib_name),
-            ("package_name", package_name),
-            ("project_name", project_name),
-            ("identifier", identifier),
-            ("project_name_pascal_case", &project_name_pascal_case),
-            (
-                "double_dash_with_space",
-                if pkg_manager == PackageManager::Npm {
-                    "-- "
-                } else {
-                    ""
-                },
-            ),
-        ]
-        .into();
-
         let versions = TauriVersion::all()
             .iter()
-            .map(|v| format!("v{v}"))
+            .map(|&v| {
+                (
+                    format!("v{v}",),
+                    match v == tauri_version {
+                        true => "true",
+                        false => "false",
+                    },
+                )
+            })
             .collect::<Vec<_>>();
-        for version in &versions {
-            manifest_template_data.insert(version.as_str(), "false");
-        }
-        let tauri_version_key = format!("v{tauri_version}");
-        manifest_template_data.insert(tauri_version_key.as_str(), "true");
 
         let styles = String::from_utf8(
             EMBEDDED_TEMPLATES::get("_assets_/styles.css")
@@ -312,6 +297,20 @@ impl<'a> Template {
                 .data
                 .to_vec(),
         )?;
+
+        let mut manifest_template_data: HashMap<&str, &str> = [
+            ("pkg_manager_run_command", pkg_manager.run_cmd()),
+            ("lib_name", &lib_name),
+            ("package_name", package_name),
+            ("project_name", project_name),
+            ("identifier", identifier),
+            ("project_name_pascal_case", &project_name_pascal_case),
+        ]
+        .into();
+
+        for (version, enabled) in &versions {
+            manifest_template_data.insert(version, enabled);
+        }
 
         let mut template_data: HashMap<&str, String> = [
             ("project_name", project_name.to_string()),
@@ -336,16 +335,16 @@ impl<'a> Template {
                 )?,
             ),
             (
-                "dev_path",
+                "dev_url",
                 lte::render(
-                    manifest.dev_path.unwrap_or_default(),
+                    manifest.dev_url.unwrap_or_default(),
                     &manifest_template_data,
                 )?,
             ),
             (
-                "dist_dir",
+                "frontend_dist",
                 lte::render(
-                    manifest.dist_dir.unwrap_or_default(),
+                    manifest.frontend_dist.unwrap_or_default(),
                     &manifest_template_data,
                 )?,
             ),
@@ -354,33 +353,18 @@ impl<'a> Template {
                 manifest.with_global_tauri.unwrap_or_default().to_string(),
             ),
             ("lib_name", lib_name),
-            (
-                "styles_padded",
-                styles
-                    .lines()
-                    .map(|l| {
-                        if l.is_empty() {
-                            l.to_string()
-                        } else {
-                            format!("  {l}")
-                        }
-                    })
-                    .collect::<Vec<_>>()
-                    .join("\n"),
-            ),
             ("styles", styles),
         ]
         .into();
 
-        let versions = TauriVersion::all()
-            .iter()
-            .map(|v| format!("v{v}"))
-            .collect::<Vec<_>>();
-        for version in &versions {
-            template_data.insert(version.as_str(), "false".to_string());
+        for (version, enabled) in &versions {
+            template_data.insert(version.as_str(), enabled.to_string());
         }
-        let tauri_version_key = format!("v{tauri_version}");
-        template_data.insert(tauri_version_key.as_str(), "true".to_string());
+
+        let version_flags = TauriVersion::all()
+            .iter()
+            .map(|&v| (v, format!("v{v}")))
+            .collect::<Vec<_>>();
 
         let write_file = |file: &str, template_data| -> anyhow::Result<()> {
             // remove the first component, which is certainly the template directory they were in before getting embeded into the binary
@@ -393,11 +377,6 @@ impl<'a> Template {
 
             let p = target_dir.join(p);
             let file_name = p.file_name().unwrap().to_string_lossy();
-
-            let version_flags = TauriVersion::all()
-                .iter()
-                .map(|version| (format!("v{version}"), *version))
-                .collect::<Vec<_>>();
 
             let file_name = match &*file_name {
                 "_gitignore" => ".gitignore",
@@ -417,19 +396,18 @@ impl<'a> Template {
 
                     let for_version = version_flags
                         .iter()
-                        .find(|(flag, _version)| flags.contains(&flag.as_str()))
-                        .map(|(_flag, version)| *version);
+                        .find(|(_, flag)| flags.contains(&flag.as_str()))
+                        .map(|(v, _)| *v);
 
-                    // remove these flags to only keep package managers flags
-                    flags.retain(|e| !["stable", "rc"].contains(e));
+                    // remove version flags to only keep package managers flags
+                    flags.retain(|e| !version_flags.iter().any(|(_, flag)| e == flag));
 
-                    if let Some(for_version) = for_version {
-                        if for_version == tauri_version {
-                            name
-                        } else {
-                            return Ok(());
-                        }
-                    } else if flags.contains(&pkg_manager.to_string().as_str()) || flags.is_empty()
+                    // this file has a version flag and matches active version.
+                    // if doesn't have any version flag, it should be rendered
+                    if for_version.map(|v| v == tauri_version).unwrap_or(true)
+                        // this file has a package manager flag and matches active package manager.
+                        // if doesn't have any package manager flag, it should be rendered
+                        && (flags.contains(&pkg_manager.to_string().as_str()) || flags.is_empty())
                     {
                         name
                     } else {

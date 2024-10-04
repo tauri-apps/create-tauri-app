@@ -29,8 +29,8 @@ cargo run -- <cli arguments>
   ```ini
   beforeDevCommand = {% pkg_manager_run_command %} dev
   beforeBuildCommand = {% pkg_manager_run_command %} build
-  devPath = http://localhost:1420
-  distDir = ../dist
+  devUrl = http://localhost:1420
+  frontendDist = ../dist
 
   # the next sction is used to determine what files to copy from `templates/_assets_`
   # if you introduce a new file like an icon that is shared between multiple templates,

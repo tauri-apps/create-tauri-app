@@ -1,7 +1,7 @@
 beforeDevCommand = dotnet watch run --project src/{% project_name_pascal_case %}.csproj
 beforeBuildCommand = dotnet publish -c release src/{% project_name_pascal_case %}.csproj -o dist
-devPath = http://localhost:1420
-distDir = ../dist/wwwroot
+devUrl = http://localhost:1420
+frontendDist = ../dist/wwwroot
 withGlobalTauri = true
 
 [files]
