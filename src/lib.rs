@@ -339,7 +339,7 @@ where
     if has_missing {
         let prereqs_url = match tauri_version {
             TauriVersion::V1 => "https://v1.tauri.app/v1/guides/getting-started/prerequisites/",
-            TauriVersion::V2 => "https://v2.tauri.app/start/prerequisites/",
+            TauriVersion::V2 => "https://tauri.app/start/prerequisites/",
         };
 
         println!("Make sure you have installed the prerequisites for your OS: {BLUE}{BOLD}{prereqs_url}{RESET}, then run:");
