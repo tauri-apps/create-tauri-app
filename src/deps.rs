@@ -257,8 +257,8 @@ pub fn print_missing_deps(
         Dep {
             name: "webkit2gtk & rsvg2",
             instruction: format!("Visit {BLUE}{BOLD}{}{RESET}", match tauri_version {
-                TauriVersion::V1 => "https://tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux",
-                TauriVersion::V2 => "https://v2.tauri.app/guides/prerequisites/#linux",
+                TauriVersion::V1 => "https://v1.tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux",
+                TauriVersion::V2 => "https://tauri.app/guides/prerequisites/#linux",
             }),
             exists: &|| webkit2gtk_installed && rsvg2_installed,
             skip: webkit2gtk_installed || rsvg2_installed,
@@ -273,8 +273,8 @@ pub fn print_missing_deps(
         Dep {
             name: "webkit2gtk",
             instruction: format!("Visit {BLUE}{BOLD}{}{RESET}", match tauri_version {
-                TauriVersion::V1 => "https://tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux",
-                TauriVersion::V2 => "https://v2.tauri.app/guides/prerequisites/#linux",
+                TauriVersion::V1 => "https://v1.tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux",
+                TauriVersion::V2 => "https://tauri.app/guides/prerequisites/#linux",
             }),
             exists: &|| webkit2gtk_installed,
             skip: !rsvg2_installed && !webkit2gtk_installed,
@@ -289,8 +289,8 @@ pub fn print_missing_deps(
         Dep {
             name: "rsvg2",
             instruction: format!("Visit {BLUE}{BOLD}{}{RESET}", match tauri_version {
-                TauriVersion::V2 => "https://v2.tauri.app/guides/prerequisites/#linux",
-                TauriVersion::V1 => "https://tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux"
+                TauriVersion::V1 => "https://v1.tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux",
+                TauriVersion::V2 => "https://tauri.app/guides/prerequisites/#linux",
             }),
             exists: &|| rsvg2_installed,
             skip: !rsvg2_installed && !webkit2gtk_installed,
