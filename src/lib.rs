@@ -337,7 +337,12 @@ where
     print!("Template created!");
     let has_missing = print_missing_deps(pkg_manager, template, tauri_version);
     if has_missing {
-        println!("Make sure you have installed the prerequisites for your OS: {BLUE}{BOLD}https://tauri.app/v1/guides/getting-started/prerequisites{RESET}, then run:");
+        let prereqs_url = match tauri_version {
+            TauriVersion::V1 => "https://v1.tauri.app/v1/guides/getting-started/prerequisites/",
+            TauriVersion::V2 => "https://v2.tauri.app/start/prerequisites/",
+        };
+
+        println!("Make sure you have installed the prerequisites for your OS: {BLUE}{BOLD}{prereqs_url}{RESET}, then run:");
     } else {
         println!(" To get started run:")
     }
