@@ -10,8 +10,9 @@
 [![changelog](https://img.shields.io/badge/CHANGELOG-yellowgreen)](./CHANGELOG.md)
 
 # Usage
+To get started using `create-tauri-app` run one of the below commands in the folder you'd like to setup your project.
 
-## Bash:
+### Bash:
 
 ```
 sh <(curl https://create.tauri.app/sh)
@@ -23,38 +24,38 @@ or
 sh <(wget https://create.tauri.app/sh)
 ```
 
-## Powershell:
+### Powershell:
 
 ```powershell
 irm https://create.tauri.app/ps | iex
 ```
 
-## Cargo:
+### Cargo:
 
 ```bash
 cargo install create-tauri-app --locked
 cargo create-tauri-app
 ```
 
-## NPM:
+### NPM:
 
 ```bash
 npm create tauri-app@latest
 ```
 
-## Yarn:
+### Yarn:
 
 ```bash
 yarn create tauri-app
 ```
 
-## PNPM:
+### PNPM:
 
 ```bash
 pnpm create tauri-app
 ```
 
-## Bun:
+### Bun:
 
 ```bash
 bunx create-tauri-app
@@ -62,6 +63,72 @@ bunx create-tauri-app
 
 <br>
 
+## Scaffold a new project (interactive)
+Follow along with the prompts to choose your project name, frontend language, package manager, and frontend framework, and frontend framework options if applicable.
+
+
+1. Choose a name and a bundle identifier (unique-id for your app):
+    ```
+    ? Project name (tauri-app) ›
+    ? Identifier (com.tauri-app.app) ›
+    ```
+2. Select a flavor for your frontend. First the language:
+    ```
+    ? Choose which language to use for your frontend ›
+    Rust  (cargo)
+    TypeScript / JavaScript  (pnpm, yarn, npm, bun)
+    .NET  (dotnet)
+    ```
+3. Select a package manager (if there are multiple available):
+
+
+    Options for **TypeScript / JavaScript**:
+
+    ```
+    ? Choose your package manager ›
+    pnpm
+    yarn
+    npm
+    bun
+    ```
+
+4. Select a UI Template and flavor (if there are multiple available):
+
+    Options for **Rust**:
+    ```
+    ? Choose your UI template ›
+    Vanilla
+    Yew 
+    Leptos 
+    Sycamore
+    ```
+
+    Options for **TypeScript / JavaScript**:
+
+    ```
+    ? Choose your UI template ›
+    Vanilla
+    Vue 
+    Svelte 
+    React 
+    Solid 
+    Angular 
+    Preact
+
+    ? Choose your UI flavor ›
+    TypeScript
+    JavaScript
+    ```
+
+    Options for **.NET**:
+    ```
+    ? Choose your UI template ›
+    Blazor  (https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor/)
+    ```
+
+Once completed, the utility reports that the template has been created and displays how to run it using the configured package manager. If it detects missing decencies on your system, it prints a list of packages and prompts how to install them.
+
+## Scaffold a new project (non-interactive)
 You can also directly specify the project name, package manager and the template you want to use via additional command line options. For example, to scaffold a Svelte project in a `my-tauri-app` directory, run:
 
 ```bash
