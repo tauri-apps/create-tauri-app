@@ -16,7 +16,6 @@
         "title": "{% package_name %}",
         "width": 800,
         "height": 600
-        
       }
     ],
     "security": {

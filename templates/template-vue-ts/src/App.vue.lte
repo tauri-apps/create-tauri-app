@@ -45,5 +45,7 @@ async function greet() {
   filter: drop-shadow(0 0 2em #249b73);
 }
 
+</style>
+<style>
 {% styles %}
 </style>
