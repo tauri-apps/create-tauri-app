@@ -86,7 +86,7 @@ jobs:
           deno-version: v2.x
 
       - run: corepack enable
-        if: contains(["pnpm", "npm", "yarn"], matrix.settings.manager)
+        if: contains(fromJSON("[\"pnpm\", \"npm\", \"yarn\"]"), matrix.settings.manager)
         
       - name: Install Node.js@18
         if: contains(["pnpm", "npm", "yarn"], matrix.settings.manager)
