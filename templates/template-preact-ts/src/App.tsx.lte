@@ -13,8 +13,8 @@ function App() {
   }
 
   return (
-    <div class="container">
-      <h1>Welcome to Tauri!</h1>
+    <main class="container">
+      <h1>Welcome to Tauri + Preact</h1>
 
       <div class="row">
         <a href="https://vitejs.dev" target="_blank">
@@ -27,7 +27,6 @@ function App() {
           <img src={preactLogo} class="logo preact" alt="Preact logo" />
         </a>
       </div>
-
       <p>Click on the Tauri, Vite, and Preact logos to learn more.</p>
 
       <form
@@ -44,9 +43,8 @@ function App() {
         />
         <button type="submit">Greet</button>
       </form>
-
       <p>{greetMsg}</p>
-    </div>
+    </main>
   );
 }
 

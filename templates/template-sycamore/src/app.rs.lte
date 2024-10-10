@@ -32,6 +32,10 @@ pub fn App<G: Html>(cx: Scope) -> View<G> {
 
     view! { cx,
         main(class="container") {
+            h1 {
+                "Welcome to Tauri + Sycamore"
+            }
+
             div(class="row") {
                 a(href="https://tauri.app",target="_blank") {
                     img(src="public/tauri.svg",class="logo tauri",alt="Tauri logo")
@@ -40,7 +44,6 @@ pub fn App<G: Html>(cx: Scope) -> View<G> {
                     img(src="public/sycamore.svg",class="logo sycamore",alt="Sycamore logo")
                 }
             }
-
             p {
                 "Click on the Tauri and Sycamore logos to learn more."
             }
@@ -52,9 +55,7 @@ pub fn App<G: Html>(cx: Scope) -> View<G> {
                 }
             }
             p {
-                b {
-                    (greet_msg.get())
-                }
+                (greet_msg.get())
             }
         }
     }
