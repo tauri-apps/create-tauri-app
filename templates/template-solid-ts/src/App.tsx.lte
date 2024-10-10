@@ -13,8 +13,8 @@ function App() {
   }
 
   return (
-    <div class="container">
-      <h1>Welcome to Tauri!</h1>
+    <main class="container">
+      <h1>Welcome to Tauri + Solid</h1>
 
       <div class="row">
         <a href="https://vitejs.dev" target="_blank">
@@ -27,7 +27,6 @@ function App() {
           <img src={logo} class="logo solid" alt="Solid logo" />
         </a>
       </div>
-
       <p>Click on the Tauri, Vite, and Solid logos to learn more.</p>
 
       <form
@@ -44,9 +43,8 @@ function App() {
         />
         <button type="submit">Greet</button>
       </form>
-
       <p>{greetMsg()}</p>
-    </div>
+    </main>
   );
 }
 

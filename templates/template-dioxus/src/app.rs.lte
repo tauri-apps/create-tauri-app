@@ -35,6 +35,8 @@ pub fn App() -> Element {
         link { rel: "stylesheet", href: "styles.css" }
         main {
             class: "container",
+            h1 { "Welcome to Tauri + Dioxus" }
+
             div {
                 class: "row",
                 a {
@@ -56,7 +58,6 @@ pub fn App() -> Element {
                     }
                 }
             }
-
             p { "Click on the Tauri and Dioxus logos to learn more." }
 
             form {
@@ -70,10 +71,7 @@ pub fn App() -> Element {
                 }
                 button { r#type: "submit", "Greet" }
             }
-
-            p {
-                b { "{greet_msg}" }
-            }
+            p { "{greet_msg}" }
         }
     }
 }
