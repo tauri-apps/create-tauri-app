@@ -79,11 +79,12 @@ matrixConfig
             e.startsWith(`templates/template-${t}`) ||
             e.startsWith("src") ||
             e.startsWith("Cargo.toml") ||
-            e.startsWith(".github/workflows/templates-test.yml"),
+            e.startsWith(".github/workflows/templates-test.yml")
         )
       ) {
         const jobInfo = {
           template: t,
+          node: ["pnpm", "yarn", "npm"].includes(managerInfo.manager),
           install_trunk: ["yew", "sycamore", "leptos"].includes(t),
           install_dioxus_cli: t === "dioxus",
           tauriVersion: "latest",
