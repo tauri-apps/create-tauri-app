@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 beforeDevCommand = dx serve --port 1420
-beforeBuildCommand = dx build
+beforeBuildCommand = dx build --release
 devUrl = http://localhost:1420
 frontendDist = ../dist
 withGlobalTauri = true
