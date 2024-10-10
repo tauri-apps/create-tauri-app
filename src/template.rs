@@ -242,7 +242,7 @@ impl<'a> Template {
     pub const fn needs_tauri_cli(&self) -> bool {
         matches!(
             self,
-            Template::Sycamore | Template::Yew | Template::Leptos | Template::Vanilla
+            Template::Dioxus | Template::Sycamore | Template::Yew | Template::Leptos | Template::Vanilla
         )
     }
 
