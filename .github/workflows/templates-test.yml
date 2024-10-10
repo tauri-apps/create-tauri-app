@@ -78,15 +78,23 @@ jobs:
         if: matrix.settings.manager == 'bun'
         with:
           bun-version: latest
+          
+      - name: Install Deno@2
+        if: matrix.settings.manager == 'deno'
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
 
       - run: corepack enable
-        if: matrix.settings.manager != 'cargo'
+        if: contains(["pnpm", "npm", "yarn"], matrix.settings.manager)
         
       - name: Install Node.js@18
-        if: matrix.settings.manager != 'cargo'
+        if: contains(["pnpm", "npm", "yarn"], matrix.settings.manager)
         uses: actions/setup-node@v4
         with:
           node-version: 20
+
+
 
       - name: Install .NET@8.0.x
         if: matrix.settings.manager == 'dotnet'

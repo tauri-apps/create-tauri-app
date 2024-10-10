@@ -52,6 +52,12 @@ const matrixConfig = [
     templates: nodeJsTemplates,
   },
   {
+    manager: "deno",
+    install_cmd: "deno install",
+    run_cmd: "deno task",
+    templates: nodeJsTemplates,
+  },
+  {
     manager: "dotnet",
     install_cmd: "",
     run_cmd: "cargo",
@@ -73,7 +79,7 @@ matrixConfig
             e.startsWith(`templates/template-${t}`) ||
             e.startsWith("src") ||
             e.startsWith("Cargo.toml") ||
-            e.startsWith(".github/workflows/templates-test.yml"),
+            e.startsWith(".github/workflows/templates-test.yml")
         )
       ) {
         const jobInfo = {
