@@ -110,13 +110,13 @@ jobs:
       - run: cargo install tauri-cli --version '^1.0.0' --locked
         if: (matrix.settings.manager == 'cargo' || matrix.settings.manager == 'dotnet') && matrix.settings.tauriVersion == 1
 
-      - run: |
-          rustup target add wasm32-unknown-unknown
-          cargo install trunk --locked
+      - run: rustup target add wasm32-unknown-unknown
+        if: matrix.settings.install_trunk || matrix.settings.install_dioxus_cli
+
+      - run: cargo install trunk --locked
         if: matrix.settings.install_trunk
-      - run: |
-          rustup target add wasm32-unknown-unknown
-          cargo install dioxus-cli --locked
+
+      - run: cargo install dioxus-cli --locked
         if: matrix.settings.install_dioxus_cli
 
       - name: install system dependencies (v1)
@@ -126,7 +126,7 @@ jobs:
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libayatana-appindicator3-dev librsvg2-dev patchelf
 
       - name: install system dependencies
-        if: matrix.settings.tauriVersion == 'latest'
+        if: matrix.settings.tauriVersion != 1
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.1 libayatana-appindicator3-dev librsvg2-dev patchelf
