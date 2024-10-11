@@ -86,10 +86,10 @@ jobs:
           deno-version: v2.x
 
       - run: corepack enable
-        if: matrix.settings.manager.node
+        if: matrix.settings.node
         
       - name: Install Node.js@18
-        if: matrix.settings.manager.node
+        if: matrix.settings.node
         uses: actions/setup-node@v4
         with:
           node-version: 20
