@@ -1,5 +1,14 @@
 # Changelog
 
+## \[4.5.2]
+
+- [`94f57bb`](https://www.github.com/tauri-apps/create-tauri-app/commit/94f57bb84d128702caef7262bba60adb86dbd8eb) ([#819](https://www.github.com/tauri-apps/create-tauri-app/pull/819) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Add support for using deno as package manager
+- [`da60f1a`](https://www.github.com/tauri-apps/create-tauri-app/commit/da60f1ae218bd9c221c7e0aa2ef9ac94955498a8) ([#817](https://www.github.com/tauri-apps/create-tauri-app/pull/817) by [@situ2001](https://www.github.com/tauri-apps/create-tauri-app/../../situ2001)) Pass `--release` to `dx` CLI in `beforeBuildCommand` for `dioxus` template to generate smaller and optimized wasm bundle.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@4.5.2`
+
 ## \[4.5.1]
 
 - [`caf8a6e`](https://www.github.com/tauri-apps/create-tauri-app/commit/caf8a6ed0189c6a5afe4522a3cb2e8db5aa30459) ([#806](https://www.github.com/tauri-apps/create-tauri-app/pull/806)) Fix incorrect version printed for installing `tauri-cli` command
