@@ -12,8 +12,8 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@tauri-apps/api": "{% if v2 %}>=2.0.0{% else %}^1{% endif %}"{% if v2 %},
-    "@tauri-apps/plugin-shell": ">=2.0.0"{% endif %}
+    "@tauri-apps/api": "{% if v2 %}^2{% else %}^1{% endif %}"{% if v2 %},
+    "@tauri-apps/plugin-shell": "^2"{% endif %}
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
@@ -21,6 +21,6 @@
     "@vitejs/plugin-react": "^4.2.1",
     "typescript": "^5.2.2",
     "vite": "^5.3.1",
-    "@tauri-apps/cli": "{% if v2 %}>=2.0.0{% else %}^1{% endif %}"
+    "@tauri-apps/cli": "{% if v2 %}^2{% else %}^1{% endif %}"
   }
 }

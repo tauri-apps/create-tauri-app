@@ -52,6 +52,12 @@ const matrixConfig = [
     templates: nodeJsTemplates,
   },
   {
+    manager: "deno",
+    install_cmd: "deno install",
+    run_cmd: "deno task",
+    templates: nodeJsTemplates,
+  },
+  {
     manager: "dotnet",
     install_cmd: "",
     run_cmd: "cargo",
@@ -78,6 +84,7 @@ matrixConfig
       ) {
         const jobInfo = {
           template: t,
+          node: ["pnpm", "yarn", "npm"].includes(managerInfo.manager),
           install_trunk: ["yew", "sycamore", "leptos"].includes(t),
           install_dioxus_cli: t === "dioxus",
           tauriVersion: "latest",

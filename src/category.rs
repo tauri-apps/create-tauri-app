@@ -22,6 +22,7 @@ impl<'a> Category {
                 PackageManager::Pnpm,
                 PackageManager::Yarn,
                 PackageManager::Npm,
+                PackageManager::Deno,
                 PackageManager::Bun,
             ],
             Category::Dotnet => &[PackageManager::Dotnet],

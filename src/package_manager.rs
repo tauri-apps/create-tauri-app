@@ -15,6 +15,7 @@ pub enum PackageManager {
     Pnpm,
     Yarn,
     Npm,
+    Deno,
     Bun,
     Dotnet,
 }
@@ -26,6 +27,7 @@ impl Display for PackageManager {
             PackageManager::Pnpm => write!(f, "pnpm"),
             PackageManager::Yarn => write!(f, "yarn"),
             PackageManager::Npm => write!(f, "npm"),
+            PackageManager::Deno => write!(f, "deno"),
             PackageManager::Bun => write!(f, "bun"),
             PackageManager::Dotnet => write!(f, "dotnet"),
         }
@@ -40,6 +42,7 @@ impl FromStr for PackageManager {
             "pnpm" => Ok(PackageManager::Pnpm),
             "yarn" => Ok(PackageManager::Yarn),
             "npm" => Ok(PackageManager::Npm),
+            "deno" => Ok(PackageManager::Deno),
             "bun" => Ok(PackageManager::Bun),
             "dotnet" => Ok(PackageManager::Dotnet),
             _ => Err(format!(
@@ -60,6 +63,7 @@ impl<'a> PackageManager {
         PackageManager::Pnpm,
         PackageManager::Yarn,
         PackageManager::Npm,
+        PackageManager::Deno,
         PackageManager::Bun,
         PackageManager::Dotnet,
     ];
@@ -69,6 +73,7 @@ impl<'a> PackageManager {
         PackageManager::Pnpm,
         PackageManager::Yarn,
         PackageManager::Npm,
+        PackageManager::Deno,
         PackageManager::Bun,
     ];
 }
@@ -86,6 +91,7 @@ impl PackageManager {
             PackageManager::Pnpm
             | PackageManager::Yarn
             | PackageManager::Npm
+            | PackageManager::Deno
             | PackageManager::Bun => &[
                 Template::Vanilla,
                 Template::Vue,
@@ -111,6 +117,7 @@ impl PackageManager {
             PackageManager::Pnpm
             | PackageManager::Yarn
             | PackageManager::Npm
+            | PackageManager::Deno
             | PackageManager::Bun => &[
                 Template::Vanilla,
                 Template::VanillaTs,
@@ -135,6 +142,7 @@ impl PackageManager {
             PackageManager::Pnpm => Some("pnpm install"),
             PackageManager::Yarn => Some("yarn"),
             PackageManager::Npm => Some("npm install"),
+            PackageManager::Deno => Some("deno install"),
             PackageManager::Bun => Some("bun install"),
             _ => None,
         }
@@ -146,6 +154,7 @@ impl PackageManager {
             PackageManager::Pnpm => "pnpm",
             PackageManager::Yarn => "yarn",
             PackageManager::Npm => "npm run",
+            PackageManager::Deno => "deno task",
             PackageManager::Bun => "bun run",
             PackageManager::Dotnet => "cargo",
         }
@@ -154,7 +163,7 @@ impl PackageManager {
     pub const fn is_node(&self) -> bool {
         matches!(
             self,
-            PackageManager::Pnpm | PackageManager::Yarn | PackageManager::Npm | PackageManager::Bun,
+            PackageManager::Pnpm | PackageManager::Yarn | PackageManager::Npm
         )
     }
 }

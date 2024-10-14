@@ -5,47 +5,15 @@ use crate::utils::colors::*;
 use crate::{args::TauriVersion, internal::template};
 use std::process::{Command, Output};
 
-fn is_rustc_installed() -> bool {
-    Command::new("rustc")
-        .arg("-V")
+fn is_cli_installed(cli: &str, arg: &str) -> bool {
+    Command::new(cli)
+        .arg(arg)
         .output()
         .map(|o| o.status.success())
         .unwrap_or(false)
 }
 
-fn is_cargo_installed() -> bool {
-    Command::new("cargo")
-        .arg("-V")
-        .output()
-        .map(|o| o.status.success())
-        .unwrap_or(false)
-}
-
-fn is_node_installed() -> bool {
-    Command::new("node")
-        .arg("-v")
-        .output()
-        .map(|o| o.status.success())
-        .unwrap_or(false)
-}
-
-fn is_trunk_installed() -> bool {
-    Command::new("trunk")
-        .arg("-V")
-        .output()
-        .map(|o| o.status.success())
-        .unwrap_or(false)
-}
-
-fn is_dioxus_cli_installed() -> bool {
-    Command::new("dx")
-        .arg("-V")
-        .output()
-        .map(|o| o.status.success())
-        .unwrap_or(false)
-}
-
-fn is_appropriate_tauri_cli_installed(tauri_version: TauriVersion) -> bool {
+fn is_tauri_cli_installed(tauri_version: TauriVersion) -> bool {
     let check = |o: Output| match o.status.success() {
         true => String::from_utf8_lossy(&o.stdout)
             .split_once(' ')
@@ -154,14 +122,6 @@ fn is_xcode_command_line_tools_installed() -> bool {
         .unwrap_or(false)
 }
 
-fn is_dotnet_installed() -> bool {
-    Command::new("dotnet")
-        .arg("--version")
-        .output()
-        .map(|o| o.status.success())
-        .unwrap_or(false)
-}
-
 struct Dep<'a> {
     name: &'a str,
     instruction: String,
@@ -175,8 +135,8 @@ pub fn print_missing_deps(
     template: Template,
     tauri_version: TauriVersion,
 ) -> bool {
-    let rustc_installed = is_rustc_installed();
-    let cargo_installed = is_cargo_installed();
+    let rustc_installed = is_cli_installed("rustc", "-V");
+    let cargo_installed = is_cli_installed("cargo", "-V");
 
     #[cfg(any(
         target_os = "linux",
@@ -213,19 +173,19 @@ pub fn print_missing_deps(
                 TauriVersion::V1 => format!("Run `{BLUE}{BOLD}cargo install tauri-cli --version '^1.0.0' --locked{RESET}`"),
                 TauriVersion::V2 => format!("Run `{BLUE}{BOLD}cargo install tauri-cli --version '^2.0.0' --locked{RESET}`"),
             },
-            exists: &|| is_appropriate_tauri_cli_installed(tauri_version),
+            exists: &|| is_tauri_cli_installed(tauri_version),
             skip: pkg_manager.is_node() || !template.needs_tauri_cli(),
         },
         Dep {
             name: "Trunk",
             instruction: format!("Run `{BLUE}{BOLD}cargo install trunk --locked{RESET}`"),
-            exists: &is_trunk_installed,
+            exists: &|| is_cli_installed("trunk", "-V"),
             skip: pkg_manager.is_node() || !template.needs_trunk(),
         },
         Dep {
             name: "Dioxus CLI",
             instruction: format!("Run `{BLUE}{BOLD}cargo install dioxus-cli --locked{RESET}`"),
-            exists: &is_dioxus_cli_installed,
+            exists: &|| is_cli_installed("dx", "-V"),
             skip: pkg_manager.is_node() || !template.needs_dioxus_cli(),
         },
         Dep {
@@ -236,9 +196,21 @@ pub fn print_missing_deps(
         },
         Dep {
             name: "Node.js",
-            instruction: format!("Visit {BLUE}{BOLD}https://nodejs.org/en/{RESET}"),
-            exists: &is_node_installed,
+            instruction: format!("Visit {BLUE}{BOLD}https://nodejs.org/{RESET}"),
+            exists: &|| is_cli_installed("node", "-v"),
             skip: !pkg_manager.is_node(),
+        },
+        Dep {
+            name: "Deno",
+            instruction: format!("Visit {BLUE}{BOLD}https://deno.land/{RESET}"),
+            exists: &|| is_cli_installed("deno", "-v"),
+            skip: pkg_manager == PackageManager::Deno,
+        },
+        Dep {
+            name: "Bun",
+            instruction: format!("Visit {BLUE}{BOLD}https://bun.sh/{RESET}"),
+            exists: &|| is_cli_installed("bun", "-v"),
+            skip: pkg_manager == PackageManager::Bun,
         },
         #[cfg(windows)]
         Dep {
@@ -305,7 +277,7 @@ pub fn print_missing_deps(
         Dep {
             name: ".NET",
             instruction: format!("Visit {BLUE}{BOLD}https://dotnet.microsoft.com/download{RESET}"),
-            exists: &is_dotnet_installed,
+            exists: &|| is_cli_installed("dotnet", "--info"),
             skip: !template.needs_dotnet() || pkg_manager.is_node(),
         }
     ];
