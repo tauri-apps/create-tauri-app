@@ -1,5 +1,9 @@
 # Changelog
 
+## \[4.5.3]
+
+- [`48f8e48`](https://www.github.com/tauri-apps/create-tauri-app/commit/48f8e484f07a74c6965dc7347661340e8afe702b) ([#827](https://www.github.com/tauri-apps/create-tauri-app/pull/827) by [@Mef45](https://www.github.com/tauri-apps/create-tauri-app/../../Mef45)) Update `svelte` and `svelte-ts` templates to Svelte 5.
+
 ## \[4.5.2]
 
 - [`94f57bb`](https://www.github.com/tauri-apps/create-tauri-app/commit/94f57bb84d128702caef7262bba60adb86dbd8eb) ([#819](https://www.github.com/tauri-apps/create-tauri-app/pull/819) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Add support for using deno as package manager
