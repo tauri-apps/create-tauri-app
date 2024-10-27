@@ -2,4 +2,4 @@
 "create-tauri-app": patch
 "create-tauri-app-js": patch
 ---
-Fix: Removed false warning about missing dependencies deno and bun.
+Fixed false warning about missing dependencies, Deno and Bun.
