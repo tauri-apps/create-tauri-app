@@ -1,5 +1,9 @@
 # Changelog
 
+## \[4.5.4]
+
+- [`80e0aa0`](https://www.github.com/tauri-apps/create-tauri-app/commit/80e0aa0ca3151b84d1a0acedf11a6660618898a8) ([#831](https://www.github.com/tauri-apps/create-tauri-app/pull/831) by [@PawsFunctions](https://www.github.com/tauri-apps/create-tauri-app/../../PawsFunctions)) Fixed false warning about missing dependencies, Deno and Bun.
+
 ## \[4.5.3]
 
 - [`48f8e48`](https://www.github.com/tauri-apps/create-tauri-app/commit/48f8e484f07a74c6965dc7347661340e8afe702b) ([#827](https://www.github.com/tauri-apps/create-tauri-app/pull/827) by [@Mef45](https://www.github.com/tauri-apps/create-tauri-app/../../Mef45)) Update `svelte` and `svelte-ts` templates to Svelte 5.
