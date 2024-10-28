@@ -1,5 +1,9 @@
 # Changelog
 
+## \[4.5.6]
+
+- [`cfa3e41`](https://www.github.com/tauri-apps/create-tauri-app/commit/cfa3e41c3da289cbc7071577e4a2a16d8e6f41d7) Fix `--tauri-version 2` flag not working.
+
 ## \[4.5.5]
 
 - [`380bc07`](https://www.github.com/tauri-apps/create-tauri-app/commit/380bc0713b1f6ca2cdee96be22556011e34e86fc) ([#834](https://www.github.com/tauri-apps/create-tauri-app/pull/834) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Fix running `create-tauri-app` using deno.
