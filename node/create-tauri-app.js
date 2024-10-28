@@ -20,7 +20,7 @@ if (globalThis.navigator?.userAgent?.includes("Deno")) {
 }
 // Even if started by a package manager, the binary will be NodeJS or Bun.
 // Some distribution still use "nodejs" as the binary name.
-if (binStem.match(/(nodejs|node|bun)-*([0-9]*)*$/g)) {
+else if (binStem.match(/(nodejs|node|bun)-*([0-9]*)*$/g)) {
   const managerStem = process.env.npm_execpath
     ? path.parse(process.env.npm_execpath).name.toLowerCase()
     : null;
@@ -52,9 +52,8 @@ if (binStem.match(/(nodejs|node|bun)-*([0-9]*)*$/g)) {
 }
 
 // adapted from https://github.com/vitejs/vite/blob/34826aae015ed16dc9b9096c0f778154ca6981a6/packages/create-vite/src/index.ts#L513
-function pkgManagerFromUserAgent(userAgent) {
-  if (!userAgent) return undefined;
-  return userAgent.split(" ")[0]?.split("/")[0];
-}
-const pkgManager = pkgManagerFromUserAgent(process.env.npm_config_user_agent);
+const userAgent =
+  process.env.npm_config_user_agent ?? globalThis.navigator?.userAgent;
+const pkgManager = userAgent?.split(" ")[0]?.split("/")[0].toLocaleLowerCase();
+
 cli.run(args, binName, pkgManager);

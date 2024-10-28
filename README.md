@@ -56,6 +56,12 @@ yarn create tauri-app
 pnpm create tauri-app
 ```
 
+### Deno
+
+```bash
+deno run -A npm:create-tauri-app
+```
+
 ### Bun:
 
 ```bash
@@ -136,23 +142,25 @@ You can also directly specify the project name, package manager and the template
 
 ```bash
 # curl
-sh <(curl https://create.tauri.app/sh) my-tauri-app --template svelte --manager pnpm
+sh <(curl https://create.tauri.app/sh) my-tauri-app --template svelte
 # wget
-sh <(wget https://create.tauri.app/sh) my-tauri-app --template svelte --manager pnpm
+sh <(wget https://create.tauri.app/sh) my-tauri-app --template svelte
 # powershell
-$env:CTA_ARGS="--template svelte --manager pnpm";irm https://create.tauri.app/ps | iex
+$env:CTA_ARGS="--template svelte";irm https://create.tauri.app/ps | iex
 # cargo
-cargo create-tauri-app my-tauri-app --template svelte --manager pnpm
+cargo create-tauri-app my-tauri-app --template svelte
 # npm 6.x
-npm create tauri-app@latest my-tauri-app --template svelte --manager pnpm
+npm create tauri-app@latest my-tauri-app --template svelte
 # npm 7+, extra double-dash is needed:
-npm create tauri-app@latest my-tauri-app -- --template svelte --manager pnpm
+npm create tauri-app@latest my-tauri-app -- --template svelte
 # yarn
-yarn create tauri-app my-tauri-app --template svelte --manager pnpm
+yarn create tauri-app my-tauri-app --template svelte
 # pnpm
-pnpm create tauri-app my-tauri-app --template svelte --manager pnpm
+pnpm create tauri-app my-tauri-app --template svelte
+# deno
+deno run -A npm:create-tauri-app --template svelte
 # Bun
-bunx create-tauri-app my-tauri-app --template svelte --manager bun
+bunx create-tauri-app my-tauri-app --template svelte
 ```
 
 Currently supported template presets include:
@@ -165,6 +173,8 @@ Currently supported template presets include:
 - `svelte-ts`
 - `react`
 - `react-ts`
+- `preact`
+- `preact-ts`
 - `solid`
 - `solid-ts`
 - `angular`
