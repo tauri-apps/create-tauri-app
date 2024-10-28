@@ -1,5 +1,9 @@
 # Changelog
 
+## \[4.5.5]
+
+- [`380bc07`](https://www.github.com/tauri-apps/create-tauri-app/commit/380bc0713b1f6ca2cdee96be22556011e34e86fc) ([#834](https://www.github.com/tauri-apps/create-tauri-app/pull/834) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Fix running `create-tauri-app` using deno.
+
 ## \[4.5.4]
 
 - [`80e0aa0`](https://www.github.com/tauri-apps/create-tauri-app/commit/80e0aa0ca3151b84d1a0acedf11a6660618898a8) ([#831](https://www.github.com/tauri-apps/create-tauri-app/pull/831) by [@PawsFunctions](https://www.github.com/tauri-apps/create-tauri-app/../../PawsFunctions)) Fixed false warning about missing dependencies, Deno and Bun.
