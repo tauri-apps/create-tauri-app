@@ -1,5 +1,9 @@
 # Changelog
 
+## \[4.5.7]
+
+- [`7e5013d`](https://www.github.com/tauri-apps/create-tauri-app/commit/7e5013d5a3c180ed74a66a284a3fb295220a86c5) ([#839](https://www.github.com/tauri-apps/create-tauri-app/pull/839) by [@lukechu10](https://www.github.com/tauri-apps/create-tauri-app/../../lukechu10)) Update `sycamore` template to `v0.9`
+
 ## \[4.5.6]
 
 - [`cfa3e41`](https://www.github.com/tauri-apps/create-tauri-app/commit/cfa3e41c3da289cbc7071577e4a2a16d8e6f41d7) Fix `--tauri-version 2` flag not working.
