@@ -4,7 +4,7 @@
     "format:check": "prettier --check ."
   },
   "devDependencies": {
-    "prettier": "3.3.3"
+    "prettier": "3.4.2"
   },
   "packageManager": "pnpm@9.12.3"
 }
