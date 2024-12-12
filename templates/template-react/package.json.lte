@@ -10,14 +10,14 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "@tauri-apps/api": "{% if v2 %}^2{% else %}^1{% endif %}"{% if v2 %},
     "@tauri-apps/plugin-shell": "^2"{% endif %}
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.2.1",
-    "vite": "^5.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.0.3",
     "@tauri-apps/cli": "{% if v2 %}^2{% else %}^1{% endif %}"
   }
 }

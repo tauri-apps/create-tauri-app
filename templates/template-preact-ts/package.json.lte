@@ -10,14 +10,14 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "preact": "^10.16.0",
+    "preact": "^10.25.1",
     "@tauri-apps/api": "{% if v2 %}^2{% else %}^1{% endif %}"{% if v2 %},
     "@tauri-apps/plugin-shell": "^2"{% endif %}
   },
   "devDependencies": {
-    "@preact/preset-vite": "^2.5.0",
-    "typescript": "^5.2.2",
-    "vite": "^5.3.1",
+    "@preact/preset-vite": "^2.9.3",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.3",
     "@tauri-apps/cli": "{% if v2 %}^2{% else %}^1{% endif %}"
   }
 }
