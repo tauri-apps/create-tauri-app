@@ -22,7 +22,7 @@
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2",
     "@tauri-apps/api": "{% if v2 %}^2{% else %}^1{% endif %}"{% if v2 %},
-    "@tauri-apps/plugin-shell": "^2"{% endif %}
+    "@tauri-apps/plugin-opener": "^2"{% endif %}
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.0.0",
