@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "@tauri-apps/api": "{% if v2 %}^2{% else %}^1{% endif %}"{% if v2 %},
-    "@tauri-apps/plugin-shell": "^2"{% endif %}
+    "@tauri-apps/plugin-opener": "^2"{% endif %}
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^3.0.5",

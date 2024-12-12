@@ -12,7 +12,7 @@
   "dependencies": {
     "preact": "^10.16.0",
     "@tauri-apps/api": "{% if v2 %}^2{% else %}^1{% endif %}"{% if v2 %},
-    "@tauri-apps/plugin-shell": "^2"{% endif %}
+    "@tauri-apps/plugin-opener": "^2"{% endif %}
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.5.0",
