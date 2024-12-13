@@ -1,5 +1,13 @@
 # Changelog
 
+## \[4.5.8]
+
+- [`82413b9`](https://www.github.com/tauri-apps/create-tauri-app/commit/82413b9b6101d0234da6b3c7c832a6830893dde7) ([#854](https://www.github.com/tauri-apps/create-tauri-app/pull/854) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Use `tauri-plugin-opener` instead of `tauri-plugin-shell` in templates
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@4.5.8`
+
 ## \[4.5.7]
 
 - [`7e5013d`](https://www.github.com/tauri-apps/create-tauri-app/commit/7e5013d5a3c180ed74a66a284a3fb295220a86c5) ([#839](https://www.github.com/tauri-apps/create-tauri-app/pull/839) by [@lukechu10](https://www.github.com/tauri-apps/create-tauri-app/../../lukechu10)) Update `sycamore` template to `v0.9`
