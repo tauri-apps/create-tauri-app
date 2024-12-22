@@ -1,5 +1,5 @@
-use leptos::leptos_dom::ev::SubmitEvent;
-use leptos::*;
+use leptos::task::spawn_local;
+use leptos::{ev::SubmitEvent, prelude::*};
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
 
@@ -16,8 +16,8 @@ struct GreetArgs<'a> {
 
 #[component]
 pub fn App() -> impl IntoView {
-    let (name, set_name) = create_signal(String::new());
-    let (greet_msg, set_greet_msg) = create_signal(String::new());
+    let (name, set_name) = signal(String::new());
+    let (greet_msg, set_greet_msg) = signal(String::new());
 
     let update_name = move |ev| {
         let v = event_target_value(&ev);
