@@ -9,7 +9,7 @@ $bitness = if ([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchi
 } else {
     "i686"
 }
-$__TAG_NAME__ = "create-tauri-app-v4.5.8"
+$__TAG_NAME__ = "create-tauri-app-v4.5.9"
 # $url="https://github.com/tauri-apps/create-tauri-app/releases/download/$__TAG_NAME__/create-tauri-app-$bitness-pc-windows-msvc.exe"
 $url="https://create.tauri.app/download/bin?tag=$__TAG_NAME__&arch=$bitness-pc-windows-msvc&ext=.exe"
 $outFile = "$Env:TEMP\create-tauri-app.exe"

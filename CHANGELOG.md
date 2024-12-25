@@ -1,5 +1,9 @@
 # Changelog
 
+## \[4.5.9]
+
+- [`d9bbb13`](https://www.github.com/tauri-apps/create-tauri-app/commit/d9bbb13ddf7689303c737e9da7451267a4314154) Update `leptos` template to `0.7`
+
 ## \[4.5.8]
 
 - [`82413b9`](https://www.github.com/tauri-apps/create-tauri-app/commit/82413b9b6101d0234da6b3c7c832a6830893dde7) ([#854](https://www.github.com/tauri-apps/create-tauri-app/pull/854) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Use `tauri-plugin-opener` instead of `tauri-plugin-shell` in templates
