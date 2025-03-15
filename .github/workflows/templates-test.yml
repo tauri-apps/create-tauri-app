@@ -31,18 +31,19 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Get changed files
+      - uses: dorny/paths-filter@v3
         id: changed-files
-        uses: tj-actions/changed-files@v42
         with:
-          base_sha: ${{ github.event.pull_request.base.sha }}
-          separator: ","
+          list-files: shell
+          filters: |
+            modified:
+              - modified: '**'
 
       - name: set matrix
         id: set-matrix
         shell: bash
         run: |
-          OUT="$(node .scripts/generate-templates-matrix.js '${{ github.event_name }}' '${{ steps.changed-files.outputs.all_changed_files }}')"
+          OUT="$(node .scripts/generate-templates-matrix.js '${{ github.event_name }}' '${{ steps.changed-files.outputs.modified_files }}')"
           echo "matrix=$OUT" >> $GITHUB_OUTPUT
 
   build-cli:
@@ -57,7 +58,7 @@ jobs:
         run: tar -rf create-tauri-app.tar target/release/cargo-create-tauri-app
 
       - name: upload cli artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: create-tauri-app
           path: create-tauri-app.tar
@@ -85,7 +86,9 @@ jobs:
         with:
           deno-version: v2.x
 
-      - run: corepack enable
+      - run: |
+          npm i -g --force corepack
+          corepack enable
         if: matrix.settings.node
         
       - name: Install Node.js@18
@@ -130,7 +133,7 @@ jobs:
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.1 libayatana-appindicator3-dev librsvg2-dev patchelf
 
       - name: download cli artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
 
       - run: tar -xf create-tauri-app/create-tauri-app.tar
 
