@@ -6,5 +6,11 @@
   "devDependencies": {
     "prettier": "3.4.2"
   },
-  "packageManager": "pnpm@9.15.0"
+  "packageManager": "pnpm@9.15.0",
+  "pnpm": {
+    "overrides": {
+      "undici@>=4.5.0 <5.28.5": ">=5.28.5",
+      "esbuild@<=0.24.2": ">=0.25.0"
+    }
+  }
 }
