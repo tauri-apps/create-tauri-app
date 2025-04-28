@@ -119,7 +119,7 @@ dependencies = [
 
 [[package]]
 name = "create-tauri-app"
-version = "4.5.9"
+version = "4.5.10"
 dependencies = [
  "anyhow",
  "ctrlc",

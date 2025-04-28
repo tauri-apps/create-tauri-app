@@ -1,5 +1,14 @@
 # Changelog
 
+## \[4.5.10]
+
+- [`593f90d`](https://www.github.com/tauri-apps/create-tauri-app/commit/593f90d91220a78334b5246f4c07c01288b80f70) ([#888](https://www.github.com/tauri-apps/create-tauri-app/pull/888) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Update `dioxus` template to use `dx bundle` and update the `frontendDist` option in the generated `tauri.conf.json` file in the template.
+- [`5633bcf`](https://www.github.com/tauri-apps/create-tauri-app/commit/5633bcf8c9229e8bc4f845be6648a598674f220f) ([#883](https://www.github.com/tauri-apps/create-tauri-app/pull/883) by [@Ruben-Kruepper](https://www.github.com/tauri-apps/create-tauri-app/../../Ruben-Kruepper)) Changed Svelte templates to use `@sveltejs/adapter-static`'s fallback feature instead of disabling SSR per-router, See https://svelte.dev/docs/kit/single-page-apps
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@4.5.10`
+
 ## \[4.5.9]
 
 - [`d9bbb13`](https://www.github.com/tauri-apps/create-tauri-app/commit/d9bbb13ddf7689303c737e9da7451267a4314154) Update `leptos` template to `0.7`
