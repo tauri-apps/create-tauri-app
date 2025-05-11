@@ -19,7 +19,7 @@ export default component$(() => {
                 <a href="https://tauri.app" target="_blank">
                     <img src={tauriLogo} class="logo tauri" alt="Tauri logo" />
                 </a>
-                <a href="https://qwik.builder.io" target="_blank">
+                <a href="https://qwik.dev" target="_blank">
                     <img src={qwikLogo} class="logo qwik" alt="Qwik logo" />
                 </a>
             </div>
