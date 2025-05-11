@@ -18,6 +18,8 @@ const nodeJsTemplates = [
   "preact",
   "preact-ts",
   "angular",
+  "qwik",
+  "qwik-ts",
 ];
 
 const matrixConfig = [

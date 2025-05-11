@@ -72,6 +72,8 @@ Currently supported template presets include:
 - `preact-ts`
 - `solid`
 - `solid-ts`
+- `qwik`
+- `qwik-ts`
 - `angular`
 - `yew`
 - `leptos`

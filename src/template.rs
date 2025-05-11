@@ -60,6 +60,8 @@ pub enum Template {
     PreactTs,
     Blazor,
     Dioxus,
+    Qwik,
+    QwikTs,
 }
 
 impl Display for Template {
@@ -83,6 +85,8 @@ impl Display for Template {
             Template::PreactTs => write!(f, "preact-ts"),
             Template::Blazor => write!(f, "blazor"),
             Template::Dioxus => write!(f, "dioxus"),
+            Template::Qwik => write!(f, "qwik"),
+            Template::QwikTs => write!(f, "qwik-ts"),
         }
     }
 }
@@ -109,6 +113,8 @@ impl FromStr for Template {
             "preact-ts" => Ok(Template::PreactTs),
             "blazor" => Ok(Template::Blazor),
             "dioxus" => Ok(Template::Dioxus),
+            "qwik" => Ok(Template::Qwik),
+            "qwik-ts" => Ok(Template::QwikTs),
             _ => Err(format!(
                 "{YELLOW}{s}{RESET} is not a valid template. Valid templates are [{}]",
                 Template::ALL
@@ -138,6 +144,7 @@ impl Template {
                 "Blazor - (https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor/)"
             }
             Template::Dioxus => "Dioxus - (https://dioxuslabs.com/)",
+            Template::Qwik => "Qwik - (https://qwik.dev/)",
             _ => unreachable!(),
         }
     }
@@ -163,6 +170,8 @@ impl<'a> Template {
         Template::PreactTs,
         Template::Blazor,
         Template::Dioxus,
+        Template::Qwik,
+        Template::QwikTs,
     ];
 
     pub fn flavors<'b>(&self, pkg_manager: PackageManager) -> Option<&'b [Flavor]> {
@@ -179,6 +188,7 @@ impl<'a> Template {
             Template::React => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
             Template::Solid => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
             Template::Preact => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
+            Template::Qwik => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
             _ => None,
         }
     }
@@ -191,6 +201,7 @@ impl<'a> Template {
             (Template::React, Flavor::TypeScript) => Template::ReactTs,
             (Template::Solid, Flavor::TypeScript) => Template::SolidTs,
             (Template::Preact, Flavor::TypeScript) => Template::PreactTs,
+            (Template::Qwik, Flavor::TypeScript) => Template::QwikTs,
             _ => *self,
         }
     }
@@ -203,6 +214,7 @@ impl<'a> Template {
             Template::ReactTs => Template::React,
             Template::SolidTs => Template::Solid,
             Template::PreactTs => Template::Preact,
+            Template::QwikTs => Template::Qwik,
             _ => *self,
         }
     }
@@ -227,7 +239,9 @@ impl<'a> Template {
             | Template::SolidTs
             | Template::Angular
             | Template::Preact
-            | Template::PreactTs => PackageManager::NODE,
+            | Template::PreactTs
+            | Template::Qwik
+            | Template::QwikTs => PackageManager::NODE,
             Template::Yew | Template::Leptos | Template::Sycamore | Template::Dioxus => {
                 &[PackageManager::Cargo]
             }

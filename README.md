@@ -121,6 +121,7 @@ Follow along with the prompts to choose your project name, frontend language, pa
    Solid
    Angular
    Preact
+   Qwik
 
    ? Choose your UI flavor ›
    TypeScript
@@ -177,6 +178,8 @@ Currently supported template presets include:
 - `preact-ts`
 - `solid`
 - `solid-ts`
+- `qwik`
+- `qwik-ts`
 - `angular`
 - `yew`
 - `leptos`
