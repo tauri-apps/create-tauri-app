@@ -1,0 +1,42 @@
+import { component$, useSignal } from '@builder.io/qwik';
+import { invoke } from "@tauri-apps/api/{% if v2 %}core{% else %}tauri{% endif %}";
+
+export default component$(() => {
+    const greetMsg = useSignal<string>('');
+    const name = useSignal<string>('');
+
+    return (
+    <>
+        <div class="container container-center">
+        <h1>
+            <span class="highlight">Qwik</span> + <span class="highlight">Tauri</span> App
+        </h1>
+        
+        <div class="card">
+            <input
+                id="greet-input"
+                type="text"
+                placeholder="İsminizi girin..."
+                onChange$={(e) => {
+                name.value = (e.target as HTMLInputElement).value;
+                }}
+            />
+            <button
+                onClick$={async () => {
+                try {
+                    greetMsg.value = await invoke('greet', { name: name.value || 'Qwik' }) as string;
+                } catch (error) {
+                    greetMsg.value = `Merhaba ${name.value || 'Qwik'} (Tarayıcı modunda)`;
+                    console.warn('Tauri API yüklenemedi:', error);
+                }
+                }}
+            >
+                Selamla
+            </button>
+
+            <p>{greetMsg.value}</p>
+            </div>
+        </div>
+    </>
+    );
+}); 
