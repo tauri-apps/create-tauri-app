@@ -9,4 +9,6 @@ frontendDist = ../dist
 
 [files]
 styles.css = src/global.css
+vite.svg = src/assets/vite.svg
 qwik.svg = src/assets/qwik.svg
+tauri.svg = src/assets/tauri.svg

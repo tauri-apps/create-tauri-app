@@ -1,3 +1,7 @@
+.logo.vite:hover {
+    filter: drop-shadow(0 0 2em #747bff);
+  }
+
 .logo.qwik:hover {
     filter: drop-shadow(0 0 2em #AC7EF4);
   }

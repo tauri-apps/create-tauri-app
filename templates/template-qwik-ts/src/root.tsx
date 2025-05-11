@@ -10,7 +10,7 @@ export default component$(() => {
     <QwikCityProvider>
       <head>
         <meta charSet="UTF-8" />
-        <title>Tauri + Qwik</title>
+        <title>Vite + Tauri + Qwik</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body>
