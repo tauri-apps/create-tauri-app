@@ -101,7 +101,10 @@ impl PackageManager {
                 Template::Angular,
                 Template::Preact,
             ],
-            PackageManager::Dotnet => &[Template::Blazor],
+            PackageManager::Dotnet => &[
+                Template::AspNet,
+                Template::Blazor
+            ],
         }
     }
 
@@ -133,7 +136,10 @@ impl PackageManager {
                 Template::Preact,
                 Template::PreactTs,
             ],
-            PackageManager::Dotnet => &[Template::Blazor],
+            PackageManager::Dotnet => &[
+                Template::AspNet,
+                Template::Blazor
+            ],
         }
     }
 

@@ -60,6 +60,7 @@ pub enum Template {
     PreactTs,
     Blazor,
     Dioxus,
+    AspNet,
 }
 
 impl Display for Template {
@@ -83,6 +84,7 @@ impl Display for Template {
             Template::PreactTs => write!(f, "preact-ts"),
             Template::Blazor => write!(f, "blazor"),
             Template::Dioxus => write!(f, "dioxus"),
+            Template::AspNet => write!(f, "aspnet"),
         }
     }
 }
@@ -109,6 +111,7 @@ impl FromStr for Template {
             "preact-ts" => Ok(Template::PreactTs),
             "blazor" => Ok(Template::Blazor),
             "dioxus" => Ok(Template::Dioxus),
+            "aspnet" => Ok(Template::AspNet),
             _ => Err(format!(
                 "{YELLOW}{s}{RESET} is not a valid template. Valid templates are [{}]",
                 Template::ALL
@@ -134,10 +137,9 @@ impl Template {
             Template::Sycamore => "Sycamore - (https://sycamore-rs.netlify.app/)",
             Template::Angular => "Angular - (https://angular.dev/)",
             Template::Preact => "Preact - (https://preactjs.com/)",
-            Template::Blazor => {
-                "Blazor - (https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor/)"
-            }
+            Template::Blazor => "Blazor - (https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor/)",
             Template::Dioxus => "Dioxus - (https://dioxuslabs.com/)",
+            Template::AspNet => "AspNet - (https://dotnet.microsoft.com/en-us/apps/aspnet/)",
             _ => unreachable!(),
         }
     }
@@ -163,6 +165,7 @@ impl<'a> Template {
         Template::PreactTs,
         Template::Blazor,
         Template::Dioxus,
+        Template::AspNet,
     ];
 
     pub fn flavors<'b>(&self, pkg_manager: PackageManager) -> Option<&'b [Flavor]> {
@@ -231,7 +234,7 @@ impl<'a> Template {
             Template::Yew | Template::Leptos | Template::Sycamore | Template::Dioxus => {
                 &[PackageManager::Cargo]
             }
-            Template::Blazor => &[PackageManager::Dotnet],
+            Template::AspNet | Template::Blazor => &[PackageManager::Dotnet],
         }
     }
 
@@ -251,7 +254,7 @@ impl<'a> Template {
     }
 
     pub const fn needs_dotnet(&self) -> bool {
-        matches!(self, Template::Blazor)
+        matches!(self, Template::AspNet | Template::Blazor)
     }
 
     pub const fn needs_dioxus_cli(&self) -> bool {
