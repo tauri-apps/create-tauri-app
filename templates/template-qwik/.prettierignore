@@ -1,0 +1,13 @@
+**/*.log
+**/.DS_Store
+*.
+.vscode/settings.json
+dist
+dist-ssr
+lib
+lib-types
+server
+node_modules
+server
+tmp
+target/ 

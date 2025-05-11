@@ -1,0 +1,53 @@
+import { component$, useSignal } from '@builder.io/qwik';
+import { invoke } from "@tauri-apps/api/{% if v2 %}core{% else %}tauri{% endif %}";
+import viteLogo from '../assets/vite.svg';
+import qwikLogo from '../assets/qwik.svg';
+import tauriLogo from '../assets/tauri.svg';
+
+export default component$(() => {
+    const greetMsg = useSignal('');
+    const name = useSignal('');
+
+    return (
+        <main class="container">
+            <h1>Welcome to Vite + Tauri + Qwik</h1>
+
+            <div class="row">
+                <a href="https://vite.dev" target="_blank">
+                    <img src={viteLogo} class="logo vite" alt="Vite logo" />
+                </a>
+                <a href="https://tauri.app" target="_blank">
+                    <img src={tauriLogo} class="logo tauri" alt="Tauri logo" />
+                </a>
+                <a href="https://qwik.builder.io" target="_blank">
+                    <img src={qwikLogo} class="logo qwik" alt="Qwik logo" />
+                </a>
+            </div>
+            <p>Click on the Tauri, Vite, and Qwik logos to learn more.</p>
+
+            <div class="row">
+                <input
+                    id="greet-input"
+                    type="text"
+                    placeholder="Enter a name..."
+                    onChange$={(e) => {
+                        name.value = e.target.value;
+                    }}
+                />
+                <button
+                    onClick$={async () => {
+                        try {
+                            greetMsg.value = await invoke('greet', { name: name.value || 'Qwik' });
+                        } catch (error) {
+                            greetMsg.value = `Hello ${name.value || 'Qwik'} (Browser mode)`;
+                            console.warn('Failed to load Tauri API:', error);
+                        }
+                    }}
+                >
+                    Greet
+                </button>
+            </div>
+            <p>{greetMsg.value}</p>
+        </main>
+    );
+}); 
