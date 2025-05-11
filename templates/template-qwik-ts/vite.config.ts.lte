@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import { qwikVite } from "@builder.io/qwik/optimizer";
 import { qwikCity } from "@builder.io/qwik-city/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
-// https://tauri.app/v1/api/config/
 
 export default defineConfig(async () => {
   return {
