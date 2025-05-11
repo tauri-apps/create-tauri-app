@@ -11,4 +11,4 @@ import { join } from 'node:path';
 const distDir = join(fileURLToPath(import.meta.url), '..', '..');
 
 // Create the Qwik City node middleware
-export default createQwikCity({ render, qwikCityPlan, manifest, distDir }); 
+export default createQwikCity({ render, qwikCityPlan, manifest, distDir });

@@ -1,11 +1,19 @@
 import { defineConfig } from "vite";
+import jsconfigPaths from "vite-jsconfig-paths";
 import { qwikVite } from "@builder.io/qwik/optimizer";
 import { qwikCity } from "@builder.io/qwik-city/vite";
-import jsconfigPaths from "vite-jsconfig-paths";
+import { staticAdapter } from "@builder.io/qwik-city/adapters/static/vite";
 
 export default defineConfig(async () => {
   return {
-    plugins: [qwikCity(), qwikVite(), jsconfigPaths()],
+    plugins: [
+      qwikCity(),
+      qwikVite(),
+      jsconfigPaths(),
+      staticAdapter({
+        origin: process.env.TAURI_DEV_HOST,
+      }),
+    ],
     // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
     // prevent vite from obscuring rust errors
     clearScreen: false,
