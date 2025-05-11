@@ -2,13 +2,17 @@ import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { qwikVite } from "@builder.io/qwik/optimizer";
 import { qwikCity } from "@builder.io/qwik-city/vite";
+import { staticAdapter } from "@builder.io/qwik-city/adapters/static/vite";
 
 export default defineConfig(async () => {
   return {
     plugins: [
       qwikCity(),
       qwikVite(),
-      tsconfigPaths()
+      tsconfigPaths(),
+      staticAdapter({
+        origin: process.env.TAURI_DEV_HOST,
+      }),
     ],
     // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
     // prevent vite from obscuring rust errors
@@ -23,6 +27,11 @@ export default defineConfig(async () => {
     // https://tauri.studio/v1/api/config#buildconfig.beforedevcommand
     envPrefix: ["VITE_", "TAURI_"],
     build: {
+      ssr: true,
+      scripts: true,
+      rollupOptions: {
+        input: ["@qwik-city-plan"],
+      },
       // Tauri supports es2021
       target: ["es2021", "chrome100", "safari13"],
       // don't minify for debug builds
