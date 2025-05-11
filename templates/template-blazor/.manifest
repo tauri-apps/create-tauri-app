@@ -7,3 +7,4 @@ withGlobalTauri = true
 [files]
 styles.css = src/wwwroot/css/app.css
 tauri.svg = src/wwwroot/img/tauri.svg
+blazor.svg = src/wwwroot/img/blazor.svg

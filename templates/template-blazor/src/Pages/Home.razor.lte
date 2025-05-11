@@ -9,7 +9,7 @@
             <img src="img/tauri.svg" class="logo tauri" alt="Tauri logo"/>
         </a>
         <a href="https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor" target="_blank">
-            <img src="img/blazor.png" class="logo blazor" alt="Blazor logo"/>
+            <img src="img/blazor.svg" class="logo blazor" alt="Blazor logo"/>
         </a>
     </div>
     <p>Click on the Tauri and Blazor logos to learn more.</p>
