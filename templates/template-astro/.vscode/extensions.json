@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "astro-build.astro-vscode",
+    "tauri-apps.tauri-vscode",
+    "rust-lang.rust-analyzer"
+  ]
+}

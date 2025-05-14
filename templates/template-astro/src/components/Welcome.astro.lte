@@ -1,0 +1,55 @@
+<script>
+    import { invoke } from '@tauri-apps/api/{% if v2 %}core{% else %}tauri{% endif %}';
+
+    async function greet({
+        greetInputEl,
+        greetMsgEl,
+    }: {
+        greetInputEl: HTMLInputElement;
+        greetMsgEl: Element;
+    }) {
+        // Learn more about Tauri commands at {% if v2 %}https://tauri.app/develop/calling-rust/{% else %}https://v1.tauri.app/v1/guides/features/command{% endif %}
+        greetMsgEl.textContent = await invoke('greet', {
+            name: greetInputEl.value,
+        });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const greetInputEl: HTMLInputElement =
+          document.querySelector('#greet-input')!;
+        const greetMsgEl = document.querySelector('#greet-msg')!;
+        document
+            .querySelector('#greet-form')!
+            .addEventListener('submit', (e) => {
+                e.preventDefault();
+                greet({ greetInputEl, greetMsgEl });
+            });
+    });
+</script>
+
+<main class="container">
+    <h1>Welcome to Tauri + Astro</h1>
+
+    <div class="row">
+        <a href="https://tauri.app" target="_blank">
+            <img src="/tauri.svg" class="logo tauri" alt="Tauri Logo" />
+        </a>
+        <a href="https://astro.build" target="_blank">
+            <img src="/astro.svg" class="logo astro" alt="Astro Logo" />
+        </a>
+    </div>
+    <p>Click on the Tauri or Astro logo to learn more.</p>
+
+    <form class="row" id="greet-form">
+        <input id="greet-input" placeholder="Enter a name..." />
+        <button type="submit">Greet</button>
+    </form>
+
+    <p id="greet-msg"></p>
+</main>
+
+<style>
+    .logo.astro:hover {
+        filter: drop-shadow(0 0 2em #F041FF);
+    }
+</style>

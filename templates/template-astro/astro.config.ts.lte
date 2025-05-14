@@ -1,0 +1,34 @@
+// @ts-check
+import { defineConfig } from "astro/config";{% if v2 %}
+
+// @ts-expect-error process is a nodejs global
+const host = process.env.TAURI_DEV_HOST;{% endif %}
+
+// https://astro.build/config
+export default defineConfig({
+  server: {{% if v2 %}
+    port: 1420,{% endif %}
+    host: host ?? false,
+  },
+  vite: {
+    // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
+    //
+    // 1. prevent Vite from obscuring rust errors
+    clearScreen: false,
+    // 2. tauri expects a fixed port, fail if that port is not available
+    server: {
+      strictPort: true,{% if v2 %}
+      hmr: host
+        ? {
+            protocol: "ws",
+            host,
+            port: 1421,
+          }
+        : undefined,{% endif %}
+      watch: {
+        // 3. tell Vite to ignore watching `src-tauri`
+        ignored: ["**/src-tauri/**"],
+      },
+    },
+  },
+});

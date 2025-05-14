@@ -1,0 +1,17 @@
+{
+  "name": "{% package_name %}",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "astro build",
+    "dev": "astro dev"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "{% if v2 %}^2{% else %}^1{% endif %}",
+    "astro": "^5.7.13"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "{% if v2 %}^2{% else %}^1{% endif %}"
+  }
+}

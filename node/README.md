@@ -77,6 +77,7 @@ Currently supported template presets include:
 - `leptos`
 - `sycamore`
 - `blazor`
+- `astro`
 
 You can use `.` for the project name to scaffold in the current directory.
 

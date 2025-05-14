@@ -1,0 +1,12 @@
+# Copyright 2019-2025 Tauri Programme within The Commons Conservancy
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
+
+beforeDevCommand = {% pkg_manager_run_command %} dev
+beforeBuildCommand = {% pkg_manager_run_command %} build
+devUrl = http://localhost:1420
+frontendDist = ../dist
+
+[files]
+astro.svg = public/astro.svg
+tauri.svg = public/tauri.svg
