@@ -40,16 +40,16 @@ jobs:
           - host: windows-latest
             target: i686-pc-windows-msvc
             ext: .exe
-          - host: ubuntu-latest
+          - host: ubuntu-22.04
             target: x86_64-unknown-linux-gnu
           - host: ubuntu-latest
             target: x86_64-unknown-linux-musl
-          - host: ubuntu-latest
+          - host: ubuntu-22.04
             target: aarch64-unknown-linux-gnu
             setup: |
                   sudo apt-get update
                   sudo apt-get install gcc-aarch64-linux-gnu -y
-          - host: ubuntu-latest
+          - host: ubuntu-22.04
             target: armv7-unknown-linux-gnueabihf
             setup: |
                   sudo apt-get update
@@ -64,7 +64,7 @@ jobs:
     name: ${{ matrix.settings.target }}
     runs-on: ${{ matrix.settings.host }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: dtolnay/rust-toolchain@stable
         with:
@@ -95,7 +95,7 @@ jobs:
       - build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: download all artifacts
         uses: actions/download-artifact@v4
