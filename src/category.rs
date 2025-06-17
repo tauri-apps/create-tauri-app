@@ -12,8 +12,8 @@ pub enum Category {
     Dotnet,
 }
 
-impl<'a> Category {
-    pub const ALL: &'a [Self] = &[Category::JsTs, Category::Rust, Category::Dotnet];
+impl Category {
+    pub const ALL: &[Self] = &[Category::JsTs, Category::Rust, Category::Dotnet];
 
     pub const fn package_managers(&self) -> &[PackageManager] {
         match self {
