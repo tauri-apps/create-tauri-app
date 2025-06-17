@@ -126,7 +126,8 @@ where
     let identifier = match identifier {
         Some(name) => name,
         None => {
-            let default = format!("com.{package_name}.app");
+            let valid_user_name = utils::to_valid_pkg_name(&whoami::username());
+            let default = format!("com.{valid_user_name}.{package_name}");
             if skip {
                 default
             } else {
