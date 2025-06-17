@@ -1,5 +1,14 @@
 # Changelog
 
+## \[4.6.0]
+
+- [`b9a8d08`](https://www.github.com/tauri-apps/create-tauri-app/commit/b9a8d086d8b9c24ac617ce1a207134c6399128e8) ([#900](https://www.github.com/tauri-apps/create-tauri-app/pull/900) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Changed default app identifier from `com.{package_name}.app` to `com.{user_name}.{package_name}` as `.app` causes problems on macOS
+- [`61bba26`](https://www.github.com/tauri-apps/create-tauri-app/commit/61bba26511d46766377ad9ac367b40f85d15bc22) ([#901](https://www.github.com/tauri-apps/create-tauri-app/pull/901) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Build release binaries on ubuntu 22 to support slightly older glibc versions
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@4.6.0`
+
 ## \[4.5.10]
 
 - [`593f90d`](https://www.github.com/tauri-apps/create-tauri-app/commit/593f90d91220a78334b5246f4c07c01288b80f70) ([#888](https://www.github.com/tauri-apps/create-tauri-app/pull/888) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Update `dioxus` template to use `dx bundle` and update the `frontendDist` option in the generated `tauri.conf.json` file in the template.
