@@ -143,8 +143,8 @@ impl Template {
     }
 }
 
-impl<'a> Template {
-    pub const ALL: &'a [Template] = &[
+impl Template {
+    pub const ALL: &[Template] = &[
         Template::Vanilla,
         Template::VanillaTs,
         Template::Vue,
