@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: cloudflare/wrangler-action@2.0.0
+      - uses: cloudflare/wrangler-action@v3
         with:
           command: publish
           workingDirectory: 'worker'
