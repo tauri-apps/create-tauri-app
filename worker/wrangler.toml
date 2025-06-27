@@ -10,3 +10,7 @@ compatibility_date = "2022-08-04"
 type = "Text"
 globs = ["**/*.sh", "**/*.ps1", "index.html"]
 fallthrough = true
+
+[observability]
+enabled = true
+head_sampling_rate = 1
