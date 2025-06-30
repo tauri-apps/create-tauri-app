@@ -293,9 +293,18 @@ where
     // is valid, otherwise, we error and exit
     if !pkg_manager.templates().contains(&template) {
         eprintln!(
-            "{BOLD}{RED}error{RESET}: the {GREEN}{template}{RESET} template is not suppported for the {GREEN}{pkg_manager}{RESET} package manager\n       possible templates for {GREEN}{pkg_manager}{RESET} are: [{}]\n       or maybe you meant to use another package manager\n       possible package managers for {GREEN}{template}{RESET} are: [{}]" ,
-            templates_no_flavors.iter().map(|e|format!("{GREEN}{e}{RESET}")).collect::<Vec<_>>().join(", "),
-            template.possible_package_managers().iter().map(|e|format!("{GREEN}{e}{RESET}")).collect::<Vec<_>>().join(", "),
+            "{BOLD}{RED}error{RESET}: the {GREEN}{template}{RESET} template is not suppported for the {GREEN}{pkg_manager}{RESET} package manager\n       possible templates for {GREEN}{pkg_manager}{RESET} are: [{}]\n       or maybe you meant to use another package manager\n       possible package managers for {GREEN}{template}{RESET} are: [{}]",
+            templates_no_flavors
+                .iter()
+                .map(|e| format!("{GREEN}{e}{RESET}"))
+                .collect::<Vec<_>>()
+                .join(", "),
+            template
+                .possible_package_managers()
+                .iter()
+                .map(|e| format!("{GREEN}{e}{RESET}"))
+                .collect::<Vec<_>>()
+                .join(", "),
         );
         exit(1);
     }
@@ -343,7 +352,9 @@ where
             TauriVersion::V2 => "https://tauri.app/start/prerequisites/",
         };
 
-        println!("Make sure you have installed the prerequisites for your OS: {BLUE}{BOLD}{prereqs_url}{RESET}, then run:");
+        println!(
+            "Make sure you have installed the prerequisites for your OS: {BLUE}{BOLD}{prereqs_url}{RESET}, then run:"
+        );
     } else {
         println!(" To get started run:")
     }

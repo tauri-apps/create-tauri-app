@@ -151,27 +151,37 @@ pub fn print_missing_deps(
     let deps: &[Dep<'_>] = &[
         Dep {
             name: "Rust",
-            instruction: format!("Visit {BLUE}{BOLD}https://www.rust-lang.org/learn/get-started#installing-rust{RESET}"),
+            instruction: format!(
+                "Visit {BLUE}{BOLD}https://www.rust-lang.org/learn/get-started#installing-rust{RESET}"
+            ),
             exists: &|| rustc_installed && cargo_installed,
             skip: rustc_installed || cargo_installed,
         },
-        Dep  {
+        Dep {
             name: "rustc",
-            instruction: format!("Visit {BLUE}{BOLD}https://www.rust-lang.org/learn/get-started#installing-rust{RESET} to install Rust"),
+            instruction: format!(
+                "Visit {BLUE}{BOLD}https://www.rust-lang.org/learn/get-started#installing-rust{RESET} to install Rust"
+            ),
             exists: &|| rustc_installed,
             skip: !rustc_installed && !cargo_installed,
         },
         Dep {
             name: "Cargo",
-            instruction: format!("Visit {BLUE}{BOLD}https://www.rust-lang.org/learn/get-started#installing-rust{RESET} to install Rust"),
+            instruction: format!(
+                "Visit {BLUE}{BOLD}https://www.rust-lang.org/learn/get-started#installing-rust{RESET} to install Rust"
+            ),
             exists: &|| cargo_installed,
             skip: !rustc_installed && !cargo_installed,
         },
         Dep {
             name: "Tauri CLI",
             instruction: match tauri_version {
-                TauriVersion::V1 => format!("Run `{BLUE}{BOLD}cargo install tauri-cli --version '^1.0.0' --locked{RESET}`"),
-                TauriVersion::V2 => format!("Run `{BLUE}{BOLD}cargo install tauri-cli --version '^2.0.0' --locked{RESET}`"),
+                TauriVersion::V1 => format!(
+                    "Run `{BLUE}{BOLD}cargo install tauri-cli --version '^1.0.0' --locked{RESET}`"
+                ),
+                TauriVersion::V2 => format!(
+                    "Run `{BLUE}{BOLD}cargo install tauri-cli --version '^2.0.0' --locked{RESET}`"
+                ),
             },
             exists: &|| is_tauri_cli_installed(tauri_version),
             skip: pkg_manager.is_node() || !template.needs_tauri_cli(),
@@ -190,7 +200,9 @@ pub fn print_missing_deps(
         },
         Dep {
             name: "wasm32 target",
-            instruction: format!("Run `{BLUE}{BOLD}rustup target add wasm32-unknown-unknown{RESET}`"),
+            instruction: format!(
+                "Run `{BLUE}{BOLD}rustup target add wasm32-unknown-unknown{RESET}`"
+            ),
             exists: &is_wasm32_installed,
             skip: pkg_manager.is_node() || !template.needs_wasm32_target(),
         },
@@ -215,7 +227,9 @@ pub fn print_missing_deps(
         #[cfg(windows)]
         Dep {
             name: "Webview2",
-            instruction: format!("Visit {BLUE}{BOLD}https://go.microsoft.com/fwlink/p/?LinkId=2124703{RESET}"),
+            instruction: format!(
+                "Visit {BLUE}{BOLD}https://go.microsoft.com/fwlink/p/?LinkId=2124703{RESET}"
+            ),
             exists: &is_webview2_installed,
             skip: false,
         },
@@ -228,10 +242,14 @@ pub fn print_missing_deps(
         ))]
         Dep {
             name: "webkit2gtk & rsvg2",
-            instruction: format!("Visit {BLUE}{BOLD}{}{RESET}", match tauri_version {
-                TauriVersion::V1 => "https://v1.tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux",
-                TauriVersion::V2 => "https://tauri.app/guides/prerequisites/#linux",
-            }),
+            instruction: format!(
+                "Visit {BLUE}{BOLD}{}{RESET}",
+                match tauri_version {
+                    TauriVersion::V1 =>
+                        "https://v1.tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux",
+                    TauriVersion::V2 => "https://tauri.app/guides/prerequisites/#linux",
+                }
+            ),
             exists: &|| webkit2gtk_installed && rsvg2_installed,
             skip: webkit2gtk_installed || rsvg2_installed,
         },
@@ -244,10 +262,14 @@ pub fn print_missing_deps(
         ))]
         Dep {
             name: "webkit2gtk",
-            instruction: format!("Visit {BLUE}{BOLD}{}{RESET}", match tauri_version {
-                TauriVersion::V1 => "https://v1.tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux",
-                TauriVersion::V2 => "https://tauri.app/guides/prerequisites/#linux",
-            }),
+            instruction: format!(
+                "Visit {BLUE}{BOLD}{}{RESET}",
+                match tauri_version {
+                    TauriVersion::V1 =>
+                        "https://v1.tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux",
+                    TauriVersion::V2 => "https://tauri.app/guides/prerequisites/#linux",
+                }
+            ),
             exists: &|| webkit2gtk_installed,
             skip: !rsvg2_installed && !webkit2gtk_installed,
         },
@@ -260,10 +282,14 @@ pub fn print_missing_deps(
         ))]
         Dep {
             name: "rsvg2",
-            instruction: format!("Visit {BLUE}{BOLD}{}{RESET}", match tauri_version {
-                TauriVersion::V1 => "https://v1.tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux",
-                TauriVersion::V2 => "https://tauri.app/guides/prerequisites/#linux",
-            }),
+            instruction: format!(
+                "Visit {BLUE}{BOLD}{}{RESET}",
+                match tauri_version {
+                    TauriVersion::V1 =>
+                        "https://v1.tauri.app/v1/guides/getting-started/prerequisites#setting-up-linux",
+                    TauriVersion::V2 => "https://tauri.app/guides/prerequisites/#linux",
+                }
+            ),
             exists: &|| rsvg2_installed,
             skip: !rsvg2_installed && !webkit2gtk_installed,
         },
@@ -279,7 +305,7 @@ pub fn print_missing_deps(
             instruction: format!("Visit {BLUE}{BOLD}https://dotnet.microsoft.com/download{RESET}"),
             exists: &|| is_cli_installed("dotnet", "--info"),
             skip: !template.needs_dotnet() || pkg_manager.is_node(),
-        }
+        },
     ];
 
     let missing_deps: Vec<(&str, &str)> = deps
@@ -306,7 +332,9 @@ pub fn print_missing_deps(
             });
 
     if !missing_deps.is_empty() {
-        println!("\n\nYour system is {YELLOW}missing dependencies{RESET} (or they do not exist in {YELLOW}$PATH{RESET}):");
+        println!(
+            "\n\nYour system is {YELLOW}missing dependencies{RESET} (or they do not exist in {YELLOW}$PATH{RESET}):"
+        );
         for (index, (name, instruction)) in missing_deps.iter().enumerate() {
             if index == 0 {
                 println!(
