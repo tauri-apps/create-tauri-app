@@ -1,5 +1,14 @@
 # Changelog
 
+## \[4.6.1]
+
+- [`b3a990b`](https://www.github.com/tauri-apps/create-tauri-app/commit/b3a990b909aea2290b4a4b68bd3ca19cf38c5c76) ([#909](https://www.github.com/tauri-apps/create-tauri-app/pull/909) by [@Mota-Link](https://www.github.com/tauri-apps/create-tauri-app/../../Mota-Link)) fix template-dioxus loading assets error
+- [`a9cc156`](https://www.github.com/tauri-apps/create-tauri-app/commit/a9cc156e29e3471791957571a5d9384bf20e8786) ([#916](https://www.github.com/tauri-apps/create-tauri-app/pull/916) by [@ernestorbemx](https://www.github.com/tauri-apps/create-tauri-app/../../ernestorbemx)) Update `react` and `react-ts` templates to React 19 based on create-vite template
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@4.6.1`
+
 ## \[4.6.0]
 
 - [`b9a8d08`](https://www.github.com/tauri-apps/create-tauri-app/commit/b9a8d086d8b9c24ac617ce1a207134c6399128e8) ([#900](https://www.github.com/tauri-apps/create-tauri-app/pull/900) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Changed default app identifier from `com.{package_name}.app` to `com.{user_name}.{package_name}` as `.app` causes problems on macOS
