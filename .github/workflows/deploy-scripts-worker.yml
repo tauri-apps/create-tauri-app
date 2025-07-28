@@ -9,7 +9,7 @@ on:
     branches:
       - dev
     paths:
-      - '.github/workflows/deploy-scripts.yml'
+      - '.github/workflows/deploy-scripts-worker.yml'
       - 'worker/**'
 
 jobs:
