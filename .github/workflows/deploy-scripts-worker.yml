@@ -28,7 +28,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
-      - run: pnpm install
+      - run: pnpm install --frozen-lockfile
 
       - uses: cloudflare/wrangler-action@v3
         with:
