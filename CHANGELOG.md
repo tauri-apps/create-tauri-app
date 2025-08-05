@@ -1,5 +1,9 @@
 # Changelog
 
+## \[4.6.2]
+
+- [`43802a4`](https://www.github.com/tauri-apps/create-tauri-app/commit/43802a492d53179234f5944944a8c526ed7eebc3) ([#912](https://www.github.com/tauri-apps/create-tauri-app/pull/912) by [@JosefBredereck](https://www.github.com/tauri-apps/create-tauri-app/../../JosefBredereck)) updated angular template to v20
+
 ## \[4.6.1]
 
 - [`b3a990b`](https://www.github.com/tauri-apps/create-tauri-app/commit/b3a990b909aea2290b4a4b68bd3ca19cf38c5c76) ([#909](https://www.github.com/tauri-apps/create-tauri-app/pull/909) by [@Mota-Link](https://www.github.com/tauri-apps/create-tauri-app/../../Mota-Link)) fix template-dioxus loading assets error
