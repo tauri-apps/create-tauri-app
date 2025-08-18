@@ -131,7 +131,7 @@ impl Template {
             Template::Solid => "Solid - (https://solidjs.com/)",
             Template::Yew => "Yew - (https://yew.rs/)",
             Template::Leptos => "Leptos - (https://leptos.dev/)",
-            Template::Sycamore => "Sycamore - (https://sycamore-rs.netlify.app/)",
+            Template::Sycamore => "Sycamore - (https://sycamore.dev/)",
             Template::Angular => "Angular - (https://angular.dev/)",
             Template::Preact => "Preact - (https://preactjs.com/)",
             Template::Blazor => {
