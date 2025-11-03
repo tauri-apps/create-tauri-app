@@ -1,5 +1,31 @@
 # Changelog
 
+## \[4.6.2]
+
+- [`43802a4`](https://www.github.com/tauri-apps/create-tauri-app/commit/43802a492d53179234f5944944a8c526ed7eebc3) ([#912](https://www.github.com/tauri-apps/create-tauri-app/pull/912) by [@JosefBredereck](https://www.github.com/tauri-apps/create-tauri-app/../../JosefBredereck)) updated angular template to v20
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@4.6.2`
+
+## \[4.6.1]
+
+- [`b3a990b`](https://www.github.com/tauri-apps/create-tauri-app/commit/b3a990b909aea2290b4a4b68bd3ca19cf38c5c76) ([#909](https://www.github.com/tauri-apps/create-tauri-app/pull/909) by [@Mota-Link](https://www.github.com/tauri-apps/create-tauri-app/../../Mota-Link)) fix template-dioxus loading assets error
+- [`a9cc156`](https://www.github.com/tauri-apps/create-tauri-app/commit/a9cc156e29e3471791957571a5d9384bf20e8786) ([#916](https://www.github.com/tauri-apps/create-tauri-app/pull/916) by [@ernestorbemx](https://www.github.com/tauri-apps/create-tauri-app/../../ernestorbemx)) Update `react` and `react-ts` templates to React 19 based on create-vite template
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@4.6.1`
+
+## \[4.6.0]
+
+- [`b9a8d08`](https://www.github.com/tauri-apps/create-tauri-app/commit/b9a8d086d8b9c24ac617ce1a207134c6399128e8) ([#900](https://www.github.com/tauri-apps/create-tauri-app/pull/900) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Changed default app identifier from `com.{package_name}.app` to `com.{user_name}.{package_name}` as `.app` causes problems on macOS
+- [`61bba26`](https://www.github.com/tauri-apps/create-tauri-app/commit/61bba26511d46766377ad9ac367b40f85d15bc22) ([#901](https://www.github.com/tauri-apps/create-tauri-app/pull/901) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Build release binaries on ubuntu 22 to support slightly older glibc versions
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@4.6.0`
+
 ## \[4.5.10]
 
 - [`593f90d`](https://www.github.com/tauri-apps/create-tauri-app/commit/593f90d91220a78334b5246f4c07c01288b80f70) ([#888](https://www.github.com/tauri-apps/create-tauri-app/pull/888) by [@amrbashir](https://www.github.com/tauri-apps/create-tauri-app/../../amrbashir)) Update `dioxus` template to use `dx bundle` and update the `frontendDist` option in the generated `tauri.conf.json` file in the template.
