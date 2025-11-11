@@ -6,3 +6,4 @@
 /target
 /package-json.lock
 /yarn.lock
+**.sln
