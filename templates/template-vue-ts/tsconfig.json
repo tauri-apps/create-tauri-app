@@ -13,6 +13,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
+    "forceConsistentCasingInFileNames": true,
 
     /* Linting */
     "strict": true,
