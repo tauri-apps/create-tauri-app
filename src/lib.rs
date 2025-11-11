@@ -97,7 +97,7 @@ where
         }
     };
 
-    let target_dir = cwd.join(&project_name);
+    let target_dir = cwd.join("builds").join(&project_name);
 
     // Package name used in Cargo.toml, Package.json ...etc
     let package_name = if utils::is_valid_pkg_name(&project_name) {
@@ -347,13 +347,23 @@ where
     } else {
         println!(" To get started run:")
     }
+    // Display the path to the created project relative to the current working directory.
+    let display_dir = if target_dir != cwd {
+        match target_dir.strip_prefix(&cwd) {
+            Ok(p) => p.to_string_lossy().to_string(),
+            Err(_) => project_name.clone(),
+        }
+    } else {
+        String::new()
+    };
+
     if target_dir != cwd {
         println!(
             "  cd {}",
-            if project_name.contains(' ') {
-                format!("\"{project_name}\"")
+            if display_dir.contains(' ') {
+                format!("\"{display_dir}\"")
             } else {
-                project_name
+                display_dir
             }
         );
     }

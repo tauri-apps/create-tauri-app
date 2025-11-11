@@ -4,5 +4,7 @@
 
 /node_modules
 /target
+/builds
+/**/src/obj/
 /package-json.lock
 /yarn.lock
