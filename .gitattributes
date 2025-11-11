@@ -1,0 +1,12 @@
+# Explicitly mark known binary file types first (more specific patterns override general ones)
+*.{png,jpg,jpeg,gif,ico,svg,woff,woff2,ttf,eot,otf} binary
+*.{exe,dll,so,dylib,node,bin} binary
+*.{zip,tar,gz,7z,rar,pdf} binary
+*.{pdb,rlib,d} binary
+*.{wasm,o,a} binary
+
+# Auto-detect text files and normalize line endings to LF
+# text=auto will detect text files and apply line ending normalization
+# The eol=lf specifies LF as the line ending for text files
+* text=auto eol=lf
+
