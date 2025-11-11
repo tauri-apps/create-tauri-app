@@ -4,6 +4,7 @@
 
 /node_modules
 /target
+/**/src/obj/
 /package-json.lock
 /yarn.lock
 **.sln
