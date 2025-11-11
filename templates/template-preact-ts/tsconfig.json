@@ -14,6 +14,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
+    "forceConsistentCasingInFileNames": true,
 
     /* Linting */
     "strict": true,
