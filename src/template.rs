@@ -50,6 +50,7 @@ pub enum Template {
     SvelteTs,
     React,
     ReactTs,
+    Ripple,
     Solid,
     SolidTs,
     Yew,
@@ -73,6 +74,7 @@ impl Display for Template {
             Template::SvelteTs => write!(f, "svelte-ts"),
             Template::React => write!(f, "react"),
             Template::ReactTs => write!(f, "react-ts"),
+            Template::Ripple => write!(f, "ripple"),
             Template::Solid => write!(f, "solid"),
             Template::SolidTs => write!(f, "solid-ts"),
             Template::Yew => write!(f, "yew"),
@@ -99,6 +101,7 @@ impl FromStr for Template {
             "svelte-ts" => Ok(Template::SvelteTs),
             "react" => Ok(Template::React),
             "react-ts" => Ok(Template::ReactTs),
+            "ripple" => Ok(Template::Ripple),
             "solid" => Ok(Template::Solid),
             "solid-ts" => Ok(Template::SolidTs),
             "yew" => Ok(Template::Yew),
@@ -128,6 +131,7 @@ impl Template {
             Template::Vue => "Vue - (https://vuejs.org/)",
             Template::Svelte => "Svelte - (https://svelte.dev/)",
             Template::React => "React - (https://react.dev/)",
+            Template::Ripple => "Ripple - (https://www.ripplejs.com/)",
             Template::Solid => "Solid - (https://solidjs.com/)",
             Template::Yew => "Yew - (https://yew.rs/)",
             Template::Leptos => "Leptos - (https://leptos.dev/)",
@@ -153,6 +157,7 @@ impl Template {
         Template::SvelteTs,
         Template::React,
         Template::ReactTs,
+        Template::Ripple,
         Template::Solid,
         Template::SolidTs,
         Template::Yew,
@@ -177,6 +182,7 @@ impl Template {
             Template::Vue => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
             Template::Svelte => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
             Template::React => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
+            Template::Ripple => Some(&[Flavor::TypeScript]),
             Template::Solid => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
             Template::Preact => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
             _ => None,
@@ -223,6 +229,7 @@ impl Template {
             | Template::SvelteTs
             | Template::React
             | Template::ReactTs
+            | Template::Ripple
             | Template::Solid
             | Template::SolidTs
             | Template::Angular

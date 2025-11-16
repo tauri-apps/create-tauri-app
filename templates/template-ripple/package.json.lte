@@ -1,0 +1,38 @@
+{
+  "name": "tauri-ripple",
+  "version": "1.0.0",
+  "description": "A Ripple application created with create-ripple",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "serve": "vite preview",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "tauri": "tauri"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@ripple-ts/eslint-plugin": "latest",
+    "@ripple-ts/prettier-plugin": "latest",
+    "@ripple-ts/typescript-plugin": "latest",
+    "@ripple-ts/vite-plugin": "latest",
+    "@tailwindcss/vite": "^4.1.12",
+    "@tauri-apps/cli": "^2.9.4",
+    "eslint": "^9.0.0",
+    "prettier": "^3.6.2",
+    "tailwindcss": "^4.1.12",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.4"
+  },
+  "dependencies": {
+    "ripple": "latest",
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-opener": "^2"
+  }
+}
