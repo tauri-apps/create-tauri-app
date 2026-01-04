@@ -23,7 +23,9 @@ pub fn App() -> Element {
     let mut name = use_signal(|| String::new());
     let mut greet_msg = use_signal(|| String::new());
 
-    let greet = move |_: FormEvent| async move {
+    let greet = move |event: FormEvent| async move {
+        event.prevent_default();
+
         if name.read().is_empty() {
             return;
         }
