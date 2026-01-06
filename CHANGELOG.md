@@ -1,5 +1,12 @@
 # Changelog
 
+## \[4.7.0]
+
+- [`8d15234`](https://www.github.com/tauri-apps/create-tauri-app/commit/8d15234e7b473afe68c8601e88f11d1646157404) ([#929](https://www.github.com/tauri-apps/create-tauri-app/pull/929) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Fix the `.ico` icon being blurry because of it lacks some sizes
+- [`22db439`](https://www.github.com/tauri-apps/create-tauri-app/commit/22db43928e31af579b29b58a8bef8a2b78b9e851) ([#944](https://www.github.com/tauri-apps/create-tauri-app/pull/944) by [@pronebird](https://www.github.com/tauri-apps/create-tauri-app/../../pronebird)) -   Update `dioxus` to `0.7` with minor changes to the template.
+  - Disable interactive mode for `dx serve`. Fixes broken terminal when developing.
+- [`f68d870`](https://www.github.com/tauri-apps/create-tauri-app/commit/f68d870adedb1519b8da3aeb4124ee5d106d5a68) ([#895](https://www.github.com/tauri-apps/create-tauri-app/pull/895) by [@bicarlsen](https://www.github.com/tauri-apps/create-tauri-app/../../bicarlsen)) Bump `leptos` to `0.8`.
+
 ## \[4.6.2]
 
 - [`43802a4`](https://www.github.com/tauri-apps/create-tauri-app/commit/43802a492d53179234f5944944a8c526ed7eebc3) ([#912](https://www.github.com/tauri-apps/create-tauri-app/pull/912) by [@JosefBredereck](https://www.github.com/tauri-apps/create-tauri-app/../../JosefBredereck)) updated angular template to v20
