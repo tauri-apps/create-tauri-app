@@ -1,5 +1,6 @@
 ---
 "create-tauri-app": "minor"
+"create-tauri-app-js": "minor"
 ---
 
 - Update `dioxus` to `0.7` with minor changes to the template.
