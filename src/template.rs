@@ -144,7 +144,7 @@ impl Template {
                 "Blazor - (https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor/)"
             }
             Template::Dioxus => "Dioxus - (https://dioxuslabs.com/)",
-            Template::Qwik | Template::QwikTs => "Qwik - (https://qwik.dev/)",
+            Template::Qwik | Template::QwikTs => "Qwik (Qwik City) - (https://qwik.dev/)",
             _ => unreachable!(),
         }
     }
