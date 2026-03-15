@@ -1,0 +1,58 @@
+import { component$, useSignal, $ } from "@builder.io/qwik";
+import type { DocumentHead } from "@builder.io/qwik-city";
+import { invoke } from "@tauri-apps/api/{% if v2 %}core{% else %}tauri{% endif %}";
+
+import qwikLogo from "../assets/qwik.svg";
+
+export default component$(() => {
+  const greetMsg = useSignal("");
+  const name = useSignal("");
+
+  const greet = $(async () => {
+    // Learn more about Tauri commands at {% if v2 %}https://tauri.app/develop/calling-rust/{% else %}https://v1.tauri.app/v1/guides/features/command{% endif %}
+    greetMsg.value = await invoke("greet", { name: name.value });
+  });
+
+  return (
+    <main class="container">
+      <h1>Welcome to Tauri + Qwik</h1>
+
+      <div class="row">
+        <a href="https://vite.dev" target="_blank">
+          <img src="/vite.svg" class="logo vite" alt="Vite logo" />
+        </a>
+        <a href="https://tauri.app" target="_blank">
+          <img src="/tauri.svg" class="logo tauri" alt="Tauri logo" />
+        </a>
+        <a href="https://qwik.dev" target="_blank">
+          <img src={qwikLogo} class="logo qwik" alt="Qwik logo" />
+        </a>
+      </div>
+      <p>Click on the Tauri, Vite, and Qwik logos to learn more.</p>
+
+      <form
+        class="row"
+        preventdefault:submit
+        onSubmit$={greet}
+      >
+        <input
+          id="greet-input"
+          bind:value={name}
+          placeholder="Enter a name..."
+        />
+        <button type="submit">Greet</button>
+      </form>
+      <p>{greetMsg.value}</p>
+    </main>
+  );
+});
+
+export const head: DocumentHead = {
+  title: "Welcome to Tauri",
+  meta: [
+    {
+      name: "description",
+      content: "Tauri + Qwik",
+    },
+  ],
+};
