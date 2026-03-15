@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 beforeDevCommand = {% pkg_manager_run_command %} dev
-beforeBuildCommand = {% pkg_manager_run_command %} build.server
+beforeBuildCommand = {% pkg_manager_run_command %} build
 devUrl = http://localhost:1420
 frontendDist = ../dist
 

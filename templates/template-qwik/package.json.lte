@@ -7,7 +7,7 @@
     "build": "qwik build",
     "build.client": "vite build",
     "build.preview": "vite build --ssr src/entry.preview.jsx",
-    "build.server": "vite build -c adapters/static/vite.config.js",
+    "build.server": "qwik check-client src dist && vite build -c adapters/static/vite.config.js",
     "dev": "vite --mode ssr",
     "preview": "qwik build preview && vite preview --open",
     "start": "vite --open --mode ssr",
@@ -17,7 +17,9 @@
   "devDependencies": {
     "@builder.io/qwik": "^1.19.2",
     "@builder.io/qwik-city": "^1.19.2",
-    "vite": "^7.0.4",
+    "vite": "7.3.1",
+    "undici": "*",
+    "ignore": "^6.0.2",
     "@tauri-apps/cli": "{% if v2 %}^2{% else %}^1{% endif %}"
   },
   "dependencies": {

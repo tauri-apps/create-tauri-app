@@ -20,8 +20,10 @@
     "@builder.io/qwik-city": "^1.19.2",
     "@types/node": "20.19.0",
     "typescript": "5.4.5",
-    "vite": "^7.0.4",
+    "vite": "7.3.1",
     "vite-tsconfig-paths": "^4.2.1",
+    "undici": "*",
+    "ignore": "^6.0.2",
     "@tauri-apps/cli": "{% if v2 %}^2{% else %}^1{% endif %}"
   },
   "dependencies": {
