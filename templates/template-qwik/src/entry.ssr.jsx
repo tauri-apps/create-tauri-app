@@ -10,13 +10,10 @@
  * - npm run build
  *
  */
-import {
-  renderToStream,
-  type RenderToStreamOptions,
-} from "@builder.io/qwik/server";
+import { renderToStream } from "@builder.io/qwik/server";
 import Root from "./root";
 
-export default function (opts: RenderToStreamOptions) {
+export default function (opts) {
   return renderToStream(<Root />, {
     ...opts,
     // Use container attributes to set attributes on the html tag.
