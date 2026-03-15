@@ -60,6 +60,7 @@ pub enum Template {
     PreactTs,
     Blazor,
     Dioxus,
+    Qwik,
 }
 
 impl Display for Template {
@@ -83,6 +84,7 @@ impl Display for Template {
             Template::PreactTs => write!(f, "preact-ts"),
             Template::Blazor => write!(f, "blazor"),
             Template::Dioxus => write!(f, "dioxus"),
+            Template::Qwik => write!(f, "qwik"),
         }
     }
 }
@@ -109,6 +111,7 @@ impl FromStr for Template {
             "preact-ts" => Ok(Template::PreactTs),
             "blazor" => Ok(Template::Blazor),
             "dioxus" => Ok(Template::Dioxus),
+            "qwik" => Ok(Template::Qwik),
             _ => Err(format!(
                 "{YELLOW}{s}{RESET} is not a valid template. Valid templates are [{}]",
                 Template::ALL
@@ -138,6 +141,7 @@ impl Template {
                 "Blazor - (https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor/)"
             }
             Template::Dioxus => "Dioxus - (https://dioxuslabs.com/)",
+            Template::Qwik => "Qwik - (https://qwik.dev/)",
             _ => unreachable!(),
         }
     }
@@ -163,6 +167,7 @@ impl Template {
         Template::PreactTs,
         Template::Blazor,
         Template::Dioxus,
+        Template::Qwik,
     ];
 
     pub fn flavors<'b>(&self, pkg_manager: PackageManager) -> Option<&'b [Flavor]> {
@@ -227,7 +232,8 @@ impl Template {
             | Template::SolidTs
             | Template::Angular
             | Template::Preact
-            | Template::PreactTs => PackageManager::NODE,
+            | Template::PreactTs
+            | Template::Qwik => PackageManager::NODE,
             Template::Yew | Template::Leptos | Template::Sycamore | Template::Dioxus => {
                 &[PackageManager::Cargo]
             }
