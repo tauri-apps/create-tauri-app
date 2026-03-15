@@ -134,6 +134,7 @@ impl PackageManager {
                 Template::Preact,
                 Template::PreactTs,
                 Template::Qwik,
+                Template::QwikTs,
             ],
             PackageManager::Dotnet => &[Template::Blazor],
         }
