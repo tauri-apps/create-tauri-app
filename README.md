@@ -121,7 +121,7 @@ Follow along with the prompts to choose your project name, frontend language, pa
    Solid
    Angular
    Preact
-   Qwik
+   Qwik (Qwik City)
 
    ? Choose your UI flavor ›
    TypeScript
