@@ -359,6 +359,7 @@ impl Template {
             ),
             ("lib_name", lib_name),
             ("styles", styles),
+            ("deno", (pkg_manager == PackageManager::Deno).to_string()),
         ]
         .into();
 

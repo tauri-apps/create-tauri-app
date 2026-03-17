@@ -1,6 +1,8 @@
 import { defineConfig } from "vite";{% if v2 %}
 
-// @ts-expect-error process is a nodejs global
+{% if deno %}
+import process from "node:process";{% else %}
+// @ts-expect-error process is a nodejs global{% endif %}
 const host = process.env.TAURI_DEV_HOST;{% endif %}
 
 // https://vite.dev/config/

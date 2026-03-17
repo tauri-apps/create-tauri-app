@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";{% if v2 %}
-
+{% if deno %}
+import process from "node:process";{% endif %}
 const host = process.env.TAURI_DEV_HOST;{% endif %}
 
 // https://vite.dev/config/
