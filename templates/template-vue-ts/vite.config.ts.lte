@@ -5,7 +5,7 @@ import vue from "@vitejs/plugin-vue";{% if v2 %}
 const host = process.env.TAURI_DEV_HOST;{% endif %}
 
 // https://vite.dev/config/
-export default defineConfig(async () => ({
+export default defineConfig(() => ({
   plugins: [vue()],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
