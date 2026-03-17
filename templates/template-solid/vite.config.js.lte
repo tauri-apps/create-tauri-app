@@ -1,7 +1,6 @@
 import { defineConfig } from "vite";
 import solid from "vite-plugin-solid";{% if v2 %}
-{% if deno %}
-import process from "node:process";{% endif %}
+import process from "node:process";
 const host = process.env.TAURI_DEV_HOST;{% endif %}
 
 // https://vite.dev/config/
