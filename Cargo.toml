@@ -10,7 +10,7 @@ repository = "https://github.com/tauri-apps/create-tauri-app"
 keywords = ["tauri"]
 categories = ["gui"]
 exclude = ["node", "worker", ".github", ".changes", ".scripts"]
-rust-version = "1.71"
+rust-version = "1.75"
 
 [[bin]]
 name = "cargo-create-tauri-app"
@@ -36,4 +36,4 @@ rust-embed = { version = "8.3", features = [
     "compression",
     "interpolate-folder-path",
 ] }
-whoami = { version = "2.0.0", default-features = false }
+whoami = { version = "2.1.1", default-features = false }
