@@ -1,9 +1,6 @@
 import { defineConfig } from "vite";
 import { sveltekit } from "@sveltejs/kit/vite";{% if v2 %}
-{% if deno %}
-import process from "node:process";{% else %}
-// @ts-expect-error type error without @types/node package
-import process from "node:process";{% endif %}
+import process from "node:process";
 const host = process.env.TAURI_DEV_HOST;{% endif %}
 
 // https://vite.dev/config/
