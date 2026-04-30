@@ -37,3 +37,6 @@ rust-embed = { version = "8.3", features = [
     "interpolate-folder-path",
 ] }
 whoami = { version = "1.6.0", default-features = false }
+
+[features]
+termux = []
