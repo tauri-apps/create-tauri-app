@@ -254,6 +254,7 @@ impl Template {
                 | Template::Yew
                 | Template::Leptos
                 | Template::Vanilla
+                | Template::Blazor
         )
     }
 

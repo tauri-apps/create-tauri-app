@@ -3,4 +3,4 @@
 "create-tauri-app-js": patch
 ---
 
-Fix the `.ico` icon being blurry because of it lacks some sizes
+Fix missing tauri-cli not printed for Blazor template

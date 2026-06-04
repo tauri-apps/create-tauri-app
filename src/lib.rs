@@ -262,7 +262,7 @@ where
                 let index = Select::with_theme(&ColorfulTheme::default())
                     .with_prompt("Choose your UI template")
                     .items(
-                        &templates_no_flavors
+                        templates_no_flavors
                             .iter()
                             .map(|t| t.select_text())
                             .collect::<Vec<_>>(),
