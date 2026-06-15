@@ -134,8 +134,10 @@ jobs:
 
       - name: download cli artifact
         uses: actions/download-artifact@v8
+        with:
+          name: create-tauri-app
 
-      - run: tar -xf create-tauri-app/create-tauri-app.tar
+      - run: tar -xf create-tauri-app.tar
 
       - name: bootstrap a ${{ matrix.settings.template }} project (${{ matrix.settings.flags }})
         run: ./target/release/cargo-create-tauri-app tauri-app -m ${{ matrix.settings.manager }} -t ${{ matrix.settings.template }} ${{ matrix.settings.flags }} -y
