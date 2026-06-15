@@ -97,6 +97,10 @@ jobs:
         with:
           node-version: 22
 
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10
+
       - name: Install .NET@8.0.x
         if: matrix.settings.manager == 'dotnet'
         uses: actions/setup-dotnet@v4
