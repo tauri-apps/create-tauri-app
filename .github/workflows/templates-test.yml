@@ -98,6 +98,7 @@ jobs:
           node-version: 22
 
       - uses: pnpm/action-setup@v6
+        if: matrix.settings.manager == 'pnpm'
         with:
           version: 10
 
