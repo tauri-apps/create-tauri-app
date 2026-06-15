@@ -29,9 +29,9 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: dorny/paths-filter@v3
+      - uses: dorny/paths-filter@v4
         id: changed-files
         with:
           list-files: shell
@@ -50,7 +50,7 @@ jobs:
     needs: [generate-matrix]
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo build --release --package create-tauri-app
 
@@ -58,7 +58,7 @@ jobs:
         run: tar -rf create-tauri-app.tar target/release/cargo-create-tauri-app
 
       - name: upload cli artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: create-tauri-app
           path: create-tauri-app.tar
@@ -91,11 +91,16 @@ jobs:
           corepack enable
         if: matrix.settings.node
 
-      - name: Install Node.js@18
+      - name: Install Node.js@22
         if: matrix.settings.node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22
+
+      - uses: pnpm/action-setup@v6
+        if: matrix.settings.manager == 'pnpm'
+        with:
+          version: 10
 
       - name: Install .NET@8.0.x
         if: matrix.settings.manager == 'dotnet'
@@ -133,9 +138,11 @@ jobs:
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.1 libayatana-appindicator3-dev librsvg2-dev patchelf
 
       - name: download cli artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
+        with:
+          name: create-tauri-app
 
-      - run: tar -xf create-tauri-app/create-tauri-app.tar
+      - run: tar -xf create-tauri-app.tar
 
       - name: bootstrap a ${{ matrix.settings.template }} project (${{ matrix.settings.flags }})
         run: ./target/release/cargo-create-tauri-app tauri-app -m ${{ matrix.settings.manager }} -t ${{ matrix.settings.template }} ${{ matrix.settings.flags }} -y

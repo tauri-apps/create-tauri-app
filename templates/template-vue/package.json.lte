@@ -15,8 +15,8 @@
     "@tauri-apps/plugin-opener": "^2"{% endif %}
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.2.1",
-    "vite": "^6.0.3",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "vite": "^8.0.16",
     "@tauri-apps/cli": "{% if v2 %}^2{% else %}^1{% endif %}"
   }
 }
