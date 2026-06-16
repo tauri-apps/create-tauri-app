@@ -155,7 +155,8 @@ jobs:
         working-directory: tauri-app
 
       - run: ${{ matrix.settings.run_cmd }} tauri build ${{ matrix.settings.no_bundle_flag }}
-        if: matrix.settings.manager != 'npm'
+        # Skip deno angular test for now, `ng build` stucks on deno
+        if: matrix.settings.manager != 'npm' && !(matrix.settings.manager == 'deno' && matrix.settings.template == 'angular')
         working-directory: tauri-app
 
       - run: ${{ matrix.settings.run_cmd }} tauri build -- ${{ matrix.settings.no_bundle_flag }}
