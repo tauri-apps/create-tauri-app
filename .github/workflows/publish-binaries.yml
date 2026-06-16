@@ -64,7 +64,7 @@ jobs:
     name: ${{ matrix.settings.target }}
     runs-on: ${{ matrix.settings.host }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: dtolnay/rust-toolchain@stable
         with:
@@ -84,7 +84,7 @@ jobs:
         if: ${{ matrix.settings.target == 'aarch64-unknown-linux-musl' }}
 
       - name: upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: "${{ matrix.settings.target }}"
           path: target/${{ matrix.settings.target }}/release/cargo-create-tauri-app${{ matrix.settings.ext }}
@@ -95,10 +95,10 @@ jobs:
       - build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: download all artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: binaries
 

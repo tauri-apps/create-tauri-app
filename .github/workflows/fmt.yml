@@ -18,7 +18,7 @@ jobs:
   cargo-fmt-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt
@@ -29,15 +29,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - run: |
-          npm i -g --force corepack
-          corepack enable
+      - uses: actions/checkout@v6
+
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22
           check-latest: true
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
 
       - run: pnpm install
       - run: pnpm format:check
