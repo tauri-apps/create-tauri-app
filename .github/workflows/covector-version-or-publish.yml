@@ -21,7 +21,7 @@ jobs:
       successfulPublish: ${{ steps.covector.outputs.successfulPublish }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -29,9 +29,9 @@ jobs:
           npm i -g --force corepack
           corepack enable
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22
           check-latest: true
           registry-url: 'https://registry.npmjs.org'
 
@@ -55,7 +55,7 @@ jobs:
 
       - name: Create Pull Request With Versions Bumped
         if: steps.covector.outputs.commandRan == 'version'
-        uses: tauri-apps/create-pull-request@v3
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # 8.1.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: release/version-updates
@@ -63,12 +63,13 @@ jobs:
           commit-message: 'apply version updates'
           labels: 'version updates'
           body: ${{ steps.covector.outputs.change }}
+          sign-commits: true
 
       - name: Trigger publish-binaries.yml workflow
         if: |
           steps.covector.outputs.successfulPublish == 'true' &&
           contains(steps.covector.outputs.packagesPublished, 'create-tauri-app')
-        uses: peter-evans/repository-dispatch@v2
+        uses: peter-evans/repository-dispatch@28959ce8df70de7be546dd1250a005dd32156697 # 4.0.1
         with:
           token: ${{ secrets.ORG_TAURI_BOT_PAT }}
           repository: tauri-apps/create-tauri-app
@@ -79,7 +80,7 @@ jobs:
         if: |
           steps.covector.outputs.successfulPublish == 'true' &&
           contains(steps.covector.outputs.packagesPublished, 'create-tauri-app-js')
-        uses: peter-evans/repository-dispatch@v2
+        uses: peter-evans/repository-dispatch@28959ce8df70de7be546dd1250a005dd32156697 # 4.0.1
         with:
           token: ${{ secrets.ORG_TAURI_BOT_PAT }}
           repository: tauri-apps/create-tauri-app

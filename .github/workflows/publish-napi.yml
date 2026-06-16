@@ -80,15 +80,15 @@ jobs:
     name: stable - ${{ matrix.settings.target }} - node@20
     runs-on: ${{ matrix.settings.host }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: |
           npm i -g --force corepack
           corepack enable
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         if: ${{ !matrix.settings.docker }}
         with:
-          node-version: 20
+          node-version: 22
           cache: pnpm
 
       - name: Install
@@ -127,10 +127,10 @@ jobs:
         run: pnpm install
 
       - name: Setup node x86
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         if: matrix.settings.target == 'i686-pc-windows-msvc'
         with:
-          node-version: 20
+          node-version: 22
           cache: pnpm
           architecture: x86
 
@@ -148,7 +148,7 @@ jobs:
         shell: bash
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: napi-${{ matrix.settings.target }}
           path: node/${{ env.APP_NAME }}.*.node
@@ -163,34 +163,34 @@ jobs:
       run:
         working-directory: node
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: |
           npm i -g --force corepack
           corepack enable
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22
           cache: pnpm
 
       - name: Install dependencies
         run: pnpm install
 
       - name: Download macOS x64 artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: napi-x86_64-apple-darwin
           path: node/artifacts
 
       - name: Download macOS arm64 artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: napi-aarch64-apple-darwin
           path: node/artifacts
       - name: Combine binaries
         run: pnpm universal
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: napi-universal-apple-darwin
           path: node/${{ env.APP_NAME }}.darwin-universal.node
@@ -205,21 +205,21 @@ jobs:
       run:
         working-directory: node
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - run: |
           npm i -g --force corepack
           corepack enable
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 22
           cache: pnpm
 
       - name: Install dependencies
         run: pnpm install
 
       - name: Download all artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: node/artifacts
 
