@@ -6,11 +6,11 @@ name = "create-tauri-app"
 main = "index.js"
 compatibility_date = "2022-08-04"
 
-[[rules]]
-type = "Text"
-globs = ["**/*.sh", "**/*.ps1", "index.html"]
-fallthrough = true
-
 [observability]
 enabled = true
 head_sampling_rate = 1
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true

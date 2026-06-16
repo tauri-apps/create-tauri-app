@@ -2,24 +2,20 @@
 // SPDX-License-Identifier: Apache-2.0
 // SPDX-License-Identifier: MIT
 
-import sh from "./scripts/create-tauri-app.sh";
-import ps from "./scripts/create-tauri-app.ps1";
-import index from "./index.html";
-
 export default {
-  async fetch(request) {
+  async fetch(request, env) {
     const { pathname, searchParams } = new URL(request.url);
 
     if (pathname.startsWith("/sh")) {
-      return new Response(sh, {
-        headers: { "Content-Type": "text/plain" },
-      });
+      return env.ASSETS.fetch(
+        new URL("/scripts/create-tauri-app.sh", request.url),
+      );
     }
 
     if (pathname.startsWith("/ps")) {
-      return new Response(ps, {
-        headers: { "Content-Type": "text/plain" },
-      });
+      return env.ASSETS.fetch(
+        new URL("/scripts/create-tauri-app.ps1", request.url),
+      );
     }
 
     if (pathname.startsWith("/v")) {
@@ -54,8 +50,6 @@ export default {
       });
     }
 
-    return new Response(index, {
-      headers: { "Content-Type": "text/html" },
-    });
+    return env.ASSETS.fetch(new URL("/index.html", request.url));
   },
 };
