@@ -3,3 +3,4 @@
 # SPDX-License-Identifier: MIT
 
 /node_modules
+/.wrangler
