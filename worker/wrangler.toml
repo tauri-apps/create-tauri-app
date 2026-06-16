@@ -4,7 +4,7 @@
 
 name = "create-tauri-app"
 main = "index.js"
-compatibility_date = "2022-08-04"
+compatibility_date = "2025-05-05"
 
 [observability]
 enabled = true
