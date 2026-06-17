@@ -20,39 +20,35 @@ jobs:
       fail-fast: false
       matrix:
         settings:
-          - host: macos-latest
-            target: x86_64-apple-darwin
-          - host: macos-latest
-            target: aarch64-apple-darwin
-          - host: windows-latest
-            target: x86_64-pc-windows-msvc
-            ext: .exe
-          - host: windows-latest
-            target: aarch64-pc-windows-msvc
-            ext: .exe
-          - host: windows-latest
-            target: i686-pc-windows-msvc
-            ext: .exe
-          - host: ubuntu-22.04
-            target: x86_64-unknown-linux-gnu
-          - host: ubuntu-latest
-            target: x86_64-unknown-linux-musl
-          - host: ubuntu-22.04
-            target: aarch64-unknown-linux-gnu
-            setup: |
-                  sudo apt-get update
-                  sudo apt-get install gcc-aarch64-linux-gnu -y
-          - host: ubuntu-22.04
-            target: armv7-unknown-linux-gnueabihf
-            setup: |
-                  sudo apt-get update
-                  sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf -y
+          # - host: macos-latest
+          #   target: x86_64-apple-darwin
+          # - host: macos-latest
+          #   target: aarch64-apple-darwin
+          # - host: windows-latest
+          #   target: x86_64-pc-windows-msvc
+          #   ext: .exe
+          # - host: windows-latest
+          #   target: aarch64-pc-windows-msvc
+          #   ext: .exe
+          # - host: windows-latest
+          #   target: i686-pc-windows-msvc
+          #   ext: .exe
+          # - host: ubuntu-22.04
+          #   target: x86_64-unknown-linux-gnu
+          # - host: ubuntu-latest
+          #   target: x86_64-unknown-linux-musl
+          # - host: ubuntu-22.04
+          #   target: aarch64-unknown-linux-gnu
+          #   setup: |
+          #         sudo apt-get update
+          #         sudo apt-get install gcc-aarch64-linux-gnu -y
+          # - host: ubuntu-22.04
+          #   target: armv7-unknown-linux-gnueabihf
+          #   setup: |
+          #         sudo apt-get update
+          #         sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf -y
           - host: ubuntu-latest
             target: aarch64-unknown-linux-musl
-            setup: |
-                  wget https://musl.cc/aarch64-linux-musl-cross.tgz
-                  echo '::group::extracting'
-                  tar -xvzf aarch64-linux-musl-cross.tgz
 
     name: ${{ matrix.settings.target }}
     runs-on: ${{ matrix.settings.host }}
@@ -72,8 +68,8 @@ jobs:
         if: ${{ matrix.settings.target != 'aarch64-unknown-linux-musl' }}
 
       - run: |
-          export PATH="$PWD/aarch64-linux-musl-cross/bin:$PATH"
-          cargo build --release --package create-tauri-app --target ${{ matrix.settings.target }}
+          cargo install cross --git https://github.com/cross-rs/cross --rev 51f46f296253d8122c927c5bb933e3c4f27cc317 --locked
+          cross build --release --package create-tauri-app --target ${{ matrix.settings.target }}
         if: ${{ matrix.settings.target == 'aarch64-unknown-linux-musl' }}
 
       - name: upload artifact
