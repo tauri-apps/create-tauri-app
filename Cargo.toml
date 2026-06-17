@@ -32,8 +32,5 @@ anyhow = "1"
 dialoguer = "0.12"
 pico-args = "0.5"
 ctrlc = "3.3"
-rust-embed = { version = "8.3", features = [
-    "compression",
-    "interpolate-folder-path",
-] }
+rust-embed = { version = "8.3", features = ["interpolate-folder-path"] }
 whoami = { version = "1.6.0", default-features = false }
