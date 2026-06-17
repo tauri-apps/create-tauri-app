@@ -238,8 +238,10 @@ jobs:
         run: ls -R ./npm
         shell: bash
 
+      # We publish as `create-tauri-app` first and then rewrite the package.json to publish as `create-tauri` as well.
       - name: Publish
         run: |
+          npm publish
           jq '.name = "create-tauri" | .bin = { "create-tauri": .bin["create-tauri-app"] } |  del(.scripts.prepublishOnly)' package.json > package.tmp
           mv -f package.tmp package.json
           npm publish
