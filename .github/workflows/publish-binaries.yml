@@ -56,10 +56,6 @@ jobs:
                   sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf -y
           - host: ubuntu-latest
             target: aarch64-unknown-linux-musl
-            setup: |
-                  wget https://musl.cc/aarch64-linux-musl-cross.tgz
-                  echo '::group::extracting'
-                  tar -xvzf aarch64-linux-musl-cross.tgz
 
     name: ${{ matrix.settings.target }}
     runs-on: ${{ matrix.settings.host }}
@@ -79,8 +75,8 @@ jobs:
         if: ${{ matrix.settings.target != 'aarch64-unknown-linux-musl' }}
 
       - run: |
-          export PATH="$PWD/aarch64-linux-musl-cross/bin:$PATH"
-          cargo build --release --package create-tauri-app --target ${{ matrix.settings.target }}
+          cargo install cross --git https://github.com/cross-rs/cross --rev 51f46f296253d8122c927c5bb933e3c4f27cc317 --locked
+          cross build --release --package create-tauri-app --target ${{ matrix.settings.target }}
         if: ${{ matrix.settings.target == 'aarch64-unknown-linux-musl' }}
 
       - name: upload artifact
