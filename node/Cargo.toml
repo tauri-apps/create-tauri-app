@@ -3,15 +3,15 @@ edition = "2021"
 name = "create-tauri-app-node"
 version = "0.0.0"
 license = "Apache-2.0 OR MIT"
+rust-version = "1.77"
 
 [lib]
 crate-type = ["cdylib"]
 
 [dependencies]
-# Default enable napi4 feature, see https://nodejs.org/api/n-api.html#node-api-version-matrix
-napi = { version = "2.16", default-features = false, features = ["napi4"] }
-napi-derive = "2.16"
+napi = "3"
+napi-derive = "3"
 create-tauri-app = { path = ".." }
 
 [build-dependencies]
-napi-build = "2.1"
+napi-build = "2.3"
