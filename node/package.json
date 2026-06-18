@@ -54,7 +54,7 @@
     "build": "napi build --platform --release",
     "build:debug": "napi build --platform",
     "prepublishOnly": "napi prepublish -t npm --gh-release-id $RELEASE_ID",
-    "universal": "napi universal",
+    "universal": "napi universalize",
     "version": "napi version"
   }
 }
