@@ -127,3 +127,95 @@ jobs:
           name: napi-${{ matrix.settings.target }}
           path: node/${{ env.APP_NAME }}.*.node
           if-no-files-found: error
+
+  build-universal-macOS:
+    name: Build universal macOS binary
+    needs:
+      - build
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: node
+    steps:
+      - uses: actions/checkout@v6
+      - run: |
+          npm i -g --force corepack
+          corepack enable
+      - name: Setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Download macOS x64 artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: napi-x86_64-apple-darwin
+          path: node/artifacts
+
+      - name: Download macOS arm64 artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: napi-aarch64-apple-darwin
+          path: node/artifacts
+      - name: Combine binaries
+        run: pnpm universal
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: napi-universal-apple-darwin
+          path: node/${{ env.APP_NAME }}.darwin-universal.node
+          if-no-files-found: error
+
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    needs:
+      - build-universal-macOS
+    defaults:
+      run:
+        working-directory: node
+    steps:
+      - uses: actions/checkout@v6
+      - run: |
+          npm i -g --force corepack
+          corepack enable
+      - name: Setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v8
+        with:
+          path: node/artifacts
+
+      - name: List artifacts
+        run: ls artifacts
+        shell: bash
+
+      - name: Move artifacts
+        run: pnpm artifacts
+
+      - name: List packages
+        run: ls -R ./npm
+        shell: bash
+
+      - name: Publish
+        run: |
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+          npm publish
+          jq '.name = "create-tauri" | .bin = { "create-tauri": .bin["create-tauri-app"] } |  del(.scripts.prepublishOnly)' package.json > package.tmp
+          mv -f package.tmp package.json
+          npm publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.ORG_NPM_TOKEN }}
+          RELEASE_ID: ${{ github.event.client_payload.releaseId || inputs.releaseId }}
