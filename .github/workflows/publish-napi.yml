@@ -10,7 +10,14 @@ env:
   MACOSX_DEPLOYMENT_TARGET: '10.13'
 
 on:
-  pull_request:
+  workflow_dispatch:
+    inputs:
+      releaseId:
+        description: 'Release Id'
+        required: true
+        type: string
+  repository_dispatch:
+    types: [publish-napi]
 
 jobs:
   build:
