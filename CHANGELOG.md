@@ -1,5 +1,9 @@
 # Changelog
 
+## \[4.7.3]
+
+- [`55c577c`](https://www.github.com/tauri-apps/create-tauri-app/commit/55c577cc8aff672c7f7f184c1d360161f8d44c26) `4.7.3` is a re-release of `4.7.2` to resolve publishing issues.
+
 ## \[4.7.2]
 
 - [`034e3dc`](https://www.github.com/tauri-apps/create-tauri-app/commit/034e3dcf15727367f635b25cafc27bf1d504dd10) ([#983](https://www.github.com/tauri-apps/create-tauri-app/pull/983) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Migrated to NAPI 3, this bumps the inernal crate `create-tauri-app-node`'s MSRV to 1.88
