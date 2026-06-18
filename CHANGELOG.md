@@ -1,5 +1,9 @@
 # Changelog
 
+## \[4.7.2]
+
+- [`034e3dc`](https://www.github.com/tauri-apps/create-tauri-app/commit/034e3dcf15727367f635b25cafc27bf1d504dd10) ([#983](https://www.github.com/tauri-apps/create-tauri-app/pull/983) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Migrated to NAPI 3, this bumps the inernal crate `create-tauri-app-node`'s MSRV to 1.88
+
 ## \[4.7.1]
 
 - [`87c455b`](https://www.github.com/tauri-apps/create-tauri-app/commit/87c455bb2003586682c287157cd831e9050df70b) ([#960](https://www.github.com/tauri-apps/create-tauri-app/pull/960) by [@katayama8000](https://www.github.com/tauri-apps/create-tauri-app/../../katayama8000)) added `import process from "node:process"` to Vite-based templates
