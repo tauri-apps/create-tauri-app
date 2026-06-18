@@ -1,0 +1,42 @@
+# Copyright 2019-2022 Tauri Programme within The Commons Conservancy
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: MIT
+
+name: test create-tauri-app
+
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - '.github/workflows/cli-test.yml'
+      - 'src/**'
+      - 'Cargo.lock'
+      - 'Cargo.toml'
+  pull_request:
+    paths:
+      - '.github/workflows/cli-test.yml'
+      - 'src/**'
+      - 'Cargo.lock'
+      - 'Cargo.toml'
+
+env:
+  RUST_BACKTRACE: 1
+
+concurrency:
+   group: ${{ github.workflow }}-${{ github.ref }}
+   cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        toolchain: [1.77, stable]
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.toolchain }}
+      - run: cargo test
