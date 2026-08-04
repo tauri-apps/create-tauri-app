@@ -32,7 +32,7 @@ jobs:
   audit-rust:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: rustsec/audit-check@v2.0.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -40,16 +40,15 @@ jobs:
   audit-js:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: |
           npm i -g --force corepack
           corepack enable
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: 20
-          check-latest: true
-          cache: 'pnpm'
+          node-version: 24
+          cache: pnpm
           cache-dependency-path: '**/pnpm-lock.yaml'
       - run: pnpm install
       - run: pnpm audit

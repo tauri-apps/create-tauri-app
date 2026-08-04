@@ -56,15 +56,11 @@ jobs:
                   sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf -y
           - host: ubuntu-latest
             target: aarch64-unknown-linux-musl
-            setup: |
-                  wget https://musl.cc/aarch64-linux-musl-cross.tgz
-                  echo '::group::extracting'
-                  tar -xvzf aarch64-linux-musl-cross.tgz
 
     name: ${{ matrix.settings.target }}
     runs-on: ${{ matrix.settings.host }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: dtolnay/rust-toolchain@stable
         with:
@@ -79,12 +75,12 @@ jobs:
         if: ${{ matrix.settings.target != 'aarch64-unknown-linux-musl' }}
 
       - run: |
-          export PATH="$PWD/aarch64-linux-musl-cross/bin:$PATH"
-          cargo build --release --package create-tauri-app --target ${{ matrix.settings.target }}
+          cargo install cross --git https://github.com/cross-rs/cross --rev 51f46f296253d8122c927c5bb933e3c4f27cc317 --locked
+          cross build --release --package create-tauri-app --target ${{ matrix.settings.target }}
         if: ${{ matrix.settings.target == 'aarch64-unknown-linux-musl' }}
 
       - name: upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: "${{ matrix.settings.target }}"
           path: target/${{ matrix.settings.target }}/release/cargo-create-tauri-app${{ matrix.settings.ext }}
@@ -95,10 +91,10 @@ jobs:
       - build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: download all artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: binaries
 

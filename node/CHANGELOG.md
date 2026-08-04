@@ -1,5 +1,34 @@
 # Changelog
 
+## \[4.7.3]
+
+- [`55c577c`](https://www.github.com/tauri-apps/create-tauri-app/commit/55c577cc8aff672c7f7f184c1d360161f8d44c26) `4.7.3` is a re-release of `4.7.2` to resolve publishing issues.
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@4.7.3`
+
+## \[4.7.2]
+
+- [`034e3dc`](https://www.github.com/tauri-apps/create-tauri-app/commit/034e3dcf15727367f635b25cafc27bf1d504dd10) ([#983](https://www.github.com/tauri-apps/create-tauri-app/pull/983) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Migrated to NAPI 3, this bumps the inernal crate `create-tauri-app-node`'s MSRV to 1.88
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@4.7.2`
+
+## \[4.7.1]
+
+- [`87c455b`](https://www.github.com/tauri-apps/create-tauri-app/commit/87c455bb2003586682c287157cd831e9050df70b) ([#960](https://www.github.com/tauri-apps/create-tauri-app/pull/960) by [@katayama8000](https://www.github.com/tauri-apps/create-tauri-app/../../katayama8000)) added `import process from "node:process"` to Vite-based templates
+- [`5f8ed15`](https://www.github.com/tauri-apps/create-tauri-app/commit/5f8ed15d41101abc49de14e139d989f69fb01c32) ([#976](https://www.github.com/tauri-apps/create-tauri-app/pull/976) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Updated angular template to v22 and typescript to v6
+- [`3083ea8`](https://www.github.com/tauri-apps/create-tauri-app/commit/3083ea8191e9c4c98dd014fa411fb776ea7a28ae) ([#950](https://www.github.com/tauri-apps/create-tauri-app/pull/950) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Fix missing tauri-cli not printed for Blazor template
+- [`5bf2822`](https://www.github.com/tauri-apps/create-tauri-app/commit/5bf282217ff4455493971a3d2f59e4f53f1cddd7) ([#965](https://www.github.com/tauri-apps/create-tauri-app/pull/965) by [@SoftAndoWeto](https://www.github.com/tauri-apps/create-tauri-app/../../SoftAndoWeto)) Remove CMD-incompatible quotes from the printed `tauri-cli` install command.
+- [`0b66048`](https://www.github.com/tauri-apps/create-tauri-app/commit/0b66048820d7379d1776c8a95123ec82ba1eb204) ([#959](https://www.github.com/tauri-apps/create-tauri-app/pull/959) by [@katayama8000](https://www.github.com/tauri-apps/create-tauri-app/../../katayama8000)) Remove unnecessary `async` keyword from `defineConfig` in Vite-based templates
+- [`847647e`](https://www.github.com/tauri-apps/create-tauri-app/commit/847647e94a5ec12a83f70b785f55569453d7cdbf) ([#975](https://www.github.com/tauri-apps/create-tauri-app/pull/975) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Updated vite to v8 and typescript to v6 for all templates
+
+### Dependencies
+
+- Upgraded to `create-tauri-app@4.7.1`
+
 ## \[4.7.0]
 
 - [`8d15234`](https://www.github.com/tauri-apps/create-tauri-app/commit/8d15234e7b473afe68c8601e88f11d1646157404) ([#929](https://www.github.com/tauri-apps/create-tauri-app/pull/929) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Fix the `.ico` icon being blurry because of it lacks some sizes
