@@ -65,12 +65,12 @@ jobs:
     name: stable - ${{ matrix.settings.target }} - node@22
     runs-on: ${{ matrix.settings.host }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - run: |
           npm i -g --force corepack
           corepack enable
       - name: Setup node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         if: ${{ !matrix.settings.docker }}
         with:
           node-version: 22
@@ -135,14 +135,14 @@ jobs:
       run:
         working-directory: node
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - run: |
           npm i -g --force corepack
           corepack enable
       - name: Setup node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 24
           cache: pnpm
 
       - name: Install dependencies
