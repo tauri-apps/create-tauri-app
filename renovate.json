@@ -12,7 +12,7 @@
     },
     {
       "groupName": "napi-rs dependencies",
-      "matchPackagePrefixes": ["napi"]
+      "matchPackageNames": ["napi", "napi-build", "napi-derive", "@napi-rs/cli"]
     }
   ]
 }
