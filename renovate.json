@@ -3,6 +3,10 @@
   "extends": ["config:base", ":disableDependencyDashboard"],
   "packageRules": [
     {
+      "matchPackageNames": ["*"],
+      "minimumReleaseAge": "3 days"
+    },
+    {
       "groupName": "templates dependencies",
       "matchFileNames": [
         "templates/**/*package.json",
