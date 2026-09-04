@@ -12,6 +12,10 @@
     "create-tauri-app.linux-arm64-musl.node"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tauri-apps/create-tauri-app.git"
+  },
   "engines": {
     "node": ">= 10"
   },

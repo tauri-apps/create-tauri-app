@@ -12,6 +12,10 @@
     "create-tauri-app.win32-ia32-msvc.node"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tauri-apps/create-tauri-app.git"
+  },
   "engines": {
     "node": ">= 10"
   }
