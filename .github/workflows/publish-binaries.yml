@@ -21,6 +21,9 @@ concurrency:
    group: ${{ github.workflow }}-${{ github.ref }}
    cancel-in-progress: true
 
+permissions:
+  contents: write # required to create new releases
+
 jobs:
   build:
     strategy:

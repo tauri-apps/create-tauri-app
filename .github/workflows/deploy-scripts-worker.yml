@@ -12,6 +12,9 @@ on:
       - '.github/workflows/deploy-scripts-worker.yml'
       - 'worker/**'
 
+permissions:
+  contents: read
+
 jobs:
   deploy:
     # prevents this action from running on forks

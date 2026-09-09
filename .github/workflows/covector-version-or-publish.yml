@@ -9,6 +9,12 @@ on:
     branches:
       - dev
 
+permissions:
+  actions: write # required for workflow_dispatch
+  contents: write # required to create new releases
+  pull-requests: write # required to open version update pr
+  id-token: write # pnpm provenance / oidc token
+
 jobs:
   version-or-publish:
     # prevents this action from running on forks
