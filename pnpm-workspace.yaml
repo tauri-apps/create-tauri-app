@@ -7,4 +7,5 @@ allowBuilds:
   workerd: true
 
 overrides:
+  sharp@<0.35.4: ^0.35.4
   "undici@>=7.0.0 <7.29.0": ">=7.29.0"
