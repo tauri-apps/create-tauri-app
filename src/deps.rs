@@ -30,14 +30,26 @@ fn is_tauri_cli_installed(tauri_version: TauriVersion) -> bool {
 }
 
 fn is_wasm32_installed() -> bool {
-    Command::new("rustup")
-        .args(["target", "list", "--installed"])
-        .output()
-        .map(|o| {
-            let s = String::from_utf8_lossy(&o.stdout);
-            s.contains("wasm32-unknown-unknown")
-        })
-        .unwrap_or(false)
+    if cfg!(not(all(target_os = "android", feature = "termux"))) {
+        Command::new("rustup")
+            .args(["target", "list", "--installed"])
+            .output()
+            .map(|o| {
+                let s = String::from_utf8_lossy(&o.stdout);
+                s.contains("wasm32-unknown-unknown")
+            })
+            .unwrap_or(false)
+    } else {
+        // android + termux
+        Command::new("pkg")
+            .args(["list-installed"])
+            .output()
+            .map(|o| {
+                let s = String::from_utf8_lossy(&o.stdout);
+                s.contains("rust-std-wasm32-unknown-unknown")
+            })
+            .unwrap_or(false)
+    }
 }
 
 #[cfg(windows)]
@@ -85,17 +97,23 @@ fn is_webview2_installed() -> bool {
     target_os = "dragonfly",
     target_os = "freebsd",
     target_os = "openbsd",
-    target_os = "netbsd"
+    target_os = "netbsd",
+    all(target_os = "android", feature = "termux")
 ))]
 fn is_webkit2gtk_installed(tauri_version: TauriVersion) -> bool {
-    Command::new("pkg-config")
-        .arg(match tauri_version {
-            TauriVersion::V1 => "webkit2gtk-4.0",
-            TauriVersion::V2 => "webkit2gtk-4.1",
-        })
-        .output()
-        .map(|o| o.status.success())
-        .unwrap_or(false)
+    if cfg!(not(all(target_os = "android", feature = "termux"))) {
+        Command::new("pkg-config")
+            .arg(match tauri_version {
+                TauriVersion::V1 => "webkit2gtk-4.0",
+                TauriVersion::V2 => "webkit2gtk-4.1",
+            })
+            .output()
+            .map(|o| o.status.success())
+            .unwrap_or(false)
+    } else {
+        // webkit2gtk not required for android apps (only target for android + termux)
+        true
+    }
 }
 
 #[cfg(any(
@@ -103,7 +121,8 @@ fn is_webkit2gtk_installed(tauri_version: TauriVersion) -> bool {
     target_os = "dragonfly",
     target_os = "freebsd",
     target_os = "openbsd",
-    target_os = "netbsd"
+    target_os = "netbsd",
+    all(target_os = "android", feature = "termux")
 ))]
 fn is_rsvg2_installed() -> bool {
     Command::new("pkg-config")
@@ -143,7 +162,8 @@ pub fn print_missing_deps(
         target_os = "dragonfly",
         target_os = "freebsd",
         target_os = "openbsd",
-        target_os = "netbsd"
+        target_os = "netbsd",
+        all(target_os = "android", feature = "termux")
     ))]
     let (webkit2gtk_installed, rsvg2_installed) =
         (is_webkit2gtk_installed(tauri_version), is_rsvg2_installed());
@@ -224,7 +244,8 @@ pub fn print_missing_deps(
             target_os = "dragonfly",
             target_os = "freebsd",
             target_os = "openbsd",
-            target_os = "netbsd"
+            target_os = "netbsd",
+            all(target_os = "android", feature = "termux")
         ))]
         Dep {
             name: "webkit2gtk & rsvg2",
@@ -240,7 +261,8 @@ pub fn print_missing_deps(
             target_os = "dragonfly",
             target_os = "freebsd",
             target_os = "openbsd",
-            target_os = "netbsd"
+            target_os = "netbsd",
+            all(target_os = "android", feature = "termux")
         ))]
         Dep {
             name: "webkit2gtk",
@@ -256,7 +278,8 @@ pub fn print_missing_deps(
             target_os = "dragonfly",
             target_os = "freebsd",
             target_os = "openbsd",
-            target_os = "netbsd"
+            target_os = "netbsd",
+            all(target_os = "android", feature = "termux")
         ))]
         Dep {
             name: "rsvg2",
