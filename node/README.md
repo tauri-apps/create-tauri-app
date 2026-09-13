@@ -76,6 +76,7 @@ Currently supported template presets include:
 - `yew`
 - `leptos`
 - `sycamore`
+- `aspnet`
 - `blazor`
 
 You can use `.` for the project name to scaffold in the current directory.
