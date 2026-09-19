@@ -121,7 +121,7 @@ importers:
     devDependencies:
       '@napi-rs/cli':
         specifier: ^3.0.0
-        version: 3.9.0(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(supports-color@10.2.2)
+        version: 3.10.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(supports-color@10.2.2)
 
   worker:
     devDependencies:
@@ -661,8 +661,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@napi-rs/cli@3.9.0':
-    resolution: {integrity: sha512-ZlerYOCLgVdaqbVDt8+uQxmU9j8bKMVFcYo6zRHJJHTO9jN5060+y953aIVc/0zkVSKq+fHjDAtTGOrbxpeZCw==}
+  '@napi-rs/cli@3.10.3':
+    resolution: {integrity: sha512-RdHgxFNFUi7vSoLow7uqhigx6nhFBqe1nI8EL0hux66foc8wQ/4OL9WLlVRRkw+y67K7+BIHvYsEUn/cNpMsjA==}
     engines: {node: ^20.17.0 || ^22.13.0 || >= 23.5.0}
     hasBin: true
     peerDependencies:
@@ -1172,8 +1172,8 @@ packages:
     resolution: {integrity: sha512-IKXpvIzjnC9XTAUbVBcMfGS0EPaIXtW6v+zr+RRp+hqULEpo0owZax6wyRwPOJbWbzjYspQwusTsfVr0ifh4uQ==}
     engines: {node: '>=0.10.0'}
 
-  js-yaml@4.3.2:
-    resolution: {integrity: sha512-SFNOvSJ+Dgf/9An904Yx+CgSlIPCkIpao4qo51lpee25TIRejdH3rhR4EZMGoNx3/TP3O+wzWuiTFl4sqbltzA==}
+  js-yaml@5.4.2:
+    resolution: {integrity: sha512-m+aqu+LwO1O6sIopafj8HUVl5aawITwZQe/yHpMCKjaWBaA/d07B/QdMb3529REftiU+RMMHL3Vlsw3hON7vWg==}
     hasBin: true
 
   json-with-bigint@3.5.12:
@@ -1194,8 +1194,8 @@ packages:
     resolution: {integrity: sha512-dkEJPVvun4FryqBmZ5KhDo0K9iDXAwn08tMLDinNdRBNPcYEDiWYysLcc6k3mjTMlbP9KyylvRpd4wFtwrT9rw==}
     engines: {node: ^20.17.0 || >=22.9.0}
 
-  obug@2.1.4:
-    resolution: {integrity: sha512-4a+OsYv9UktOJKE+l1A4OufDgdRF9PifWj+tJnHURo/P+WOxpG4GzUFL9qCalmWauao6ogiG+QvnCovwPoyAWA==}
+  obug@3.0.0:
+    resolution: {integrity: sha512-5vvB5+W7ePv+p3uqxi+RcW1XAzLW0/hxt3/4X4Lc4qHudzOhmBiBwOY6DRob4WnanAEGvNcLjF+KNOufrUoEQw==}
     engines: {node: '>=12.20.0'}
 
   path-to-regexp@6.3.0:
@@ -1638,7 +1638,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
-  '@napi-rs/cli@3.9.0(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(supports-color@10.2.2)':
+  '@napi-rs/cli@3.10.3(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(supports-color@10.2.2)':
     dependencies:
       '@inquirer/prompts': 8.7.2
       '@napi-rs/cross-toolchain': 1.0.3(supports-color@10.2.2)
@@ -1647,8 +1647,8 @@ snapshots:
       clipanion: 4.0.0-rc.4(typanion@3.14.0)
       colorette: 2.0.20
       es-toolkit: 1.52.0
-      js-yaml: 4.3.2
-      obug: 2.1.4
+      js-yaml: 5.4.2
+      obug: 3.0.0
       semver: 7.8.5
       typanion: 3.14.0
       typescript: 6.0.3
@@ -2064,7 +2064,7 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
-  js-yaml@4.3.2:
+  js-yaml@5.4.2:
     dependencies:
       argparse: 2.0.1
 
@@ -2089,7 +2089,7 @@ snapshots:
 
   mute-stream@3.0.0: {}
 
-  obug@2.1.4: {}
+  obug@3.0.0: {}
 
   path-to-regexp@6.3.0: {}
 
