@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use anyhow::{Context, bail};
+use anyhow::{bail, Context};
 
 #[derive(Default, Clone, PartialEq, Eq, Debug)]
 pub struct Manifest<'a> {
