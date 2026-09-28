@@ -44,8 +44,8 @@
       "postversion": [
         "cargo check",
         "node .scripts/sync-scripts-tagname.js ${ release.type }",
-        "cp create-tauri-app.ps1 worker/scripts",
-        "cp create-tauri-app.sh worker/scripts"
+        "cp create-tauri-app.ps1 worker/public/scripts",
+        "cp create-tauri-app.sh worker/public/scripts"
       ],
       "assets": [
         {

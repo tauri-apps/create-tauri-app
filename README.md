@@ -134,7 +134,7 @@ Follow along with the prompts to choose your project name, frontend language, pa
    Blazor  (https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor/)
    ```
 
-Once completed, the utility reports that the template has been created and displays how to run it using the configured package manager. If it detects missing decencies on your system, it prints a list of packages and prompts how to install them.
+Once completed, the utility reports that the template has been created and displays how to run it using the configured package manager. If it detects missing dependencies on your system, it prints a list of packages and prompts how to install them.
 
 ## Scaffold a new project (non-interactive)
 

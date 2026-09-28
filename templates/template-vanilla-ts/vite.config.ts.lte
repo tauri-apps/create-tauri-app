@@ -1,10 +1,10 @@
 import { defineConfig } from "vite";{% if v2 %}
-
-// @ts-expect-error process is a nodejs global
+// @ts-expect-error type error without @types/node package
+import process from "node:process";
 const host = process.env.TAURI_DEV_HOST;{% endif %}
 
 // https://vite.dev/config/
-export default defineConfig(async () => ({
+export default defineConfig(() => ({
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //

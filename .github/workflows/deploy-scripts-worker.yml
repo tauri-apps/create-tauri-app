@@ -9,8 +9,11 @@ on:
     branches:
       - dev
     paths:
-      - '.github/workflows/deploy-scripts.yml'
+      - '.github/workflows/deploy-scripts-worker.yml'
       - 'worker/**'
+
+permissions:
+  contents: read
 
 jobs:
   deploy:
@@ -18,10 +21,22 @@ jobs:
     if: github.repository_owner == 'tauri-apps'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: cloudflare/wrangler-action@v3
+      - uses: actions/checkout@v7
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Install Node.js
+        uses: actions/setup-node@v7
         with:
-          command: publish
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - uses: cloudflare/wrangler-action@v4
+        with:
+          command: deploy
           workingDirectory: 'worker'
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
