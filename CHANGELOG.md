@@ -1,5 +1,42 @@
 # Changelog
 
+## [4.7.4]
+
+- [`af57aae`](https://www.github.com/tauri-apps/create-tauri-app/commit/af57aaedd325e040279f21d9464e1e778104d24d) ([#992](https://www.github.com/tauri-apps/create-tauri-app/pull/992) by [@CoffeeWithoutSugger](https://www.github.com/tauri-apps/create-tauri-app/../../CoffeeWithoutSugger)) Run `svelte-kit sync` after installing generated Svelte templates so the referenced SvelteKit tsconfig exists before checks run.
+
+## \[4.7.3]
+
+- [`55c577c`](https://www.github.com/tauri-apps/create-tauri-app/commit/55c577cc8aff672c7f7f184c1d360161f8d44c26) `4.7.3` is a re-release of `4.7.2` to resolve publishing issues.
+
+## \[4.7.2]
+
+- [`034e3dc`](https://www.github.com/tauri-apps/create-tauri-app/commit/034e3dcf15727367f635b25cafc27bf1d504dd10) ([#983](https://www.github.com/tauri-apps/create-tauri-app/pull/983) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Migrated to NAPI 3, this bumps the inernal crate `create-tauri-app-node`'s MSRV to 1.88
+
+## \[4.7.1]
+
+- [`87c455b`](https://www.github.com/tauri-apps/create-tauri-app/commit/87c455bb2003586682c287157cd831e9050df70b) ([#960](https://www.github.com/tauri-apps/create-tauri-app/pull/960) by [@katayama8000](https://www.github.com/tauri-apps/create-tauri-app/../../katayama8000)) added `import process from "node:process"` to Vite-based templates
+- [`5f8ed15`](https://www.github.com/tauri-apps/create-tauri-app/commit/5f8ed15d41101abc49de14e139d989f69fb01c32) ([#976](https://www.github.com/tauri-apps/create-tauri-app/pull/976) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Updated angular template to v22 and typescript to v6
+- [`3083ea8`](https://www.github.com/tauri-apps/create-tauri-app/commit/3083ea8191e9c4c98dd014fa411fb776ea7a28ae) ([#950](https://www.github.com/tauri-apps/create-tauri-app/pull/950) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Fix missing tauri-cli not printed for Blazor template
+- [`5bf2822`](https://www.github.com/tauri-apps/create-tauri-app/commit/5bf282217ff4455493971a3d2f59e4f53f1cddd7) ([#965](https://www.github.com/tauri-apps/create-tauri-app/pull/965) by [@SoftAndoWeto](https://www.github.com/tauri-apps/create-tauri-app/../../SoftAndoWeto)) Remove CMD-incompatible quotes from the printed `tauri-cli` install command.
+- [`0b66048`](https://www.github.com/tauri-apps/create-tauri-app/commit/0b66048820d7379d1776c8a95123ec82ba1eb204) ([#959](https://www.github.com/tauri-apps/create-tauri-app/pull/959) by [@katayama8000](https://www.github.com/tauri-apps/create-tauri-app/../../katayama8000)) Remove unnecessary `async` keyword from `defineConfig` in Vite-based templates
+- [`847647e`](https://www.github.com/tauri-apps/create-tauri-app/commit/847647e94a5ec12a83f70b785f55569453d7cdbf) ([#975](https://www.github.com/tauri-apps/create-tauri-app/pull/975) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Updated vite to v8 and typescript to v6 for all templates
+
+## \[4.7.0]
+
+- [`8d15234`](https://www.github.com/tauri-apps/create-tauri-app/commit/8d15234e7b473afe68c8601e88f11d1646157404) ([#929](https://www.github.com/tauri-apps/create-tauri-app/pull/929) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Fix the `.ico` icon being blurry because of it lacks some sizes
+- [`22db439`](https://www.github.com/tauri-apps/create-tauri-app/commit/22db43928e31af579b29b58a8bef8a2b78b9e851) ([#944](https://www.github.com/tauri-apps/create-tauri-app/pull/944) by [@pronebird](https://www.github.com/tauri-apps/create-tauri-app/../../pronebird)) -   Update `dioxus` to `0.7` with minor changes to the template.
+  - Disable interactive mode for `dx serve`. Fixes broken terminal when developing.
+- [`f68d870`](https://www.github.com/tauri-apps/create-tauri-app/commit/f68d870adedb1519b8da3aeb4124ee5d106d5a68) ([#895](https://www.github.com/tauri-apps/create-tauri-app/pull/895) by [@bicarlsen](https://www.github.com/tauri-apps/create-tauri-app/../../bicarlsen)) Bump `leptos` to `0.8`.
+
+## \[4.6.2]
+
+- [`43802a4`](https://www.github.com/tauri-apps/create-tauri-app/commit/43802a492d53179234f5944944a8c526ed7eebc3) ([#912](https://www.github.com/tauri-apps/create-tauri-app/pull/912) by [@JosefBredereck](https://www.github.com/tauri-apps/create-tauri-app/../../JosefBredereck)) updated angular template to v20
+
+## \[4.6.1]
+
+- [`b3a990b`](https://www.github.com/tauri-apps/create-tauri-app/commit/b3a990b909aea2290b4a4b68bd3ca19cf38c5c76) ([#909](https://www.github.com/tauri-apps/create-tauri-app/pull/909) by [@Mota-Link](https://www.github.com/tauri-apps/create-tauri-app/../../Mota-Link)) fix template-dioxus loading assets error
+- [`a9cc156`](https://www.github.com/tauri-apps/create-tauri-app/commit/a9cc156e29e3471791957571a5d9384bf20e8786) ([#916](https://www.github.com/tauri-apps/create-tauri-app/pull/916) by [@ernestorbemx](https://www.github.com/tauri-apps/create-tauri-app/../../ernestorbemx)) Update `react` and `react-ts` templates to React 19 based on create-vite template
+
 ## \[4.6.0]
 
 - [`b9a8d08`](https://www.github.com/tauri-apps/create-tauri-app/commit/b9a8d086d8b9c24ac617ce1a207134c6399128e8) ([#900](https://www.github.com/tauri-apps/create-tauri-app/pull/900) by [@Legend-Master](https://www.github.com/tauri-apps/create-tauri-app/../../Legend-Master)) Changed default app identifier from `com.{package_name}.app` to `com.{user_name}.{package_name}` as `.app` causes problems on macOS

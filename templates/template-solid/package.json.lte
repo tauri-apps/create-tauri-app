@@ -17,8 +17,8 @@
     "@tauri-apps/plugin-opener": "^2"{% endif %}
   },
   "devDependencies": {
-    "vite": "^6.0.3",
-    "vite-plugin-solid": "^2.11.0",
+    "vite": "^8.0.16",
+    "vite-plugin-solid": "^2.11.12",
     "@tauri-apps/cli": "{% if v2 %}^2{% else %}^1{% endif %}"
   }
 }

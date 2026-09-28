@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-License-Identifier: MIT
 
-beforeDevCommand = dx serve --port 1420
+beforeDevCommand = dx serve --port 1420 --interactive false
 beforeBuildCommand = dx bundle --release
 devUrl = http://localhost:1420
 frontendDist = ../dist/public
