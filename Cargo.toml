@@ -17,7 +17,7 @@ name = "cargo-create-tauri-app"
 path = "src/main.rs"
 
 [workspace]
-resolver = "2"
+resolver = "3"
 members = ["node"]
 
 [profile.release]
