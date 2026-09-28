@@ -212,7 +212,7 @@ enum Stmt<'a> {
     },
 }
 
-impl Stmt<'_> {
+impl<'a> Stmt<'a> {
     fn execute<V, T>(&self, out: &mut T, data: &HashMap<&str, V>) -> Result<()>
     where
         T: Write,
