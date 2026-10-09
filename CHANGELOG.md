@@ -1,5 +1,9 @@
 # Changelog
 
+## [4.8.0]
+
+- [`12db955`](https://www.github.com/tauri-apps/create-tauri-app/commit/12db955f20162e7422cbeed76c2aa630760ccca3) ([#906](https://www.github.com/tauri-apps/create-tauri-app/pull/906) by [@oscartbeaumont](https://www.github.com/tauri-apps/create-tauri-app/../../oscartbeaumont)) Upgrade CLI and templates to Rust 2024 edition.
+
 ## [4.7.4]
 
 - [`af57aae`](https://www.github.com/tauri-apps/create-tauri-app/commit/af57aaedd325e040279f21d9464e1e778104d24d) ([#992](https://www.github.com/tauri-apps/create-tauri-app/pull/992) by [@CoffeeWithoutSugger](https://www.github.com/tauri-apps/create-tauri-app/../../CoffeeWithoutSugger)) Run `svelte-kit sync` after installing generated Svelte templates so the referenced SvelteKit tsconfig exists before checks run.
