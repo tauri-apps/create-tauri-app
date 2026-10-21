@@ -1,0 +1,4 @@
+@using {% project_name_pascal_case %}
+@using {% project_name_pascal_case %}.Models
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers 

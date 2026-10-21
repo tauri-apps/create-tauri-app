@@ -131,6 +131,7 @@ Follow along with the prompts to choose your project name, frontend language, pa
 
    ```
    ? Choose your UI template ›
+   AspNet  (https://dotnet.microsoft.com/en-us/apps/aspnet/)
    Blazor  (https://dotnet.microsoft.com/en-us/apps/aspnet/web-apps/blazor/)
    ```
 
@@ -181,6 +182,7 @@ Currently supported template presets include:
 - `yew`
 - `leptos`
 - `sycamore`
+- `aspnet`
 - `blazor`
 
 You can use `.` for the project name to scaffold in the current directory.
