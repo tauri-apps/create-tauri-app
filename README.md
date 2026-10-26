@@ -8,6 +8,8 @@
 [![https://good-labs.github.io/greater-good-affirmation/assets/images/badge.svg](https://good-labs.github.io/greater-good-affirmation/assets/images/badge.svg)](https://good-labs.github.io/greater-good-affirmation)
 [![support](https://img.shields.io/badge/sponsor-Open%20Collective-blue.svg)](https://opencollective.com/tauri)
 [![changelog](https://img.shields.io/badge/CHANGELOG-yellowgreen)](./CHANGELOG.md)
+[![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/tauri-apps/create-tauri-app/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/tauri-apps/create-tauri-app)
+[![SWH](https://archive.softwareheritage.org/badge/swh:1:dir:72ddbb5028ad83c94e5c392ef04df7b652814f91/)](https://archive.softwareheritage.org/swh:1:dir:72ddbb5028ad83c94e5c392ef04df7b652814f91;origin=https://github.com/tauri-apps/create-tauri-app;visit=swh:1:snp:d204f3b56da6f45ebd4cdb02f45594e1ec30bd14;anchor=swh:1:rev:12db955f20162e7422cbeed76c2aa630760ccca3)
 
 # Usage
 
