@@ -568,6 +568,49 @@ mod specta_tests {
     use super::*;
 
     #[test]
+    fn tauri_one_manifests_use_a_compatible_edition() {
+        for template in [
+            Template::Vanilla,
+            Template::React,
+            Template::Yew,
+            Template::Leptos,
+            Template::Sycamore,
+            Template::Dioxus,
+        ] {
+            let dir = tempfile::tempdir().unwrap();
+            let manager = if template == Template::React {
+                PackageManager::Npm
+            } else {
+                PackageManager::Cargo
+            };
+            template
+                .render(
+                    dir.path(),
+                    manager,
+                    "test-app",
+                    "test-app",
+                    "com.test.app",
+                    RenderOptions {
+                        tauri_version: TauriVersion::V1,
+                        specta: false,
+                    },
+                )
+                .unwrap();
+            let manifest = fs::read_to_string(dir.path().join("src-tauri/Cargo.toml")).unwrap();
+            assert!(manifest.contains("edition = \"2021\""), "{template}");
+            let root_manifest = dir.path().join("Cargo.toml");
+            if root_manifest.exists() {
+                assert!(
+                    fs::read_to_string(root_manifest)
+                        .unwrap()
+                        .contains("edition = \"2021\""),
+                    "{template}"
+                );
+            }
+        }
+    }
+
+    #[test]
     fn specta_is_a_flavor_not_a_template() {
         assert!("specta".parse::<Template>().is_err());
         for template in [
