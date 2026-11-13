@@ -124,7 +124,9 @@ Follow along with the prompts to choose your project name, frontend language, pa
 
    ? Choose your UI flavor ›
    TypeScript
+   TypeScript + Tauri Specta
    JavaScript
+   JavaScript + Tauri Specta
    ```
 
    Options for **.NET**:
@@ -184,6 +186,11 @@ Currently supported template presets include:
 - `blazor`
 
 You can use `.` for the project name to scaffold in the current directory.
+
+For Tauri 2 JavaScript and TypeScript templates, add `--specta` to generate
+[Tauri Specta](https://github.com/specta-rs/tauri-specta) command bindings, for example
+`cargo create-tauri-app my-app --manager npm --template react-ts --specta`.
+The interactive UI flavor prompt also offers Specta variants.
 
 ## Semver
 

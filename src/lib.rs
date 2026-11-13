@@ -73,6 +73,7 @@ where
         template,
         force,
         identifier,
+        mut specta,
     } = args;
     let cwd = std::env::current_dir()?;
 
@@ -273,14 +274,19 @@ where
                 let template = templates_no_flavors[index];
 
                 // Prompt for flavors if the template has more than one flavor
-                let flavors = template.flavors(pkg_manager);
+                let flavors = template.flavors(pkg_manager, tauri_version == TauriVersion::V2);
                 if let Some(flavors) = flavors {
                     let index = Select::with_theme(&ColorfulTheme::default())
                         .with_prompt("Choose your UI flavor")
                         .items(flavors)
                         .default(0)
                         .interact()?;
-                    template.from_flavor(flavors[index])
+                    let flavor = flavors[index];
+                    specta |= matches!(
+                        flavor,
+                        template::Flavor::JavaScriptSpecta | template::Flavor::TypeScriptSpecta
+                    );
+                    template.from_flavor(flavor)
                 } else {
                     template
                 }
@@ -309,13 +315,30 @@ where
         exit(1);
     }
 
-    if tauri_version == TauriVersion::V1
-        && matches!(
-            template,
-            template::Template::Specta | template::Template::SpectaTs
-        )
+    if specta
+        && (tauri_version == TauriVersion::V1
+            || !pkg_manager.templates().contains(&template)
+            || !matches!(
+                template,
+                template::Template::Vanilla
+                    | template::Template::VanillaTs
+                    | template::Template::Vue
+                    | template::Template::VueTs
+                    | template::Template::Svelte
+                    | template::Template::SvelteTs
+                    | template::Template::React
+                    | template::Template::ReactTs
+                    | template::Template::Solid
+                    | template::Template::SolidTs
+                    | template::Template::Preact
+                    | template::Template::PreactTs
+                    | template::Template::Angular
+            )
+            || pkg_manager == PackageManager::Cargo)
     {
-        anyhow::bail!("the {template} template requires Tauri 2");
+        anyhow::bail!(
+            "Tauri Specta requires Tauri 2 and a JavaScript or TypeScript template with a JavaScript package manager"
+        );
     }
 
     // Remove the target dir contents before rendering the template
@@ -349,6 +372,7 @@ where
         &package_name,
         &identifier,
         tauri_version,
+        specta,
     )?;
 
     // Print post-render instructions

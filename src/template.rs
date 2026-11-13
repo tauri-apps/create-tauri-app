@@ -26,6 +26,8 @@ struct EMBEDDED_TEMPLATES;
 pub enum Flavor {
     JavaScript,
     TypeScript,
+    JavaScriptSpecta,
+    TypeScriptSpecta,
 }
 
 impl Display for Flavor {
@@ -33,6 +35,8 @@ impl Display for Flavor {
         match self {
             Flavor::JavaScript => write!(f, "JavaScript"),
             Flavor::TypeScript => write!(f, "TypeScript"),
+            Flavor::JavaScriptSpecta => write!(f, "JavaScript + Tauri Specta"),
+            Flavor::TypeScriptSpecta => write!(f, "TypeScript + Tauri Specta"),
         }
     }
 }
@@ -44,8 +48,6 @@ pub enum Template {
     #[default]
     Vanilla,
     VanillaTs,
-    Specta,
-    SpectaTs,
     Vue,
     VueTs,
     Svelte,
@@ -69,8 +71,6 @@ impl Display for Template {
         match self {
             Template::Vanilla => write!(f, "vanilla"),
             Template::VanillaTs => write!(f, "vanilla-ts"),
-            Template::Specta => write!(f, "specta"),
-            Template::SpectaTs => write!(f, "specta-ts"),
             Template::Vue => write!(f, "vue"),
             Template::VueTs => write!(f, "vue-ts"),
             Template::Svelte => write!(f, "svelte"),
@@ -97,8 +97,6 @@ impl FromStr for Template {
         match s {
             "vanilla" => Ok(Template::Vanilla),
             "vanilla-ts" => Ok(Template::VanillaTs),
-            "specta" => Ok(Template::Specta),
-            "specta-ts" => Ok(Template::SpectaTs),
             "vue" => Ok(Template::Vue),
             "vue-ts" => Ok(Template::VueTs),
             "svelte" => Ok(Template::Svelte),
@@ -131,7 +129,6 @@ impl Template {
     pub const fn select_text<'a>(&self) -> &'a str {
         match self {
             Template::Vanilla => "Vanilla",
-            Template::Specta => "Tauri Specta - (https://github.com/specta-rs/tauri-specta)",
             Template::Vue => "Vue - (https://vuejs.org/)",
             Template::Svelte => "Svelte - (https://svelte.dev/)",
             Template::React => "React - (https://react.dev/)",
@@ -155,24 +152,91 @@ mod specta_tests {
     use super::*;
 
     #[test]
-    fn specta_flavors_are_selectable() {
-        assert_eq!("specta".parse::<Template>().unwrap(), Template::Specta);
-        assert_eq!("specta-ts".parse::<Template>().unwrap(), Template::SpectaTs);
-        assert_eq!(
-            Template::Specta.from_flavor(Flavor::TypeScript),
-            Template::SpectaTs
-        );
-        assert_eq!(Template::SpectaTs.without_flavor(), Template::Specta);
+    fn specta_is_a_flavor_not_a_template() {
+        assert!("specta".parse::<Template>().is_err());
+        for template in [
+            Template::Vanilla,
+            Template::React,
+            Template::Vue,
+            Template::Svelte,
+            Template::Solid,
+            Template::Preact,
+        ] {
+            let flavors = template.flavors(PackageManager::Npm, true).unwrap();
+            assert!(flavors.contains(&Flavor::JavaScriptSpecta));
+            assert!(flavors.contains(&Flavor::TypeScriptSpecta));
+            assert_eq!(template.from_flavor(Flavor::JavaScriptSpecta), template);
+            assert_eq!(
+                template.from_flavor(Flavor::TypeScriptSpecta),
+                template.from_flavor(Flavor::TypeScript)
+            );
+            assert!(
+                !template
+                    .flavors(PackageManager::Npm, false)
+                    .unwrap()
+                    .contains(&Flavor::TypeScriptSpecta)
+            );
+        }
         assert!(
-            PackageManager::Npm
-                .templates()
-                .contains(&Template::SpectaTs)
+            Template::Angular
+                .flavors(PackageManager::Npm, true)
+                .unwrap()
+                .contains(&Flavor::TypeScriptSpecta)
         );
-        assert!(
-            !PackageManager::Cargo
-                .templates()
-                .contains(&Template::Specta)
-        );
+    }
+
+    #[test]
+    fn renders_specta_for_each_javascript_template() {
+        for template in [
+            Template::Vanilla,
+            Template::VanillaTs,
+            Template::Vue,
+            Template::VueTs,
+            Template::Svelte,
+            Template::SvelteTs,
+            Template::React,
+            Template::ReactTs,
+            Template::Solid,
+            Template::SolidTs,
+            Template::Preact,
+            Template::PreactTs,
+            Template::Angular,
+        ] {
+            let dir = tempfile::tempdir().unwrap();
+            template
+                .render(
+                    dir.path(),
+                    PackageManager::Npm,
+                    "test-app",
+                    "test-app",
+                    "com.test.app",
+                    TauriVersion::V2,
+                    true,
+                )
+                .unwrap();
+            let ts = matches!(
+                template,
+                Template::VanillaTs
+                    | Template::VueTs
+                    | Template::SvelteTs
+                    | Template::ReactTs
+                    | Template::SolidTs
+                    | Template::PreactTs
+                    | Template::Angular
+            );
+            assert!(
+                dir.path()
+                    .join(if ts {
+                        "src/bindings.ts"
+                    } else {
+                        "src/bindings.js"
+                    })
+                    .exists(),
+                "{template}"
+            );
+            let rust = fs::read_to_string(dir.path().join("src-tauri/src/lib.rs")).unwrap();
+            assert!(rust.contains("builder.invoke_handler()"), "{template}");
+        }
     }
 }
 
@@ -180,8 +244,6 @@ impl Template {
     pub const ALL: &[Template] = &[
         Template::Vanilla,
         Template::VanillaTs,
-        Template::Specta,
-        Template::SpectaTs,
         Template::Vue,
         Template::VueTs,
         Template::Svelte,
@@ -200,7 +262,33 @@ impl Template {
         Template::Dioxus,
     ];
 
-    pub fn flavors<'b>(&self, pkg_manager: PackageManager) -> Option<&'b [Flavor]> {
+    pub fn flavors<'b>(
+        &self,
+        pkg_manager: PackageManager,
+        specta_available: bool,
+    ) -> Option<&'b [Flavor]> {
+        if specta_available && matches!(self, Template::Angular) {
+            return Some(&[Flavor::TypeScript, Flavor::TypeScriptSpecta]);
+        }
+        if specta_available
+            && pkg_manager != PackageManager::Cargo
+            && matches!(
+                self,
+                Template::Vanilla
+                    | Template::Vue
+                    | Template::Svelte
+                    | Template::React
+                    | Template::Solid
+                    | Template::Preact
+            )
+        {
+            return Some(&[
+                Flavor::TypeScript,
+                Flavor::TypeScriptSpecta,
+                Flavor::JavaScript,
+                Flavor::JavaScriptSpecta,
+            ]);
+        }
         match self {
             Template::Vanilla => {
                 if pkg_manager == PackageManager::Cargo {
@@ -210,7 +298,6 @@ impl Template {
                 }
             }
             Template::Vue => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
-            Template::Specta => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
             Template::Svelte => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
             Template::React => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
             Template::Solid => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
@@ -220,9 +307,13 @@ impl Template {
     }
 
     pub fn from_flavor(&self, flavor: Flavor) -> Self {
+        let flavor = match flavor {
+            Flavor::TypeScriptSpecta => Flavor::TypeScript,
+            Flavor::JavaScriptSpecta => Flavor::JavaScript,
+            other => other,
+        };
         match (self, flavor) {
             (Template::Vanilla, Flavor::TypeScript) => Template::VanillaTs,
-            (Template::Specta, Flavor::TypeScript) => Template::SpectaTs,
             (Template::Vue, Flavor::TypeScript) => Template::VueTs,
             (Template::Svelte, Flavor::TypeScript) => Template::SvelteTs,
             (Template::React, Flavor::TypeScript) => Template::ReactTs,
@@ -235,7 +326,6 @@ impl Template {
     pub fn without_flavor(&self) -> Self {
         match self {
             Template::VanillaTs => Template::Vanilla,
-            Template::SpectaTs => Template::Specta,
             Template::VueTs => Template::Vue,
             Template::SvelteTs => Template::Svelte,
             Template::ReactTs => Template::React,
@@ -255,8 +345,6 @@ impl Template {
                 PackageManager::Bun,
             ],
             Template::VanillaTs
-            | Template::Specta
-            | Template::SpectaTs
             | Template::Vue
             | Template::VueTs
             | Template::Svelte
@@ -311,9 +399,25 @@ impl Template {
         package_name: &str,
         identifier: &str,
         tauri_version: TauriVersion,
+        specta: bool,
     ) -> anyhow::Result<()> {
+        let specta_ts = matches!(
+            self,
+            Template::VanillaTs
+                | Template::VueTs
+                | Template::SvelteTs
+                | Template::ReactTs
+                | Template::SolidTs
+                | Template::PreactTs
+                | Template::Angular
+        );
+        let template_dir = if specta && *self == Template::Vanilla {
+            "_specta-vanilla_".to_string()
+        } else {
+            format!("template-{self}")
+        };
         let manifest_bytes =
-            EMBEDDED_TEMPLATES::get(&format!("template-{self}/{CTA_MANIFEST_FILENAME}"))
+            EMBEDDED_TEMPLATES::get(&format!("{template_dir}/{CTA_MANIFEST_FILENAME}"))
                 .with_context(|| "Failed to get manifest bytes")?
                 .data
                 .to_vec();
@@ -399,6 +503,8 @@ impl Template {
             ),
             ("lib_name", lib_name),
             ("styles", styles),
+            ("specta", specta.to_string()),
+            ("specta_ts", specta_ts.to_string()),
         ]
         .into();
 
@@ -500,7 +606,7 @@ impl Template {
                 .next()
                 .unwrap()
                 .as_os_str()
-                == path::PathBuf::from(format!("template-{self}"))
+                == path::PathBuf::from(&template_dir)
         }) {
             write_file(&file, &template_data)?;
         }
@@ -518,6 +624,24 @@ impl Template {
                 .create(true)
                 .open(dest)?;
             file.write_all(&data)?;
+        }
+
+        if specta {
+            let extension = if specta_ts { "ts" } else { "js" };
+            let data = EMBEDDED_TEMPLATES::get(&format!("_specta_/bindings.{extension}"))
+                .context("Failed to get Specta bindings")?
+                .data;
+            fs::create_dir_all(target_dir.join("src"))?;
+            fs::write(target_dir.join(format!("src/bindings.{extension}")), data)?;
+            let readme = target_dir.join("README.md");
+            let mut file = fs::OpenOptions::new()
+                .append(true)
+                .create(true)
+                .open(readme)?;
+            writeln!(
+                file,
+                "\n## Tauri Specta\n\nBindings are generated in `src/bindings.{extension}` during development. After changing commands, run `cargo test --manifest-path src-tauri/Cargo.toml export_bindings` to regenerate them before building the frontend. Commit the generated file. See https://github.com/specta-rs/tauri-specta."
+            )?;
         }
 
         Ok(())

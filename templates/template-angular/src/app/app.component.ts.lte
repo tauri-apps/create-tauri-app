@@ -1,6 +1,6 @@
 import { Component, signal } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
-import { invoke } from "@tauri-apps/api/{% if v2 %}core{% else %}tauri{% endif %}";
+{% if specta %}import { commands } from "../bindings";{% else %}import { invoke } from "@tauri-apps/api/{% if v2 %}core{% else %}tauri{% endif %}";{% endif %}
 
 @Component({
   selector: "app-root",
@@ -15,7 +15,7 @@ export class AppComponent {
     event.preventDefault();
 
     // Learn more about Tauri commands at {% if v2 %}https://tauri.app/develop/calling-rust/{% else %}https://v1.tauri.app/v1/guides/features/command{% endif %}
-    invoke<string>("greet", { name }).then((text) => {
+    {% if specta %}commands.greet(name){% else %}invoke<string>("greet", { name }){% endif %}.then((text) => {
       this.greetingMessage.set(text);
     });
   }

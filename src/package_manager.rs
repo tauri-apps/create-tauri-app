@@ -95,7 +95,6 @@ impl PackageManager {
             | PackageManager::Bun => &[
                 Template::Vanilla,
                 Template::Vue,
-                Template::Specta,
                 Template::Svelte,
                 Template::React,
                 Template::Solid,
@@ -122,8 +121,6 @@ impl PackageManager {
             | PackageManager::Bun => &[
                 Template::Vanilla,
                 Template::VanillaTs,
-                Template::Specta,
-                Template::SpectaTs,
                 Template::Vue,
                 Template::VueTs,
                 Template::Svelte,

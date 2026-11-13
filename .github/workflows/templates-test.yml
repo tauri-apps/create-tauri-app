@@ -158,15 +158,14 @@ jobs:
         working-directory: tauri-app
 
       - name: Verify Tauri Specta bindings
-        if: matrix.settings.template == 'specta' || matrix.settings.template == 'specta-ts'
+        if: matrix.settings.specta
         working-directory: tauri-app
         shell: bash
         run: |
-          extension=js
-          if [ '${{ matrix.settings.template }}' = specta-ts ]; then extension=ts; fi
-          cp "src/bindings.$extension" "$RUNNER_TEMP/bindings.$extension"
+          binding=$(find src -maxdepth 1 -name 'bindings.*')
+          cp "$binding" "$RUNNER_TEMP/bindings"
           cargo test --manifest-path src-tauri/Cargo.toml export_bindings
-          cmp "$RUNNER_TEMP/bindings.$extension" "src/bindings.$extension"
+          cmp "$RUNNER_TEMP/bindings" "$binding"
 
       - run: ${{ matrix.settings.run_cmd }} tauri build ${{ matrix.settings.no_bundle_flag }}
         # Skip deno angular test for now, `ng build` stucks on deno
