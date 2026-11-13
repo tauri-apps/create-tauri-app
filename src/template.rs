@@ -163,8 +163,15 @@ mod specta_tests {
             Template::Preact,
         ] {
             let flavors = template.flavors(PackageManager::Npm, true).unwrap();
-            assert!(flavors.contains(&Flavor::JavaScriptSpecta));
-            assert!(flavors.contains(&Flavor::TypeScriptSpecta));
+            assert_eq!(
+                flavors,
+                &[
+                    Flavor::TypeScript,
+                    Flavor::JavaScript,
+                    Flavor::TypeScriptSpecta,
+                    Flavor::JavaScriptSpecta
+                ]
+            );
             assert_eq!(template.from_flavor(Flavor::JavaScriptSpecta), template);
             assert_eq!(
                 template.from_flavor(Flavor::TypeScriptSpecta),
@@ -284,8 +291,8 @@ impl Template {
         {
             return Some(&[
                 Flavor::TypeScript,
-                Flavor::TypeScriptSpecta,
                 Flavor::JavaScript,
+                Flavor::TypeScriptSpecta,
                 Flavor::JavaScriptSpecta,
             ]);
         }

@@ -124,8 +124,8 @@ Follow along with the prompts to choose your project name, frontend language, pa
 
    ? Choose your UI flavor ›
    TypeScript
-   TypeScript + Tauri Specta
    JavaScript
+   TypeScript + Tauri Specta
    JavaScript + Tauri Specta
    ```
 
