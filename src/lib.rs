@@ -309,6 +309,15 @@ where
         exit(1);
     }
 
+    if tauri_version == TauriVersion::V1
+        && matches!(
+            template,
+            template::Template::Specta | template::Template::SpectaTs
+        )
+    {
+        anyhow::bail!("the {template} template requires Tauri 2");
+    }
+
     // Remove the target dir contents before rendering the template
     // SAFETY: Upon reaching this line, the user already accepted to overwrite
     if target_dir.exists() {

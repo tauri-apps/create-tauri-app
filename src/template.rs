@@ -44,6 +44,8 @@ pub enum Template {
     #[default]
     Vanilla,
     VanillaTs,
+    Specta,
+    SpectaTs,
     Vue,
     VueTs,
     Svelte,
@@ -67,6 +69,8 @@ impl Display for Template {
         match self {
             Template::Vanilla => write!(f, "vanilla"),
             Template::VanillaTs => write!(f, "vanilla-ts"),
+            Template::Specta => write!(f, "specta"),
+            Template::SpectaTs => write!(f, "specta-ts"),
             Template::Vue => write!(f, "vue"),
             Template::VueTs => write!(f, "vue-ts"),
             Template::Svelte => write!(f, "svelte"),
@@ -93,6 +97,8 @@ impl FromStr for Template {
         match s {
             "vanilla" => Ok(Template::Vanilla),
             "vanilla-ts" => Ok(Template::VanillaTs),
+            "specta" => Ok(Template::Specta),
+            "specta-ts" => Ok(Template::SpectaTs),
             "vue" => Ok(Template::Vue),
             "vue-ts" => Ok(Template::VueTs),
             "svelte" => Ok(Template::Svelte),
@@ -125,6 +131,7 @@ impl Template {
     pub const fn select_text<'a>(&self) -> &'a str {
         match self {
             Template::Vanilla => "Vanilla",
+            Template::Specta => "Tauri Specta - (https://github.com/specta-rs/tauri-specta)",
             Template::Vue => "Vue - (https://vuejs.org/)",
             Template::Svelte => "Svelte - (https://svelte.dev/)",
             Template::React => "React - (https://react.dev/)",
@@ -143,10 +150,38 @@ impl Template {
     }
 }
 
+#[cfg(test)]
+mod specta_tests {
+    use super::*;
+
+    #[test]
+    fn specta_flavors_are_selectable() {
+        assert_eq!("specta".parse::<Template>().unwrap(), Template::Specta);
+        assert_eq!("specta-ts".parse::<Template>().unwrap(), Template::SpectaTs);
+        assert_eq!(
+            Template::Specta.from_flavor(Flavor::TypeScript),
+            Template::SpectaTs
+        );
+        assert_eq!(Template::SpectaTs.without_flavor(), Template::Specta);
+        assert!(
+            PackageManager::Npm
+                .templates()
+                .contains(&Template::SpectaTs)
+        );
+        assert!(
+            !PackageManager::Cargo
+                .templates()
+                .contains(&Template::Specta)
+        );
+    }
+}
+
 impl Template {
     pub const ALL: &[Template] = &[
         Template::Vanilla,
         Template::VanillaTs,
+        Template::Specta,
+        Template::SpectaTs,
         Template::Vue,
         Template::VueTs,
         Template::Svelte,
@@ -175,6 +210,7 @@ impl Template {
                 }
             }
             Template::Vue => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
+            Template::Specta => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
             Template::Svelte => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
             Template::React => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
             Template::Solid => Some(&[Flavor::TypeScript, Flavor::JavaScript]),
@@ -186,6 +222,7 @@ impl Template {
     pub fn from_flavor(&self, flavor: Flavor) -> Self {
         match (self, flavor) {
             (Template::Vanilla, Flavor::TypeScript) => Template::VanillaTs,
+            (Template::Specta, Flavor::TypeScript) => Template::SpectaTs,
             (Template::Vue, Flavor::TypeScript) => Template::VueTs,
             (Template::Svelte, Flavor::TypeScript) => Template::SvelteTs,
             (Template::React, Flavor::TypeScript) => Template::ReactTs,
@@ -198,6 +235,7 @@ impl Template {
     pub fn without_flavor(&self) -> Self {
         match self {
             Template::VanillaTs => Template::Vanilla,
+            Template::SpectaTs => Template::Specta,
             Template::VueTs => Template::Vue,
             Template::SvelteTs => Template::Svelte,
             Template::ReactTs => Template::React,
@@ -217,6 +255,8 @@ impl Template {
                 PackageManager::Bun,
             ],
             Template::VanillaTs
+            | Template::Specta
+            | Template::SpectaTs
             | Template::Vue
             | Template::VueTs
             | Template::Svelte

@@ -1,0 +1,38 @@
+#[tauri::command]
+#[specta::specta]
+fn greet(name: String) -> String {
+    format!("Hello, {name}! You've been greeted from Rust!")
+}
+
+fn specta_builder() -> tauri_specta::Builder<tauri::Wry> {
+    tauri_specta::Builder::<tauri::Wry>::new()
+        .commands(tauri_specta::collect_commands![greet])
+}
+
+#[cfg(any(debug_assertions, test))]
+fn export_bindings(builder: &tauri_specta::Builder<tauri::Wry>) {
+    builder
+        .export(specta_typescript::Typescript::default(), std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../src/bindings.ts"))
+        .expect("failed to export Tauri Specta bindings");
+}
+
+#[cfg_attr(mobile, tauri::mobile_entry_point)]
+pub fn run() {
+    let builder = specta_builder();
+    #[cfg(debug_assertions)]
+    export_bindings(&builder);
+
+    tauri::Builder::default()
+        .plugin(tauri_plugin_opener::init())
+        .invoke_handler(builder.invoke_handler())
+        .run(tauri::generate_context!())
+        .expect("error while running tauri application");
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn export_bindings() {
+        super::export_bindings(&super::specta_builder());
+    }
+}

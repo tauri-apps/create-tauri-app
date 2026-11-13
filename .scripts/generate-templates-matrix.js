@@ -15,6 +15,8 @@ const nodeJsTemplates = [
   "react-ts",
   "vanilla",
   "vanilla-ts",
+  "specta",
+  "specta-ts",
   "preact",
   "preact-ts",
   "angular",
@@ -92,7 +94,7 @@ matrixConfig
           ...managerInfo,
         };
         outMatrix.push(jobInfo);
-        outMatrix.push({
+        if (!["specta", "specta-ts"].includes(t)) outMatrix.push({
           ...jobInfo,
           tauriVersion: 1,
           no_bundle_flag: "-b none",
