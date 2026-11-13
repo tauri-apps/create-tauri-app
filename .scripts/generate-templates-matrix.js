@@ -2,7 +2,7 @@ const trigger = process.argv[2];
 const isCron = trigger === "schedule" || trigger === "workflow_dispatch";
 
 const changedFilesStr = process.argv[3];
-const changedFiles = changedFilesStr.split(",");
+const changedFiles = JSON.parse(changedFilesStr || "[]");
 
 const nodeJsTemplates = [
   "svelte",
@@ -75,7 +75,8 @@ matrixConfig
         isCron ||
         changedFiles.some(
           (e) =>
-            e.startsWith(`templates/base`) ||
+            e.startsWith(`templates/_base_`) ||
+            e.startsWith(`templates/_specta`) ||
             e.startsWith(`templates/template-${t}`) ||
             e.startsWith("src") ||
             e.startsWith("Cargo.toml") ||
@@ -98,6 +99,9 @@ matrixConfig
           no_bundle_flag: "-b none",
           flags: "--tauri-version 1",
         });
+        if (managerInfo.manager === "npm" && nodeJsTemplates.includes(t)) {
+          outMatrix.push({ ...jobInfo, flags: "--specta", specta: true });
+        }
       }
     }
   });

@@ -1,14 +1,43 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 #[tauri::command]
-fn greet(name: &str) -> String {
+{% if specta %}#[specta::specta]
+{% endif %}fn greet(name: {% if specta %}String{% else %}&str{% endif %}) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
 }
 
+{% if specta %}fn specta_builder() -> tauri_specta::Builder<tauri::Wry> {
+    tauri_specta::Builder::<tauri::Wry>::new()
+        .commands(tauri_specta::collect_commands![greet])
+}
+
+#[cfg(any(debug_assertions, test))]
+fn export_bindings(builder: &tauri_specta::Builder<tauri::Wry>) {
+    builder
+        .export(
+            specta_typescript::{% if specta_ts %}Typescript{% else %}JSDoc{% endif %}::default(),
+            std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../src/bindings.{% if specta_ts %}ts{% else %}js{% endif %}"),
+        )
+        .expect("failed to export Tauri Specta bindings");
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn export_bindings() {
+        super::export_bindings(&super::specta_builder());
+    }
+}
+{% endif %}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    tauri::Builder::default()
+    {% if specta %}let builder = specta_builder();
+    #[cfg(debug_assertions)]
+    export_bindings(&builder);
+
+    {% endif %}tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![greet])
+        .invoke_handler({% if specta %}builder.invoke_handler(){% else %}tauri::generate_handler![greet]{% endif %})
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

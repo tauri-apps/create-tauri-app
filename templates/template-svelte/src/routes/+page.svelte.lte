@@ -1,5 +1,5 @@
 <script>
-  import { invoke } from "@tauri-apps/api/{% if v2 %}core{% else %}tauri{% endif %}";
+  {% if specta %}import { commands } from "../bindings";{% else %}import { invoke } from "@tauri-apps/api/{% if v2 %}core{% else %}tauri{% endif %}";{% endif %}
 
   let name = $state("");
   let greetMsg = $state("");
@@ -7,7 +7,7 @@
   async function greet(event) {
     event.preventDefault();
     // Learn more about Tauri commands at {% if v2 %}https://tauri.app/develop/calling-rust/{% else %}https://v1.tauri.app/v1/guides/features/command{% endif %}
-    greetMsg = await invoke("greet", { name });
+    greetMsg = await {% if specta %}commands.greet(name){% else %}invoke("greet", { name }){% endif %};
   }
 </script>
 

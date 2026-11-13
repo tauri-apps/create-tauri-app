@@ -37,16 +37,19 @@ jobs:
       - uses: dorny/paths-filter@v4
         id: changed-files
         with:
-          list-files: shell
+          list-files: json
           filters: |
             modified:
-              - modified: '**'
+              - '**'
 
       - name: set matrix
         id: set-matrix
         shell: bash
+        env:
+          CHANGED_FILES: ${{ steps.changed-files.outputs.modified_files }}
         run: |
-          OUT="$(node .scripts/generate-templates-matrix.js '${{ github.event_name }}' '${{ steps.changed-files.outputs.modified_files }}')"
+          node .scripts/test-templates-matrix.js
+          OUT="$(node .scripts/generate-templates-matrix.js '${{ github.event_name }}' "$CHANGED_FILES")"
           echo "matrix=$OUT" >> $GITHUB_OUTPUT
 
   build-cli:
@@ -156,6 +159,16 @@ jobs:
       - run: ${{ matrix.settings.install_cmd }}
         if: matrix.settings.install_cmd  != ''
         working-directory: tauri-app
+
+      - name: Verify Tauri Specta bindings
+        if: matrix.settings.specta
+        working-directory: tauri-app
+        shell: bash
+        run: |
+          binding=$(find src -maxdepth 1 -name 'bindings.*')
+          cp "$binding" "$RUNNER_TEMP/bindings"
+          cargo test --manifest-path src-tauri/Cargo.toml export_bindings
+          cmp "$RUNNER_TEMP/bindings" "$binding"
 
       - run: ${{ matrix.settings.run_cmd }} tauri build ${{ matrix.settings.no_bundle_flag }}
         # Skip deno angular test for now, `ng build` stucks on deno
