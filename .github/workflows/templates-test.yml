@@ -37,16 +37,19 @@ jobs:
       - uses: dorny/paths-filter@v4
         id: changed-files
         with:
-          list-files: shell
+          list-files: json
           filters: |
             modified:
-              - modified: '**'
+              - '**'
 
       - name: set matrix
         id: set-matrix
         shell: bash
+        env:
+          CHANGED_FILES: ${{ steps.changed-files.outputs.modified_files }}
         run: |
-          OUT="$(node .scripts/generate-templates-matrix.js '${{ github.event_name }}' '${{ steps.changed-files.outputs.modified_files }}')"
+          node .scripts/test-templates-matrix.js
+          OUT="$(node .scripts/generate-templates-matrix.js '${{ github.event_name }}' "$CHANGED_FILES")"
           echo "matrix=$OUT" >> $GITHUB_OUTPUT
 
   build-cli:

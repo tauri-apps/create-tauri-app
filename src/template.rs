@@ -16,6 +16,11 @@ use crate::{
 
 const CTA_MANIFEST_FILENAME: &str = ".manifest";
 
+pub struct RenderOptions {
+    pub tauri_version: TauriVersion,
+    pub specta: bool,
+}
+
 #[derive(Embed)]
 #[folder = "templates"]
 #[allow(non_camel_case_types)]
@@ -143,106 +148,6 @@ impl Template {
             }
             Template::Dioxus => "Dioxus - (https://dioxuslabs.com/)",
             _ => unreachable!(),
-        }
-    }
-}
-
-#[cfg(test)]
-mod specta_tests {
-    use super::*;
-
-    #[test]
-    fn specta_is_a_flavor_not_a_template() {
-        assert!("specta".parse::<Template>().is_err());
-        for template in [
-            Template::Vanilla,
-            Template::React,
-            Template::Vue,
-            Template::Svelte,
-            Template::Solid,
-            Template::Preact,
-        ] {
-            let flavors = template.flavors(PackageManager::Npm, true).unwrap();
-            assert_eq!(
-                flavors,
-                &[
-                    Flavor::TypeScript,
-                    Flavor::JavaScript,
-                    Flavor::TypeScriptSpecta,
-                    Flavor::JavaScriptSpecta
-                ]
-            );
-            assert_eq!(template.from_flavor(Flavor::JavaScriptSpecta), template);
-            assert_eq!(
-                template.from_flavor(Flavor::TypeScriptSpecta),
-                template.from_flavor(Flavor::TypeScript)
-            );
-            assert!(
-                !template
-                    .flavors(PackageManager::Npm, false)
-                    .unwrap()
-                    .contains(&Flavor::TypeScriptSpecta)
-            );
-        }
-        assert!(
-            Template::Angular
-                .flavors(PackageManager::Npm, true)
-                .unwrap()
-                .contains(&Flavor::TypeScriptSpecta)
-        );
-    }
-
-    #[test]
-    fn renders_specta_for_each_javascript_template() {
-        for template in [
-            Template::Vanilla,
-            Template::VanillaTs,
-            Template::Vue,
-            Template::VueTs,
-            Template::Svelte,
-            Template::SvelteTs,
-            Template::React,
-            Template::ReactTs,
-            Template::Solid,
-            Template::SolidTs,
-            Template::Preact,
-            Template::PreactTs,
-            Template::Angular,
-        ] {
-            let dir = tempfile::tempdir().unwrap();
-            template
-                .render(
-                    dir.path(),
-                    PackageManager::Npm,
-                    "test-app",
-                    "test-app",
-                    "com.test.app",
-                    TauriVersion::V2,
-                    true,
-                )
-                .unwrap();
-            let ts = matches!(
-                template,
-                Template::VanillaTs
-                    | Template::VueTs
-                    | Template::SvelteTs
-                    | Template::ReactTs
-                    | Template::SolidTs
-                    | Template::PreactTs
-                    | Template::Angular
-            );
-            assert!(
-                dir.path()
-                    .join(if ts {
-                        "src/bindings.ts"
-                    } else {
-                        "src/bindings.js"
-                    })
-                    .exists(),
-                "{template}"
-            );
-            let rust = fs::read_to_string(dir.path().join("src-tauri/src/lib.rs")).unwrap();
-            assert!(rust.contains("builder.invoke_handler()"), "{template}");
         }
     }
 }
@@ -405,9 +310,12 @@ impl Template {
         project_name: &str,
         package_name: &str,
         identifier: &str,
-        tauri_version: TauriVersion,
-        specta: bool,
+        options: RenderOptions,
     ) -> anyhow::Result<()> {
+        let RenderOptions {
+            tauri_version,
+            specta,
+        } = options;
         let specta_ts = matches!(
             self,
             Template::VanillaTs
@@ -652,5 +560,107 @@ impl Template {
         }
 
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod specta_tests {
+    use super::*;
+
+    #[test]
+    fn specta_is_a_flavor_not_a_template() {
+        assert!("specta".parse::<Template>().is_err());
+        for template in [
+            Template::Vanilla,
+            Template::React,
+            Template::Vue,
+            Template::Svelte,
+            Template::Solid,
+            Template::Preact,
+        ] {
+            let flavors = template.flavors(PackageManager::Npm, true).unwrap();
+            assert_eq!(
+                flavors,
+                &[
+                    Flavor::TypeScript,
+                    Flavor::JavaScript,
+                    Flavor::TypeScriptSpecta,
+                    Flavor::JavaScriptSpecta
+                ]
+            );
+            assert_eq!(template.from_flavor(Flavor::JavaScriptSpecta), template);
+            assert_eq!(
+                template.from_flavor(Flavor::TypeScriptSpecta),
+                template.from_flavor(Flavor::TypeScript)
+            );
+            assert!(
+                !template
+                    .flavors(PackageManager::Npm, false)
+                    .unwrap()
+                    .contains(&Flavor::TypeScriptSpecta)
+            );
+        }
+        assert!(
+            Template::Angular
+                .flavors(PackageManager::Npm, true)
+                .unwrap()
+                .contains(&Flavor::TypeScriptSpecta)
+        );
+    }
+
+    #[test]
+    fn renders_specta_for_each_javascript_template() {
+        for template in [
+            Template::Vanilla,
+            Template::VanillaTs,
+            Template::Vue,
+            Template::VueTs,
+            Template::Svelte,
+            Template::SvelteTs,
+            Template::React,
+            Template::ReactTs,
+            Template::Solid,
+            Template::SolidTs,
+            Template::Preact,
+            Template::PreactTs,
+            Template::Angular,
+        ] {
+            let dir = tempfile::tempdir().unwrap();
+            template
+                .render(
+                    dir.path(),
+                    PackageManager::Npm,
+                    "test-app",
+                    "test-app",
+                    "com.test.app",
+                    RenderOptions {
+                        tauri_version: TauriVersion::V2,
+                        specta: true,
+                    },
+                )
+                .unwrap();
+            let ts = matches!(
+                template,
+                Template::VanillaTs
+                    | Template::VueTs
+                    | Template::SvelteTs
+                    | Template::ReactTs
+                    | Template::SolidTs
+                    | Template::PreactTs
+                    | Template::Angular
+            );
+            assert!(
+                dir.path()
+                    .join(if ts {
+                        "src/bindings.ts"
+                    } else {
+                        "src/bindings.js"
+                    })
+                    .exists(),
+                "{template}"
+            );
+            let rust = fs::read_to_string(dir.path().join("src-tauri/src/lib.rs")).unwrap();
+            assert!(rust.contains("builder.invoke_handler()"), "{template}");
+        }
     }
 }

@@ -371,8 +371,10 @@ where
         &project_name,
         &package_name,
         &identifier,
-        tauri_version,
-        specta,
+        template::RenderOptions {
+            tauri_version,
+            specta,
+        },
     )?;
 
     // Print post-render instructions

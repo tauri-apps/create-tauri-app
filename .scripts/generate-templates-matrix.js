@@ -2,7 +2,7 @@ const trigger = process.argv[2];
 const isCron = trigger === "schedule" || trigger === "workflow_dispatch";
 
 const changedFilesStr = process.argv[3];
-const changedFiles = changedFilesStr.split(",");
+const changedFiles = JSON.parse(changedFilesStr || "[]");
 
 const nodeJsTemplates = [
   "svelte",
