@@ -113,8 +113,8 @@ importers:
   .:
     devDependencies:
       prettier:
-        specifier: 3.8.1
-        version: 3.8.1
+        specifier: 3.10.1
+        version: 3.10.1
 
   node:
     devDependencies:
@@ -1203,8 +1203,8 @@ packages:
   pathe@2.0.3:
     resolution: {integrity: sha512-WUjGcAqP1gQacoQe+OBJsFA7Ld4DyXuUIjZ5cc75cLHvJ7dtNsTugphxIADwspS+AraAUePCKrSVtPLFj/F88w==}
 
-  prettier@3.8.1:
-    resolution: {integrity: sha512-UOnG6LftzbdaHZcKoPFtOcCKztrQ57WkHDeRD9t/PTQtmT0NHSeWWepj6pS0z/N7+08BHFDQVUrfmfMRcZwbMg==}
+  prettier@3.10.1:
+    resolution: {integrity: sha512-70vp3ZUYoPlFbF9uiTdXHUUCGEIp7d4+6p+8DYbkm2jP7x/3i/paXVF6dopSI3zd/CEitrZN1rc4i85xWmmXlg==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -2094,7 +2094,7 @@ snapshots:
 
   pathe@2.0.3: {}
 
-  prettier@3.8.1: {}
+  prettier@3.10.1: {}
 
   safer-buffer@2.1.2: {}
 
