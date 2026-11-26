@@ -1,4 +1,4 @@
-import { invoke } from "@tauri-apps/api/{% if v2 %}core{% else %}tauri{% endif %}";
+{% if specta %}import { commands } from "./bindings";{% else %}import { invoke } from "@tauri-apps/api/{% if v2 %}core{% else %}tauri{% endif %}";{% endif %}
 
 let greetInputEl: HTMLInputElement | null;
 let greetMsgEl: HTMLElement | null;
@@ -6,9 +6,9 @@ let greetMsgEl: HTMLElement | null;
 async function greet() {
   if (greetMsgEl && greetInputEl) {
     // Learn more about Tauri commands at {% if v2 %}https://tauri.app/develop/calling-rust/{% else %}https://v1.tauri.app/v1/guides/features/command{% endif %}
-    greetMsgEl.textContent = await invoke("greet", {
+    greetMsgEl.textContent = await {% if specta %}commands.greet(greetInputEl.value){% else %}invoke("greet", {
       name: greetInputEl.value,
-    });
+    }){% endif %};
   }
 }
 

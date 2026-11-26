@@ -16,6 +16,11 @@ use crate::{
 
 const CTA_MANIFEST_FILENAME: &str = ".manifest";
 
+pub struct RenderOptions {
+    pub tauri_version: TauriVersion,
+    pub specta: bool,
+}
+
 #[derive(Embed)]
 #[folder = "templates"]
 #[allow(non_camel_case_types)]
@@ -26,6 +31,8 @@ struct EMBEDDED_TEMPLATES;
 pub enum Flavor {
     JavaScript,
     TypeScript,
+    JavaScriptSpecta,
+    TypeScriptSpecta,
 }
 
 impl Display for Flavor {
@@ -33,6 +40,8 @@ impl Display for Flavor {
         match self {
             Flavor::JavaScript => write!(f, "JavaScript"),
             Flavor::TypeScript => write!(f, "TypeScript"),
+            Flavor::JavaScriptSpecta => write!(f, "JavaScript + Tauri Specta"),
+            Flavor::TypeScriptSpecta => write!(f, "TypeScript + Tauri Specta"),
         }
     }
 }
@@ -165,7 +174,33 @@ impl Template {
         Template::Dioxus,
     ];
 
-    pub fn flavors<'b>(&self, pkg_manager: PackageManager) -> Option<&'b [Flavor]> {
+    pub fn flavors<'b>(
+        &self,
+        pkg_manager: PackageManager,
+        specta_available: bool,
+    ) -> Option<&'b [Flavor]> {
+        if specta_available && matches!(self, Template::Angular) {
+            return Some(&[Flavor::TypeScript, Flavor::TypeScriptSpecta]);
+        }
+        if specta_available
+            && pkg_manager != PackageManager::Cargo
+            && matches!(
+                self,
+                Template::Vanilla
+                    | Template::Vue
+                    | Template::Svelte
+                    | Template::React
+                    | Template::Solid
+                    | Template::Preact
+            )
+        {
+            return Some(&[
+                Flavor::TypeScript,
+                Flavor::JavaScript,
+                Flavor::TypeScriptSpecta,
+                Flavor::JavaScriptSpecta,
+            ]);
+        }
         match self {
             Template::Vanilla => {
                 if pkg_manager == PackageManager::Cargo {
@@ -184,6 +219,11 @@ impl Template {
     }
 
     pub fn from_flavor(&self, flavor: Flavor) -> Self {
+        let flavor = match flavor {
+            Flavor::TypeScriptSpecta => Flavor::TypeScript,
+            Flavor::JavaScriptSpecta => Flavor::JavaScript,
+            other => other,
+        };
         match (self, flavor) {
             (Template::Vanilla, Flavor::TypeScript) => Template::VanillaTs,
             (Template::Vue, Flavor::TypeScript) => Template::VueTs,
@@ -270,10 +310,29 @@ impl Template {
         project_name: &str,
         package_name: &str,
         identifier: &str,
-        tauri_version: TauriVersion,
+        options: RenderOptions,
     ) -> anyhow::Result<()> {
+        let RenderOptions {
+            tauri_version,
+            specta,
+        } = options;
+        let specta_ts = matches!(
+            self,
+            Template::VanillaTs
+                | Template::VueTs
+                | Template::SvelteTs
+                | Template::ReactTs
+                | Template::SolidTs
+                | Template::PreactTs
+                | Template::Angular
+        );
+        let template_dir = if specta && *self == Template::Vanilla {
+            "_specta-vanilla_".to_string()
+        } else {
+            format!("template-{self}")
+        };
         let manifest_bytes =
-            EMBEDDED_TEMPLATES::get(&format!("template-{self}/{CTA_MANIFEST_FILENAME}"))
+            EMBEDDED_TEMPLATES::get(&format!("{template_dir}/{CTA_MANIFEST_FILENAME}"))
                 .with_context(|| "Failed to get manifest bytes")?
                 .data
                 .to_vec();
@@ -359,6 +418,8 @@ impl Template {
             ),
             ("lib_name", lib_name),
             ("styles", styles),
+            ("specta", specta.to_string()),
+            ("specta_ts", specta_ts.to_string()),
         ]
         .into();
 
@@ -460,7 +521,7 @@ impl Template {
                 .next()
                 .unwrap()
                 .as_os_str()
-                == path::PathBuf::from(format!("template-{self}"))
+                == path::PathBuf::from(&template_dir)
         }) {
             write_file(&file, &template_data)?;
         }
@@ -480,6 +541,169 @@ impl Template {
             file.write_all(&data)?;
         }
 
+        if specta {
+            let extension = if specta_ts { "ts" } else { "js" };
+            let data = EMBEDDED_TEMPLATES::get(&format!("_specta_/bindings.{extension}"))
+                .context("Failed to get Specta bindings")?
+                .data;
+            fs::create_dir_all(target_dir.join("src"))?;
+            fs::write(target_dir.join(format!("src/bindings.{extension}")), data)?;
+            let readme = target_dir.join("README.md");
+            let mut file = fs::OpenOptions::new()
+                .append(true)
+                .create(true)
+                .open(readme)?;
+            writeln!(
+                file,
+                "\n## Tauri Specta\n\nBindings are generated in `src/bindings.{extension}` during development. After changing commands, run `cargo test --manifest-path src-tauri/Cargo.toml export_bindings` to regenerate them before building the frontend. Commit the generated file. See https://github.com/specta-rs/tauri-specta."
+            )?;
+        }
+
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod specta_tests {
+    use super::*;
+
+    #[test]
+    fn tauri_one_manifests_use_a_compatible_edition() {
+        for template in [
+            Template::Vanilla,
+            Template::React,
+            Template::Yew,
+            Template::Leptos,
+            Template::Sycamore,
+            Template::Dioxus,
+        ] {
+            let dir = tempfile::tempdir().unwrap();
+            let manager = if template == Template::React {
+                PackageManager::Npm
+            } else {
+                PackageManager::Cargo
+            };
+            template
+                .render(
+                    dir.path(),
+                    manager,
+                    "test-app",
+                    "test-app",
+                    "com.test.app",
+                    RenderOptions {
+                        tauri_version: TauriVersion::V1,
+                        specta: false,
+                    },
+                )
+                .unwrap();
+            let manifest = fs::read_to_string(dir.path().join("src-tauri/Cargo.toml")).unwrap();
+            assert!(manifest.contains("edition = \"2021\""), "{template}");
+            let root_manifest = dir.path().join("Cargo.toml");
+            if root_manifest.exists() {
+                assert!(
+                    fs::read_to_string(root_manifest)
+                        .unwrap()
+                        .contains("edition = \"2021\""),
+                    "{template}"
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn specta_is_a_flavor_not_a_template() {
+        assert!("specta".parse::<Template>().is_err());
+        for template in [
+            Template::Vanilla,
+            Template::React,
+            Template::Vue,
+            Template::Svelte,
+            Template::Solid,
+            Template::Preact,
+        ] {
+            let flavors = template.flavors(PackageManager::Npm, true).unwrap();
+            assert_eq!(
+                flavors,
+                &[
+                    Flavor::TypeScript,
+                    Flavor::JavaScript,
+                    Flavor::TypeScriptSpecta,
+                    Flavor::JavaScriptSpecta
+                ]
+            );
+            assert_eq!(template.from_flavor(Flavor::JavaScriptSpecta), template);
+            assert_eq!(
+                template.from_flavor(Flavor::TypeScriptSpecta),
+                template.from_flavor(Flavor::TypeScript)
+            );
+            assert!(
+                !template
+                    .flavors(PackageManager::Npm, false)
+                    .unwrap()
+                    .contains(&Flavor::TypeScriptSpecta)
+            );
+        }
+        assert!(
+            Template::Angular
+                .flavors(PackageManager::Npm, true)
+                .unwrap()
+                .contains(&Flavor::TypeScriptSpecta)
+        );
+    }
+
+    #[test]
+    fn renders_specta_for_each_javascript_template() {
+        for template in [
+            Template::Vanilla,
+            Template::VanillaTs,
+            Template::Vue,
+            Template::VueTs,
+            Template::Svelte,
+            Template::SvelteTs,
+            Template::React,
+            Template::ReactTs,
+            Template::Solid,
+            Template::SolidTs,
+            Template::Preact,
+            Template::PreactTs,
+            Template::Angular,
+        ] {
+            let dir = tempfile::tempdir().unwrap();
+            template
+                .render(
+                    dir.path(),
+                    PackageManager::Npm,
+                    "test-app",
+                    "test-app",
+                    "com.test.app",
+                    RenderOptions {
+                        tauri_version: TauriVersion::V2,
+                        specta: true,
+                    },
+                )
+                .unwrap();
+            let ts = matches!(
+                template,
+                Template::VanillaTs
+                    | Template::VueTs
+                    | Template::SvelteTs
+                    | Template::ReactTs
+                    | Template::SolidTs
+                    | Template::PreactTs
+                    | Template::Angular
+            );
+            assert!(
+                dir.path()
+                    .join(if ts {
+                        "src/bindings.ts"
+                    } else {
+                        "src/bindings.js"
+                    })
+                    .exists(),
+                "{template}"
+            );
+            let rust = fs::read_to_string(dir.path().join("src-tauri/src/lib.rs")).unwrap();
+            assert!(rust.contains("builder.invoke_handler()"), "{template}");
+        }
     }
 }

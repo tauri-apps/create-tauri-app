@@ -83,6 +83,7 @@ dependencies = [
  "dialoguer",
  "pico-args",
  "rust-embed",
+ "tempfile",
  "whoami",
 ]
 

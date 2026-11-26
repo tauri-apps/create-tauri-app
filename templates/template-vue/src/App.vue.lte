@@ -1,13 +1,13 @@
 <script setup>
 import { ref } from "vue";
-import { invoke } from "@tauri-apps/api/{% if v2 %}core{% else %}tauri{% endif %}";
+{% if specta %}import { commands } from "./bindings";{% else %}import { invoke } from "@tauri-apps/api/{% if v2 %}core{% else %}tauri{% endif %}";{% endif %}
 
 const greetMsg = ref("");
 const name = ref("");
 
 async function greet() {
   // Learn more about Tauri commands at {% if v2 %}https://tauri.app/develop/calling-rust/{% else %}https://v1.tauri.app/v1/guides/features/command{% endif %}
-  greetMsg.value = await invoke("greet", { name: name.value });
+  greetMsg.value = await {% if specta %}commands.greet(name.value){% else %}invoke("greet", { name: name.value }){% endif %};
 }
 </script>
 
